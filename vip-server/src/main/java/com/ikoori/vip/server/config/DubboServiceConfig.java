@@ -7,7 +7,7 @@ import com.alibaba.dubbo.config.spring.ServiceBean;
 import com.ikoori.vip.api.service.MemberService;
 
 @Configuration
-public class Export extends DubboBaseConfig {
+public class DubboServiceConfig extends DubboBaseConfig {
 	@Bean
 	public ServiceBean<MemberService> personProvider(MemberService memberService) {
 		ServiceBean<MemberService> serviceBean = new ServiceBean<MemberService>();

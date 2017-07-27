@@ -17,12 +17,12 @@ import com.ikoori.vip.common.annotion.log.BussinessLog;
 import com.ikoori.vip.common.constant.dictmap.base.AbstractDictMap;
 import com.ikoori.vip.common.constant.dictmap.factory.DictMapFactory;
 import com.ikoori.vip.common.support.HttpKit;
-import com.ikoori.vip.common.util.Contrast;
 import com.ikoori.vip.core.log.LogManager;
 import com.ikoori.vip.core.log.LogObjectHolder;
 import com.ikoori.vip.core.log.factory.LogTaskFactory;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.core.shiro.ShiroUser;
+import com.ikoori.vip.server.core.util.Contrast;
 
 /**
  * 日志记录

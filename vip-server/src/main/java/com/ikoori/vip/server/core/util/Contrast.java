@@ -1,4 +1,4 @@
-package com.ikoori.vip.common.util;
+package com.ikoori.vip.server.core.util;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -7,9 +7,10 @@ import java.util.Date;
 import java.util.Map;
 
 import com.ikoori.vip.common.constant.dictmap.base.AbstractDictMap;
-import com.ikoori.vip.common.constant.dictmap.factory.DictFieldWarpperFactory;
 import com.ikoori.vip.common.constant.dictmap.factory.DictMapFactory;
 import com.ikoori.vip.common.support.StrKit;
+import com.ikoori.vip.common.util.DateUtil;
+import com.ikoori.vip.server.common.constant.dictmap.factory.DictFieldWarpperFactory;
 
 /**
  * 对比两个对象的变化的工具类

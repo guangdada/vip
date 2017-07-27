@@ -3,10 +3,10 @@ package com.ikoori.vip.server.modular.system.warpper;
 import java.util.List;
 import java.util.Map;
 
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
 import com.ikoori.vip.common.persistence.model.Dict;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 
 /**
  * 字典列表的包装

@@ -77,11 +77,11 @@
 			<artifactId>vip-api</artifactId>
 			<version>${vip.api.version}</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.ikoori</groupId>
 			<artifactId>vip-common</artifactId>
 			<version>${vip.common.version}</version>
-		</dependency> -->
+		</dependency>
     </dependencies>
 
     <build>

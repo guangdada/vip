@@ -1,4 +1,4 @@
-package com.ikoori.vip.common.constant.factory;
+package com.ikoori.vip.server.common.constant.factory;
 
 import java.util.List;
 
@@ -291,7 +291,7 @@ public class ConstantFactory implements IConstantFactory {
     /**
      * 获取被缓存的对象(用户删除业务)
      */
-   /* @Override
+/*    @Override
     public String getCacheObject(String para) {
         return LogObjectHolder.me().get().toString();
     }*/

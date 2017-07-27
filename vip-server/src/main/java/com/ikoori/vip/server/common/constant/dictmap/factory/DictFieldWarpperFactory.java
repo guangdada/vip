@@ -1,11 +1,11 @@
-package com.ikoori.vip.common.constant.dictmap.factory;
+package com.ikoori.vip.server.common.constant.dictmap.factory;
 
 import java.lang.reflect.Method;
 
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
-import com.ikoori.vip.common.constant.factory.IConstantFactory;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
+import com.ikoori.vip.server.common.constant.factory.IConstantFactory;
 
 /**
  * 字段的包装创建工厂

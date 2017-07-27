@@ -1,10 +1,10 @@
 package com.ikoori.vip.server.modular.system.warpper;
 
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
-import com.ikoori.vip.common.warpper.BaseControllerWarpper;
-
 import java.util.List;
 import java.util.Map;
+
+import com.ikoori.vip.common.warpper.BaseControllerWarpper;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 
 /**
  * 用户管理的包装类

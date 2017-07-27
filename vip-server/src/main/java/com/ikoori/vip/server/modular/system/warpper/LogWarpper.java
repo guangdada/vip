@@ -2,10 +2,10 @@ package com.ikoori.vip.server.modular.system.warpper;
 
 import java.util.Map;
 
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
-import com.ikoori.vip.common.util.Contrast;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
+import com.ikoori.vip.server.core.util.Contrast;
 
 /**
  * 日志列表的包装类

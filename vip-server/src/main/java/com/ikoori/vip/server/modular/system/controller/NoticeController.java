@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ikoori.vip.common.annotion.log.BussinessLog;
 import com.ikoori.vip.common.constant.Dict;
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.NoticeMapper;
 import com.ikoori.vip.common.persistence.model.Notice;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.core.log.LogObjectHolder;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.system.dao.NoticeDao;

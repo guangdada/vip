@@ -13,11 +13,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ikoori.vip.common.constant.factory.ConstantFactory;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.common.util.Convert;
 import com.ikoori.vip.common.util.SpringContextHolder;
+import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 import com.ikoori.vip.server.core.shiro.ShiroUser;
 import com.ikoori.vip.server.modular.system.dao.MenuDao;
 import com.ikoori.vip.server.modular.system.dao.UserMgrDao;

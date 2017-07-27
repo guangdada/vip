@@ -77,7 +77,13 @@ spring:
       username: root
       password: root
       filters: log4j,wall,mergeStat
-
+###################  beetl配置  ###################
+dubbo:
+  application-name: krvip.provider
+  registry-address: 127.0.0.1:2181
+  registry-protocol: zookeeper
+  monitor-protocol: registry
+  protocol-port: 20880
 #多数据源
 biz:
   datasource:

@@ -1,4 +1,4 @@
-package com.ikoori.vip.common.constant.factory;
+package com.ikoori.vip.server.common.constant.factory;
 
 import java.util.List;
 
