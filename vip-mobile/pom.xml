@@ -8,7 +8,83 @@
   <artifactId>vip-mobile</artifactId>
   <packaging>war</packaging>
   <name>vip-mobile</name>
-  <build>
+  
+  <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>${kaptcha.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>${zxing.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>${velocity.version}</version>
+        </dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>dubbo</artifactId>
+		    <version>${com.alibaba.dubbo.version}</version>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>log4j</groupId>
+		            <artifactId>log4j</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>commons-logging</groupId>
+		            <artifactId>commons-logging</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>org.springframework</groupId>
+		            <artifactId>spring</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>com.alibaba</groupId>
+		            <artifactId>fastjson</artifactId>
+		        </exclusion>
+		    </exclusions>
+		</dependency> 
+        <dependency>  
+            <groupId>com.github.sgroschupf</groupId>  
+            <artifactId>zkclient</artifactId>  
+            <version>${com.github.sgroschupf.zkclient.version}</version>  
+        </dependency>
+        <dependency>
+			<groupId>com.ikoori</groupId>
+			<artifactId>vip-api</artifactId>
+			<version>${vip.api.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>com.ikoori</groupId>
+			<artifactId>vip-common</artifactId>
+			<version>${vip.common.version}</version>
+		</dependency> -->
+    </dependencies>
+
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
