@@ -25,14 +25,14 @@ var MenuInfoDlg = {
                     message: '父菜单不能为空'
                 }
             }
-        },
+        }/*,
         url: {
             validators: {
                 notEmpty: {
                     message: '请求地址不能为空'
                 }
             }
-        },
+        }*/,
         num: {
             validators: {
                 notEmpty: {

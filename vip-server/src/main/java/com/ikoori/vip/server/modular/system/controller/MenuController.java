@@ -127,7 +127,6 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) String menuName, @RequestParam(required = false) String level) {
-    	System.out.println("111111");
     	List<Map<String, Object>> menus = this.menuDao.selectMenus(menuName, level);
         return super.warpObject(new MenuWarpper(menus));
     }
