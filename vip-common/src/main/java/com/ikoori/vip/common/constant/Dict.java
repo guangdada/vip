@@ -42,5 +42,10 @@ public interface Dict {
      * 通知管理业务的字典
      */
     String NoticeMap = "NoticeMap";
+    
+    /**
+     * 商户管理业务的字典
+     */
+    String MerchantDict = "MerchantDict";
 
 }

@@ -95,6 +95,11 @@ public interface IConstantFactory {
      * 获取用户登录状态
      */
     String getStatusName(Integer status);
+    
+    /**
+     * 获取商户状态
+     */
+    String getMerchantStateName(Integer state);
 
     /**
      * 获取菜单状态
@@ -109,6 +114,6 @@ public interface IConstantFactory {
     /**
      * 获取被缓存的对象(用户删除业务)
      */
-    //String getCacheObject(String para);
+    String getCacheObject(String para);
 
 }

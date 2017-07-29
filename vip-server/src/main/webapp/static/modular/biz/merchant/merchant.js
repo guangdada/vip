@@ -14,7 +14,11 @@ var Merchant = {
 Merchant.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'}
+        {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+        {title: '商户名', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
+        {title: 'QQ', field: 'qq', visible: true, align: 'center', valign: 'middle'},
+        {title: '状态', field: 'stateName', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -81,17 +85,26 @@ Merchant.delete = function () {
 };
 
 /**
+ * 查询表单提交参数对象
+ * @returns {{}}
+ */
+Merchant.formParams = function() {
+    var queryData = {};
+    queryData['merName'] = $("#merName").val();
+    return queryData;
+}
+
+/**
  * 查询商户列表
  */
 Merchant.search = function () {
-    var queryData = {};
-    queryData['condition'] = $("#condition").val();
-    Merchant.table.refresh({query: queryData});
+    Merchant.table.refresh({query: Merchant.formParams()});
 };
 
 $(function () {
     var defaultColunms = Merchant.initColumn();
     var table = new BSTable(Merchant.id, "/merchant/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
+    table.setQueryParams(Merchant.formParams());
     Merchant.table = table.init();
 });

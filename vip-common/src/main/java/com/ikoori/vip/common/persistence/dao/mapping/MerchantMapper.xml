@@ -8,6 +8,9 @@
 		<result column="mobile" property="mobile" />
 		<result column="user_id" property="userId" />
 		<result column="name" property="name" />
+		<result column="tips" property="tips" />
+		<result column="qq" property="qq" />
+		<result column="head_img" property="headImg" />
 		<result column="state" property="state" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />

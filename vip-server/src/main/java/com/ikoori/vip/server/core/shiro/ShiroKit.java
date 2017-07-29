@@ -31,6 +31,16 @@ import java.util.Random;
  */
 public class ShiroKit {
 
+	/**
+	 * 默认密码
+	 */
+	public static final String DEFAULTPWD = "123456";
+	
+	/**
+	 * 商户角色id
+	 */
+	public static final String merchantRoleId = "6";
+	
     private static final String NAMES_DELIMETER = ",";
 
     /**

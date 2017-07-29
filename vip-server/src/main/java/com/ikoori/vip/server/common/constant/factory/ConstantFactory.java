@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.MenuStatus;
+import com.ikoori.vip.common.constant.state.MerchantState;
 import com.ikoori.vip.common.persistence.dao.DeptMapper;
 import com.ikoori.vip.common.persistence.dao.DictMapper;
 import com.ikoori.vip.common.persistence.dao.MenuMapper;
@@ -25,6 +26,7 @@ import com.ikoori.vip.common.support.StrKit;
 import com.ikoori.vip.common.util.Convert;
 import com.ikoori.vip.common.util.SpringContextHolder;
 import com.ikoori.vip.common.util.ToolUtil;
+import com.ikoori.vip.core.log.LogObjectHolder;
 
 /**
  * 常量的生产工厂
@@ -261,6 +263,14 @@ public class ConstantFactory implements IConstantFactory {
     public String getStatusName(Integer status) {
         return ManagerStatus.valueOf(status);
     }
+    
+    /**
+     * 获取商户状态
+     */
+    @Override
+    public String getMerchantStateName(Integer state) {
+        return MerchantState.valueOf(state);
+    }
 
     /**
      * 获取菜单状态
@@ -291,9 +301,9 @@ public class ConstantFactory implements IConstantFactory {
     /**
      * 获取被缓存的对象(用户删除业务)
      */
-/*    @Override
+    @Override
     public String getCacheObject(String para) {
         return LogObjectHolder.me().get().toString();
-    }*/
+    }
 
 }

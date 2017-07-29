@@ -1,12 +1,13 @@
 package com.ikoori.vip.common.persistence.model;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -14,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author chengxg
- * @since 2017-07-28
+ * @since 2017-07-29
  */
 @TableName("vip_merchant")
 public class Merchant extends Model<Merchant> {
@@ -39,6 +40,19 @@ public class Merchant extends Model<Merchant> {
      * 商户名称
      */
 	private String name;
+    /**
+     * 备注
+     */
+	private String tips;
+    /**
+     * qq号码
+     */
+	private String qq;
+    /**
+     * 头像
+     */
+	@TableField("head_img")
+	private String headImg;
     /**
      * 商户状态（0：未认证;1:已认证）
      */
@@ -91,6 +105,30 @@ public class Merchant extends Model<Merchant> {
 		this.name = name;
 	}
 
+	public String getTips() {
+		return tips;
+	}
+
+	public void setTips(String tips) {
+		this.tips = tips;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
+	}
+
 	public Integer getState() {
 		return state;
 	}
@@ -135,6 +173,9 @@ public class Merchant extends Model<Merchant> {
 			", mobile=" + mobile +
 			", userId=" + userId +
 			", name=" + name +
+			", tips=" + tips +
+			", qq=" + qq +
+			", headImg=" + headImg +
 			", state=" + state +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +

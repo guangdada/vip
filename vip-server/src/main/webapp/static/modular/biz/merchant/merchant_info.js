@@ -2,7 +2,23 @@
  * 初始化商户详情对话框
  */
 var MerchantInfoDlg = {
-    merchantInfoData : {}
+    merchantInfoData : {},
+    validateFields: {
+        name: {
+            validators: {
+                notEmpty: {
+                    message: '商户名称不能为空'
+                }
+            }
+        },
+        mobile: {
+            validators: {
+                notEmpty: {
+                    message: '手机号码不能为空'
+                }
+            }
+        }
+    }
 };
 
 /**
@@ -44,7 +60,16 @@ MerchantInfoDlg.close = function() {
  * 收集数据
  */
 MerchantInfoDlg.collectData = function() {
-    this.set('id');
+	this.set('id').set('name').set('mobile').set('tips').set('qq');
+}
+
+/**
+ * 验证数据是否为空
+ */
+MerchantInfoDlg.validate = function () {
+    $('#merchantInfoForm').data("bootstrapValidator").resetForm();
+    $('#merchantInfoForm').bootstrapValidator('validate');
+    return $("#merchantInfoForm").data('bootstrapValidator').isValid();
 }
 
 /**
@@ -54,7 +79,9 @@ MerchantInfoDlg.addSubmit = function() {
 
     this.clearData();
     this.collectData();
-
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/merchant/add", function(data){
         Feng.success("添加成功!");
@@ -88,5 +115,5 @@ MerchantInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+	Feng.initValidator("merchantInfoForm", MerchantInfoDlg.validateFields);
 });
