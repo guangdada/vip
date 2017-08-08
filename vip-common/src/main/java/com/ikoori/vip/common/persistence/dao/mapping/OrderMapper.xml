@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.OrderMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Order">
+		<id column="id" property="id" />
+		<result column="store_id" property="storeId" />
+		<result column="order_no" property="orderNo" />
+		<result column="return_status" property="returnStatus" />
+		<result column="pay_status" property="payStatus" />
+		<result column="pay_type" property="payType" />
+		<result column="received_type" property="receivedType" />
+		<result column="member_id" property="memberId" />
+		<result column="cashier_user_id" property="cashierUserId" />
+		<result column="cashier_name" property="cashierName" />
+		<result column="customer_money" property="customerMoney" />
+		<result column="change_money" property="changeMoney" />
+		<result column="rounded_to" property="roundedTo" />
+		<result column="payment" property="payment" />
+		<result column="discount" property="discount" />
+		<result column="balance_due" property="balanceDue" />
+		<result column="product_num" property="productNum" />
+		<result column="discount_info" property="discountInfo" />
+		<result column="flow_no" property="flowNo" />
+		<result column="outFlow_no" property="outFlowNo" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

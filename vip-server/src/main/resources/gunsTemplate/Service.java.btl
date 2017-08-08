@@ -3,9 +3,14 @@ package ${service.packageName};
 /**
  * ${context.bizChName}Service
  *
- * @author fengshuonan
+ * @author chengxg
  * @Date ${tool.currentTime()}
  */
 public interface I${context.bizEnBigName}Service {
-
+	public Integer deleteById(Long id);
+	public Integer updateById(${context.bizEnBigName} ${context.bizEnName});
+	public ${context.bizEnBigName} selectById(Long id);
+	public Integer insert(${context.bizEnBigName} ${context.bizEnName});
+	List<Map<String, Object>> get${context.bizEnBigName}List(@Param("page") Page<${context.bizEnBigName}> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	
 }

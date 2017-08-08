@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.StorePhotoMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.StorePhoto">
+		<id column="id" property="id" />
+		<result column="store_id" property="storeId" />
+		<result column="pic_id" property="picId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

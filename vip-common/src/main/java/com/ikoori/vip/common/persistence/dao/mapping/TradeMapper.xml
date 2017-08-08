@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.TradeMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Trade">
+		<id column="id" property="id" />
+		<result column="amount" property="amount" />
+		<result column="trade_type" property="tradeType" />
+		<result column="store_id" property="storeId" />
+		<result column="flow_no" property="flowNo" />
+		<result column="order_id" property="orderId" />
+		<result column="order_no" property="orderNo" />
+		<result column="state" property="state" />
+		<result column="in_out" property="inOut" />
+		<result column="pay_time" property="payTime" />
+		<result column="finish_time" property="finishTime" />
+		<result column="tag" property="tag" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

@@ -1,0 +1,588 @@
+.uneditable-input, input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=tel], input[type=color], input[type=search], select, textarea {
+    display: inline-block;
+    height: 30px;
+    padding: 4px 6px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    line-height: 30px;
+    color: #555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+textarea {
+    height: auto;
+}
+
+/* .uneditable-input, input, textarea {
+    width: 206px;
+} */
+
+.input-mini {
+    width: 60px;
+}
+
+input[type=file], select {
+    height: 30px;
+    line-height: 30px;
+}
+
+.checkbox, .radio {
+    padding-left: 16px;
+}
+
+.checkbox, .radio {
+    min-height: 20px;
+    padding-left: 20px;
+}
+
+.checkbox.inline, .radio.inline {
+    display: inline-block;
+    padding-top: 5px;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.widget-promotion {
+	position: relative;
+	z-index: 100;
+	width: 360px;
+	height: 320px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 9px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.widget-promotion .alert {
+	margin-bottom: 10px
+}
+
+.widget-promotion::after, .widget-promotion::before {
+	content: "";
+	position: absolute;
+	top: 66px;
+	right: -19px;
+	border: 10px solid transparent;
+	border-left-color: white
+}
+
+.widget-promotion::before {
+	right: -21px;
+	border-left-color: #ccc
+}
+
+.widget-promotion-tab li {
+	float: left;
+	width: 50%;
+	line-height: 40px;
+	text-align: center;
+	font-size: 16px;
+	background: #f2f2f2;
+	cursor: pointer;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.widget-promotion-tab li:first-child {
+	border-top-left-radius: 9px
+}
+
+.widget-promotion-tab li:last-child {
+	border-top-right-radius: 9px
+}
+
+.widget-promotion-tab li.active {
+	background: #fff
+}
+
+.widget-promotion-tab li+li {
+	border-left: 1px solid #ccc
+}
+
+.widget-promotion-main {
+	min-height: 200px;
+	padding: 10px 15px 20px
+}
+
+.widget-promotion-main label {
+	margin: 10px 0 5px;
+	font-size: 12px;
+	line-height: 12px
+}
+
+.widget-promotion-main input[type="text"] {
+	width: 230px
+}
+
+.widget-promotion-main button.btn {
+	width: 55px
+}
+
+.widget-promotion-main select {
+	width: 166px
+}
+
+.widget-promotion-main .widget-promotion-content {
+	margin-top: 15px;
+	padding-left: 20px
+}
+
+.widget-promotion-main .qrcode-popover.popover {
+	z-index: 1000
+}
+
+.widget-promotion-main .qrcode-popover.popover .arrow {
+	top: 33px
+}
+
+.widget-promotion-main .qrcode-popover .popover-inner {
+	width: 365px
+}
+
+.widget-promotion-main .qrcode-popover .popover-content {
+	padding: 0
+}
+
+.widget-promotion-main .qrcode-popover.loading .qrcode-content {
+	visibility: hidden
+}
+
+.widget-promotion-main .qrcode-header {
+	padding: 10px;
+	border-bottom: 1px solid #E4E4E4
+}
+
+.widget-promotion-main .qrcode-header .close {
+	margin-top: -3px
+}
+
+.widget-promotion-main .qrcode-title {
+	font-size: 16px
+}
+
+.widget-promotion-main .qrcode-content {
+	background-color: #F2F2F2;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex
+}
+
+.widget-promotion-main .qrcode-content.hide {
+	display: none
+}
+
+.widget-promotion-main .qrcode-left-sidebar {
+	height: 200px;
+	overflow: auto;
+	width: 164px;
+	text-align: right
+}
+
+.widget-promotion-main .qrcode-left-sidebar .btn-delete-qrcode {
+	display: none
+}
+
+.widget-promotion-main .qrcode-left-sidebar li {
+	padding: 10px 20px 10px 10px;
+	border-bottom: 1px solid #E4E4E4;
+	cursor: pointer
+}
+
+.widget-promotion-main .qrcode-left-sidebar li.active {
+	position: relative;
+	background-color: #FFF
+}
+
+.widget-promotion-main .qrcode-left-sidebar li.active .btn-delete-qrcode
+	{
+	display: inline-block
+}
+
+.widget-promotion-main .qrcode-left-sidebar li.active::after {
+	position: absolute;
+	top: 14px;
+	right: 1px;
+	content: "";
+	border: 4px solid transparent;
+	border-left: 6px solid #F60
+}
+
+.widget-promotion-main .qrcode-left-sidebar li:hover .btn-delete-qrcode
+	{
+	display: inline-block
+}
+
+.widget-promotion-main .qrcode-right-sidebar {
+	background-color: #FFF;
+	width: 165px;
+	min-height: 200px;
+	padding: 0 0 0 5px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.widget-promotion-main .qrcode-right-sidebar img {
+	padding-top: 10px;
+	width: 200px;
+	margin: -10px -10px 0 0
+}
+
+.widget-promotion-main .qrcode-links {
+	padding: 5px 13px
+}
+
+.widget-promotion-main .qrcode-create-button {
+	padding: 10px 20px 10px 10px;
+	display: block
+}
+
+.widget-promotion-main .qrcode-text {
+	color: #F60;
+	margin-top: 5px
+}
+
+.widget-promotion-main .qrcode-form-create {
+	margin: 30px 0 0;
+	background-color: #FFF;
+	overflow: hidden;
+	padding: 0 10px
+}
+
+.widget-promotion-main .btn-create-qrcode {
+	margin-right: 10px
+}
+
+.widget-promotion-main .qrcode-help {
+	margin-right: -20px;
+	font-size: 12px
+}
+
+.widget-promotion-main .form-horizontal .control-label {
+	margin-top: 0;
+	width: 100px
+}
+
+.widget-promotion-main .form-horizontal .control-group {
+	margin-bottom: 5px
+}
+
+.widget-promotion-main .form-horizontal .controls {
+	margin-left: 110px
+}
+
+.widget-promotion-main .form-horizontal label.radio.inline {
+	margin-top: 0
+}
+
+.widget-promotion-main .form-horizontal .input-append input[type=text],
+	.widget-promotion-main .form-horizontal .input-prepend input[type=text]
+	{
+	width: 120px
+}
+
+.widget-promotion-main .input-prepend .add-on, .widget-promotion-main .input-append .add-on
+	{
+	width: 20px
+}
+
+.page-tradeincard .ump-coupon-detail-wrap .promote-card {
+	text-align: center
+}
+
+.page-tradeincard .ump-coupon-detail-wrap .promote-card-name {
+	font-size: 18px;
+	line-height: 60px
+}
+
+.page-tradeincard .ump-coupon-detail-wrap .promote-value-sign {
+	line-height: 40px
+}
+
+.page-tradeincard .ump-coupon-detail-wrap .promote-desc {
+	display: block
+}
+
+.page-tradeincard .ump-coupon-action {
+	border-radius: 0
+}
+
+.page-tradeincard .config-title {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 30px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #e8e8e8
+}
+
+.page-tradeincard .card-bgcolor-show {
+	display: inline-block;
+	width: 60px;
+	height: 20px;
+	vertical-align: middle;
+	border-radius: 2px
+}
+
+.page-tradeincard .caret {
+	margin-left: 5px
+}
+
+.page-tradeincard .dropdown-toggle {
+	margin-bottom: 2px
+}
+
+.page-tradeincard .dropdown-menu {
+	width: 140px;
+	padding: 0 5px
+}
+
+.page-tradeincard .dropdown-menu li {
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin: 4px;
+	cursor: pointer
+}
+
+.page-tradeincard .ump-title {
+	line-height: 40px;
+	padding: 0 20px;
+	margin: 10px auto;
+	font-size: 14px;
+	background: #f2f2f2
+}
+
+.page-tradeincard .app-sidebar .controls {
+	margin-left: 100px
+}
+
+.page-tradeincard .app-sidebar .control-label {
+	width: 100px
+}
+
+.page-tradeincard .about-card-desc {
+	font-size: 12px;
+	text-align: center;
+	line-height: 40px;
+	color: #ccc
+}
+
+.page-tradeincard .divide-line {
+	margin: 30px 10px 30px;
+	height: 2px;
+	border-top: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e8e8e8
+}
+
+.page-tradeincard .adds-goods {
+	display: block;
+	margin-top: 10px
+}
+
+.page-tradeincard .assign-goods-list .single-goods {
+	color: #333
+}
+
+.page-tradeincard .assign-goods-list tr, .page-tradeincard .assign-goods-list tr:nth-child(even)
+	{
+	background: #fff
+}
+
+.page-tradeincard .assign-goods-list tr:hover {
+	background: #f8f8f8
+}
+
+.page-tradeincard .help-desc {
+	padding-left: 8px
+}
+
+.page-tradeincard .to-helps {
+	margin-left: 10px;
+	font-size: 12px
+}
+
+.page-tradeincard .date-range-wrap {
+	margin-bottom: 5px
+}
+
+.page-tradeincard .date-range-wrap input {
+	width: 136px
+}
+
+.page-tradeincard .fixed-term {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	height: 38px
+}
+
+.page-tradeincard .fixed-term .inline.radio {
+	padding-top: 0px
+}
+
+.page-tradeincard .weixin-card-show .card {
+	margin: 0 auto;
+	position: relative;
+	height: 160px;
+	color: #f8f8f8;
+	overflow: hidden
+}
+
+.page-tradeincard .weixin-card-show .card .card-shop-logo {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	position: absolute;
+	left: 15px;
+	top: 15px
+}
+
+.page-tradeincard .weixin-card-show .card .card-shop-name {
+	font-size: 14px;
+	position: absolute;
+	left: 70px;
+	top: 25px
+}
+
+.page-tradeincard .weixin-card-show .card .present-btn {
+	position: absolute;
+	right: 10px;
+	top: 20px;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 6px 8px;
+	border: 1px solid #f8f8f8;
+	border-color: rgba(255, 255, 255, 0.4);
+	border-radius: 5px
+}
+
+.page-tradeincard .weixin-card-show .card .card-info {
+	text-align: center;
+	margin-top: 70px
+}
+
+.page-tradeincard .weixin-card-show .card .card-info h2 {
+	font-size: 24px;
+	line-height: 24px
+}
+
+.page-tradeincard .weixin-card-show .card .card-info p {
+	font-size: 12px;
+	line-height: 24px
+}
+
+.page-tradeincard .weixin-card-show .card .card-divide {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 2px;
+	width: 100%;
+	background: url("/static/img/coupon/dot_line.png") repeat-x left bottom;
+	-webkit-transform: rotate(180deg)
+}
+
+.page-tradeincard .weixin-card-show .card-code {
+	text-align: center;
+	padding: 20px;
+	background: #fff
+}
+
+.page-tradeincard .weixin-card-show .card-code h2 {
+	font-size: 24px;
+	line-height: 30px;
+	color: #000
+}
+
+.page-tradeincard .weixin-card-show .card-code .used-mall {
+	font-size: 12px;
+	color: #999
+}
+
+.receive-list-title span {
+	font-size: 14px
+}
+
+.ui-table-list tr th, .ui-table-list tr td {
+	text-align: center;
+	vertical-align: middle
+}
+
+.ui-table-list tr .text-left {
+	text-align: left
+}
+
+.ui-table-list .fans-box .fans-avatar {
+	float: left;
+	width: 60px;
+	height: 60px;
+	background: #eee;
+	overflow: hidden
+}
+
+.ui-table-list .fans-box .fans-avatar img {
+	width: 60px;
+	height: auto
+}
+
+.ui-table-list .fans-box .fans-msg {
+	float: left
+}
+
+.ui-table-list .fans-box .fans-msg p {
+	padding: 0 10px;
+	text-align: left
+}
+
+.confirm-tips {
+	text-align: left;
+	line-height: 18px
+}
+
+.confirm-tips span {
+	font-size: 12px;
+	color: #f00
+}
+
+.widget-promotion {
+	width: 340px
+}
+
+.widget-promotion-main {
+	padding: 20px 0
+}
+
+.widget-promotion-main .qrcode {
+	width: 200px
+}
+
+.widget-promotion-main .widget-promotion-content {
+	position: absolute;
+	top: 50%;
+	margin-top: -10px
+}
+
+.control-group.padding-16 {
+	padding-left: 16px
+}
+
+.control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.CouponTradeMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.CouponTrade">
+		<id column="id" property="id" />
+		<result column="store_id" property="storeId" />
+		<result column="coupon_id" property="couponId" />
+		<result column="member_id" property="memberId" />
+		<result column="used_value" property="usedValue" />
+		<result column="used_time" property="usedTime" />
+		<result column="used_order_no" property="usedOrderNo" />
+		<result column="verify_code" property="verifyCode" />
+		<result column="wx_user_id" property="wxUserId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

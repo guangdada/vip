@@ -10,4 +10,5 @@ import com.ikoori.vip.common.persistence.model.Merchant;
  */
 public interface IMerchantService {
 	public void saveMerchant(Merchant merchant);
+	public Merchant getMerchantUserId(Long userId);
 }

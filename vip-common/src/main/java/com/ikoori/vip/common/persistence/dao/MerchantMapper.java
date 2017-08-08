@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author chengxg
- * @since 2017-07-28
+ * @since 2017-07-31
  */
 public interface MerchantMapper extends BaseMapper<Merchant> {
 

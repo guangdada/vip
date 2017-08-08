@@ -1,0 +1,29 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="wxConfigInfoForm">
+
+            <input type="hidden" id="id" value="${wxConfig.id}">
+
+            <div class="row">
+                <div class="col-sm-12">
+					<#input id="appid" name="appid" value="${wxConfig.appid}" underline="false"/>
+					<#input id="mchId" name="mchId" value="${wxConfig.mchId}" underline="false"/>
+					<#input id="secret" name="secret" value="${wxConfig.secret}" underline="false"/>
+					<#input id="encodingAESKey" value="${wxConfig.encodingAESKey}" name="EncodingAESKey" underline="false"/>
+					<#input id="apiKey" name="apiKey" value="${wxConfig.apiKey}" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12 text-right">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="WxConfigInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="WxConfigInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/wxConfig/wxConfig_info.js"></script>
+@}

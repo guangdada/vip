@@ -1,0 +1,21 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="merchantInfoForm">
+
+            <input type="hidden" id="id" value="${merchant.id}">
+
+            <div class="row">
+                <div class="col-sm-12">
+					<#input id="name" name="商户名称" underline="false" value="${merchant.name}" readonly="true"/>
+					<#input id="mobile" name="手机号" underline="false" value="${merchant.mobile}" readonly="true"/>
+					<#input id="qq" name="QQ" underline="false" value="${merchant.qq}" readonly="true"/>
+					<#textarea id="tips" name="备注" underline="true" rows = "3" value="${merchant.tips}" readonly="true"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/merchant/merchant_info.js"></script>
+@}

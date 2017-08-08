@@ -126,9 +126,9 @@ var Feng = {
             }
         });
     },
-    initValidator: function(formId,fields){
+    initValidator: function(formId,fields,feedbackIcons){
         $('#' + formId).bootstrapValidator({
-            feedbackIcons: {
+            feedbackIcons: feedbackIcons ? feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
                 validating: 'glyphicon glyphicon-refresh'

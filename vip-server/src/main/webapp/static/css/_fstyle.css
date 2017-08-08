@@ -59,3 +59,22 @@
 .editorHeight{
 	height: 170px;
 }
+
+.no-right{
+	margin-right:0;
+	padding-right:0;
+}
+
+.no-left{
+	margin-left:0;
+	padding-left:0;
+}
+.auto_width{
+	width:auto;
+}
+.error_info{
+	margin-left:3px;
+	padding-left:3px;
+	color:#a94442;
+	font-size: 12px;
+}

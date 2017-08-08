@@ -17,6 +17,7 @@ public class DeleteDict extends AbstractDictMap {
         put("menuId", "菜单名称");
         put("dictId", "字典名称");
         put("noticeId", "标题");
+        put("merchantId", "商户名称");
     }
 
     @Override
@@ -26,6 +27,6 @@ public class DeleteDict extends AbstractDictMap {
         putFieldWrapperMethodName("menuId","getCacheObject");
         putFieldWrapperMethodName("dictId","getCacheObject");
         putFieldWrapperMethodName("noticeId","getCacheObject");
-
+        putFieldWrapperMethodName("merchantId","getCacheObject");
     }
 }

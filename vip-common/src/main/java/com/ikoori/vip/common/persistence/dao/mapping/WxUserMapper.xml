@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.WxUserMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.WxUser">
+		<id column="id" property="id" />
+		<result column="is_subscribe" property="isSubscribe" />
+		<result column="openid" property="openid" />
+		<result column="nickname" property="nickname" />
+		<result column="sex" property="sex" />
+		<result column="city" property="city" />
+		<result column="country" property="country" />
+		<result column="province" property="province" />
+		<result column="unionId" property="unionId" />
+		<result column="language" property="language" />
+		<result column="headimgurl" property="headimgurl" />
+		<result column="subscribe_time" property="subscribeTime" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

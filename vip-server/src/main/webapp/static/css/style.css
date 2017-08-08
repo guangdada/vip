@@ -3721,7 +3721,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 #content-main {
-    height: calc(100% - 140px);
+    height: calc(100% - 40px);
     overflow: hidden;
 }
 
@@ -7757,7 +7757,8 @@ body.skin-3 {
 .checkbox-inline input[type=checkbox],
 .radio input[type=radio],
 .radio-inline input[type=radio] {
-    margin-top: -4px;
+    /* margin-top: -4px; */
+    margin-top: 3px;
 }
 
 

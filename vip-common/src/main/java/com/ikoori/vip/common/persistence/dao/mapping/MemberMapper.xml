@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.MemberMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Member">
+		<id column="id" property="id" />
+		<result column="mobile" property="mobile" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="is_active" property="isActive" />
+		<result column="name" property="name" />
+		<result column="wx_code" property="wxCode" />
+		<result column="wx_user_id" property="wxUserId" />
+		<result column="sex" property="sex" />
+		<result column="birthday" property="birthday" />
+		<result column="source_type" property="sourceType" />
+		<result column="points" property="points" />
+		<result column="balance" property="balance" />
+		<result column="trade_amount" property="tradeAmount" />
+		<result column="last_trade_time" property="lastTradeTime" />
+		<result column="address" property="address" />
+		<result column="trade_count" property="tradeCount" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

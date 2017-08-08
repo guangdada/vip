@@ -18,7 +18,7 @@ public class DaoConfig {
     public void init() {
         this.daoPathTemplate = "\\src\\main\\java\\com\\ikoori\\vip\\server\\modular\\" + contextConfig.getModuleName() + "\\dao\\{}Dao.java";
         this.xmlPathTemplate = "\\src\\main\\java\\com\\ikoori\\vip\\server\\modular\\" + contextConfig.getModuleName() + "\\dao\\mapping\\{}Dao.xml";
-        this.packageName = "com.ikoori.vip.modular." + contextConfig.getModuleName() + ".dao";
+        this.packageName = "com.ikoori.vip.server.modular." + contextConfig.getModuleName() + ".dao";
     }
 
     public String getPackageName() {

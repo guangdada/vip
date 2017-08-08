@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.OrderItemMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.OrderItem">
+		<id column="id" property="id" />
+		<result column="order_id" property="orderId" />
+		<result column="order_no" property="orderNo" />
+		<result column="quantity" property="quantity" />
+		<result column="original_price" property="originalPrice" />
+		<result column="discount" property="discount" />
+		<result column="product_name" property="productName" />
+		<result column="case_price" property="casePrice" />
+		<result column="sku_no" property="skuNo" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

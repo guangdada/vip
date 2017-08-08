@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.CouponMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Coupon">
+		<id column="id" property="id" />
+		<result column="create_user_id" property="createUserId" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="store_id" property="storeId" />
+		<result column="name" property="name" />
+		<result column="type" property="type" />
+		<result column="preferential_type" property="preferentialType" />
+		<result column="discount" property="discount" />
+		<result column="origin_discount" property="originDiscount" />
+		<result column="alias" property="alias" />
+		<result column="value" property="value" />
+		<result column="origin_value" property="originValue" />
+		<result column="quota" property="quota" />
+		<result column="at_least" property="atLeast" />
+		<result column="origin_at_least" property="originAtLeast" />
+		<result column="is_at_least" property="isAtLeast" />
+		<result column="total" property="total" />
+		<result column="stock" property="stock" />
+		<result column="start_at" property="startAt" />
+		<result column="start_time" property="startTime" />
+		<result column="end_at" property="endAt" />
+		<result column="end_time" property="endTime" />
+		<result column="expire_notice" property="expireNotice" />
+		<result column="description" property="description" />
+		<result column="card_id" property="cardId" />
+		<result column="is_sync_weixin" property="isSyncWeixin" />
+		<result column="is_invalid" property="isInvalid" />
+		<result column="is_expired" property="isExpired" />
+		<result column="is_share" property="isShare" />
+		<result column="url" property="url" />
+		<result column="use_count" property="useCount" />
+		<result column="get_count" property="getCount" />
+		<result column="get_count_user" property="getCountUser" />
+		<result column="use_condition" property="useCondition" />
+		<result column="weixin_title" property="weixinTitle" />
+		<result column="weixin_sub_title" property="weixinSubTitle" />
+		<result column="service_phone" property="servicePhone" />
+		<result column="color_id" property="colorId" />
+		<result column="can_give_friend" property="canGiveFriend" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

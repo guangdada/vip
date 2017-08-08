@@ -6,6 +6,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
@@ -17,7 +18,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @author chengxg
  * @since 2017-07-29
  */
-@TableName("vip_merchant")
+@TableName("v_merchant")
 public class Merchant extends Model<Merchant> {
 
     private static final long serialVersionUID = 1L;
@@ -70,7 +71,8 @@ public class Merchant extends Model<Merchant> {
     /**
      * 状态
      */
-	private Boolean status;
+	@TableLogic
+	private Integer status;
 
 
 	public Long getId() {
@@ -152,12 +154,12 @@ public class Merchant extends Model<Merchant> {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public Boolean isStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

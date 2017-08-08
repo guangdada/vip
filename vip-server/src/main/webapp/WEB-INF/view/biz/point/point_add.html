@@ -1,0 +1,76 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="form-horizontal" id="pointInfoForm">
+
+			<input type="hidden" id="id" value="">
+			<input type="hidden" id="ruleType" value="">
+			<input type="hidden" id="pointsLimitTemp" value="">
+
+			<div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">奖励分值</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="points" name="points" placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-2 control-label">奖励条件</label>
+				<div class="col-sm-10">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<div class="radio">
+								<label> <input id="ruleType0" type="radio" name="ruleType" value="0" onclick="PointInfoDlg.changeRule(0)">关注我的微信 </label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-3 auto_width">
+							<div class="radio">
+								<label> <input id="ruleType1" type="radio" name="ruleType" value="1" onclick="PointInfoDlg.changeRule(1)">每成功交易 </label>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="input-group">
+						      <input type="text" class="form-control" id="pointsLimit1" name="pointsLimit1" placeholder="" onfocus="PointInfoDlg.changeRule(1)">
+						      <div class="input-group-addon">笔</div>
+						    </div>
+						</div>
+						<div class="col-sm-4">
+							<small class="help-block" id="pointsLimit1Block" style="display: none;color:#a94442;">请输入交易笔数限制</small>
+						</div>
+						
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3 auto_width">
+							<div class="radio"> 
+								<label> <input id="ruleType2" type="radio" name="ruleType" value="2" onclick="PointInfoDlg.changeRule(2)">每购买金额 </label>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="input-group">
+						      <input type="text" class="form-control" id="pointsLimit2" name="pointsLimit2" placeholder="" onfocus="PointInfoDlg.changeRule(2)">
+						      <div class="input-group-addon">元</div>
+						    </div>
+						</div>
+						<div class="col-sm-4">
+							<small class="help-block" id="pointsLimit2Block" style="display: none;color:#a94442;">请输入购买金额限制</small>
+						</div>
+					</div>
+					<small class="help-block" id="ruleTypeBlock" style="display: none;color:#a94442;">请选择奖励条件</small>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
+						clickFun="PointInfoDlg.addSubmit()" />
+					<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"
+						clickFun="PointInfoDlg.close()" />
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<script src="${ctxPath}/static/modular/biz/point/point_info.js"></script>
+@}

@@ -1,0 +1,435 @@
+@layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/card/pc.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/card/cards.css">
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<input type="hidden"  name="colorCode" id="colorCode" value="${colors[0].code}"/>
+		<!-- <input type="hidden"  name="grantType" id="grantType" value="${grantType[0].code}"/> -->
+		<div class="app-design clearfix">
+			<div class="app-preview">
+				<div class="app-header"></div>
+				<div class="app-entry">
+					<div class="app-config js-config-region">
+						<div class="app-field clearfix editing">
+							<h1>
+								<span>会员卡</span>
+							</h1>
+
+							<div class="membercard-area">
+								<div class="card-region" style="background-color: ${colors[0].color}">
+									<!-- style="background-image: url(https://img.yzcdn.cn/upload_files/2014/12/05/cfd43da2bfd9181e53275706d850eb91.png);"> -->
+									<div class="card-header">
+										<h4 class="shop-name">
+											<span class="shop-logo" style="background-image: url(${logo!})"></span>${merchantName!}
+										</h4>
+										<div class="qr-code"></div>
+									</div>
+									<h3 class="member-type"></h3>
+									<div class="card-content">
+										<p class="expiry-date">
+											有效期：<span>无限期</span>
+										</p>
+									</div>
+								</div>
+
+								<div class="membership-region block js-show-sub-info">
+
+									<h3 class="membership-header" style="border-bottom:0px;">
+										<span class="icon info-icon-member"></span> 会员权益
+									</h3>
+									<ul class="membership">
+
+										<li class="membership-item">
+											<p class="item-name free-shipping">包邮</p>
+										</li>
+
+
+										<li class="membership-item">
+											<p class="item-name discount">折扣</p>
+										</li>
+
+
+										<li class="membership-item">
+											<p class="item-name coupon">优惠券</p>
+										</li>
+
+
+										<li class="membership-item">
+											<p class="item-name score">积分</p>
+										</li>
+
+									</ul>
+								</div>
+
+								<div class="block block-list">
+									<a href="javascript:;" class="block-item js-show-sub-info">
+										<p class="arrow-right">
+											<span class="icon info-icon-description"></span> 使用须知
+										</p>
+										<p class="block-sub-desc js-block-sub-desc" style="display: block">
+											
+										</p>
+									</a> 
+									<!-- <a href="javascript:;" class="block-item">出示会员凭证</a> -->
+								</div>
+								<!-- <a href="javascript:;" class="single-block block">店铺主页</a> -->
+							</div>
+						</div>
+					</div>
+					<div class="app-fields js-fields-region">
+						<div class="app-fields ui-sortable"></div>
+					</div>
+				</div>
+				<div class="js-add-region">
+					<div></div>
+				</div>
+			</div>
+			<div class="app-sidebar" style="margin-top: 0px;">
+				<div class="arrow"></div>
+				<div class="app-sidebar-inner js-sidebar-region">
+					<div>
+						<form class="form-horizontal" novalidate="">
+							<!-- 会员卡基本信息 -->
+							<div class="title">
+								<h3>会员卡基本信息</h3>
+								<hr>
+							</div>
+							<div class="js-toggle-content" style="margin-bottom: 30px">
+								<div class="control-group">
+									<label class="control-label">商户名称：</label>
+									<div class="controls">
+										<div class="control-action">${merchantName!}</div>
+									</div>
+								</div>
+								<!-- <div class="control-group">
+									<label class="control-label">商户 Logo：</label>
+									<div class="controls">
+										<span class="avatar"> <img class="avatar-img" src="${logo!}">
+										</span>
+										<p class="help-desc">
+											如需修改店铺信息，请在<a href="//store.youzan.com/shop/v2/setting/store">店铺设置</a>中更新。
+										</p>
+									</div>
+								</div> -->
+								<div class="control-group can-edit">
+									<label class="control-label">卡片封面：</label>
+									<div class="control-group">
+										<div class="controls">
+											<div>
+												<label class="radio inline"> 
+													<input type="radio" name="background" value="color" checked="">背景色
+												</label>
+												<div class="dropdown hover card-color">
+													<button class="btn dropdown-toggle" data-toggle="dropdown"
+														type="button">
+														<div class="card-color-show" style="background-color: ${colors[0].color}"></div>
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu">
+														@for(co in colors){
+															<li><div class="js-select-card-color card-color-box"
+																style="background-color: ${co.color}" data-value="${co.color}" data-name="${co.code}"></div></li>
+														@}
+													</ul>
+												</div>
+											</div>
+											<!-- <div>
+												<label class="radio inline"> <input
+													name="background" type="radio" value="img">封面图片
+												</label> <img
+													src="https://img.yzcdn.cn/upload_files/2014/12/05/cfd43da2bfd9181e53275706d850eb91.png"
+													class="thumb-image" width="100" heigth="100"> <a
+													class="control-action js-choose-image" href="javascript:;">修改</a>
+												<span>|</span> <a href="javascript:;"
+													class="control-action js-delete-image">删除</a>
+												<p class="help-desc">尺寸：1000*600像素，小于1M，支持jpg、png、jpeg格式</p>
+											</div> -->
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="name"> <em class="required">*</em>会员卡名称：
+									</label>
+									<div class="controls">
+										<input type="text" id="name" name="name" value="" maxlength="18" placeholder="最多可输入9个字符">
+										<p class="help-desc">会员卡名称保存成功后不支持修改</p>
+										<p class="error_info">错误提示</p>
+									</div>
+								</div>
+								<div class="control-group can-edit">
+									<label class="control-label"><em class="required">*</em>会员权益：</label>
+									<div class="controls">
+										<div class="upgrade-rules">
+											<!-- <div class="control-group">
+												<div class="controls">
+													<label class="checkbox inline"> <input
+														type="checkbox" name="isPostageFree" value="1" checked="">包邮
+													</label>
+												</div>
+											</div> -->
+											<div class="control-group">
+												<div class="controls">
+													<label class="checkbox inline"> 
+														<input type="checkbox" name="isDiscount">会员折扣
+													</label> 
+													<input type="text" class="input-mini" name="discount" value=""> 折
+												</div>
+											</div>
+											<div class="js-coupon-region">
+												<div class="control-group">
+													<input type="hidden" name="coupon">
+													<div class="control-group">
+														<div class="controls">
+															<label class="checkbox inline coupon-label"> <input
+																type="checkbox" name="isCoupon">优惠券
+															</label> <span
+																class="checkbox inline coupon-area js-coupon-block">
+																<span class="coupon-item js-coupon-item"> 
+																	<select class="coupon-select">
+																	    <option value="0" name="couponId">请选择优惠券</option>
+																	    @for(c in coupons){
+																	    	<option value="${c.id}" name="couponId">
+																    	    	${c.name}
+																    		</option>
+																	    @}
+																	</select>
+																	<!-- <select class="coupon-select">
+																		<option value="0" name="couponId">请选择优惠券</option>
+																    </select>  -->
+																    <input type="text" class="input-mini coupon-num" name="number" value="">&nbsp;张
+																</span>
+															</span>
+															<p class="help-desc radio" style="color: #999;">优惠券过期、被删除、或库存为0时，系统不再送券</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="control-group">
+												<div class="controls">
+													<label class="checkbox inline"> <input
+														type="checkbox" name="isPoints">送积分
+													</label> <label class="checkbox inline"> 开卡赠送&nbsp; <input
+														type="text" name="pointsNum" class="input-mini" value="">
+														&nbsp;积分
+													</label>
+												</div>
+											</div>
+										</div>
+										<p class="error_info">错误提示</p>
+									</div>
+									<div class="control-group">
+										<input type="hidden" name="isRights">
+										<div class="controls"></div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="description"><em
+										class="required">*</em>使用须知：</label>
+									<div class="controls">
+										<textarea id="description" name="description" cols="50"
+											rows="4"
+											placeholder="会员特权会根据您上文的勾选情况系统自动生成，此处可填写其它补充信息以便会员知晓，最多可输入300个字符"
+											maxlength="300"></textarea>
+										<p class="error_info">错误提示</p>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="servicePhone">客服电话：</label>
+									<div class="controls">
+										<input type="text" id="servicePhone" name="servicePhone"
+											value="" placeholder="请输入手机号或固定电话">
+									</div>
+								</div>
+							</div>
+
+							<!-- 领取设置 -->
+							<div class="title">
+								<h3>领取设置</h3>
+								<hr>
+							</div>
+							<div class="js-toggle-content" style="margin-bottom: 30px">
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>发卡方式：</label>
+									<div class="controls">
+										@for(g in grantType){
+											<label class="radio inline"> 
+												<input type="radio" name="grantType" value="${g.code}" data-name= "${g}"
+												@if(g.code == 0){
+													checked
+												@}
+												>${g.message}
+											</label> 
+										@}
+									</div>
+								</div>
+								<!-- 规则卡 -->
+								<div class="control-group rule-group" style="display:none">
+									<label class="control-label">升级条件：</label>
+									<div class="controls">
+										累计支付成功 <input type="text" class="input-mini" name="tradeLimit"
+											value=""> 笔
+									</div>
+								</div>
+								<div class="control-group rule-group" style="display:none">
+									<label class="control-label">或&nbsp;&nbsp;</label>
+									<div class="controls">
+										累计消费金额 <input type="text" class="input-mini"
+											name="amountLimit" value=""> 元
+									</div>
+								</div>
+								<div class="control-group rule-group" style="display:none">
+									<label class="control-label">或&nbsp;&nbsp;</label>
+									<div class="controls">
+										累计积分达到 <input type="text" class="input-mini"
+											name="pointsLimit" value=""> 分
+										<p class="error_info">错误提示</p>
+									</div>
+								</div>
+								<div class="control-group rule-group" style="display:none">
+									<label class="control-label"><em class="required">*</em>等级：</label>
+									<div class="controls">
+										<select name="level" id="level">
+											<option value="0">请选择</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+										</select>
+										<p class="help-desc">数字越大等级越高，当会员满足条件时会自动发放上一等级对应的会员卡</p>
+										<p class="error_info">错误提示</p>
+									</div>
+								</div>
+								
+								<!-- 无门槛 -->
+								<div class="control-group can-edit rule-no-group">
+									<label class="control-label"><em class="required">*</em>会员期限：</label>
+									<div class="controls term-block">
+										<label class="radio"
+											style="padding-top: 0; display: inline-block;"> <input
+											type="radio" name="termDaysRadio" onclick="CardInfoDlg.chageTerm('infinite')" checked="" value="0"
+											style="margin-top: 10px;">无限期
+										</label>
+										<div class="control-group" style="margin-bottom: 0;">
+											<div class="controls" style="margin-left: 0;">
+												<label class="radio" style="display: inline-block;">
+													<input type="radio" onclick="CardInfoDlg.chageTerm('days')" name="termDaysRadio" value="1">
+													<input type="text" class="input-mini" name="termDays" value="">&nbsp;天
+												</label>
+											</div>
+										</div>
+										<div class="control-group">
+											<div class="controls" style="margin-left: 0;">
+												<input type="hidden" name="termDaysValida"> 
+												<label class="radio"> 
+													<input type="radio" name="termDaysRadio" value="2" onclick="CardInfoDlg.chageTerm('range')"> 
+													<input type="text" class="input-mini hasDatepicker" id="js-stime" name="termStartAt" placeholder="开始时间" value=""
+													onclick="laydate({choose:CardInfoDlg.chooseStart,istime: false,issure: false,istoday: false, format: 'YYYY-MM-DD'})">
+													<input type="text" class="input-mini hasDatepicker" id="js-etime" name="termEndAt" placeholder="结束时间" value=""
+													onclick="laydate({choose:CardInfoDlg.chooseStart,istime: false,issure: false,istoday: false, format: 'YYYY-MM-DD'})">
+												</label>
+											</div>
+										</div>
+										<p class="error_info">错误提示</p>
+									</div>
+								</div>
+
+
+								<div class="control-group rule-no-group">
+									<label class="control-label">过期设置：</label>
+									<div class="controls">
+										过期后调整至 
+										<select class="card-type js-card-type-area" name="termToCardId" id="termToCardId">
+											<option value="0">非会员</option>
+											@for(c in cards!){
+												<option value="${c.id}">${c.name}</option>
+											@}
+										</select> 
+										<!-- <a href="javascript:;" class="js-card-list-refresh">刷新</a> |
+										<a href="//store.youzan.com/scrm/card" target="_blank">新建</a> -->
+									</div>
+								</div>
+
+
+
+
+								<!-- <div class="control-group">
+									<label class="control-label">激活设置：</label>
+									<div class="controls">
+										<label class="radio inline"> <input type="radio"
+											name="isNeedActivate" value="0" checked="" disabled="">无需激活
+										</label> <label class="radio inline"> <input type="radio"
+											name="isNeedActivate" value="1" disabled="">需要激活
+										</label>
+									</div>
+
+									<p class="help-desc" style="margin-left: 93px;">如需在线下门店使用，建议设置为“需要激活”</p>
+								</div>
+
+
+								<div class="control-group can-edit">
+									<label class="control-label">分享设置：</label>
+									<div class="controls">
+										<label class="radio inline"> <input type="radio"
+											name="isAllowShare" value="1" checked="">允许会员分享招募新会员
+										</label> <label class="radio inline"> <input type="radio"
+											name="isAllowShare" value="0">禁止会员分享
+										</label>
+									</div>
+								</div> -->
+
+							</div>
+							<!-- 同步设置
+							<div class="title">
+								<h3>同步设置</h3>
+								<hr>
+							</div>
+							<div class="js-toggle-content" style="margin-bottom: 30px;">
+								<div class="control-group card-notice can-edit">
+									<label class="control-label" for="isSyncWeixin">同步发布至：</label>
+									<div class="controls">
+										<label class="checkbox inline"> <input type="checkbox"
+											id="isSyncWeixin" name="isSyncWeixin" value="1" disabled="">微信卡包
+										</label>
+
+										<p style="margin-top: 10px">
+											未绑定认证服务号，<a href="//store.youzan.com/shop/v2/setting/weixin"
+												target="_blank">去绑定</a>&nbsp;或&nbsp;<a
+												href="//store.youzan.com/shop/v2/setting/store#card"
+												target="_blank">申请代制卡券</a>
+										</p>
+
+
+									</div>
+								</div>
+
+							</div>
+							-->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+</div>
+<div class="row btn-group-m-t text-center">
+	<div class="col-sm-12" style="margin-top: 10px;">
+		<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
+			clickFun="CardInfoDlg.addSubmit()" />
+		<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"
+			clickFun="CardInfoDlg.close()" />
+	</div>
+</div>
+
+<script src="${ctxPath}/static/modular/biz/card/card_info.js"></script>
+@}

@@ -1,11 +1,14 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -51,5 +54,10 @@ public class MerchantServiceImpl implements IMerchantService {
         merchant.setUserId(Long.valueOf(user.getId()));
 		merchantMapper.insert(merchant);
 		
+	}
+	
+	public Merchant getMerchantUserId(Long userId){
+		List<Merchant> mlist = merchantMapper.selectList(new EntityWrapper<Merchant>().eq("user_id", userId));
+		return CollectionUtils.isEmpty(mlist) ? null : mlist.get(0);
 	}
 }

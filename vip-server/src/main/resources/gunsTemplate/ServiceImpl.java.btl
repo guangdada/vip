@@ -7,11 +7,38 @@ import ${import};
 /**
  * ${context.bizChName}Dao
  *
- * @author fengshuonan
+ * @author chengxg
  * @Date ${tool.currentTime()}
  */
 @Service
 public class ${context.bizEnBigName}ServiceImpl implements I${context.bizEnBigName}Service {
+	@Autowired
+	${context.bizEnBigName}Dao ${context.bizEnName}Dao;
+	@Autowired
+	${context.bizEnBigName}Mapper ${context.bizEnName}Mapper;
+	@Override
+	public Integer deleteById(Long id) {
+		return ${context.bizEnName}Mapper.deleteById(id);
+	}
 
+	@Override
+	public Integer updateById(${context.bizEnBigName} ${context.bizEnName}) {
+		return ${context.bizEnName}Mapper.updateById(${context.bizEnName});
+	}
 
+	@Override
+	public ${context.bizEnBigName} selectById(Long id) {
+		return ${context.bizEnName}Mapper.selectById(id);
+	}
+
+	@Override
+	public Integer insert(${context.bizEnBigName} ${context.bizEnName}) {
+		return ${context.bizEnName}Mapper.insert(${context.bizEnName});
+	}
+	
+	@Override
+	public List<Map<String, Object>> get${context.bizEnBigName}List(Page<${context.bizEnBigName}> page, String name, String orderByField,
+			boolean isAsc) {
+		return ${context.bizEnName}Dao.get${context.bizEnBigName}List(page, name, orderByField, isAsc);
+	}
 }

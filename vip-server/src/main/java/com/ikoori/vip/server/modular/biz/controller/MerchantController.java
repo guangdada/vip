@@ -18,8 +18,11 @@ import com.ikoori.vip.common.annotion.log.BussinessLog;
 import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.Dict;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.exception.BizExceptionEnum;
+import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.model.Merchant;
+import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.modular.biz.dao.MerchantDao;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
@@ -64,7 +67,9 @@ public class MerchantController extends BaseController {
      * 跳转到修改商户
      */
     @RequestMapping("/merchant_update/{merchantId}")
-    public String merchantUpdate(@PathVariable Integer merchantId, Model model) {
+    public String merchantUpdate(@PathVariable Long merchantId, Model model) {
+    	Merchant merchant = merchantMapper.selectById(merchantId);
+    	model.addAttribute(merchant);
         return PREFIX + "merchant_edit.html";
     }
 
@@ -98,8 +103,10 @@ public class MerchantController extends BaseController {
      * 删除商户
      */
     @RequestMapping(value = "/delete")
+    @Permission
     @ResponseBody
-    public Object delete() {
+    public Object delete(Long merchantId) {
+    	merchantMapper.deleteById(merchantId);
         return SUCCESS_TIP;
     }
 
@@ -108,17 +115,23 @@ public class MerchantController extends BaseController {
      * 修改商户
      */
     @RequestMapping(value = "/update")
+    @Permission
     @ResponseBody
-    public Object update() {
+    public Object update(Merchant merchant) {
+    	if (ToolUtil.isEmpty(merchant) || merchant.getId() == null) {
+            throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
+        }
+    	merchantMapper.updateById(merchant);
         return super.SUCCESS_TIP;
     }
 
     /**
      * 商户详情
      */
-    @RequestMapping(value = "/detail")
-    @ResponseBody
-    public Object detail() {
-        return null;
+    @RequestMapping(value = "/merchant_detail/{merchantId}")
+    public Object detail(@PathVariable Long merchantId, Model model) {
+    	Merchant merchant = merchantMapper.selectById(merchantId);
+    	model.addAttribute(merchant);
+    	return PREFIX + "merchant_detail.html";
     }
 }

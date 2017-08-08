@@ -3,10 +3,9 @@ package ${dao.packageName};
 /**
  * ${context.bizChName}Dao
  *
- * @author fengshuonan
+ * @author chengxg
  * @Date ${tool.currentTime()}
  */
 public interface ${context.bizEnBigName}Dao {
-
-
+   List<Map<String, Object>> get${context.bizEnBigName}List(@Param("page") Page<${context.bizEnBigName}> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 }

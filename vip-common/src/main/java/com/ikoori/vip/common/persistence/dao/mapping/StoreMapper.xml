@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.StoreMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Store">
+		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="user_id" property="userId" />
+		<result column="name" property="name" />
+		<result column="logo" property="logo" />
+		<result column="balance" property="balance" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="area_id" property="areaId" />
+		<result column="adress" property="adress" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="open_time" property="openTime" />
+		<result column="close_time" property="closeTime" />
+		<result column="goods_type" property="goodsType" />
+		<result column="service_phone" property="servicePhone" />
+		<result column="official_website" property="officialWebsite" />
+		<result column="state" property="state" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>

@@ -34,6 +34,7 @@
         <druid.version>1.0.28</druid.version>
         <beetl.version>2.7.15</beetl.version>
         <swagger.version>2.2.2</swagger.version>
+        <commons-lang3.version>3.6</commons-lang3.version>
         <springload.version>1.2.7.RELEASE</springload.version>
         <com.alibaba.dubbo.version>2.5.3</com.alibaba.dubbo.version>  
         <org.apache.zookeeper.version>3.4.6</org.apache.zookeeper.version>  

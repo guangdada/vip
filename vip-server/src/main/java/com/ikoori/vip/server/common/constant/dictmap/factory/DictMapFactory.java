@@ -13,7 +13,7 @@ import com.ikoori.vip.common.exception.BussinessException;
  */
 public class DictMapFactory {
 
-    private static final String basePath = "com.stylefeng.guns.common.constant.dictmap.";
+    private static final String basePath = "com.ikoori.vip.common.constant.dictmap.";
 
     /**
      * 通过类名创建具体的字典类

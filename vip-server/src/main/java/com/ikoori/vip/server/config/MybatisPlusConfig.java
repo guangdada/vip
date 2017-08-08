@@ -96,4 +96,13 @@ public class MybatisPlusConfig {
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
+    
+    /*@Bean
+    public GlobalConfiguration globalConfiguration() {
+        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
+        conf.setLogicDeleteValue("-1");
+        conf.setLogicNotDeleteValue("1");
+        conf.setIdType(0);
+        return conf;
+    }*/
 }

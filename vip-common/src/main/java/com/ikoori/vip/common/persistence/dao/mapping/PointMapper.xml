@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.PointMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Point">
+		<id column="id" property="id" />
+		<result column="create_user_id" property="createUserId" />
+		<result column="store_id" property="storeId" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="name" property="name" />
+		<result column="rule_type" property="ruleType" />
+		<result column="points_limit" property="pointsLimit" />
+		<result column="points" property="points" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<select id="getPointList" resultType="map">
+        select * from v_point where 1 = 1 and status = 1
+        <if test="name != null and name !=''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

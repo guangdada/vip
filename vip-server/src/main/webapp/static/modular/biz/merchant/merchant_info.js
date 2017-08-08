@@ -102,6 +102,9 @@ MerchantInfoDlg.editSubmit = function() {
     this.clearData();
     this.collectData();
 
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/merchant/update", function(data){
         Feng.success("修改成功!");
