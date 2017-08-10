@@ -17,8 +17,8 @@ Store.initColumn = function () {
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '门店名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '地址', field: 'address', visible: true, align: 'center', valign: 'middle'},
-        {title: '经度', field: 'longitude', visible: true, align: 'center', valign: 'middle'},
-        {title: '经度', field: 'longitude', visible: true, align: 'center', valign: 'middle'}
+        {title: '联系电话', field: 'service_phone', visible: true, align: 'center', valign: 'middle'},
+        {title: '营业时间', field: 'open_time', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -40,7 +40,7 @@ Store.check = function () {
  * 点击添加门店
  */
 Store.openAddStore = function () {
-    var index = layer.open({
+    /*var index = layer.open({
         type: 2,
         title: '添加门店',
         area: ['800px', '420px'], //宽高
@@ -48,7 +48,8 @@ Store.openAddStore = function () {
         maxmin: true,
         content: Feng.ctxPath + '/store/store_add'
     });
-    this.layerIndex = index;
+    this.layerIndex = index;*/
+	location.href=Feng.ctxPath + '/store/store_add';
 };
 
 /**
@@ -56,7 +57,7 @@ Store.openAddStore = function () {
  */
 Store.openStoreDetail = function () {
     if (this.check()) {
-        var index = layer.open({
+        /*var index = layer.open({
             type: 2,
             title: '门店详情',
             area: ['800px', '420px'], //宽高
@@ -64,7 +65,8 @@ Store.openStoreDetail = function () {
             maxmin: true,
             content: Feng.ctxPath + '/store/store_update/' + Store.seItem.id
         });
-        this.layerIndex = index;
+        this.layerIndex = index;*/
+    	location.href = Feng.ctxPath + '/store/store_update/' + Store.seItem.id;
     }
 };
 

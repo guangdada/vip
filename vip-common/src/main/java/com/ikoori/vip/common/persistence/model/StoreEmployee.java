@@ -14,10 +14,10 @@ import java.io.Serializable;
  * </p>
  *
  * @author chengxg
- * @since 2017-07-31
+ * @since 2017-08-09
  */
-@TableName("v_store_employee_role")
-public class StoreEmployeeRole extends Model<StoreEmployeeRole> {
+@TableName("v_store_employee")
+public class StoreEmployee extends Model<StoreEmployee> {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,6 +41,19 @@ public class StoreEmployeeRole extends Model<StoreEmployeeRole> {
      */
 	@TableField("create_user_id")
 	private Long createUserId;
+    /**
+     * 商户ID
+     */
+	@TableField("merchant_id")
+	private Long merchantId;
+    /**
+     * 员工姓名
+     */
+	private String name;
+    /**
+     * 员工手机号
+     */
+	private String mobile;
     /**
      * 用户id
      */
@@ -94,6 +107,30 @@ public class StoreEmployeeRole extends Model<StoreEmployeeRole> {
 		this.createUserId = createUserId;
 	}
 
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -133,11 +170,14 @@ public class StoreEmployeeRole extends Model<StoreEmployeeRole> {
 
 	@Override
 	public String toString() {
-		return "StoreEmployeeRole{" +
+		return "StoreEmployee{" +
 			"id=" + id +
 			", storeId=" + storeId +
 			", roleId=" + roleId +
 			", createUserId=" + createUserId +
+			", merchantId=" + merchantId +
+			", name=" + name +
+			", mobile=" + mobile +
 			", userId=" + userId +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +

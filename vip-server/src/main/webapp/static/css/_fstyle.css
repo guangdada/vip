@@ -60,6 +60,16 @@
 	height: 170px;
 }
 
+.left-little{
+	margin-left:2px;
+	padding-left:0;
+}
+
+.right-little{
+	margin-right:2px;
+	padding-right:0;
+}
+
 .no-right{
 	margin-right:0;
 	padding-right:0;
@@ -69,9 +79,32 @@
 	margin-left:0;
 	padding-left:0;
 }
-.auto_width{
+
+.no-right{
+	margin-right:0;
+	padding-right:0;
+}
+
+.no-left{
+	margin-left:0;
+	padding-left:0;
+}
+.auto-width{
 	width:auto;
 }
+
+.both-no{
+	margin:0;
+	padding:0;
+	width:auto;
+}
+
+.both-little{
+	margin:0px 2px;
+	padding:6px 2px;
+	width:auto;
+}
+
 .error_info{
 	margin-left:3px;
 	padding-left:3px;

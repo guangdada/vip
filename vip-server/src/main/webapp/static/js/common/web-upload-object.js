@@ -79,17 +79,19 @@
 
 			// 文件上传过程中创建进度条实时显示。
 			bindedObj.on('uploadProgress', function(file, percentage) {
-                $("#"+me.uploadBarId).css("width",percentage * 100 + "%");
+                $("#"+me.uploadBarId).css("width",percentage * 100 + "%").parent().show();
 			});
 
 			// 文件上传成功，给item添加成功class, 用样式标记上传成功。
 			bindedObj.on('uploadSuccess', function(file,response) {
+				$("#"+me.uploadBarId).parent().hide();
 				Feng.success("上传成功");
 				$("#" + me.pictureId).val(response);
 			});
 
 			// 文件上传失败，显示上传出错。
 			bindedObj.on('uploadError', function(file) {
+				$("#"+me.uploadBarId).parent().hide();
 				Feng.error("上传失败");
 			});
 

@@ -1,6 +1,6 @@
 package com.ikoori.vip.common.persistence.dao;
 
-import com.ikoori.vip.common.persistence.model.StoreEmployeeRole;
+import com.ikoori.vip.common.persistence.model.StoreEmployee;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author chengxg
- * @since 2017-07-31
+ * @since 2017-08-09
  */
-public interface StoreEmployeeRoleMapper extends BaseMapper<StoreEmployeeRole> {
+public interface StoreEmployeeMapper extends BaseMapper<StoreEmployee> {
 
 }

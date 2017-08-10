@@ -18,7 +18,7 @@ ${context.bizEnBigName}InfoDlg.clearData = function() {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-${context.bizEnBigName}InfoDlg.set = function(key, val) {
+${context.bizEnBigName}InfoDlg.set = function(key, value) {
     this.${context.bizEnName}InfoData[key] = (typeof value == "undefined") ? $("#" + key).val() : value;
     return this;
 }
@@ -88,5 +88,5 @@ ${context.bizEnBigName}InfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+	Feng.initValidator("${context.bizEnName}InfoForm", ${context.bizEnBigName}InfoDlg.validateFields);
 });

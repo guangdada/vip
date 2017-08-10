@@ -100,8 +100,8 @@ public class Store extends Model<Store> {
     /**
      * 官网地址
      */
-	@TableField("official_website")
-	private String officialWebsite;
+	@TableField("website")
+	private String website;
     /**
      * 店铺状态
      */
@@ -116,6 +116,9 @@ public class Store extends Model<Store> {
      */
 	@TableField("update_time")
 	private Date updateTime;
+	
+	@TableField("description")
+	private String description;
     /**
      * 状态
      */
@@ -177,6 +180,14 @@ public class Store extends Model<Store> {
 
 	public void setProvinceId(Long provinceId) {
 		this.provinceId = provinceId;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getCityId() {
@@ -250,13 +261,12 @@ public class Store extends Model<Store> {
 	public void setServicePhone(String servicePhone) {
 		this.servicePhone = servicePhone;
 	}
-
-	public String getOfficialWebsite() {
-		return officialWebsite;
+	public String getWebsite() {
+		return website;
 	}
 
-	public void setOfficialWebsite(String officialWebsite) {
-		this.officialWebsite = officialWebsite;
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public Integer getState() {
@@ -315,7 +325,7 @@ public class Store extends Model<Store> {
 			", closeTime=" + closeTime +
 			", goodsType=" + goodsType +
 			", servicePhone=" + servicePhone +
-			", officialWebsite=" + officialWebsite +
+			", website=" + website +
 			", state=" + state +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +

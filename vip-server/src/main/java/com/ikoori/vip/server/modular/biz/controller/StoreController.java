@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,12 @@ import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
+import com.ikoori.vip.server.core.shiro.ShiroKit;
+import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.StoreWarpper;
 
@@ -35,6 +39,8 @@ public class StoreController extends BaseController {
     private String PREFIX = "/biz/store/";
     @Autowired
 	IStoreService storeService;
+    @Autowired
+    IMerchantService merchantService;
 
     /**
      * 跳转到门店首页
@@ -56,11 +62,23 @@ public class StoreController extends BaseController {
      * 跳转到修改门店
      */
     @RequestMapping("/store_update/{storeId}")
-    public String storeUpdate(@PathVariable Long storeId, Model model) {
-    	Store store = storeService.selectById(storeId);
-    	model.addAttribute(store);
-        return PREFIX + "store_edit.html";
-    }
+	public String storeUpdate(@PathVariable Long storeId, Model model) {
+		Store store = storeService.selectById(storeId);
+		String servicePhone = store.getServicePhone();
+		if (StringUtils.isNotBlank(servicePhone)) {
+			if (servicePhone.contains("-")) {
+				String[] s = servicePhone.split("-");
+				model.addAttribute("servicePhonePre", s[0]);
+				model.addAttribute("servicePhoneSub", s[1]);
+			}
+		}
+		String latitude = StringUtils.isNotBlank(store.getLatitude()) ? store.getLatitude() : "";
+		String longitude = StringUtils.isNotBlank(store.getLongitude()) ? store.getLongitude() : "";
+		String coordinate = latitude + "," + longitude;
+		model.addAttribute("coordinate", coordinate);
+		model.addAttribute(store);
+		return PREFIX + "store_edit.html";
+	}
 
     /**
      * 获取门店列表
@@ -81,6 +99,9 @@ public class StoreController extends BaseController {
     @Permission
     @ResponseBody
     public Object add(Store store) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	store.setMerchantId(merchant.getId());
     	storeService.insert(store);
         return super.SUCCESS_TIP;
     }
