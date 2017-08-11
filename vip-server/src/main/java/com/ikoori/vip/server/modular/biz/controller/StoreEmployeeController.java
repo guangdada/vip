@@ -18,13 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
-import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.RoleType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
-import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.StoreEmployee;
@@ -32,15 +30,12 @@ import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
-import com.ikoori.vip.server.modular.biz.service.ICardService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IStoreEmployeeService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.StoreEmployeeWarpper;
 import com.ikoori.vip.server.modular.system.dao.UserMgrDao;
-import com.ikoori.vip.server.modular.system.factory.UserFactory;
 import com.ikoori.vip.server.modular.system.service.IRoleService;
-import com.ikoori.vip.server.modular.system.transfer.UserDto;
 
 /**
  * 员工管理控制器
@@ -71,6 +66,7 @@ public class StoreEmployeeController extends BaseController {
     @Resource
     private UserMapper userMapper;
 
+    
     /**
      * 跳转到员工管理首页
      */
@@ -133,48 +129,11 @@ public class StoreEmployeeController extends BaseController {
         if (theUser != null) {
             throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
         }
-        
-      
-		/*String roleId = null;
-		if (roleType == "shop") {
-		     roleId="7";
-		} else if (roleType == "shopManager") {
-			 roleId="8";
-		}*/
-     /*   UserDto user=new UserDto();
-        // 完善账号信息
-        user.setSalt(ShiroKit.getRandomSalt(5));
-        user.setPassword(ShiroKit.md5(password, user.getSalt()));
-        
-        user.setName(name);
-        user.setRoleid(roleid);
-        user.setPhone(mobile);
-        user.setStatus(ManagerStatus.OK.getCode());
-        user.setCreatetime(new Date());
-        this.userMapper.insert(UserFactory.createUser(user));*/
-        User user=new User();
-        user.setSalt(ShiroKit.getRandomSalt(5));
-        user.setPassword(ShiroKit.md5(password, user.getSalt()));
-        
-        user.setName(name);
-        //user.setRoleid(roleid);
-        user.setAccount(mobile);
-        user.setRoleid(RoleType.valueOf(roleType).getCode()+"");
-        user.setPhone(mobile);
-        user.setSex(Integer.valueOf(sex));
-        user.setStatus(ManagerStatus.OK.getCode());
-        user.setCreatetime(new Date());
-        userMapper.insert(user);
-        long userId=user.getId().longValue();
-        //storeEmployee.setStoreId();
-        storeEmployee.setMerchantId(merchant.getId());
-        storeEmployee.setCreateUserId(createUserId);
-        storeEmployee.setUserId(userId);
-        storeEmployee.setRoleId(Long.valueOf(RoleType.valueOf(roleType).getCode()));
-        //storeEmployee.setMobile(mobile);
-    	storeEmployeeService.insert(storeEmployee);
+        storeEmployeeService.saveEmployee(storeEmployee, mobile, password, sex, roleType, name, store, createUserId, merchant);
         return super.SUCCESS_TIP;
     }
+
+	
 
     /**
      * 删除员工管理

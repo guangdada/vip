@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.model.Card;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Store;
+import com.ikoori.vip.common.persistence.model.StoreEmployee;
 
 /**
  * 门店Service

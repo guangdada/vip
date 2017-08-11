@@ -3,23 +3,15 @@
     <div class="ibox-content">
         <div class="form-horizontal" id="storeEmployeeConfigInfoForm">
              <input type="hidden" id="id" value="">
-           <!--  <input type="hidden" id="storeId" value=""/>
-            <input type="hidden" id="merchantId" value=""/>
-            <input type="hidden" id="createUserId" value=""/> -->
-			<!-- <div class="control-group">
-				<label class="control-label col-sm-2" for="storeNumber">店铺账号：</label>
-				<div class="controls">
-					<input type="text" id="storeNumber" placeholder="请输入店铺账号">
-				</div>
-			</div> -->
+         <input type="hidden" id="storeId" value=""/>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">店铺名称:</label>
 				<div class="col-sm-5">
 				<select class="form-control" name="stores" id="stores" >
-											<!--  <option value="0">请选择</option> -->
-											@for(c in stores!){
-												<option value="${c.id}">${c.name}</option>
-											@}
+				<!--  <option value="0">请选择</option> -->
+				  @for(c in stores!){ 
+				  <option value="${c.id}">${c.name}</option> 
+				  @}
 				</select>
 				</div> 
 			</div>
@@ -50,27 +42,19 @@
 					<input type="password" class="form-control" id="password" name="password"/>
 				</div>
 			</div>
-			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">赋予权限:</label>
 				<div class="col-sm-5">
 					<label class="checkbox inline">
 					@for(c in roles!){
-						<input type="radio" name="roleType" id="optionsRadios3"
-						value="${c}" @if(c.code==1){
-													checked
-												@}
-						>${c.message} @} 
-						<!-- <input type="radio" name="optionsRadios" id="optionsRadios3" value="shop">店员
-					</label> -->
+						<input type="radio" name="roleType" id="optionsRadios3" value="${c}" 
+						@if(c.code==1){
+							checked 
+						@}
+						>${c.message}
+					@}
 				</div>
 			</div>
-			<!-- <div class="row">
-                <div class="col-sm-6 b-r">
-                </div>
-                <div class="col-sm-6">
-                </div>
-            </div> -->
             <div class="row btn-group-m-t">
                 <div class="col-sm-12 text-right">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="StoreEmployeeInfoDlg.addSubmit()"/>
