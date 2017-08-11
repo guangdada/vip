@@ -6,8 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.StoreMapper;
+import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
@@ -48,5 +50,11 @@ public class StoreServiceImpl implements IStoreService {
 	public List<Map<String, Object>> getStoreList(Page<Store> page, String name, String orderByField,
 			boolean isAsc) {
 		return storeDao.getStoreList(page, name, orderByField, isAsc);
+	}
+
+	@Override
+	public List<Store> selectByCondition(Map<String, Object> condition) {
+		// TODO Auto-generated method stub
+		return storeMapper.selectList(new EntityWrapper<Store>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
 	}
 }
