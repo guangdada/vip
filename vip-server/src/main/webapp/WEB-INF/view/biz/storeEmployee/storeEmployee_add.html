@@ -3,7 +3,7 @@
     <div class="ibox-content">
         <div class="form-horizontal" id="storeEmployeeConfigInfoForm">
              <input type="hidden" id="id" value="">
-         <input type="hidden" id="storeId" value=""/>
+             <input type="hidden" id="storeId" value=""/>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">店铺名称:</label>
 				<div class="col-sm-5">
@@ -47,8 +47,8 @@
 				<div class="col-sm-5">
 					<label class="checkbox inline">
 					@for(c in roles!){
-						<input type="radio" name="roleType" id="optionsRadios3" value="${c}" 
-						@if(c.code==1){
+						<input type="radio" name="roleType" id="optionsRadios3" value="${c.code}" 
+						@if(c.code==7){
 							checked 
 						@}
 						>${c.message}

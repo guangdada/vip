@@ -15,7 +15,16 @@ var StoreEmployeeInfoDlg = {
 			validators : {
 				notEmpty : {
 					message : '联系方式不能为空'
-				}
+				},
+		   stringLength: {
+            min: 11,
+            max: 11,
+            message: '请输入11位手机号码'
+          },
+        regexp: {
+            regexp: /^1[3|5|8]{1}[0-9]{9}$/,
+            message: '请输入正确的手机号码'
+        }
 			}
 		},
 		password : {
@@ -76,13 +85,10 @@ StoreEmployeeInfoDlg.validate = function () {
  * 收集数据
  */
 StoreEmployeeInfoDlg.collectData = function() {
-	var roleType = $("input[name='roleType']:checked").val();
-	var store = $("select[name='stores'] option:selected").val();
+	var roleId = $("input[name='roleType']:checked").val();
+	var storeId = $("select[name='stores'] option:selected").val();
 	var sex = $("input[name='sex']:checked").val();
-	/*alert("s"+sex);
-	alert("s1"+store);
-	alert("s2"+roleType);*/
-    this.set('id').set('password').set('mobile').set('store',store).set('name').set('sex',sex).set('roleType',roleType);
+    this.set('id').set('password').set('mobile').set('storeId',storeId).set('name').set('sex',sex).set('roleId',roleId);
 
 }
 
@@ -112,11 +118,8 @@ StoreEmployeeInfoDlg.addSubmit = function() {
  * 提交修改
  */
 StoreEmployeeInfoDlg.editSubmit = function() {
-
     this.clearData();
-    
     this.collectData();
-
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/storeEmployee/update", function(data){
         Feng.success("修改成功!");

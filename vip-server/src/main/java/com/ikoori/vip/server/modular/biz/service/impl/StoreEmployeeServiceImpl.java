@@ -36,6 +36,9 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 	StoreEmployeeMapper storeEmployeeMapper;
 	@Resource
 	private UserMapper userMapper;
+	@Autowired
+	IStoreEmployeeService storeEmployeeService;
+	   
 	@Override
 	public Integer deleteById(Long id) {
 		return storeEmployeeMapper.deleteById(id);
@@ -62,27 +65,39 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 		return storeEmployeeDao.getStoreEmployeeList(page, name, orderByField, isAsc);
 	}
 	@Transactional(readOnly=false)
-	public void saveEmployee(StoreEmployee storeEmployee, String mobile, String password, String sex, String roleType,
-			String name, String store, Long createUserId, Merchant merchant) {
-		User user=new User();
-        user.setSalt(ShiroKit.getRandomSalt(5));
-        user.setPassword(ShiroKit.md5(password, user.getSalt()));
-        user.setName(name);
-        //user.setRoleid(roleid);
-        user.setAccount(mobile);
-        user.setRoleid(store);
-        user.setPhone(mobile);
-        user.setSex(Integer.valueOf(sex));
-        user.setStatus(ManagerStatus.OK.getCode());
-        user.setCreatetime(new Date());
-        userMapper.insert(user);
-        long userId=user.getId().longValue();
-        storeEmployee.setStoreId(Long.valueOf(store));
-        storeEmployee.setMerchantId(merchant.getId());
-        storeEmployee.setCreateUserId(createUserId);
-        storeEmployee.setUserId(userId);
-        storeEmployee.setRoleId(Long.valueOf(RoleType.valueOf(roleType).getCode()));
-        //storeEmployee.setMobile(mobile);
-    	this.insert(storeEmployee);
+	public void saveEmployee(StoreEmployee storeEmployee,String password, String sex) {
+		if(storeEmployee.getId() == null){
+			User user=new User();
+	        user.setSalt(ShiroKit.getRandomSalt(5));
+	        user.setPassword(ShiroKit.md5(password, user.getSalt()));
+	        user.setName(storeEmployee.getName());
+	        user.setAccount(storeEmployee.getMobile());
+	        user.setRoleid(storeEmployee.getRoleId()+"");
+	        user.setPhone(storeEmployee.getMobile());
+	        user.setSex(Integer.valueOf(sex));
+	        user.setStatus(ManagerStatus.OK.getCode());
+	        user.setCreatetime(new Date());
+	        userMapper.insert(user);
+	        long userId=user.getId().longValue();
+	        storeEmployee.setUserId(userId);
+	    	this.insert(storeEmployee);
+		}else{
+			StoreEmployee dbEmp = storeEmployeeMapper.selectById(storeEmployee.getId());
+			User dbUser = userMapper.selectById(dbEmp.getUserId());
+			dbUser.setName(storeEmployee.getName());
+			dbUser.setRoleid(storeEmployee.getRoleId()+"");
+			dbUser.setPhone(storeEmployee.getMobile());
+			dbUser.setSex(Integer.valueOf(sex));
+	        userMapper.updateById(dbUser);
+	        storeEmployeeMapper.updateById(storeEmployee);
+		}
+	}
+
+	@Override
+	public void deleteEmployee(long storeEmployeeId) {
+		// TODO Auto-generated method stub
+		StoreEmployee storeEmployee=storeEmployeeService.selectById(storeEmployeeId);
+    	userMapper.deleteById(storeEmployee.getUserId().intValue());
+        storeEmployeeService.deleteById(storeEmployeeId);
 	}
 }

@@ -13,12 +13,24 @@ var StoreEmployee = {
  */
 StoreEmployee.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+    	{field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '员工名称', field: 'name', visible: false, align: 'center', valign: 'middle'}
+        {title: '店铺名称', field: 'storeName',visible: true, align: 'center', valign: 'middle', sortable: true},
+        {title: '员工姓名', field: 'name', visible: true,align: 'center', valign: 'middle', sortable: true},
+      /*  {title: '性别', field: 'sexName', visible: true,align: 'center', valign: 'middle', sortable: true},*/
+        {title: '账号', field: 'mobile', visible: true,align: 'center', valign: 'middle', sortable: true},
+        {title: '赋予权限', field: 'roleType',visible: true, align: 'center', valign: 'middle', sortable: true},
     ];
 };
 
+/**
+ * 查询员工列表
+ */
+StoreEmployee.search = function () {
+    var queryData = {};
+    queryData['condition'] = $("#condition").val();
+    Store.table.refresh({query: queryData});
+};
 /**
  * 检查是否选中
  */
@@ -92,6 +104,7 @@ StoreEmployee.search = function () {
 
 $(function () {
     var defaultColunms = StoreEmployee.initColumn();
+    /*var table = new BSTable("StoreEmployeeTable", "/storeEmployee/list", defaultColunms);*/
     var table = new BSTable(StoreEmployee.id, "/storeEmployee/list", defaultColunms);
     table.setPaginationType("server");
     StoreEmployee.table = table.init();

@@ -1,12 +1,12 @@
 package com.ikoori.vip.server.modular.biz.controller;
 
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +36,8 @@ import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.StoreEmployeeWarpper;
 import com.ikoori.vip.server.modular.system.dao.UserMgrDao;
 import com.ikoori.vip.server.modular.system.service.IRoleService;
+import com.ikoori.vip.server.modular.system.warpper.UserWarpper;
+import com.ikoori.vip.common.persistence.model.Role;
 
 /**
  * 员工管理控制器
@@ -97,7 +99,23 @@ public class StoreEmployeeController extends BaseController {
     @RequestMapping("/storeEmployee_update/{storeEmployeeId}")
     public String storeEmployeeUpdate(@PathVariable Long storeEmployeeId, Model model) {
     	StoreEmployee storeEmployee = storeEmployeeService.selectById(storeEmployeeId);
+    	//当前登录账号
+    	Long createUserId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(createUserId);
+    	//roleService.selectById(storeEmployee.getStoreId());
+        Role role=roleService.selectById(storeEmployee.getStoreId());
+        User user=userMapper.selectById(storeEmployee.getUserId());
+        Map<String,Object> condition = new HashMap<String,Object>();
+    	condition.put("merchantId", merchant.getId());
+        List<Store> stores=storeService.selectByCondition(condition);
+        //查询店铺
+    	model.addAttribute("stores", stores);
+    	model.addAttribute("roles", RoleType.values());
+    	storeEmployee.getStoreId();
+    	model.addAttribute(user);
+    	model.addAttribute(role);
     	model.addAttribute(storeEmployee);
+    	model.addAttribute(merchant);
         return PREFIX + "storeEmployee_edit.html";
     }
 
@@ -120,16 +138,18 @@ public class StoreEmployeeController extends BaseController {
     @RequestMapping(value = "/add")
     @Permission
     @ResponseBody
-    public Object add(StoreEmployee storeEmployee,String mobile,String password,String sex,String roleType,String name,String store) {
+    public Object add(StoreEmployee storeEmployee,String password,String sex) {
     	//当前登录账号
     	Long createUserId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(createUserId);
     	//添加用户， 判断账号是否重复
-        User theUser = managerDao.getByAccount(mobile);
+        User theUser = managerDao.getByAccount(storeEmployee.getMobile());
         if (theUser != null) {
             throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
         }
-        storeEmployeeService.saveEmployee(storeEmployee, mobile, password, sex, roleType, name, store, createUserId, merchant);
+        storeEmployee.setMerchantId(merchant.getId());
+        storeEmployee.setCreateUserId(createUserId);
+        storeEmployeeService.saveEmployee(storeEmployee, password, sex);
         return super.SUCCESS_TIP;
     }
 
@@ -142,7 +162,7 @@ public class StoreEmployeeController extends BaseController {
     @Permission
     @ResponseBody
     public Object delete(@RequestParam Long storeEmployeeId) {
-        storeEmployeeService.deleteById(storeEmployeeId);
+    	storeEmployeeService.deleteEmployee(storeEmployeeId);
         return SUCCESS_TIP;
     }
 
@@ -153,11 +173,11 @@ public class StoreEmployeeController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public Object update(StoreEmployee storeEmployee) {
+    public Object update(StoreEmployee storeEmployee,String sex) {
     	if (ToolUtil.isEmpty(storeEmployee) || storeEmployee.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	storeEmployeeService.updateById(storeEmployee);
+    	storeEmployeeService.saveEmployee(storeEmployee, null, sex);
         return super.SUCCESS_TIP;
     }
 

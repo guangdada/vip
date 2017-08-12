@@ -20,8 +20,8 @@ public interface IStoreEmployeeService {
 	public Integer updateById(StoreEmployee storeEmployee);
 	public StoreEmployee selectById(Long id);
 	public Integer insert(StoreEmployee storeEmployee);
-	public void saveEmployee(StoreEmployee storeEmployee, String mobile, String password, String sex, String roleType,
-			String name, String store, Long createUserId, Merchant merchant);
+	public void deleteEmployee(long storeEmployeeId);
+	public void saveEmployee(StoreEmployee storeEmployee, String password, String sex);
 	List<Map<String, Object>> getStoreEmployeeList(@Param("page") Page<StoreEmployee> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 	
 }

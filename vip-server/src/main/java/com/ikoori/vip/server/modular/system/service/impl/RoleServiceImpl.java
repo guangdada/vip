@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ikoori.vip.common.persistence.dao.RelationMapper;
 import com.ikoori.vip.common.persistence.dao.RoleMapper;
 import com.ikoori.vip.common.persistence.model.Relation;
+import com.ikoori.vip.common.persistence.model.Role;
 import com.ikoori.vip.common.util.Convert;
 import com.ikoori.vip.server.modular.system.dao.RoleDao;
 import com.ikoori.vip.server.modular.system.service.IRoleService;
@@ -23,7 +24,6 @@ public class RoleServiceImpl implements IRoleService {
 
     @Resource
     RelationMapper relationMapper;
-
     @Override
     @Transactional(readOnly = false)
     public void setAuthority(Integer roleId, String ids) {
@@ -49,5 +49,11 @@ public class RoleServiceImpl implements IRoleService {
         // 删除该角色所有的权限
         this.roleDao.deleteRolesById(roleId);
     }
+
+	@Override
+	public Role selectById(Long id) {
+		// TODO Auto-generated method stub
+		return roleMapper.selectById(id);
+	}
 
 }

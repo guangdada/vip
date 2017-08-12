@@ -1,5 +1,7 @@
 package com.ikoori.vip.server.modular.system.service;
 
+import com.ikoori.vip.common.persistence.model.Role;
+
 /**
  * 角色相关业务
  *
@@ -24,4 +26,6 @@ public interface IRoleService {
      * @Date 2017/5/5 22:24
      */
     void delRoleById(Integer roleId);
+    
+    public Role selectById(Long id);
 }

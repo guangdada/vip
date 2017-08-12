@@ -1,20 +1,74 @@
 @layout("/common/_container.html"){
 <div class="ibox float-e-margins">
     <div class="ibox-content">
-        <div class="form-horizontal">
+        <div class="form-horizontal" id="storeEmployeeConfigInfoForm">
 
             <input type="hidden" id="id" value="${storeEmployee.id}">
-
-            <div class="row">
-                <div class="col-sm-6 b-r">
-
-                </div>
-
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-
+            <input type="hidden" id="storeId" value=""/>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">店铺名称:</label>
+				<div class="col-sm-5">
+				<select class="form-control" name="stores" id="stores" >
+				<!--  <option value="0">请选择</option> -->
+				  @for(c in stores!){ 
+				  <option value="${c.id}" 
+				  @if(storeEmployee.storeId==c.id){
+							selected 
+						@}
+				  >${c.name}</option> 
+				  @}
+				</select>
+				</div> 
+			</div>
+             <div class="form-group">
+				<label class="col-sm-2 control-label">员工姓名:</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="name" name="name" value="${storeEmployee.name}"   placeholder=""/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">账号:</label>
+				<div class="col-sm-5">
+					<input type="text" class="form-control" id="mobile" name="mobile" value="${storeEmployee.mobile}" readonly/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">性别:</label>
+				<div class="col-sm-5">
+					<label class="checkbox inline">
+						<input type="radio" name="sex" id="optionsRadios4" value="1"
+						@if(user.sex==1){
+							checked 
+						@}
+						>男 
+						<input type="radio" name="sex" id="optionsRadios5" value="2"
+						@if(user.sex==2){
+							checked 
+						@}
+						>女 
+					</label> 
+				</div>
+			</div>
+			<!-- <div class="form-group">
+				<label class="col-sm-2 control-label">密码:</label>
+				<div class="col-sm-5">
+					<input type="password" class="form-control" id="password" name="password"/>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label class="col-sm-2 control-label">赋予权限:</label>
+				<div class="col-sm-5">
+					<label class="checkbox inline">
+					@for(c in roles!){
+						<input type="radio" name="roleType" id="optionsRadios3" value="${c.code}" 
+						@if(c.code==storeEmployee.roleId){
+							checked 
+						@}
+						>${c.message}
+					@}
+				</div>
+			</div>
+        </div>
             <div class="row btn-group-m-t">
                 <div class="col-sm-12 text-right">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="StoreEmployeeInfoDlg.editSubmit()"/>

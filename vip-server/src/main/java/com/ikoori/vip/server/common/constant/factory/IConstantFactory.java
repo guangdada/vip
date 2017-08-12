@@ -115,5 +115,10 @@ public interface IConstantFactory {
      * 获取被缓存的对象(用户删除业务)
      */
     String getCacheObject(String para);
+    
+    /**
+     * 获取店铺名称
+     */
+    String getStoreName(Long storeId);
 
 }
