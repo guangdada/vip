@@ -1,12 +1,12 @@
 package com.ikoori.vip.server.modular.biz.controller;
 
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
-import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.RoleType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
 import com.ikoori.vip.common.persistence.model.Merchant;
+import com.ikoori.vip.common.persistence.model.Role;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.StoreEmployee;
 import com.ikoori.vip.common.persistence.model.User;
@@ -36,8 +36,6 @@ import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.StoreEmployeeWarpper;
 import com.ikoori.vip.server.modular.system.dao.UserMgrDao;
 import com.ikoori.vip.server.modular.system.service.IRoleService;
-import com.ikoori.vip.server.modular.system.warpper.UserWarpper;
-import com.ikoori.vip.common.persistence.model.Role;
 
 /**
  * 员工管理控制器

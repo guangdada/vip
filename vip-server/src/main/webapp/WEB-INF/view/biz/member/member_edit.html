@@ -1,20 +1,43 @@
 @layout("/common/_container.html"){
 <div class="ibox float-e-margins">
     <div class="ibox-content">
-        <div class="form-horizontal">
-
+        <div class="form-horizontal" id="memberForm">
             <input type="hidden" id="id" value="${member.id}">
-
-            <div class="row">
-                <div class="col-sm-6 b-r">
-
-                </div>
-
-                <div class="col-sm-6">
-
-                </div>
-            </div>
-
+              <div class="row">
+				<div class="col-sm-6 b-r">
+					<#input id="mobile" name="手机号码" underline="true" value="${member.mobile}" readonly="readonly"/>
+					<#input id="name" name="姓名" underline="true" value="${member.name}"/>
+					<#select id="sex" name="性别" underline="true">
+						<option value="1"
+					   @if(member.sex==1){
+							selected 
+						@}
+						>男</option>
+						<option value="2"
+						@if(member.sex==2){
+							selected 
+						@}
+						>女</option>
+					</#select>
+					<#input id="birthdayStr" name="出生日期" underline="true" type="date" value="${member.birthday}"
+							clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})" />
+				</div>
+				<div class="col-sm-6">
+				    <#input id="wxCode" name="微信号" underline="true" value="${member.wxCode}"/>
+					<#select id="cards" name="会员卡" underline="true">
+					@for(c in cards!){
+						<option value="${c.id}"
+						@if(1==c.name){
+						        selected
+						 @}
+						>${c.name}</option>
+						@}
+					</#select>
+					<#textarea id="tips" name="备注" underline="true" value="${member.tips}">
+					</#textarea>
+				</div>
+			</div>
+		</div>
             <div class="row btn-group-m-t">
                 <div class="col-sm-12 text-right">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MemberInfoDlg.editSubmit()"/>

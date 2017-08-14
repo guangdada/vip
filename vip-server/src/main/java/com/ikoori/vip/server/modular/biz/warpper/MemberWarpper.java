@@ -2,7 +2,7 @@ package com.ikoori.vip.server.modular.biz.warpper;
 
 import java.util.List;
 import java.util.Map;
-
+import com.ikoori.vip.common.constant.state.SexType;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
 
 /**
@@ -19,6 +19,8 @@ public class MemberWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
+    	/*map.put("sexName", ConstantFactory.me().getSexName((Integer) map.get("sex")));*/
+    	map.put("sex", SexType.valueOf(Integer.valueOf(map.get("sex").toString())));
     }
 
 }

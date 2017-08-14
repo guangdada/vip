@@ -59,11 +59,17 @@ public class Member extends Model<Member> {
     /**
      * 性别
      */
-	private Boolean sex;
-    /**
+	private Integer sex;
+	/**
      * 生日
      */
 	private Date birthday;
+	
+	/**
+	 * 生日(接收参数)
+	 */
+	@TableField(exist=false)
+	private String birthdayStr;
     /**
      * 来源(0:关注微信;1:导入)
      */
@@ -111,7 +117,18 @@ public class Member extends Model<Member> {
      */
 	@TableLogic
 	private Integer status;
+	/**
+     * 备注
+     */
+	private String tips;
 
+	public String getTips() {
+		return tips;
+	}
+
+	public void setTips(String tips) {
+		this.tips = tips;
+	}
 
 	public Long getId() {
 		return id;
@@ -169,11 +186,11 @@ public class Member extends Model<Member> {
 		this.wxUserId = wxUserId;
 	}
 
-	public Boolean isSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(Boolean sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -264,6 +281,13 @@ public class Member extends Model<Member> {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getBirthdayStr() {
+		return birthdayStr;
+	}
+
+	public void setBirthdayStr(String birthdayStr) {
+		this.birthdayStr = birthdayStr;
 	}
 
 	@Override

@@ -36,11 +36,12 @@
 				<label class="col-sm-2 control-label">性别:</label>
 				<div class="col-sm-5">
 					<label class="checkbox inline">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="sex" id="optionsRadios4" value="1"
 						@if(user.sex==1){
 							checked 
 						@}
-						>男 
+						>男  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="sex" id="optionsRadios5" value="2"
 						@if(user.sex==2){
 							checked 
@@ -59,12 +60,13 @@
 				<label class="col-sm-2 control-label">赋予权限:</label>
 				<div class="col-sm-5">
 					<label class="checkbox inline">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					@for(c in roles!){
 						<input type="radio" name="roleType" id="optionsRadios3" value="${c.code}" 
 						@if(c.code==storeEmployee.roleId){
 							checked 
 						@}
-						>${c.message}
+						>${c.message} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					@}
 				</div>
 			</div>

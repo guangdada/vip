@@ -2,15 +2,45 @@
  * 初始化会员详情对话框
  */
 var MemberInfoDlg = {
-    memberInfoData : {}
+    memberInfoData : {},
+    validateFields : {
+		name : {
+			validators : {
+				notEmpty : {
+					message : '员工姓名不能为空'
+				},
+				 stringLength: {
+                     min: 2,
+                     max: 20,
+                     message: '用户名长度必须在2到20之间'
+                 },
+			}
+		},
+		mobile : {
+			validators : {
+				notEmpty : {
+					message : '联系方式不能为空'
+				},
+		   stringLength: {
+            min: 11,
+            max: 11,
+            message: '请输入11位手机号码'
+          },
+        regexp: {
+            regexp: /^1[3|5|8]{1}[0-9]{9}$/,
+            message: '请输入正确的手机号码'
+                }
+			}
+		}
+	}
 };
 
 /**
  * 清除数据
  */
 MemberInfoDlg.clearData = function() {
-    this.memberInfoData = {};
-}
+	  this.memberInfoData = {};
+};
 
 /**
  * 设置对话框中的数据
@@ -18,11 +48,10 @@ MemberInfoDlg.clearData = function() {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-MemberInfoDlg.set = function(key, val) {
+MemberInfoDlg.set = function(key, value) {
     this.memberInfoData[key] = (typeof value == "undefined") ? $("#" + key).val() : value;
     return this;
 }
-
 /**
  * 设置对话框中的数据
  *
@@ -44,7 +73,9 @@ MemberInfoDlg.close = function() {
  * 收集数据
  */
 MemberInfoDlg.collectData = function() {
-    this.set('id');
+	var cardId = $("select[id='cards'] option:selected").val();
+	var sex = $("select[id='sex'] option:selected").val();
+    this.set('id').set('name').set('mobile').set('cardId',cardId).set('wxCode').set('sex',sex).set("tips").set('birthdayStr');
 }
 
 /**
@@ -88,5 +119,5 @@ MemberInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+	Feng.initValidator("memberForm", MemberInfoDlg.validateFields);
 });

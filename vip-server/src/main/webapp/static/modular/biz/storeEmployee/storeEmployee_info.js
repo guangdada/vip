@@ -8,7 +8,12 @@ var StoreEmployeeInfoDlg = {
 			validators : {
 				notEmpty : {
 					message : '员工姓名不能为空'
-				}
+				},
+				 stringLength: {
+                     min: 2,
+                     max: 20,
+                     message: '用户名长度必须在2到20之间'
+                 },
 			}
 		},
 		mobile : {
@@ -89,9 +94,7 @@ StoreEmployeeInfoDlg.collectData = function() {
 	var storeId = $("select[name='stores'] option:selected").val();
 	var sex = $("input[name='sex']:checked").val();
     this.set('id').set('password').set('mobile').set('storeId',storeId).set('name').set('sex',sex).set('roleId',roleId);
-
 }
-
 /**
  * 提交添加
  */
