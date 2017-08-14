@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.CouponFetchDao">
+	<!-- <resultMap id="fetchResult" type="com.ikoori.vip.common.dto.CouponFetchDo">
+		<id property="id" column="id" />
+		<result property="createTime" column="create_time" />
+	</resultMap> -->
+	
+	<select id="getCouponFetchList" resultType="map">
+        select * from v_coupon_fetch where 1 = 1 and status = 1
+        <if test="name != null and name !=''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="merchantId != null">
+        	and merchant_id = #{merchantId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="selectByCondition" resultType="map">
+    	SELECT
+			cf.id AS id,
+			m.sex AS sex,
+			u.headimgurl AS headImg,
+			c.`value` AS VALUE,
+			c.`name` AS couponName,
+			c.type AS couponType,
+			m.`name` AS memberName,
+			m.mobile AS mobile,
+			cf.create_time AS createTime,
+			cf.is_used AS isUsed
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		LEFT JOIN v_member m ON cf.member_id = m.id
+		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
+		WHERE
+			cf.`status` = 1
+		AND c.`status` = 1
+		AND m.`status` = 1
+        <if test="name != null and name !=''">
+            and c.`name` like CONCAT('%',#{name},'%')
+        </if>
+        <if test="merchantId != null">
+        	and cf.merchant_id = #{merchantId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by cf.create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

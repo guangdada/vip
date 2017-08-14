@@ -3,6 +3,7 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -26,6 +27,16 @@ public class CouponFetch extends Model<CouponFetch> {
      */
 	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
+	
+	 /**
+     * 商户Id
+     */
+	@TableField("merchant_id")
+	private Long merchantId;
+	
+	@TableField(exist =false)
+	private Merchant merchant;
+	
     /**
      * 店铺Id
      */
@@ -106,7 +117,8 @@ public class CouponFetch extends Model<CouponFetch> {
     /**
      * 状态
      */
-	private Boolean status;
+	@TableLogic
+	private Integer status;
 
 
 	public Long getId() {
@@ -173,7 +185,7 @@ public class CouponFetch extends Model<CouponFetch> {
 		this.memberId = memberId;
 	}
 
-	public Boolean isIsInvalid() {
+	public Boolean getIsInvalid() {
 		return isInvalid;
 	}
 
@@ -245,17 +257,34 @@ public class CouponFetch extends Model<CouponFetch> {
 		this.updateTime = updateTime;
 	}
 
-	public Boolean isStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public Merchant getMerchant() {
+		return merchant;
+	}
+
+	public void setMerchant(Merchant merchant) {
+		this.merchant = merchant;
 	}
 
 	@Override

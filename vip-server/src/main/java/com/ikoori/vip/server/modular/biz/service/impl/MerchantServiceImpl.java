@@ -57,7 +57,10 @@ public class MerchantServiceImpl implements IMerchantService {
 	}
 	
 	public Merchant getMerchantUserId(Long userId){
-		List<Merchant> mlist = merchantMapper.selectList(new EntityWrapper<Merchant>().eq("user_id", userId));
-		return CollectionUtils.isEmpty(mlist) ? null : mlist.get(0);
+		Merchant merchant = new Merchant();
+		merchant.setUserId(userId);
+		return merchantMapper.selectOne(merchant);
+		/*List<Merchant> mlist = merchantMapper.selectList(new EntityWrapper<Merchant>().eq("user_id", userId));
+		return CollectionUtils.isEmpty(mlist) ? null : mlist.get(0);*/
 	}
 }

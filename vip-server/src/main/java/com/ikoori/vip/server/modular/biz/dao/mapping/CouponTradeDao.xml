@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.CouponTradeDao">
+	<select id="getCouponTradeList" resultType="map">
+        select * from v_coupon_trade where 1 = 1 and status = 1
+        <if test="name != null and name !=''">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="merchantId != null">
+        	and merchant_id = #{merchantId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="selectByCondition" resultType="map">
+        SELECT
+			ct.id AS id,
+			m.sex AS sex,
+			u.headimgurl AS headImg,
+			c.`value` AS VALUE,
+			c.`name` AS couponName,
+			c.type AS couponType,
+			m.`name` AS memberName,
+			m.mobile AS mobile,
+			ct.used_time AS usedTime,
+			ct.used_order_no AS usedOrderNo,
+			ct.used_value AS usedValue
+		FROM
+			v_coupon_trade ct
+		LEFT JOIN v_coupon c ON ct.coupon_id = c.id
+		LEFT JOIN v_member m ON ct.member_id = m.id
+		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
+		WHERE
+			ct.`status` = 1
+		AND c.`status` = 1
+		AND m.`status` = 1
+        <if test="name != null and name !=''">
+            and c.`name` like CONCAT('%',#{name},'%')
+        </if>
+        <if test="merchantId != null">
+        	and ct.merchant_id = #{merchantId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by ct.create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

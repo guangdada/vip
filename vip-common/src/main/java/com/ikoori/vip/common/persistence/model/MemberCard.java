@@ -3,6 +3,7 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -47,9 +48,9 @@ public class MemberCard extends Model<MemberCard> {
 	@TableField("card_number")
 	private String cardNumber;
     /**
-     * 状态(0:使用中;1:未激活)
+     * 状态(0:使用中;1:未激活;2:已过期)
      */
-	private Boolean state;
+	private Integer state;
     /**
      * 是否为默认卡
      */
@@ -68,7 +69,8 @@ public class MemberCard extends Model<MemberCard> {
     /**
      * 状态
      */
-	private Boolean status;
+	@TableLogic
+	private Integer status;
 
 
 	public Long getId() {
@@ -110,12 +112,12 @@ public class MemberCard extends Model<MemberCard> {
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-
-	public Boolean isState() {
+	
+	public Integer getState() {
 		return state;
 	}
 
-	public void setState(Boolean state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 
@@ -143,11 +145,11 @@ public class MemberCard extends Model<MemberCard> {
 		this.updateTime = updateTime;
 	}
 
-	public Boolean isStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

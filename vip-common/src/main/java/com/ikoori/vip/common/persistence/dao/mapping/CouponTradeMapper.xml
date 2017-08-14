@@ -5,6 +5,7 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.CouponTrade">
 		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
 		<result column="store_id" property="storeId" />
 		<result column="coupon_id" property="couponId" />
 		<result column="member_id" property="memberId" />

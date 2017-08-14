@@ -6,7 +6,10 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.ikoori.vip.common.constant.cache.Cache;
 import com.ikoori.vip.common.constant.cache.CacheKey;
+import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Dict;
+import com.ikoori.vip.common.persistence.model.Member;
+import com.ikoori.vip.common.persistence.model.Merchant;
 
 /**
  * 常量生产工厂的接口
@@ -120,5 +123,23 @@ public interface IConstantFactory {
      * 获取店铺名称
      */
     String getStoreName(Long storeId);
+    
+    /**
+     * 通过会员卡id获取会员卡
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_CARD + "'+#cardId")
+    Card getCard(Long cardId);
+    
+    /**
+     * 通过会员id获取会员
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MEMBER + "'+#memberId")
+    Member getMember(Long memberId);
+    
+    /**
+     * 通过商户id获取商户
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MERCHANT + "'+#merchantId")
+    Merchant getMerchant(Long merchantId);
 
 }

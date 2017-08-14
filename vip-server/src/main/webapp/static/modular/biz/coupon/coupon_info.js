@@ -1,16 +1,19 @@
-//laydate({elem: '#test1',choose:CouponInfoDlg.startDate(),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'};
-//laydate({elem: '#test1',choose:CouponInfoDlg.endDate(),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'});
-
 /**
  * 初始化优惠券管理详情对话框
  */
 var CouponInfoDlg = {
     couponInfoData : {},
+    num : /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/,
     validateFields: {
         name: {
             validators: {
                 notEmpty: {
                     message: '优惠券名称不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 10,
+                    message: '优惠券名称必须在 1-10 个字内'
                 }
             }
         },
@@ -92,13 +95,14 @@ CouponInfoDlg.close = function() {
  * 收集数据
  */
 CouponInfoDlg.collectData = function() {
+	var type = $("input[name='type']:checked").val();
 	var isAtLeast = $("input[name='is_at_least']:checked").val();
 	var isShare = $("input[name='isShare']").is(":checked") ? 1 : 0;
 	var startAt = $("#startAt").val();
 	var endAt = $("#endAt").val();
 	var quota = $("#quota option:selected").val();
 	var cardId = $("#user_level option:selected").val();
-	this.set('id').set('name').set('total').set('value')
+	this.set('id').set('name').set('total').set('value').set('type',type)
 	.set('isAtLeast',isAtLeast).set('isShare',isShare).set('atLeast').set('quota',quota).set('cardId',cardId)
 	.set('description').set('servicePhone').set('startAtStr',startAt).set('endAtStr',endAt);
 }
@@ -201,7 +205,7 @@ CouponInfoDlg.validateOther = function (){
 	}
 	
 	if(!value){
-		value_help.text("优惠券面值必须大于等于 0.01 元").show();
+		value_help.text("优惠券面值必须大于等于 1 元").show();
 		result = false;
 	}
 	
@@ -241,8 +245,13 @@ $(function() {
 	});
 	
 	$("#value").bind("blur",function(){
-		var value = "￥" + ($(this).val() ? $(this).val() : '0.00');
-		$(".promote-value-sign").text(value);
+		var number = $(this).val() ? $(this).val() : "";
+		if(!CouponInfoDlg.num.test(number)){
+			$(this).val("");
+			$(".promote-value-sign").text("￥0.00");
+		}else{
+			$(".promote-value-sign").text("￥" + number);
+		}
 	});
 	
 	$("input[name='is_at_least']").bind("change",function(){
@@ -258,7 +267,12 @@ $(function() {
 	
 	$("#atLeast").bind("blur",function(){
 		var atLeast = $(this).val();
-		$(".promote-limit").text("订单满" + (atLeast ? atLeast : 'xx') + "元");
+		if(!CouponInfoDlg.num.test(atLeast)){
+			$(this).val("");
+			$(".promote-limit").text("订单满xx元");
+		}else{
+			$(".promote-limit").text("订单满 " +atLeast+ "元 (含运费)");
+		}
 	});
 	
 	$("#description").bind("blur",function(){
@@ -266,19 +280,10 @@ $(function() {
 		$(".js-desc-detail").text(description ? description : "暂无使用说明....");
 	});
 	
-	/*$("#startAt").bind("propertyChange",function(){
-		var startAt = $(this).val();
-		var endAt = $("#endAt").val();
-		alert(startAt);
-		alert(endAt);
-		var datestr = "有效期：" + (startAt ? startAt : ' 20xx : 00 : 00') + ' - ' + (endAt ? endAt : ' 20xx : 00 : 00');
-		$(".promote-date").text(datestr);
-	});
-	
-	$("#endAt").bind("propertyChange",function(){
-		var endAt = $(this).val();
-		var startAt = $("#startAt").val();
-		var datestr = "有效期：" + (startAt ? startAt : ' 20xx : 00 : 00') + ' - ' + (endAt ? endAt : ' 20xx : 00 : 00');
-		$(".promote-date").text(datestr);
-	});*/
+	$("input[name='name']").attr("maxlength",10);
+	$("#description").attr("maxlength",250);
+	$("#servicePhone").attr("maxlength",20);
+	$("#servicePhone").attr("maxlength",20);
+	$("#value").attr("maxlength",7);
+	$("#atLeast").attr("maxlength",7);
 });

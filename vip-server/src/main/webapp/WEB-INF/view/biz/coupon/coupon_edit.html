@@ -5,477 +5,480 @@
 	<div class="ibox float-e-margins">
 	<div class="ibox-content">
 	<input type="hidden" id="id" value="${coupon.id}">
-<!--<div class="form-horizontal" id="couponInfoForm">
- 	<div class="app">
-		<div class="app-inner clearfix">
-			<div class="app-init-container">
-				<div class="app__content js-app-main center-block"> -->
-					<div class="app-design clearfix">
-					
-					
-						<div class="page-tradeincard">
-							<div class="app-preview">
-								<div class="app-header"></div>
-								<div class="app-entry">
-									<div class="app-config js-config-region">
-										<div class="app-field clearfix editing">
-											<h1 style="margin-top: 0">
-												<span>优惠券</span>
-											</h1>
-											<div class="app-field-wrap editing">
-												<p class="about-card-desc">(酷锐零售优惠券)</p>
-												<div class="ump-coupon-detail-wrap">
-													<div class="promote-card">
-														<div class="clearfix">
-															<h2 class="pull-left font-size-16 promote-card-name">${coupon.name!"优惠券标题"}</h2>
+		<div class="app-design clearfix">
+			<div class="page-tradeincard">
+				<div class="app-preview">
+					<div class="app-header"></div>
+					<div class="app-entry">
+						<div class="app-config js-config-region">
+							<div class="app-field clearfix editing">
+								<h1 style="margin-top: 0">
+									<span>优惠券</span>
+								</h1>
+								<div class="app-field-wrap editing">
+									<p class="about-card-desc">(酷锐零售优惠券)</p>
+									<div class="ump-coupon-detail-wrap">
+										<div class="promote-card">
+											<div class="clearfix">
+												<h2 class="pull-left font-size-16 promote-card-name">${coupon.name!"优惠券标题"}</h2>
 
-															<p class="pull-right font-size-14 center promote-share transparent-color js-share">分享</p>
-
-														</div>
-														<p class="center promote-value">
-															<span class="promote-value-sign"> <span>￥</span><i>${coupon.value!"0.00"}</i>
-
-															</span>
-														</p>
-														
-														<p class="center font-size-14 promote-limit">订单满 ${coupon.atLeast!"xx"}元 (含运费)</p>
-														<p class="center font-size-14 transparent-color promote-date">
-															有效日期： 
-															@if(isNotEmpty(coupon.startAt)){
-																${coupon.startAt,dateFormat='YYYY-MM-dd hh:mm:ss'}
-															@}else{
-																"20xx : 00 : 00"
-															@}
-															 - 
-															@if(isNotEmpty(coupon.startAt)){
-																${coupon.endAt,dateFormat='YYYY-MM-dd hh:mm:ss'}
-															@}else{
-																"20xx : 00 : 00"
-															@}
-														</p>
-														<div class="dot"></div>
-													</div>
-
-													<div class="promote-desc">
-														<h2 class="font-size-14 c-gray-dark promote-desc-title">使用说明</h2>
-														<div class="block border-top-0">
-															<div class="block-item clearfix">
-																<span class="js-desc-detail">${coupon.description!"暂无使用说明....."}</span> <a
-																	class="c-blue more-desc pull-right js-more-desc"
-																	href="javascript:void(0)">更多</a>
-															</div>
-														</div>
-													</div>
-												</div>
-
-
-												<!-- <p class="about-card-desc"
-													style="margin-top: 10px; margin-bottom: 10px;">(微信卡券包)</p>
-												<div class="weixin-card-show">
-													<div class="card" style="background-color: #e4b138">
-
-
-
-														<img
-															src="https://b.yzcdn.cn/v2/image/youzan_mall_logo.jpg"
-															class="card-shop-logo">
-														<p class="card-shop-name">酷锐零售</p>
-
-
-
-
-														<div class="card-info">
-															<h2>1</h2>
-															<p>1</p>
-															<p style="color: #e8e8e8;">有效期：2017-08-04
-																17:18:19&nbsp;-&nbsp;2017-08-24 17:18:19</p>
-														</div>
-														<div class="card-divide"></div>
-													</div>
-													<div class="card-code">
-														<h2>H7MR XXXX ZKSM</h2>
-														<p class="used-mall">请在店铺内购物使用</p>
-													</div>
-												</div> -->
+												<p class="pull-right font-size-14 center promote-share transparent-color js-share">分享</p>
 
 											</div>
+											<p class="center promote-value">
+												<span class="promote-value-sign"> <span>￥</span><i>${coupon.value!"0.00"}</i>
+
+												</span>
+											</p>
+											
+											<p class="center font-size-14 promote-limit">订单满 ${coupon.atLeast!"xx"}元 (含运费)</p>
+											<p class="center font-size-14 transparent-color promote-date">
+												有效日期： 
+												@if(isNotEmpty(coupon.startAt)){
+													${coupon.startAt,dateFormat='YYYY-MM-dd hh:mm:ss'}
+												@}else{
+													"20xx : 00 : 00"
+												@}
+												 - 
+												@if(isNotEmpty(coupon.startAt)){
+													${coupon.endAt,dateFormat='YYYY-MM-dd hh:mm:ss'}
+												@}else{
+													"20xx : 00 : 00"
+												@}
+											</p>
+											<div class="dot"></div>
+										</div>
+
+										<div class="promote-desc">
+											<h2 class="font-size-14 c-gray-dark promote-desc-title">使用说明</h2>
+											<div class="block border-top-0">
+												<div class="block-item clearfix">
+													<span class="js-desc-detail">${coupon.description!"暂无使用说明....."}</span> <a
+														class="c-blue more-desc pull-right js-more-desc"
+														href="javascript:void(0)">更多</a>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<!-- <p class="about-card-desc"
+										style="margin-top: 10px; margin-bottom: 10px;">(微信卡券包)</p>
+									<div class="weixin-card-show">
+										<div class="card" style="background-color: #e4b138">
+
+
+
+											<img
+												src="https://b.yzcdn.cn/v2/image/youzan_mall_logo.jpg"
+												class="card-shop-logo">
+											<p class="card-shop-name">酷锐零售</p>
+
+
+
+
+											<div class="card-info">
+												<h2>1</h2>
+												<p>1</p>
+												<p style="color: #e8e8e8;">有效期：2017-08-04
+													17:18:19&nbsp;-&nbsp;2017-08-24 17:18:19</p>
+											</div>
+											<div class="card-divide"></div>
+										</div>
+										<div class="card-code">
+											<h2>H7MR XXXX ZKSM</h2>
+											<p class="used-mall">请在店铺内购物使用</p>
+										</div>
+									</div> -->
+
+								</div>
+
+							</div>
+						</div>
+						<div class="app-fields js-fields-region">
+							<div class="app-fields ui-sortable"></div>
+						</div>
+					</div>
+					<div class="js-add-region">
+						<div></div>
+					</div>
+				</div>
+				<div class="app-sidebar" style="margin-top: 0px;">
+					<div class="arrow"></div>
+					<div class="app-sidebar-inner js-sidebar-region">
+						<div>
+							<form class="form-horizontal" novalidate="">
+								<h1 class="config-title">优惠券基础信息</h1>
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>券类型：</label>
+									<div class="controls">
+										<label class="radio inline"> 
+											<input name="type" type="radio" value="0"
+												@if(coupon.type==0){
+													checked
+												@}
+											>代金券
+										</label>
+										<label class="radio inline"> 
+											<input name="type" type="radio" value="1"
+												@if(coupon.type==1){
+													checked
+												@}
+											>现金券
+										</label>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>优惠券名称：</label>
+									<div class="controls">
+										<input type="text"  id="name" name="name" maxlength="10" value="${coupon.name!}" placeholder="最多支持10个字">
+										<p class="help-desc error_info">错误提示</p>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>发放总量：</label>
+									<div class="controls">
+										<div class="input-append">
+											<input type="number" id="total" name="total" value="${coupon.total!}" class="input-small"> <span class="add-on">张</span>
+											<p class="help-desc error_info">错误提示</p>
+										</div>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>面值：</label>
+									<div class="controls">
+										<div>
+											<input type="text" id="value" name="value" value="${coupon.value!}" class="input-small">
+											<p class="help-desc error_info">错误提示</p>
+
+											<!-- <p class="help-desc">同步至微信卡包, 不支持金额随机</p> -->
 
 										</div>
 									</div>
-									<div class="app-fields js-fields-region">
-										<div class="app-fields ui-sortable"></div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>使用门槛：</label>
+									<div class="controls">
+										<label class="radio inline"> 
+										<input name="is_at_least" type="radio" value="0"
+											@if(isNotEmpty(coupon.IsAtLeast) && !coupon.IsAtLeast){
+							                    checked
+							                @}
+										> 不限制
+										</label>
 									</div>
 								</div>
-								<div class="js-add-region">
-									<div></div>
-								</div>
-							</div>
-							<div class="app-sidebar" style="margin-top: 0px;">
-								<div class="arrow"></div>
-								<div class="app-sidebar-inner js-sidebar-region">
-									<div>
-										<form class="form-horizontal" novalidate="">
-											<h1 class="config-title">优惠券基础信息</h1>
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>优惠券名称：</label>
-												<div class="controls">
-													<input type="text"  id="name" name="name" maxlength="10" value="${coupon.name!}" placeholder="最多支持10个字">
-													<p class="help-desc error_info">错误提示</p>
-												</div>
-											</div>
 
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>发放总量：</label>
-												<div class="controls">
-													<div class="input-append">
-														<input type="number" id="total" name="total" value="${coupon.total!}" class="input-small"> <span class="add-on">张</span>
-														<p class="help-desc error_info">错误提示</p>
-													</div>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>面值：</label>
-												<div class="controls">
-													<div>
-														<input type="text" id="value" name="value" value="${coupon.value!}" class="input-small">
-														<p class="help-desc error_info">错误提示</p>
-
-														<!-- <p class="help-desc">同步至微信卡包, 不支持金额随机</p> -->
-
-													</div>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>使用门槛：</label>
-												<div class="controls">
-													<label class="radio inline"> 
-													<input name="is_at_least" type="radio" value="0"
-														@if(isNotEmpty(coupon.IsAtLeast) && !coupon.IsAtLeast){
-										                    checked
-										                @}
-													> 不限制
-													</label>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"></label>
-												<div class="controls">
-													<label class="radio inline"> 
-														<input style="margin-top: 6px;" name="is_at_least" type="radio" value="1" 
-															@if(isNotEmpty(coupon.AtLeast) && coupon.IsAtLeast){
-										                    	checked
-											                @}
-														>满 
-														<input type="text" id="atLeast" name="at_least" value="${coupon.atLeast!}" class="input-small js-price" data-value-type="Number"> 元可使用
-													</label>
-													<p class="help-desc error_info">错误提示</p>
-												</div>
-											</div>
-
-
-											<!-- <div class="control-group">
-												<label class="control-label">同步发布至：</label>
-												<div class="controls">
-													<label class="checkbox inline"> <input
-														type="checkbox" class="js-sync-weixin"
-														id="isSyncWeixin"
-														name="is_sync_weixin" checked="">微信卡券(包)<a
-														class="to-helps" href="http://kdt.im/gk93cYEEz"
-														target="_blank">帮助</a>
-													</label>
-
-													<p class="help-desc">如你的微信公众号没有开通卡券权限，将由酷锐代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</p>
-
-												</div>
-											</div>
-
-
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>卡券颜色：</label>
-												<div class="controls">
-													<div class="dropdown hover card-bgcolor">
-														<div class="btn dropdown-toggle" data-toggle="dropdown"
-															type="button">
-															<span class="card-bgcolor-show"
-																style="background-color: #e4b138"></span> <span
-																class="caret"></span>
-														</div>
-														<ul class="dropdown-menu clearfix">
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #63b359" data-value="#63b359"
-																data-name="Color010"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #2c9f67" data-value="#2c9f67"
-																data-name="Color020"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #509fc9" data-value="#509fc9"
-																data-name="Color030"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #5885cf" data-value="#5885cf"
-																data-name="Color040"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #9062c0" data-value="#9062c0"
-																data-name="Color050"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #d09a45" data-value="#d09a45"
-																data-name="Color060"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #e4b138" data-value="#e4b138"
-																data-name="Color070"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #ee903c" data-value="#ee903c"
-																data-name="Color080"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #f08500" data-value="#f08500"
-																data-name="Color081"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #a9d92d" data-value="#a9d92d"
-																data-name="Color082"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #dd6549" data-value="#dd6549"
-																data-name="Color090"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #cc463d" data-value="#cc463d"
-																data-name="Color100"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #cf3e36" data-value="#cf3e36"
-																data-name="Color101"></li>
-
-															<li class="js-card-bgcolor card-bgcolor-box"
-																style="background-color: #5E6671" data-value="#5E6671"
-																data-name="Color102"></li>
-
-														</ul>
-													</div>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>卡券标题：</label>
-												<div class="controls">
-													<input type="text" id="weixinTitle" name="weixin_title" value="" maxlength="9" placeholder="最多可输入9个字">
-													<p class="help-desc">
-														建议填写代金券“减免金额”及自定义内容，描述卡券提供的<br>具体优惠。例如：贝塔咖啡5元代金券
-													</p>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>卡券副标题：</label>
-												<div class="controls">
-													<input type="text" id="weixinSubTitle" name="weixin_sub_title" value=""
-														maxlength="18" placeholder="最多可输入18个字">
-												</div>
-											</div> -->
-
-
-											<h1 class="config-title">基本规则</h1>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>会员等级：</label>
-												<div class="controls">
-													<!-- <div class="control-action">所有用户领取</div> -->
-													<select id="user_level" name="user_level" data-value-type="Number">
-								                        <option value="" selected="">所有会员等级</option>
-								                        @for(c in cards!){
-															<option value="${c.id}"
-																@if(coupon.cardId == c.id){
-																	selected
-																@}
-															
-															>${c.name}</option>
-														@}
-									                </select>
-												</div>
-											</div>
-
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>每人限领：</label>
-												<div class="controls">
-													<select id="quota" name="quota" data-value-type="Number">
-
-														<option value="0" selected="">不限张</option>
-														@for(var i = 1;i<=5;i++){
-															<option value="${i}"
-																@if(i == coupon.quota){
-																	selected
-																@}
-															>${i}张</option>
-														@}
-													</select>
-												</div>
-											</div>
-
-											<!-- <div class="control-group">
-												<label class="control-label">同步打标签：</label>
-												<div class="controls ">
-													<select name="fans_tag" multiple=""
-														class="js-fans-tag-select" style="width: 220px;">
-													</select> <a href="javascript:;" class="js-refresh-fans-tag"> 刷新</a>
-													| <a href="//store.youzan.com/shop/v2/fans/tag/add"
-														class="new-window" target="_blank">新建</a>
-												</div>
-											</div> -->
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>生效时间：</label>
-												<div class="controls">
-													<input type="text" readonly="" id="startAt" name="start_at" value="${coupon.startAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
-														class="js-start-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.startDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
-													<p class="help-desc error_info">错误提示</p>
-												</div>
-											</div>
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>过期时间：</label>
-												<div class="controls">
-													<input type="text" readonly="" id="endAt" name="end_at" value="${coupon.endAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
-														class="js-end-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.endDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
-													<p class="help-desc error_info">错误提示</p>
-												</div>
-											</div>
-
-											<!-- <div class="control-group">
-												<label class="control-label">到期提醒：</label>
-												<div class="controls">
-													<label class="checkbox inline"> <input
-														type="checkbox" name="expireNotice" name="expire_notice">到期前4天提醒一次
-													</label>
-												</div>
-											</div> -->
-
-											<div class="control-group">
-												<label class="control-label">推广设置：</label>
-												<div class="controls">
-													<label class="checkbox inline"> <input
-														type="checkbox" name="isShare" name="is_share"
-														@if(isNotEmpty(coupon.IsShare) && coupon.IsShare){
-										                    checked
-										                @}
-														>
-														允许分享领取链接
-													</label>
-												</div>
-											</div>
-
-
-
-											<!-- <div class="control-group">
-												<label class="control-label"><em class="required">*</em>可使用商品：</label>
-												<div class="offline-goods-group-container">
-													<div class="controls">
-
-														<label class="checkbox"> <input type="checkbox"
-															value="1" name="isOffline" name="is_offline" checked=""> 门店商品
-														</label>
-
-														<div style="padding-left: 16px;">
-															<label class="radio inline"> <input
-																name="offline_range_type" type="radio" value="all"
-																checked=""> 全店商品
-															</label> <label class="radio inline"> range_type : single 兼容宝贝券数据
-																<input name="offline_range_type" type="radio"
-																value="part"> 指定商品
-															</label>
-														</div>
-													</div>
-
-													<div class="control-group">
-														<div class="controls">
-
-
-															<input type="hidden" name="is_select_offline_goods">
-														</div>
-													</div>
-
-												</div>
-												<div class="online-goods-group-container">
-													<div class="controls">
-
-														<label class="checkbox"> <input type="checkbox"
-															value="1" name="is_online" checked=""> 网店商品
-														</label>
-
-														<div style="padding-left: 16px;">
-															<label class="radio inline"> <input
-																name="online_range_type" type="radio" value="all"
-																checked=""> 全店商品
-															</label> <label class="radio inline"> range_type : single 兼容宝贝券数据
-																<input name="online_range_type" type="radio"
-																value="part"> 指定商品
-															</label>
-														</div>
-													</div>
-
-													<div class="control-group">
-														<div class="controls">
-
-
-															<input type="hidden" name="is_select_online_goods">
-														</div>
-													</div>
-
-												</div>
-											</div>
-
-											<div class="control-group padding-16">
-												<label class="control-label"></label>
-												<div class="controls">
-													<label class="checkbox inline"> <input
-														type="checkbox" name="is_forbid_preference">仅原价购买商品时可用
-													</label>
-												</div>
-											</div> -->
-
-
-											<div class="control-group">
-												<label class="control-label"><em class="required">*</em>使用说明：</label>
-												<div class="controls">
-													<textarea id="description" name="description" style="width: 280px;"
-														cols="30" rows="2" placeholder="填写活动的详细说明，支持换行;">${coupon.description!}</textarea>
-													<p class="help-desc error_info">错误提示</p>
-												</div>
-											</div>
-											<div class="control-group">
-												<label class="control-label">客服电话：</label>
-												<div class="controls">
-													<input type="text" id="servicePhone" name="service_phone" value="${coupon.servicePhone}"
-														placeholder="手机或固话">
-												</div>
-											</div>
-
-										</form>
+								<div class="control-group">
+									<label class="control-label"></label>
+									<div class="controls">
+										<label class="radio inline"> 
+											<input style="margin-top: 6px;" name="is_at_least" type="radio" value="1" 
+												@if(isNotEmpty(coupon.AtLeast) && coupon.IsAtLeast){
+							                    	checked
+								                @}
+											>满 
+											<input type="text" id="atLeast" name="at_least" value="${coupon.atLeast!}" class="input-small js-price" data-value-type="Number"> 元可使用
+										</label>
+										<p class="help-desc error_info">错误提示</p>
 									</div>
 								</div>
-							</div>
+
+
+								<!-- <div class="control-group">
+									<label class="control-label">同步发布至：</label>
+									<div class="controls">
+										<label class="checkbox inline"> <input
+											type="checkbox" class="js-sync-weixin"
+											id="isSyncWeixin"
+											name="is_sync_weixin" checked="">微信卡券(包)<a
+											class="to-helps" href="http://kdt.im/gk93cYEEz"
+											target="_blank">帮助</a>
+										</label>
+
+										<p class="help-desc">如你的微信公众号没有开通卡券权限，将由酷锐代发券。同步至微信卡包后，需等待微信审核通过，才能领取；</p>
+
+									</div>
+								</div>
+
+
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>卡券颜色：</label>
+									<div class="controls">
+										<div class="dropdown hover card-bgcolor">
+											<div class="btn dropdown-toggle" data-toggle="dropdown"
+												type="button">
+												<span class="card-bgcolor-show"
+													style="background-color: #e4b138"></span> <span
+													class="caret"></span>
+											</div>
+											<ul class="dropdown-menu clearfix">
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #63b359" data-value="#63b359"
+													data-name="Color010"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #2c9f67" data-value="#2c9f67"
+													data-name="Color020"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #509fc9" data-value="#509fc9"
+													data-name="Color030"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #5885cf" data-value="#5885cf"
+													data-name="Color040"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #9062c0" data-value="#9062c0"
+													data-name="Color050"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #d09a45" data-value="#d09a45"
+													data-name="Color060"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #e4b138" data-value="#e4b138"
+													data-name="Color070"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #ee903c" data-value="#ee903c"
+													data-name="Color080"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #f08500" data-value="#f08500"
+													data-name="Color081"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #a9d92d" data-value="#a9d92d"
+													data-name="Color082"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #dd6549" data-value="#dd6549"
+													data-name="Color090"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #cc463d" data-value="#cc463d"
+													data-name="Color100"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #cf3e36" data-value="#cf3e36"
+													data-name="Color101"></li>
+
+												<li class="js-card-bgcolor card-bgcolor-box"
+													style="background-color: #5E6671" data-value="#5E6671"
+													data-name="Color102"></li>
+
+											</ul>
+										</div>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>卡券标题：</label>
+									<div class="controls">
+										<input type="text" id="weixinTitle" name="weixin_title" value="" maxlength="9" placeholder="最多可输入9个字">
+										<p class="help-desc">
+											建议填写代金券“减免金额”及自定义内容，描述卡券提供的<br>具体优惠。例如：贝塔咖啡5元代金券
+										</p>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>卡券副标题：</label>
+									<div class="controls">
+										<input type="text" id="weixinSubTitle" name="weixin_sub_title" value=""
+											maxlength="18" placeholder="最多可输入18个字">
+									</div>
+								</div> -->
+
+
+								<h1 class="config-title">基本规则</h1>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>会员等级：</label>
+									<div class="controls">
+										<!-- <div class="control-action">所有用户领取</div> -->
+										<select id="user_level" name="user_level" data-value-type="Number">
+					                        <option value="" selected="">所有会员等级</option>
+					                        @for(c in cards!){
+												<option value="${c.id}"
+													@if(coupon.cardId == c.id){
+														selected
+													@}
+												
+												>${c.name}</option>
+											@}
+						                </select>
+									</div>
+								</div>
+
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>每人限领：</label>
+									<div class="controls">
+										<select id="quota" name="quota" data-value-type="Number">
+
+											<option value="0" selected="">不限张</option>
+											@for(var i = 1;i<=5;i++){
+												<option value="${i}"
+													@if(i == coupon.quota){
+														selected
+													@}
+												>${i}张</option>
+											@}
+										</select>
+									</div>
+								</div>
+
+								<!-- <div class="control-group">
+									<label class="control-label">同步打标签：</label>
+									<div class="controls ">
+										<select name="fans_tag" multiple=""
+											class="js-fans-tag-select" style="width: 220px;">
+										</select> <a href="javascript:;" class="js-refresh-fans-tag"> 刷新</a>
+										| <a href="//store.youzan.com/shop/v2/fans/tag/add"
+											class="new-window" target="_blank">新建</a>
+									</div>
+								</div> -->
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>生效时间：</label>
+									<div class="controls">
+										<input type="text" readonly="" id="startAt" name="start_at" value="${coupon.startAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
+											class="js-start-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.startDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
+										<p class="help-desc error_info">错误提示</p>
+									</div>
+								</div>
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>过期时间：</label>
+									<div class="controls">
+										<input type="text" readonly="" id="endAt" name="end_at" value="${coupon.endAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
+											class="js-end-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.endDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
+										<p class="help-desc error_info">错误提示</p>
+									</div>
+								</div>
+
+								<!-- <div class="control-group">
+									<label class="control-label">到期提醒：</label>
+									<div class="controls">
+										<label class="checkbox inline"> <input
+											type="checkbox" name="expireNotice" name="expire_notice">到期前4天提醒一次
+										</label>
+									</div>
+								</div> -->
+
+								<div class="control-group">
+									<label class="control-label">推广设置：</label>
+									<div class="controls">
+										<label class="checkbox inline"> <input
+											type="checkbox" name="isShare" name="is_share"
+											@if(isNotEmpty(coupon.IsShare) && coupon.IsShare){
+							                    checked
+							                @}
+											>
+											允许分享领取链接
+										</label>
+									</div>
+								</div>
+
+
+
+								<!-- <div class="control-group">
+									<label class="control-label"><em class="required">*</em>可使用商品：</label>
+									<div class="offline-goods-group-container">
+										<div class="controls">
+
+											<label class="checkbox"> <input type="checkbox"
+												value="1" name="isOffline" name="is_offline" checked=""> 门店商品
+											</label>
+
+											<div style="padding-left: 16px;">
+												<label class="radio inline"> <input
+													name="offline_range_type" type="radio" value="all"
+													checked=""> 全店商品
+												</label> <label class="radio inline"> range_type : single 兼容宝贝券数据
+													<input name="offline_range_type" type="radio"
+													value="part"> 指定商品
+												</label>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<div class="controls">
+
+
+												<input type="hidden" name="is_select_offline_goods">
+											</div>
+										</div>
+
+									</div>
+									<div class="online-goods-group-container">
+										<div class="controls">
+
+											<label class="checkbox"> <input type="checkbox"
+												value="1" name="is_online" checked=""> 网店商品
+											</label>
+
+											<div style="padding-left: 16px;">
+												<label class="radio inline"> <input
+													name="online_range_type" type="radio" value="all"
+													checked=""> 全店商品
+												</label> <label class="radio inline"> range_type : single 兼容宝贝券数据
+													<input name="online_range_type" type="radio"
+													value="part"> 指定商品
+												</label>
+											</div>
+										</div>
+
+										<div class="control-group">
+											<div class="controls">
+
+
+												<input type="hidden" name="is_select_online_goods">
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="control-group padding-16">
+									<label class="control-label"></label>
+									<div class="controls">
+										<label class="checkbox inline"> <input
+											type="checkbox" name="is_forbid_preference">仅原价购买商品时可用
+										</label>
+									</div>
+								</div> -->
+
+
+								<div class="control-group">
+									<label class="control-label"><em class="required">*</em>使用说明：</label>
+									<div class="controls">
+										<textarea id="description" name="description" style="width: 280px;"
+											cols="30" rows="2" placeholder="填写活动的详细说明，支持换行;">${coupon.description!}</textarea>
+										<p class="help-desc error_info">错误提示</p>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">客服电话：</label>
+									<div class="controls">
+										<input type="text" id="servicePhone" name="service_phone" value="${coupon.servicePhone}"
+											placeholder="手机或固话">
+									</div>
+								</div>
+
+							</form>
 						</div>
-
-
-
-
 					</div>
-<!-- 				</div>
+				</div>
 			</div>
 		</div>
-	</div> 
-</div>-->
 
 </div>
 </div>
