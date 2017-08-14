@@ -150,8 +150,10 @@ public class CardController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Page<Card> page = new PageFactory<Card>().defaultPage();
-    	List<Map<String, Object>> result = cardService.getCardList(page,condition,page.getOrderByField(), page.isAsc());
+    	List<Map<String, Object>> result = cardService.getCardList(page,condition,page.getOrderByField(), page.isAsc(),merchant.getId());
     	page.setRecords((List<Card>) new CardWarpper(result).warp());
         return super.packForBT(page);
     }

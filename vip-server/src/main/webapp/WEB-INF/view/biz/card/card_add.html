@@ -151,7 +151,7 @@
 									<label class="control-label" for="name"> <em class="required">*</em>会员卡名称：
 									</label>
 									<div class="controls">
-										<input type="text" id="name" name="name" value="" maxlength="18" placeholder="最多可输入9个字符">
+										<input type="text" id="name" name="name" value="" maxlength="9" placeholder="最多可输入9个字符">
 										<p class="help-desc">会员卡名称保存成功后不支持修改</p>
 										<p class="error_info">错误提示</p>
 									</div>
@@ -172,8 +172,9 @@
 													<label class="checkbox inline"> 
 														<input type="checkbox" name="isDiscount">会员折扣
 													</label> 
-													<input type="text" class="input-mini" name="discount" value=""> 折
+													<input type="text" class="input-mini" name="discount" value="" maxlength="2"> 折
 												</div>
+												<p class="help-desc radio" style="color: #999;">输入整数，如88表示8.8折</p>
 											</div>
 											<div class="js-coupon-region">
 												<div class="control-group">
@@ -196,7 +197,7 @@
 																	<!-- <select class="coupon-select">
 																		<option value="0" name="couponId">请选择优惠券</option>
 																    </select>  -->
-																    <input type="text" class="input-mini coupon-num" name="number" value="">&nbsp;张
+																    <input type="text" class="input-mini coupon-num" name="number" maxlength="1">&nbsp;张
 																</span>
 															</span>
 															<p class="help-desc radio" style="color: #999;">优惠券过期、被删除、或库存为0时，系统不再送券</p>
@@ -208,8 +209,7 @@
 												<div class="controls">
 													<label class="checkbox inline"> <input
 														type="checkbox" name="isPoints">送积分
-													</label> <label class="checkbox inline"> 开卡赠送&nbsp; <input
-														type="text" name="pointsNum" class="input-mini" value="">
+													</label> <label class="checkbox inline"> 开卡赠送&nbsp; <input type="text" name="pointsNum" class="input-mini" maxlength="4">
 														&nbsp;积分
 													</label>
 												</div>
@@ -236,7 +236,7 @@
 								<div class="control-group">
 									<label class="control-label" for="servicePhone">客服电话：</label>
 									<div class="controls">
-										<input type="text" id="servicePhone" name="servicePhone"
+										<input type="text" id="servicePhone" name="servicePhone" maxlength="20"
 											value="" placeholder="请输入手机号或固定电话">
 									</div>
 								</div>

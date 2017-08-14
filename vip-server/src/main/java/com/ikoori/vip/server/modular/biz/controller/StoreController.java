@@ -64,14 +64,14 @@ public class StoreController extends BaseController {
     @RequestMapping("/store_update/{storeId}")
 	public String storeUpdate(@PathVariable Long storeId, Model model) {
 		Store store = storeService.selectById(storeId);
-		String servicePhone = store.getServicePhone();
+		/*String servicePhone = store.getServicePhone();
 		if (StringUtils.isNotBlank(servicePhone)) {
 			if (servicePhone.contains("-")) {
 				String[] s = servicePhone.split("-");
 				model.addAttribute("servicePhonePre", s[0]);
 				model.addAttribute("servicePhoneSub", s[1]);
 			}
-		}
+		}*/
 		String latitude = StringUtils.isNotBlank(store.getLatitude()) ? store.getLatitude() : "";
 		String longitude = StringUtils.isNotBlank(store.getLongitude()) ? store.getLongitude() : "";
 		String coordinate = latitude + "," + longitude;
@@ -86,8 +86,10 @@ public class StoreController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Page<Store> page = new PageFactory<Store>().defaultPage();
-    	List<Map<String, Object>> result = storeService.getStoreList(page,condition,page.getOrderByField(), page.isAsc());
+    	List<Map<String, Object>> result = storeService.getStoreList(page,condition,page.getOrderByField(), page.isAsc(),merchant.getId());
     	page.setRecords((List<Store>) new StoreWarpper(result).warp());
         return super.packForBT(page);
     }

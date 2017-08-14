@@ -24,8 +24,8 @@ public class PointServiceImpl implements IPointService {
 
 	@Override
 	public List<Map<String, Object>> getPointList(Page<Point> page, String name, String orderByField,
-			boolean isAsc) {
-		return pointMapper.getPointList(page, name, orderByField, isAsc);
+			boolean isAsc,Long merchantId) {
+		return pointMapper.getPointList(page, name, orderByField, isAsc,merchantId);
 	}
 	
 	public void savePoint(Point point){

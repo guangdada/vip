@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,8 +64,8 @@ public class CardServiceImpl implements ICardService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getCardList(Page<Card> page, String name, String orderByField, boolean isAsc) {
-		return cardDao.getCardList(page, name, orderByField, isAsc);
+	public List<Map<String, Object>> getCardList(Page<Card> page, String name, String orderByField, boolean isAsc,@Param("merchantId") Long merchantId) {
+		return cardDao.getCardList(page, name, orderByField, isAsc,merchantId);
 	}
 
 	@Transactional(readOnly = false)

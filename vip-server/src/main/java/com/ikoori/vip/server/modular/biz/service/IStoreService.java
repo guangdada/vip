@@ -23,6 +23,6 @@ public interface IStoreService {
 	public Store selectById(Long id);
 	public Integer insert(Store store);
 	public List<Store> selectByCondition(Map<String, Object> condition);
-	List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 	
 }

@@ -8,6 +8,10 @@ var PointInfoDlg = {
             validators: {
                 notEmpty: {
                     message: '奖励分值不能为空'
+                },
+                regexp: {
+                    regexp: /^[1-9]\d*$/,
+                    message: '奖励分值只能为整数'
                 }
             }
         },
@@ -80,8 +84,10 @@ PointInfoDlg.validate = function () {
  */
 PointInfoDlg.validateOther = function (){
 	$("#ruleTypeBlock").hide();
-	$("#pointsLimit1Block").hide();
-	$("#pointsLimit2Block").hide();
+	$("#pointsLimit1Block").text("").hide();
+	$("#pointsLimit2Block").text("").hide();
+	// 正整数
+	var reg1 = /^[1-9]\d*$/;
 	var ruleType = $("input[name='ruleType']:checked");
 	if(!ruleType || ruleType.length == 0){
 		$("#ruleTypeBlock").show();
@@ -94,7 +100,10 @@ PointInfoDlg.validateOther = function (){
 		}else if(value == '1'){
 			var pointsLimit1 = $("#pointsLimit1").val();
 			if(!pointsLimit1){
-				$("#pointsLimit1Block").show();
+				$("#pointsLimit1Block").text("请输入交易笔数限制").show();
+				return false;
+			}else if(!reg1.test(pointsLimit1)){
+				$("#pointsLimit1Block").text("交易笔数必须为整数").show();
 				return false;
 			}else{
 				$("#ruleType").val("1");
@@ -104,7 +113,10 @@ PointInfoDlg.validateOther = function (){
 		}else if(value == '2'){
 			var pointsLimit2 = $("#pointsLimit2").val();
 			if(!pointsLimit2){
-				$("#pointsLimit2Block").show();
+				$("#pointsLimit2Block").text("请输入购买金额限制").show();
+				return false;
+			}else if(!reg1.test(pointsLimit2)){
+				$("#pointsLimit2Block").text("购买金额必须为整数").show();
 				return false;
 			}else{
 				$("#ruleType").val("2");

@@ -20,6 +20,6 @@ public interface ICardService {
 	public Card selectById(Long id);
 	public Integer insert(Card card);
 	public List<Card> selectByCondition(Map<String, Object> condition);
-	List<Map<String, Object>> getCardList(@Param("page") Page<Card> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	List<Map<String, Object>> getCardList(@Param("page") Page<Card> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 	public void saveCard(Card card, String rights);
 }

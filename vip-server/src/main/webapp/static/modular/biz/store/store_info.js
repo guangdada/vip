@@ -8,21 +8,22 @@ var StoreInfoDlg = {
             validators: {
                 notEmpty: {
                     message: '店铺名称不能为空'
+                },
+                stringLength:{
+                	 max: 30,
+                	 message: '长度必须小于30个字符'
                 }
             }
         },
-        servicePhonePre: {
+        servicePhone: {
             validators: {
                 notEmpty: {
-                    message: '不能为空'
-                }
-            }
-        },
-        servicePhoneSub: {
-            validators: {
-                notEmpty: {
-                    message: '不能为空'
-                }
+                    message: '联系电话不能为空'
+                },
+                stringLength:{
+               	 max: 20,
+               	 message: '长度必须小于20个字符'
+               }
             }
         },
         area: {
@@ -36,28 +37,52 @@ var StoreInfoDlg = {
             validators: {
                 notEmpty: {
                     message: '详细地址不能为空'
-                }
+                },
+                stringLength:{
+               	 max: 50,
+               	 message: '长度必须小于50个字符'
+               }
             }
         },
         openTime: {
             validators: {
                 notEmpty: {
                     message: '运营开始时间不能为空'
-                }
+                },
+                stringLength:{
+               	 max: 2,
+               	 message: '长度必须小于2个字符'
+               }
             }
         },
         closeTime: {
             validators: {
                 notEmpty: {
                     message: '运营结束时间不能为空'
-                }
+                },
+                stringLength:{
+               	 max: 2,
+               	 message: '长度必须小于2个字符'
+               }
             }
         },
         coordinate: {
             validators: {
                 notEmpty: {
                     message: '坐标不能为空'
-                }
+                },
+                stringLength:{
+               	 max: 30,
+               	 message: '长度必须小于30个字符'
+               }
+            }
+        },
+        description: {
+            validators: {
+                stringLength:{
+               	 max: 200,
+               	 message: '长度必须小于200个字符'
+               }
             }
         }
     }
@@ -113,11 +138,11 @@ StoreInfoDlg.close = function() {
  */
 StoreInfoDlg.collectData = function() {
 	var coordinate = $("#coordinate").val();
-	var servicePhone = $("#servicePhonePre").val() + "-" + $("#servicePhoneSub").val();
+	//var servicePhone = $("#servicePhonePre").val() + "-" + $("#servicePhoneSub").val();
 	var provinceId = $("#province option:selected").val();
 	var cityId = $("#city option:selected").val();
 	var areaId = $("#area option:selected").val();
-    this.set('id').set('name').set('name').set('servicePhone',servicePhone)
+    this.set('id').set('name').set('name').set('servicePhone')
     .set('provinceId',provinceId).set('cityId',cityId).set('areaId',areaId)
     .set('address').set('openTime').set('closeTime').set('description').set('logo').set('website');
     if(coordinate){

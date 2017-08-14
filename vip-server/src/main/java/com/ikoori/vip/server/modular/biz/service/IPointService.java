@@ -15,6 +15,6 @@ import com.ikoori.vip.common.persistence.model.Point;
  * @Date 2017-07-31 09:59:02
  */
 public interface IPointService {
-    List<Map<String, Object>> getPointList(@Param("page") Page<Point> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+    List<Map<String, Object>> getPointList(@Param("page") Page<Point> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,Long merchantId);
     public void savePoint(Point point);
 }

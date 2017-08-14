@@ -6,6 +6,9 @@
         <if test="name != null and name !=''">
             and name like CONCAT('%',#{name},'%')
         </if>
+        <if test="merchantId != null">
+        	and merchant_id = #{merchantId}
+        </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
                 <choose>

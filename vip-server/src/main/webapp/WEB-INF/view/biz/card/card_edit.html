@@ -5,6 +5,13 @@
 	<div class="ibox-content">
 		<input type="hidden"  name="id" id="id" value="${card.id}"/>
 		<input type="hidden"  name="colorCode" id="colorCode" value="${card.colorCode!}"/>
+		<input type="hidden"  name="hideDiscount" id="hideDiscount" value="${discount.discount!}"/>
+		<input type="hidden"  name="hidePoint" id="hidePoint" value="${points.points!}"/>
+		<input type="hidden"  name="hideCoupon" id="hideCoupon"
+			@if(isNotEmpty(coupon)){
+				value="1"
+			@}
+		/>
 		<div class="app-design clearfix">
 			<div class="app-preview">
 				<div class="app-header"></div>
@@ -44,9 +51,6 @@
 									</h3>
 									<ul class="membership">
 										<li class="membership-item">
-											<p class="item-name free-shipping">包邮</p>
-										</li>
-										<li class="membership-item">
 											<p class="item-name discount">折扣</p>
 										</li>
 										<li class="membership-item">
@@ -65,7 +69,7 @@
 											<span class="icon info-icon-description"></span> 使用须知
 										</p>
 										<p class="block-sub-desc js-block-sub-desc">
-											
+											${card.description!}
 										</p>
 									</a> 
 									<!-- <a href="javascript:;" class="block-item">出示会员凭证</a> -->
@@ -174,6 +178,7 @@
 													@}
 													> 折
 												</div>
+												<p class="help-desc radio" style="color: #999;">输入整数，如88表示8.8折</p>
 											</div>
 											<div class="js-coupon-region">
 												<div class="control-group">
@@ -382,7 +387,7 @@
 															checked
 														@}
 													>
-													<input type="text" class="input-mini" name="termDays" value="${card.termDays!}">&nbsp;天
+													<input type="text" class="input-mini" name="termDays" maxlength="5" value="${card.termDays!}">&nbsp;天
 												</label>
 											</div>
 										</div>

@@ -17,6 +17,7 @@ Card.initColumn = function () {
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '会员卡名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '领取方式', field: 'grant_type', visible: true, align: 'center', valign: 'middle'},
+        {title: '等级', field: 'card_level', visible: true, align: 'center', valign: 'middle'},
         {title: '使用须知', field: 'description', visible: true, align: 'center', valign: 'middle'},
         {title: '创建时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'},
         {title: '修改时间', field: 'update_time', visible: true, align: 'center', valign: 'middle'}

@@ -1,8 +1,10 @@
+
 /**
  * 初始化会员卡管理详情对话框
  */
 var CardInfoDlg = {
-    cardInfoData : {}
+    cardInfoData : {},
+    num : /^[1-9]\d*$/
 };
 
 /**
@@ -261,6 +263,23 @@ CardInfoDlg.chooseStart = function (value) {
 
 
 $(function() {
+	$("input[name=number],input[name=pointsNum],input[name=termDays],input[name=tradeLimit],input[name=amountLimit],input[name=pointsLimit]").bind("blur",function () {
+		var number = $(this).val() ? $(this).val() : "";
+		if(!CardInfoDlg.num.test(number)){
+			$(this).val("");
+		}
+	});
+	
+	$("input[name='termDays']").attr("maxlength",6);
+	$("input[name='tradeLimit']").attr("maxlength",6);
+	$("input[name='amountLimit']").attr("maxlength",6);
+	$("input[name='pointsLimit']").attr("maxlength",6);
+	$("input[name='servicePhone']").attr("maxlength",20);
+	$("input[name='pointsNum']").attr("maxlength",4);
+	$("input[name='number']").attr("maxlength",2);
+	$("input[name='discount']").attr("maxlength",2);
+	$("input[name='name']").attr("maxlength",9);
+	
 	$(".card-color-box").bind("click",function(){
 		var color = $(this).attr("data-value");
 		var code = $(this).attr("data-name");
@@ -304,8 +323,13 @@ $(function() {
 	
 	$("input[name=discount]").bind("blur",function () {
 		var discount = $(this).val() ? $(this).val() : "";
-		$(".item-name.discount").text(discount + "折");
+		if(!CardInfoDlg.num.test(discount)){
+			$(this).val("");
+		}else{
+			$(".item-name.discount").text(discount + "折");
+		}
 	});
+	
 	
 	$("input[name=isCoupon]").bind("change",function () {
 		var check = $(this).prop("checked");
@@ -341,5 +365,20 @@ $(function() {
 	});
 	
 	$(".error_info").hide();
+	
+	var id = $("#id").val();
+	var hideDiscount = $("#hideDiscount").val();
+	var hidePoint = $("#hidePoint").val();
+	var hideCoupon = $("#hideCoupon").val();
 	$(".membership-item").hide();
+	if(hideCoupon){
+		$(".item-name.coupon").parent().show();
+	}
+	if(hidePoint){
+		$(".item-name.score").parent().show();
+	}
+	if(hideDiscount){
+		$(".item-name.discount").parent().show();
+		$(".item-name.discount").text(hideDiscount + "折");
+	}
 });

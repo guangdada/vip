@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.warpper;
 import java.util.List;
 import java.util.Map;
 
+import com.ikoori.vip.common.constant.state.GrantType;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
 
 /**
@@ -19,6 +20,8 @@ public class CardWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
+    	Integer grantType = (Integer) map.get("grant_type");
+    	map.put("grant_type", GrantType.valueOf(grantType));
     }
 
 }

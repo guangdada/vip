@@ -15,5 +15,5 @@ import com.ikoori.vip.common.persistence.model.Store;
  * @Date 2017-08-07 17:52:18
  */
 public interface StoreDao {
-   List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+   List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 }

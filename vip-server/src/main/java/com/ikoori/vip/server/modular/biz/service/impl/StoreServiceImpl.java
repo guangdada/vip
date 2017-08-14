@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.StoreMapper;
-import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
@@ -48,8 +47,8 @@ public class StoreServiceImpl implements IStoreService {
 	
 	@Override
 	public List<Map<String, Object>> getStoreList(Page<Store> page, String name, String orderByField,
-			boolean isAsc) {
-		return storeDao.getStoreList(page, name, orderByField, isAsc);
+			boolean isAsc,Long merchantId) {
+		return storeDao.getStoreList(page, name, orderByField, isAsc,merchantId);
 	}
 
 	@Override

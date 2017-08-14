@@ -18,6 +18,6 @@ import com.ikoori.vip.common.persistence.model.Point;
  * @since 2017-07-31
  */
 public interface PointMapper extends BaseMapper<Point> {
-    List<Map<String, Object>> getPointList(@Param("page") Page<Point> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+    List<Map<String, Object>> getPointList(@Param("page") Page<Point> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 
 }

@@ -17,9 +17,12 @@ import com.ikoori.vip.common.constant.state.PointType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.PointMapper;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Point;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
+import com.ikoori.vip.server.core.shiro.ShiroKit;
+import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IPointService;
 import com.ikoori.vip.server.modular.biz.warpper.PointWarpper;
 
@@ -36,6 +39,8 @@ public class PointController extends BaseController {
 	private IPointService pointService;
 	@Autowired
 	private PointMapper pointMapper;
+	@Autowired
+	private IMerchantService merchantService;
     private String PREFIX = "/biz/point/";
 
     /**
@@ -78,7 +83,9 @@ public class PointController extends BaseController {
     @ResponseBody
     public Object list(String condition) {
     	Page<Point> page = new PageFactory<Point>().defaultPage();
-        List<Map<String, Object>> result = pointService.getPointList(page,condition,page.getOrderByField(), page.isAsc());
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+        List<Map<String, Object>> result = pointService.getPointList(page,condition,page.getOrderByField(), page.isAsc(),merchant.getId());
         page.setRecords((List<Point>) new PointWarpper(result).warp());
         return super.packForBT(page);
     }
@@ -121,6 +128,12 @@ public class PointController extends BaseController {
     }
 
 	private void initParam(Point point, String pointsLimitTemp) {
+		if(point.getId() == null){
+			Long userId = Long.valueOf(ShiroKit.getUser().getId());
+	    	Merchant merchant = merchantService.getMerchantUserId(userId);
+			point.setCreateUserId(userId);
+			point.setMerchantId(merchant.getId());
+		}
 		if(point.getRuleType().intValue() == PointType.PAY_ORDER.getCode()){
     		point.setPointsLimit(Integer.valueOf(pointsLimitTemp));
     		point.setName(PointType.PAY_ORDER.getMessage() + pointsLimitTemp + "笔，奖励分值：" +point.getPoints());

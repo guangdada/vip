@@ -16,7 +16,7 @@ Point.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
-        {title: '规则类型', field: 'rule_type', visible: true, align: 'center', valign: 'middle'},
+        {title: '规则类型', field: 'ruleType', visible: true, align: 'center', valign: 'middle'},
         {title: '积分条件', field: 'points_limit', visible: true, align: 'center', valign: 'middle'},
         {title: '奖励分值', field: 'points', visible: true, align: 'center', valign: 'middle'},
         {title: '创建时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'},
