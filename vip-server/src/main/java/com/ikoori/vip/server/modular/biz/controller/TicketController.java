@@ -1,5 +1,8 @@
 package com.ikoori.vip.server.modular.biz.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,13 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
+import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.ColorType;
+import com.ikoori.vip.common.constant.state.SpecType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.model.Member;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Ticket;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
+import com.ikoori.vip.server.core.shiro.ShiroKit;
+import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.ITicketService;
+import com.ikoori.vip.server.modular.biz.warpper.MemberWarpper;
+import com.ikoori.vip.server.modular.biz.warpper.TicketWarpper;
 
 /**
  * 小票控制器
@@ -29,12 +42,19 @@ public class TicketController extends BaseController {
     private String PREFIX = "/biz/ticket/";
     @Autowired
 	ITicketService ticketService;
-
+    @Autowired
+   	IMerchantService merchantService;
     /**
      * 跳转到小票首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	/*Merchant merchant = merchantService.getMerchantUserId(userId);
+    	model.addAttribute("merchant", merchant);*/
+    	Ticket ticket=ticketService.selectById(1L);
+    	model.addAttribute("ticket", ticket);
+    	model.addAttribute("specType", SpecType.values());
         return PREFIX + "ticket.html";
     }
 
@@ -61,8 +81,11 @@ public class TicketController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return null;
+    public Object list(String condition,Model model) {
+    	Page<Ticket> page = new PageFactory<Ticket>().defaultPage();
+    	List<Map<String, Object>> result = ticketService.getTicketList(page, condition, page.getOrderByField(), page.isAsc());
+    	page.setRecords((List<Ticket>) new TicketWarpper(result).warp());
+        return super.packForBT(page);
     }
 
     /**
