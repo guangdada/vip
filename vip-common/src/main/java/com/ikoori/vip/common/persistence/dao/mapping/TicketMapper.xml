@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.TicketMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Ticket">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="specType" property="specType" />
+		<result column="title" property="title" />
+		<result column="remark" property="remark" />
+		<result column="setting" property="setting" />
+		<result column="store_id" property="storeId" />
+		<result column="type" property="type" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+</mapper>

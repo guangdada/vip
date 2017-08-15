@@ -19,7 +19,7 @@ var MemberInfoDlg = {
 		mobile : {
 			validators : {
 				notEmpty : {
-					message : '联系方式不能为空'
+					message : '手机号码不能为空'
 				},
 		   stringLength: {
             min: 11,
@@ -79,13 +79,22 @@ MemberInfoDlg.collectData = function() {
 }
 
 /**
+ * 验证数据是否为空
+ */
+MemberInfoDlg.validate = function () {
+    $('#memberForm').data("bootstrapValidator").resetForm();
+    $('#memberForm').bootstrapValidator('validate');
+    return $("#memberForm").data('bootstrapValidator').isValid();
+}
+/**
  * 提交添加
  */
 MemberInfoDlg.addSubmit = function() {
-
     this.clearData();
     this.collectData();
-
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/member/add", function(data){
         Feng.success("添加成功!");
@@ -102,10 +111,12 @@ MemberInfoDlg.addSubmit = function() {
  * 提交修改
  */
 MemberInfoDlg.editSubmit = function() {
-
+	
     this.clearData();
     this.collectData();
-
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/member/update", function(data){
         Feng.success("修改成功!");

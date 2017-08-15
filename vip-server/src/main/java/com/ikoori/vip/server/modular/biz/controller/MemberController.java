@@ -139,14 +139,14 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public Object update(Member member) {
+    public Object update(Member member,Long cardId) {
     	if (ToolUtil.isEmpty(member) || member.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
     	if (StringUtils.isNotBlank(member.getBirthdayStr())) {
 			member.setBirthday(DateUtil.parseDate(member.getBirthdayStr()));
 		}
-    	memberService.updateById(member);
+    	memberService.updateMember(member, cardId);
         return super.SUCCESS_TIP;
     }
 

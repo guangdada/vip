@@ -99,12 +99,12 @@ StoreEmployeeInfoDlg.collectData = function() {
  * 提交添加
  */
 StoreEmployeeInfoDlg.addSubmit = function() {
-	if (!this.validate()) {
-        return;
-    }
+	
     this.clearData();
     this.collectData();
-
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/storeEmployee/add", function(data){
         Feng.success("添加成功!");
@@ -123,6 +123,9 @@ StoreEmployeeInfoDlg.addSubmit = function() {
 StoreEmployeeInfoDlg.editSubmit = function() {
     this.clearData();
     this.collectData();
+    if (!this.validate()) {
+        return;
+    }
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/storeEmployee/update", function(data){
         Feng.success("修改成功!");

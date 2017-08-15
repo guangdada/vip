@@ -73,7 +73,7 @@ public class MemberServiceImpl implements IMemberService {
 		//当前登录账号
     	Long createUserId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(createUserId);
-    	member.setIsActive(false);
+    	/*member.setIsActive(false);*/
     	this.insert(member);
 		MemberCard mc=new MemberCard();
         mc.setMemberId(member.getId());
@@ -92,5 +92,16 @@ public class MemberServiceImpl implements IMemberService {
 		mc=memberCardMapper.selectOne(mc);
 		memberCardMapper.deleteById(mc.getId());
 		this.deleteById(memberId);
+	}
+
+	@Override
+	@Transactional(readOnly=false)
+	public void updateMember(Member member,Long cardId) {
+		this.updateById(member);
+		MemberCard mc=new MemberCard();
+	    mc.setMemberId(member.getId());
+	    mc=memberCardMapper.selectOne(mc);
+	    mc.setCardId(cardId);
+		memberCardMapper.updateById(mc);
 	}
 }
