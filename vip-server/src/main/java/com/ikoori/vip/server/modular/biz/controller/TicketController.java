@@ -18,6 +18,7 @@ import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.SpecType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.TicketMapper;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Ticket;
@@ -43,6 +44,8 @@ public class TicketController extends BaseController {
     @Autowired
 	ITicketService ticketService;
     @Autowired
+   	TicketMapper ticketMapper;
+    @Autowired
    	IMerchantService merchantService;
     /**
      * 跳转到小票首页
@@ -52,7 +55,8 @@ public class TicketController extends BaseController {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	/*Merchant merchant = merchantService.getMerchantUserId(userId);
     	model.addAttribute("merchant", merchant);*/
-    	Ticket ticket=ticketService.selectById(1L);
+    	/*Ticket ticket=ticketService.selectById(1L);*/
+    	Ticket ticket=ticketMapper.selectById(1);
     	model.addAttribute("ticket", ticket);
     	model.addAttribute("specType", SpecType.values());
         return PREFIX + "ticket.html";

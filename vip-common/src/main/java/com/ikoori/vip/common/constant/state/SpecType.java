@@ -7,7 +7,7 @@ package com.ikoori.vip.common.constant.state;
  *
  */
 public enum SpecType {
-	specType1(1, "58mm"), specType2(2, "80mm");
+	small(1, "58mm"), big(2, "80mm");
 	int code;
 	String message;
 

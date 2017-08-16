@@ -9,7 +9,11 @@
 			<!-- <div class="app"> -->
 <!-- 				<div class="app-inner f-cb"> -->
 					<div class="mode-block f-cb">
-						<div id="ticketWidth" class="mode-print f-fl  small" style="float:left">
+						<div id="ticketWidth" class="mode-print f-fl
+						@if(ticket.specType==1){
+									 small
+									@}
+						" style="float:left">
 							<div class="mode-print-title text-16">预览效果</div>
 							<div class="mode-preview print-preview">
 								<p class="tit" id="ptitle">${ticket.title}</p>
@@ -140,17 +144,23 @@
 								</div>
 								<div class="mode-set-edit mt10">
 									<div class="mode-edit-title" >编辑头部标题</div>
-									<textarea maxlength="32" class="receipt-edit-field"
-										placeholder="有赞门店" id="title" name="title">${ticket.title}</textarea>
+									<textarea  class="receipt-edit-field"
+										placeholder="头部标题" id="title" name="title">${ticket.title}</textarea>
+								    <div id="error1">
+								     <p class="error_info">错误提示,头部标题不能为空！</p>
+								     </div>
 								</div>
 								<div class="mode-set-edit mt10">
 									<div class="mode-edit-title">编辑底部备注</div>
-									<textarea maxlength="32" class="receipt-edit-field"
+									<textarea  class="receipt-edit-field"
 										placeholder="谢谢惠顾，欢迎下次光临！" id="remark" name="remark">${ticket.remark}</textarea>
+								    <div  id="error2">
+								     <p class="error_info">错误提示,底部备注不能为空！</p>
+								   </div>
 								</div>
 								<div class="mode-option-btnbox mt20 clearfix">
 									<button type="button" class="zent-btn">打印测试</button>
-									<button type="button" class="zent-btn-primary zent-btn" id="ensure" clickFun="TicketInfoDlg.editSubmit()">应用</button>
+									<button type="button" class="zent-btn-primary zent-btn" id="ensure" onclick="TicketInfoDlg.editSubmit()">应用</button>
 								</div>
 							</div>
 						</div>
@@ -160,6 +170,6 @@
 		</div>
 	</div>
 </div>
-<script src="${ctxPath}/static/modular/biz/ticket/ticket.js"></script>
 <script src="${ctxPath}/static/modular/biz/ticket/ticket_info.js"></script>
+<script src="${ctxPath}/static/modular/biz/ticket/ticket.js"></script>
 @}

@@ -111,7 +111,6 @@ MemberInfoDlg.addSubmit = function() {
  * 提交修改
  */
 MemberInfoDlg.editSubmit = function() {
-	
     this.clearData();
     this.collectData();
     if (!this.validate()) {

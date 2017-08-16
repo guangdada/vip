@@ -81,7 +81,7 @@ CardInfoDlg.rights = [];
 CardInfoDlg.validateOther = function (){
 	var result = true;
 	var name = $("#name").val();
-	var name_help = $("#name").siblings(".error_info").text("").hide();
+	var title_help = $("#name").siblings("error1").text("").hide();
 	if(!name){
 		//$("#name").focus();
 		name_help.text("会员卡名称不能为空").show();
