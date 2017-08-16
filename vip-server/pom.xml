@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.ikoori</groupId>
     <artifactId>vip-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>vip-server</artifactId>
   <packaging>war</packaging>
@@ -23,6 +23,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 我们想要发布war包到tomcat项目，要讲spring boot中内嵌的tomcat包依赖排除，不然产生冲突 -->
+            <!-- <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-tomcat</artifactId>
+		        </exclusion>
+		    </exclusions> -->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -236,6 +243,7 @@
     </dependencies>
 
     <build>
+    	<finalName>vip-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -283,5 +291,6 @@
                 </includes>
             </resource>
         </resources>
+        <defaultGoal>compile</defaultGoal>
     </build>
 </project>

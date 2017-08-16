@@ -4,11 +4,10 @@
 
   <groupId>com.ikoori</groupId>
   <artifactId>vip-parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>pom</packaging>
 
   <name>vip-parent</name>
-  <url>http://maven.apache.org</url>
 
   <modules>
     <module>vip-common</module>
@@ -39,10 +38,10 @@
         <com.alibaba.dubbo.version>2.5.3</com.alibaba.dubbo.version>  
         <org.apache.zookeeper.version>3.4.6</org.apache.zookeeper.version>  
         <com.github.sgroschupf.zkclient.version>0.1</com.github.sgroschupf.zkclient.version>
-        <vip.api.version>0.0.1-SNAPSHOT</vip.api.version>
-        <vip.common.version>0.0.1-SNAPSHOT</vip.common.version>
-        <vip.core.version>0.0.1-SNAPSHOT</vip.core.version>
-        <vip.api.version>0.0.1-SNAPSHOT</vip.api.version>
+        <vip.api.version>0.0.1</vip.api.version>
+        <vip.common.version>0.0.1</vip.common.version>
+        <vip.core.version>0.0.1</vip.core.version>
+        <vip.api.version>0.0.1</vip.api.version>
 	</properties>
 
 	<dependencyManagement>

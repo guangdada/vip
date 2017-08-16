@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.PointMapper;
 import com.ikoori.vip.common.persistence.model.Point;
+import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IPointService;
 
 /**
@@ -21,11 +22,14 @@ import com.ikoori.vip.server.modular.biz.service.IPointService;
 public class PointServiceImpl implements IPointService {
 	@Autowired
 	PointMapper pointMapper;
+	
+	@Autowired
+	PointDao pointDao;
 
 	@Override
 	public List<Map<String, Object>> getPointList(Page<Point> page, String name, String orderByField,
 			boolean isAsc,Long merchantId) {
-		return pointMapper.getPointList(page, name, orderByField, isAsc,merchantId);
+		return pointDao.getPointList(page, name, orderByField, isAsc,merchantId);
 	}
 	
 	public void savePoint(Point point){

@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.ikoori</groupId>
     <artifactId>vip-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>vip-core</artifactId>
+  <packaging>jar</packaging>
   <name>vip-core</name>
-  <url>http://maven.apache.org</url>
   
   <dependencies>
 		<!--spring boot依赖 -->
@@ -61,7 +61,7 @@
 		<dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-            <version>${ehcache.version}</version>
+            <!-- <version>${ehcache.version}</version> -->
         </dependency>
 		<dependency>
 			<groupId>com.google.zxing</groupId>

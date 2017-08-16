@@ -29,7 +29,7 @@ public class MemberCardWarpper extends BaseControllerWarpper {
     	Integer state = Integer.valueOf(map.get("state").toString());
     	Card card = ConstantFactory.me().getCard(cardId);
     	Member member = ConstantFactory.me().getMember(memberId);
-    	map.put("mobile", member.getMobile());
+    	map.put("mobile", member == null ? "-" : member.getMobile());
     	map.put("cardName", card == null ? "-" : card.getName());
     	map.put("grantType", card == null ? "-" : GrantType.valueOf(card.getGrantType()));
     	map.put("state", MemCardState.valueOf(state));

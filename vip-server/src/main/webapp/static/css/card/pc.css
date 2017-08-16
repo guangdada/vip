@@ -97,9 +97,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 .app-preview .block {
-	-webkit-border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
-	-moz-border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
-	border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
+	-webkit-border-image: url("../coupon/img/border-line-2.png") 2 stretch;
+	-moz-border-image: url("../coupon/img/border-line-2.png") 2 stretch;
+	border-image: url("../coupon/img/border-line-2.png") 2 stretch;
 	border-top: 2px solid #e5e5e5;
 	border-bottom: 2px solid #e5e5e5;
 	overflow: hidden;
@@ -116,9 +116,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	padding: 10px;
 	line-height: 1.5;
 	border: 0;
-	-webkit-border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
-	-moz-border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
-	border-image: url("/static/img/coupon/border-line-2.png") 2 stretch;
+	-webkit-border-image: url("../coupon/img/border-line-2.png") 2 stretch;
+	-moz-border-image: url("../coupon/img/border-line-2.png") 2 stretch;
+	border-image: url("../coupon/img/border-line-2.png") 2 stretch;
 	border-top: 2px solid #e5e5e5;
 	overflow: hidden
 }
@@ -11612,7 +11612,7 @@ to {
 .app-design .app-preview .app-header {
 	display: none;
 	height: 70px;
-	background: url("/static/img/card/iphone_head.png")
+	background: url("img/iphone_head.png")
 		no-repeat 50%
 }
 
@@ -11643,7 +11643,7 @@ to {
 	color: #fff;
 	font-weight: 700;
 	text-align: center;
-	background: url("/static/img/card/titlebar.png") no-repeat
+	background: url("img/titlebar.png") no-repeat
 }
 
 .app-design .app-preview .app-config .app-field h1 span {
@@ -11925,11 +11925,11 @@ to {
 		(min--moz-device-pixel-ratio:1.5) , only screen and
 	(min-device-pixel-ratio:1.5) {
 	.app-design .app-preview .app-header {
-		background-image: url("/static/img/card/iphone_head@2x.png");
+		background-image: url("img/iphone_head@2x.png");
 		background-size: 80px 34px
 	}
 	.app-design .app-preview .app-config .app-field h1 {
-		background-image: url("/static/img/card/titlebar@2x.png");
+		background-image: url("img/titlebar@2x.png");
 		background-size: 320px 64px
 	}
 }

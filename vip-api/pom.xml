@@ -5,11 +5,11 @@
   <parent>
     <groupId>com.ikoori</groupId>
     <artifactId>vip-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
   </parent>
   <artifactId>vip-api</artifactId>
+  <packaging>jar</packaging>
   <name>vip-api</name>
-  <url>http://maven.apache.org</url>
   
   <dependencies>
 		<dependency>

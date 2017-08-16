@@ -2369,7 +2369,8 @@ to {
 	padding: 20px;
 	border: 1px solid #e6e6e6;
 	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-	box-shadow: 0 0 10px rgba(0, 0, 0, .15)
+	box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+	background-color: white;
 }
 
 .mode-preview-title {

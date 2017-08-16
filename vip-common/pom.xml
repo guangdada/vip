@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.ikoori</groupId>
 		<artifactId>vip-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>vip-common</artifactId>
+	<packaging>jar</packaging>
 	<name>vip-common</name>
-	<url>http://maven.apache.org</url>
 
 	<dependencies>
 		<!--spring boot依赖 -->

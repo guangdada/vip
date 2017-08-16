@@ -46,10 +46,10 @@ input[type=file], select {
 }
 
 .block {
-	-webkit-border-image: url("/static/img/card/border-line-2.png") 2
+	-webkit-border-image: url("img/border-line-2.png") 2
 		stretch;
-	-moz-border-image: url("/static/img/card/border-line-2.png") 2 stretch;
-	border-image: url("/static/img/card/border-line-2.png") 2 stretch;
+	-moz-border-image: url("img/border-line-2.png") 2 stretch;
+	border-image: url("img/border-line-2.png") 2 stretch;
 	border-top: 2px solid #e5e5e5;
 	border-bottom: 2px solid #e5e5e5;
 	overflow: hidden;
@@ -115,10 +115,10 @@ input[type=file], select {
 	padding: 10px;
 	line-height: 1.5;
 	border: 0;
-	-webkit-border-image: url("/static/img/card/border-line-2.png") 2
+	-webkit-border-image: url("img/border-line-2.png") 2
 		stretch;
-	-moz-border-image: url("/static/img/card/border-line-2.png") 2 stretch;
-	border-image: url("/static/img/card/border-line-2.png") 2 stretch;
+	-moz-border-image: url("img/border-line-2.png") 2 stretch;
+	border-image: url("img/border-line-2.png") 2 stretch;
 	border-top: 2px solid #e5e5e5
 }
 
@@ -282,7 +282,7 @@ input[type=file], select {
 	background-repeat: no-repeat;
 	background-size: 25px;
 	margin-top: 5px;
-	background-image: url("/static/img/card/qc_code.png")
+	background-image: url("img/qc_code.png")
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5) , only screen and
@@ -387,9 +387,9 @@ input[type=file], select {
 	padding: 10px 0;
 	margin-left: 10px;
 	line-height: 22px;
-	-webkit-border-image: url("/static/img/card/border-line.png") 2 stretch;
-	-moz-border-image: url("/static/img/card/border-line.png") 2 stretch;
-	border-image: url("/static/img/card/border-line.png") 2 stretch;
+	-webkit-border-image: url("img/border-line.png") 2 stretch;
+	-moz-border-image: url("img/border-line.png") 2 stretch;
+	border-image: url("img/border-line.png") 2 stretch;
 	border-bottom: 2px solid #e5e5e5
 }
 
@@ -421,7 +421,7 @@ input[type=file], select {
 }
 
 .membercard-area .membership-region .free-shipping {
-	background-image: url("/static/img/card/icon_baoyou.png")
+	background-image: url("img/icon_baoyou.png")
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5) , only screen and
@@ -433,7 +433,7 @@ input[type=file], select {
 }
 
 .membercard-area .membership-region .discount {
-	background-image: url("/static/img/card/icon_zhekou.png")
+	background-image: url("img/icon_zhekou.png")
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5) , only screen and
@@ -445,19 +445,19 @@ input[type=file], select {
 }
 
 .membercard-area .membership-region .coupon {
-	background-image: url("/static/img/card/icon_youhuiquan.png")
+	background-image: url("img/icon_youhuiquan.png")
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5) , only screen and
 		(min--moz-device-pixel-ratio:1.5) , only screen and
 	(min-device-pixel-ratio:1.5) {
 	.membercard-area .membership-region .coupon {
-		background-image: url("/static/img/card/icon_youhuiquan@2x.png")
+		background-image: url("img/icon_youhuiquan@2x.png")
 	}
 }
 
 .membercard-area .membership-region .score {
-	background-image: url("/static/img/card/icon_jifen.png")
+	background-image: url("img/icon_jifen.png")
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio:1.5) , only screen and
