@@ -44,6 +44,11 @@
             <artifactId>velocity</artifactId>
             <version>${velocity.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>${beetl.version}</version>
+        </dependency>
 		<dependency>
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>dubbo</artifactId>
@@ -82,6 +87,16 @@
 			<artifactId>vip-common</artifactId>
 			<version>${vip.common.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.ikoori</groupId>
+			<artifactId>vip-core</artifactId>
+			<version>${vip.core.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

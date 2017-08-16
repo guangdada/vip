@@ -1,42 +1,29 @@
-<!DOCTYPE html>
-<html>
+@layout("/common/_container.html"){
+<div class="weui-msg">
+	<div class="weui-msg__icon-area">
+		<i class="weui-icon-warn weui-icon_msg"></i>
+	</div>
+	<div class="weui-msg__text-area">
+		<h2 class="weui-msg__title">页面不见了</h2>
+		<!-- <p class="weui-msg__desc">
+			内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a>
+		</p> -->
+	</div>
+	<div class="weui-msg__opr-area">
+		<p class="weui-btn-area">
+			<a href="javascript:;" class="weui-btn weui-btn_primary">返回首页</a> 
+			<!-- <a href="javascript:;" class="weui-btn weui-btn_default">辅助操作</a> -->
+		</p>
+	</div>
+	<div class="weui-msg__extra-area">
+		<div class="weui-footer">
+			<p class="weui-footer__links">
+				<a href="javascript:void(0);" class="weui-footer__link">底部链接文本</a>
+			</p>
+			<p class="weui-footer__text">Copyright © 2017-2027</p>
+		</div>
+	</div>
+</div>
+@}
 
-<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>404 页面</title>
-    <link rel="shortcut icon" href="${ctxPath}/static/favicon.ico"> <link href="${ctxPath}/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${ctxPath}/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${ctxPath}/static/css/animate.css" rel="stylesheet">
-    <link href="${ctxPath}/static/css/style.css?v=4.1.0" rel="stylesheet">
-
-</head>
-
-<body class="gray-bg">
-
-
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>404</h1>
-        <h3 class="font-bold">页面未找到！</h3>
-
-        <div class="error-desc">
-            抱歉，页面好像去火星了~
-            <form class="form-inline m-t" role="form">
-                <div class="form-group">
-                    <input type="email" class="form-control" placeholder="请输入您需要查找的内容 …">
-                </div>
-                <button type="submit" class="btn btn-primary">搜索</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- 全局js -->
-    <script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${ctxPath}/static/js/bootstrap.min.js?v=3.3.6"></script>
-
-</body>
-
-</html>

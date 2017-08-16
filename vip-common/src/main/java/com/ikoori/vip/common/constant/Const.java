@@ -32,5 +32,10 @@ public interface Const {
      * 接口文档的菜单名
      */
     String API_MENU_NAME = "接口文档";
+    
+    /**
+     * 
+     */
+    String SESSION_USER_INFO = "userInfo";
 
 }
