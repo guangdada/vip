@@ -7,7 +7,7 @@ import com.alibaba.dubbo.config.spring.ReferenceBean;
 import com.ikoori.vip.api.service.MemberService;
 
 @Configuration
-public class Consumer extends DubboBaseConfig {
+public class DubboConsumer extends DubboBaseConfig {
 	@Bean
 	public ReferenceBean<MemberService> personConsumer() {
 		ReferenceBean<MemberService> ref = new ReferenceBean<MemberService>();

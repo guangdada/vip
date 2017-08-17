@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ikoori.vip.mobile.config.Consumer;
+import com.ikoori.vip.mobile.config.DubboConsumer;
 
 @Controller
 @RequestMapping("/member")
@@ -14,7 +14,7 @@ public class MemberController {
 	//@Reference(version = "1.0.0")
 	//private MemberService memberService;
 	 @Autowired
-	 Consumer consumer;
+	 DubboConsumer consumer;
 
 
 	@RequestMapping("/login")
