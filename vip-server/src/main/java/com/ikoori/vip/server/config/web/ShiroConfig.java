@@ -152,6 +152,8 @@ public class ShiroConfig {
         hashMap.put("/area", "anon");
         hashMap.put("/global/sessionError", "anon");
         hashMap.put("/kaptcha", "anon");
+        // 外部接口目录
+        hashMap.put("/api", "anon");
         hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
