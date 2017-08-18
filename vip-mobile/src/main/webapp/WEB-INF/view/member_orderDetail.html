@@ -1,0 +1,54 @@
+@layout("/common/_container.html",{title:"我的订单"}){
+<link href="${ctxPath}/static/css/index.css" rel="stylesheet">
+
+  <!--   <header class='demos-header1' style="background-color:gray;">
+      <h1 class="demos-title"></h1>
+    </header>  -->
+ <!--  <div class="weui-cells__titl weui-cell weui-cell_link">订单详情</div> -->
+    <body ontouchstart>
+
+    <div class="weui-form-preview order">
+      <div class="orderdetail-weui-form-preview__hd">
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">消费总金额</label>
+          <em class="weui-form-preview__value">50</em>
+        </div>
+      </div>
+      <div class="weui-form-preview__bd">
+       <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">交易单号</label>
+          <span class="weui-form-preview__value">2356445654444141</span>
+        </div>
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">时间</label>
+          <span class="weui-form-preview__value">2017-07-23</span>
+        </div>
+        
+        <div class="orderdetail-weui-cells">
+		  <div class="weui-cell orderItem">
+		    <div class="weui-cell__hd title">商品名称</div>
+		    <div class="weui-cell__bd title" align="center">
+		      <p>商品数量</p>
+		    </div>
+		    <div class="weui-cell__ft title">消费金额</div>
+		  </div>
+		  <div class="orderdetail-weui-cell orderItem">
+		    <div class="weui-cell__hd value">风扇</div>
+		    <div class="weui-cell__bd value" align="center">
+		      <p>x1</p>
+		    </div>
+		    <div class="weui-cell__ft value">￥15</div>
+		  </div>
+		</div>
+    
+        
+      </div>
+    </div>
+  
+   
+  
+  
+
+
+  </body>
+@}

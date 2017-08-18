@@ -1,0 +1,42 @@
+@layout("/common/_container.html",{title:"我的订单"}){
+<link href="${ctxPath}/static/css/index.css" rel="stylesheet">
+  <body ontouchstart>
+
+  <!--   <header class='demos-header1' style="background-color:gray;">
+      <h1 class="demos-title"></h1>
+    </header>  -->
+ <!--  <div class="weui-cells__titl weui-cell weui-cell_link">订单详情</div> -->
+ <div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
+
+    <div class="weui-form-preview">
+    <a href="/member/orderDetail" class="order-weui-cell_access">
+      <div class="weui-form-preview__bd">
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">流水号：34556667778898989</label>
+          <span class="order-weui-form-preview__value">￥50</span> 
+           <div class="order-weui-cell__ft"></div>
+        </div>
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">长沙家乐福店</label>
+        <!--   <span class="weui-form-preview__value">50</span> -->
+        </div>
+      </div>
+     </a>
+    </div>
+   
+   <div class="weui-form-preview">
+    <a href="/member/orderDetail">
+      <div class="weui-form-preview__bd">
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">流水号：34556667778898989</label>
+          <span class="order-weui-form-preview__value">￥50</span> 
+        </div>
+        <div class="weui-form-preview__item">
+          <label class="weui-form-preview__label">长沙家乐福店</label>
+        <!--   <span class="weui-form-preview__value">50</span> -->
+        </div>
+      </div>
+       </a>
+    </div>
+  </body>
+@}

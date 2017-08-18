@@ -1,5 +1,9 @@
 package com.ikoori.vip.mobile.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +27,34 @@ public class MemberController {
 		//memberService.test();
 		JSONObject obj = consumer.personConsumer().get().test("成");
 		return obj.getString("name");
+	}
+	
+	@RequestMapping("/info")
+	public String info(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_info.html";
+	}
+	@RequestMapping("/register")
+	public String register(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_register.html";
+	}
+	@RequestMapping("/point")
+	public String points(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_point.html";
+	}
+	@RequestMapping("/coupon")
+	public String coupon(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_coupon.html";
+	}
+	@RequestMapping("/order")
+	public String order(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_order.html";
+	}
+	@RequestMapping("/orderDetail")
+	public String orderDetail(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_orderDetail.html";
+	}
+	@RequestMapping("/store")
+	public String store(HttpServletRequest request, Map<String, Object> map) {
+		return "/store.html";
 	}
 }

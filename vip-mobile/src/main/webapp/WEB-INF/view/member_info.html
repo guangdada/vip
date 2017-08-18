@@ -1,0 +1,107 @@
+@layout("/common/_container.html",{title:"我的资料"}){
+
+  <body ontouchstart>
+
+    <header class='demos-header' style="background:#d7d7d7;">
+      <h4 align="center" style="color:white">完善个人资料</h4>
+    </header>
+    
+    <div class="weui-cells__title" style="color:blue">请填写真实信息，获得生日赠礼！</div>
+    <div class="weui-cells weui-cells_form">
+	  <div class="weui-cell">
+		<div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+		<div class="weui-cell__bd">
+			<input class="weui-input" type="text" placeholder="请输入昵称">
+		</div>
+      </div>
+	  
+	  <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+          <label for="" class="weui-label">性别</label>
+        </div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2">
+            <option value="1">男</option>
+            <option value="2">女</option>
+          </select>
+        </div>
+      </div>
+	
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <label class="weui-label">手机</label>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="number" placeholder="请输入手机号">
+        </div>
+      </div>
+	  
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="date"  placeholder="年/月/日">
+        </div>
+      </div>
+     <div class="weui-cell">
+		<div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
+		<div class="weui-cell__bd">
+			<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入邮箱">
+		</div>
+    </div>
+	
+	 <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+          <label for="" class="weui-label">职业</label>
+        </div>
+        <div class="weui-cell__bd">
+          <select class="weui-select" name="select2">
+            <option value="1">学生</option>
+            <option value="2">员工</option>
+          </select>
+        </div>
+      </div>
+	  
+	<div class="weui-cell">
+        <div class="weui-cell__hd"><label for="name" class="weui-label">收货地址</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="start" type="text" value="湖北省 武汉市 武昌区">
+        </div>
+      </div>
+    </div>
+    
+    <div class="weui-btn-area">
+      <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+    </div>
+
+	    <script src="${ctxPath}/static/lib/jquery-2.1.4.js"></script>
+		<script src="${ctxPath}/static/lib/fastclick.js"></script>
+		<script src="${ctxPath}/static/js/jquery-weui.js"></script>
+        <script src="${ctxPath}/static/js/city-picker.js"></script>
+    <script>
+	 $("#start").cityPicker({
+        title: "选择出发地",
+        onChange: function (picker, values, displayValues) {
+          console.log(values, displayValues);
+        }
+      });
+      $("#end").cityPicker({
+        title: "选择目的地"
+      });
+      $("#home-city").cityPicker({
+        title: "选择目的地",
+        showDistrict: false,
+        onChange: function (picker, values, displayValues) {
+          console.log(values, displayValues);
+        }
+      });
+	
+      $("#showTooltips").click(function() {
+        var tel = $('#tel').val();
+        var code = $('#code').val();
+        if(!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) $.toptip('请输入手机号');
+        else if(!code || !/\d{6}/.test(code)) $.toptip('请输入六位手机验证码');
+        else $.toptip('提交成功', 'success');
+      });
+    </script>
+  </body>
+@}
