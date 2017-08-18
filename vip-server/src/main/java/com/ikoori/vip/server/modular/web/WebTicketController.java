@@ -12,7 +12,7 @@ import com.ikoori.vip.server.common.controller.BaseController;
  * @Date 2017-08-04 11:07:42
  */
 @Controller
-@RequestMapping("/api/ticket")
-public class TicketController extends BaseController {
+@RequestMapping("/web/ticket")
+public class WebTicketController extends BaseController {
 	
 }
