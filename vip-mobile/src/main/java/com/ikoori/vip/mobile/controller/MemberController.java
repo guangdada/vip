@@ -57,4 +57,16 @@ public class MemberController {
 	public String store(HttpServletRequest request, Map<String, Object> map) {
 		return "/store.html";
 	}
+	@RequestMapping("/demo")
+	public String demo(HttpServletRequest request, Map<String, Object> map) {
+		return "/demo.html";
+	}
+	@RequestMapping("/sorting")
+	public String sorting(HttpServletRequest request, Map<String, Object> map) {
+		return "/sorting.html";
+	}
+	@RequestMapping("/select")
+	public String select(HttpServletRequest request, Map<String, Object> map) {
+		return "/select.html";
+	}
 }

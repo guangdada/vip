@@ -1,0 +1,68 @@
+._navbar{
+    background-color: #ffffff;
+    margin: auto;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+    width: 100%;
+}
+._navbar li{width:30%;display: inline-block;float: left;height: 5rem;font-size: 2rem;line-height: 5rem;border-bottom: 1px solid #eee;}
+._navbar>ul>li>span{
+    background: url("../images/on_1.png") no-repeat right center; background-size:0.75em; padding-right:22px;
+}
+._navbar>ul>.current>span{
+    background: url("../images/on_2.png") no-repeat  right center;background-size:0.75em; color:#3cb9f3;
+}
+.address_first .current{
+    background:#eee;
+    color: #6f83ff;
+    border-left: 2px solid #6f83ff;
+}
+._sorting-address,._sorting-medical,._sorting-college{
+    position:fixed;
+    top: -50%;
+    width: 100%;
+    height: 50%;
+    z-index: 1;
+    -webkit-transition-duration: 0.4s;
+    background: #fff;
+}
+._sorting-address>ul,._sorting-medical>ul,._sorting-college>ul{
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    -webkit-transition-duration: 0.4s;
+}
+._sorting-address>ul>li,._sorting-medical>ul>li,._sorting-college>ul>li{
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.5rem;
+    padding-left: 1rem;
+    border-bottom: solid 1px #eee;
+}
+._sorting-address>ul.address_first,._sorting-medical>ul.medical_first,._sorting-college>ul.college_first{
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+}
+._sorting-address>ul.address_second,._sorting-address>ul.address_third,._sorting-medical>ul.medical_second,._sorting-college>ul.college_second{
+    background: #eee;
+    position: absolute;
+    z-index: 2;
+    left: 100%;
+}
+._sorting-address>ul.address_second>._sorting-address>ul.address_third,li,._sorting-medical>ul.medical_second>li,._sorting-college>ul.college_second>li{
+    border-bottom: solid 1px #e5e5e5;
+}
+.fixed-top{
+    top:4rem;
+}
+.fixed-top::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background:rgba(0,0,0,0.2);
+}
