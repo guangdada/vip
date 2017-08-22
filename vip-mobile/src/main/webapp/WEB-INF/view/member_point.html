@@ -1,11 +1,14 @@
 @layout("/common/_container.html",{title:"我的积分"}){
-<link href="${ctxPath}/static/jqweui/css/index.css" rel="stylesheet">
-  <body ontouchstart>
-<!-- 
-    <header class='demos-header1' style="background-color:gray;">
-      <h1 class="demos-title"></h1>
-    </header>  -->
-  <div class="weui-cells__titl weui-cell weui-cell_link">积分明细列表</div>
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+  <body ontouchstart style="background-color:#f5f4f4;">
+
+    <header class='demos-header1' style="background-color:#39ad20;"  height="70px">
+    <br>
+      <p class='demos-sub-title' style="color:white;">可用积分</p>
+      <h3 class="point-demos-title" style="color:white;">101</h3>
+	
+    </header> 
+  <div class="weui-cells__titl weui-cell weui-cell_link" >积分明细列表</div>
 
     <div class="weui-form-preview">
      <!--  <div class="weui-form-preview__hd">
@@ -17,7 +20,7 @@
       <div class="weui-form-preview__bd">
          <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">积分收支</label>
-          <span class="weui-form-preview__value">2400</span>
+          <span class="weui-form-preview__value" style="color:green;">+2400</span>
         </div>
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">日期</label>
@@ -43,7 +46,7 @@
       <div class="weui-form-preview__bd">
       	<div class="weui-form-preview__item">
           <label class="weui-form-preview__label">积分收支</label>
-          <span class="weui-form-preview__value">2400</span>
+          <span class="weui-form-preview__value" style="color:red;">-2400</span>
         </div>
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">日期</label>
@@ -59,6 +62,8 @@
         <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</button>
       </div> -->
     </div>
-
+    <div class="weui-form-preview__bd" style="background-color:#fff;">
+        <h4 align="center">已经没有更多了</h4>
+    </div>
   </body>
 @}

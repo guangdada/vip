@@ -1,13 +1,12 @@
 @layout("/common/_container.html",{title:"我的订单"}){
-<link href="${ctxPath}/static/jqweui/css/index.css" rel="stylesheet">
-  <body ontouchstart>
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+  <body ontouchstart style="background-color:#fbfafa;">
 
   <!--   <header class='demos-header1' style="background-color:gray;">
       <h1 class="demos-title"></h1>
     </header>  -->
  <!--  <div class="weui-cells__titl weui-cell weui-cell_link">订单详情</div> -->
  <div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
-
     <div class="weui-form-preview">
     <a href="/member/orderDetail" class="order-weui-cell_access">
       <div class="weui-form-preview__bd">
@@ -38,5 +37,9 @@
       </div>
        </a>
     </div>
+     <div class="weui-form-preview__bd" style="background-color:#fff;">
+        <h4 align="center">(⊙０⊙)啊哦，没有更多订单啦</h4>
+    </div>
+  </body>
   </body>
 @}
