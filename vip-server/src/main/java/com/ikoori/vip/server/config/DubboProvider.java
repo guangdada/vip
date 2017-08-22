@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.dubbo.config.spring.ServiceBean;
+import com.ikoori.vip.api.service.MemberCardApi;
 import com.ikoori.vip.api.service.MemberService;
 
 @Configuration
@@ -15,6 +16,17 @@ public class DubboProvider extends DubboBaseConfig {
 		serviceBean.setVersion("myversion");
 		serviceBean.setInterface(MemberService.class.getName());
 		serviceBean.setRef(memberService);
+		serviceBean.setTimeout(5000);
+		serviceBean.setRetries(3);
+		return serviceBean;
+	}
+	@Bean
+	public ServiceBean<MemberCardApi> cardProvider(MemberCardApi cardApi) {
+		ServiceBean<MemberCardApi> serviceBean = new ServiceBean<MemberCardApi>();
+		serviceBean.setProxy("javassist");
+		serviceBean.setVersion("myversion");
+		serviceBean.setInterface(MemberCardApi.class.getName());
+		serviceBean.setRef(cardApi);
 		serviceBean.setTimeout(5000);
 		serviceBean.setRetries(3);
 		return serviceBean;

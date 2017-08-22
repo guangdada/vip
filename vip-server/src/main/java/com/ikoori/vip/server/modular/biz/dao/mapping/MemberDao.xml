@@ -22,4 +22,16 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="getMemberByOpenId" resultType="com.ikoori.vip.common.persistence.model.Member">
+    	SELECT
+			m.*
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu ON m.wx_user_id = wu.id
+		WHERE
+			m.id = 1
+		AND wu.`status` = 1
+		AND wu.openid = #{openId};
+    </select>
 </mapper>

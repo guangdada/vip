@@ -10,19 +10,19 @@
 <link href="${ctxPath}/static/jqweui/lib/weui.min.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/jquery-weui.min.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/demos/css/demos.css" rel="stylesheet">
+<script src="${ctxPath}/static/jqweui/lib/jquery-2.1.4.js"></script>
+<script src="${ctxPath}/static/jqweui/lib/fastclick.js"></script>
+<script src="${ctxPath}/static/jqweui/js/jquery-weui.min.js"></script>
+<script src="${ctxPath}/static/styles/js/ajax-object.js"></script>
 </head>
 
 <body ontouchstart>
 	${layoutContent}
-
-	<script src="${ctxPath}/static/jqweui/lib/jquery-2.1.4.js"></script>
-	<script src="${ctxPath}/static/jqweui/lib/fastclick.js"></script>
 	<script>
 		$(function() {
 			FastClick.attach(document.body);
 		});
 	</script>
 	<!-- 全局js -->
-	<script src="${ctxPath}/static/jqweui/js/jquery-weui.min.js"></script>
 </body>
 </html>

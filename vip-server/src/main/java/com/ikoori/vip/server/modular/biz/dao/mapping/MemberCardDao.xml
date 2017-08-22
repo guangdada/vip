@@ -25,4 +25,51 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="getMemberCard" parameterType="long" resultMap="memberCardMap">
+    	SELECT
+			m.id mem_id,
+			m.`name` AS mem_name,
+			c.id AS card_id,
+			c.cover_pic,
+			c.color_code,
+			c.`name` card_name,
+			me.id AS merchant_id,
+			me.`name` mer_name,
+			me.head_img,
+			mc.id AS mem_card_id,
+			mc.card_number
+		FROM
+			v_member m
+		LEFT JOIN v_merchant me ON m.merchant_id = me.id
+		LEFT JOIN v_member_card mc ON mc.member_id = m.id
+		LEFT JOIN v_card c ON c.id = mc.card_id
+		WHERE
+			1 = 1
+		AND m.`status` = 1
+		AND mc.`status` = 1
+		AND c.`status` = 1
+		AND mc.is_default = 1
+		AND m.id = #{memberId};
+    </select>
+    
+    <resultMap type="com.ikoori.vip.common.persistence.model.MemberCard" id="memberCardMap">
+    	<id property="id" column="mem_card_id"/>
+    	<result property="cardNumber" column="card_number"/>
+    	<association property="member" javaType="com.ikoori.vip.common.persistence.model.Member">
+    		<id property="id" column="mem_id"/>
+    		<result property="name" column="mem_name"/>
+    	</association>
+    	<association property="merchant" javaType="com.ikoori.vip.common.persistence.model.Merchant">
+    		<id property="id" column="merchant_id"/>
+    		<result property="name" column="mer_name"/>
+    		<result property="headImg" column="head_img"/>
+    	</association>
+    	<association property="card" javaType="com.ikoori.vip.common.persistence.model.Card">
+    		<id property="id" column="card_id"/>
+    		<result property="name" column="card_name"/>
+    		<result property="coverPic" column="cover_pic"/>
+    		<result property="colorCode" column="color_code"/>
+    	</association>
+    </resultMap>
 </mapper>

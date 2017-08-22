@@ -16,4 +16,6 @@ import com.ikoori.vip.common.persistence.model.MemberCard;
  */
 public interface MemberCardDao {
    List<Map<String, Object>> getMemberCardList(@Param("page") Page<MemberCard> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId,@Param("cardNumber") String cardNumber);
+   
+   MemberCard getMemberCard(@Param("memberId") Long memberId);
 }

@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
+@RequestMapping(value = "/login")
 public class LoginController 
 {
 
 	private static final boolean debug = false; // 开发模式
 	
-    @RequestMapping(value = "/login", method = { RequestMethod.GET, RequestMethod.POST })
-    public String login(HttpServletRequest request, Map<String, Object> map)
+    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
+    public String index(HttpServletRequest request, Map<String, Object> map)
     {
-    	return "/index.html";
+    	return "redirect:index";
+    	//return "/index.html";
     }
 
 }

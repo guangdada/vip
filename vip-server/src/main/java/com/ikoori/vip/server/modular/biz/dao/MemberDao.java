@@ -17,4 +17,5 @@ import com.ikoori.vip.common.persistence.model.Member;
 public interface MemberDao {
 	List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 
+	Member getMemberByOpenId(@Param("openId") String openId);
 }

@@ -32,16 +32,21 @@ public class MemberCard extends Model<MemberCard> {
      */
 	@TableField("member_id")
 	private Long memberId;
+	private Member member;
     /**
      * 商户id
      */
 	@TableField("merchant_id")
 	private Long merchantId;
+	
+	private Merchant merchant;
     /**
      * 会员卡id
      */
 	@TableField("card_id")
 	private Long cardId;
+	
+	private Card card;
     /**
      * 卡号
      */
@@ -156,6 +161,30 @@ public class MemberCard extends Model<MemberCard> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public Merchant getMerchant() {
+		return merchant;
+	}
+
+	public void setMerchant(Merchant merchant) {
+		this.merchant = merchant;
+	}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 
 	@Override
