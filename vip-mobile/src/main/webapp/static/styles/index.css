@@ -195,3 +195,89 @@
   text-align: right;
   color: #999999;
 }
+
+/* 首页会员卡样式 */
+.card-region, .wx-card-region {
+        background-color: #ccc;
+        padding: 20px;
+        margin: 10px;
+        color: #fff;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-size: cover
+    }
+
+    .card-region .card-header, .wx-card-region .card-header {
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden
+    }
+
+    .card-region .qr-code, .wx-card-region .qr-code {
+        margin-top: 0px;
+        float: right;
+        width: 25px;
+        height: 25px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 25px;
+        margin-top: 5px;
+        background-image: url("images/qc_code.png")
+    }
+
+
+
+    .card-region .shop-logo {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        vertical-align: top;
+        background-size: 30px;
+        -webkit-border-radius: 15px;
+        border-radius: 15px;
+        background-position: 50%;
+        background-repeat: no-repeat
+    }
+
+    .card-region .shop-name {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        float: left;
+        background-size: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+    }
+
+    .card-region .member-type {
+        margin-top: 0px;
+        font-size: 20px;
+        line-height: 24px;
+        height: 24px;
+        margin-bottom: 10px;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+    }
+
+    .card-region .card-content {
+        font-size: 14px;
+        overflow: hidden
+    }
+
+    .card-region .expiry-date {
+        float: left;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+    }
+
+    .card-region .card-state {
+        float: right;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+    }

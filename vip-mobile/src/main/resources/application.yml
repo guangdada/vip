@@ -80,8 +80,10 @@ spring:
 ###################  beetl配置  ###################
 dubbo:
   application-name: krvip.provider
-  registry-address: 127.0.0.1:2181
-  registry-protocol: zookeeper
+  #registry-address: 127.0.0.1:2181
+  #registry-protocol: zookeeper
+  registry-address: 224.5.6.7:1234
+  registry-protocol: multicast
   monitor-protocol: registry
   protocol-port: 20880
 #多数据源
