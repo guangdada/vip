@@ -1,0 +1,112 @@
+@layout("/common/_container.html",{title:"我的优惠卡"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<style>
+</style>
+
+<body style="background-color:#fafafa;">
+<div class="card-region" style="background-color: f1f1f1;" onclick="showQr()">
+	<div class="card-header">
+		<h4 class="shop-name">
+			<span >官方韩国发货</span>
+		</h4>
+		<div class="qr-code"></div>
+	</div>
+	<h2  align="center">9.0折</h2>
+	<h5  align="center">订单满100元（含运费）</h5>
+	<div class="card-content">
+		<p class="expiry-date">
+			<font align="center">有效期：2017-08-12 16:45-2017-08-31 16:45</font> 
+			<!--  <span>无限期</span> -->
+		</p>
+	</div>
+</div>
+
+ <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+      <a href="javascript:;" class="coupondetail-weui-btn weui-btn_primary">立即使用</a>
+    </p>
+  </div>
+  <div align="center">
+  <a href="/member/coupon"><font size="2px" color="blue">查看我的卡券</font></a>
+  </div>
+
+<input type="hidden" id="cardNum" value="fdfd"/>
+<div id="qrcode" style="display: none;"></div>
+
+<div class="bd">
+      <div class="page__bd">
+         <div class="weui-cells">
+          <a class="weui-cell weui-cell_access" href="/member/info">
+           <!--  <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div> -->
+            <div class="weui-cell__bd">
+              <p>卡券二维码</p>
+            </div>
+            <div class="weui-cell__ft"><img src="${ctxPath}/static/styles/images/qc_code.png" widht="20px" height="22px"/></div>
+          </a>
+      	<!--  <a class="weui-cell weui-cell_access" href="/member/point"> 
+            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/8.png
+            " alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+              <p>使用商品</p>
+            </div>
+            <div class="weui-cell__ft">全部网店商品</div>
+         </a> -->
+         
+         <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p>使用商品</p>
+            </div>
+            <div class="weui-cell__ft">全部网店商品</div>
+          </div>
+         <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p>使用说明</p>
+            </div>
+            <div class="weui-cell__ft">订单满100可使用</div>
+          </div>
+         
+          <!-- <a class="weui-cell weui-cell_access" href="/member/order">
+            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+              <p>使用说明</p>
+            </div>
+            <div class="weui-cell__ft">gfgfgfddfdfdfdfdfdfdfedrfe</div>
+          </a> -->
+        </div>
+      </div>
+ </div>
+  
+  <script type="text/javascript">
+  	$(function() {
+  	    /* var ajax = new $ax("${ctxPath}/memeberCard/view", function(data){
+  	    	alert(data);
+  	    },function(data){
+  	    });
+  	    ajax.set({});
+  	    ajax.start(); */
+  		makeCode();
+	});
+  	
+  	var showQr = function (){
+  		var src = $("#qrcode").find("img").prop("src");
+		var img = '<img src="'+src+'"/>';
+  		layer.open({
+  	  	  content: img,
+  	  	  btn: '关闭',
+  	  	  shadeClose: false
+  	  	});
+  	}
+  	
+  	var qrcode = new QRCode("qrcode");
+  	function makeCode () { 
+  		var cardNum = $("#cardNum").val();
+  	    qrcode.makeCode(cardNum);
+  	}
+  </script>
+  </body>
+@}
+
+	

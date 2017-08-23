@@ -1,6 +1,6 @@
 @layout("/common/_container.html",{title:"我的优惠券"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
-  <body ontouchstart>
+  <body ontouchstart style="background-color:#fafafa;">
 	<div class="weui-tab coupon-radius">
       <div class="weui-navbar">
         <a class="weui-navbar__item weui-bar__item--on" href="#tab1" style="border-radius: 10px;">
@@ -13,16 +13,50 @@
                                               选项三
         </a> -->
       </div>
+      
       <div class="weui-tab__bd">
-        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-          <h1>页面一</h1>
-        </div>
+			<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+			<a href="/member/couponDetail">
+				<div class="coupon-margin">
+					<div style="color: gray; margin-left: 5px;">官方韩国发货</div>
+					<div align="left">
+						<div style="float: left;">
+							<h2 style="color: red; margin-left: 5px;">
+								9.0<font size="2px">&nbsp;折</font>
+							</h2>
+						</div>
+						<div style="float: right;vertical-align: bottom;">
+							<font style="color: gray; margin-right: 5px;">满一元可使用</font>
+						</div>
+					</div>
+					<br><br>
+					<div style="color: gray;margin-left:5px;float:left;">使用期限：2017.08.22-2017.08.31</div>
+				</div>
+			</a>
+			
+				<div class="coupon-margin">
+					<div style="color: gray; margin-left: 5px;">官方韩国发货</div>
+					<div align="left">
+						<div style="float: left;">
+							<h2 style="color: red; vertical-align: bottom; margin-left: 5px;">
+								9.0<font size="2px">&nbsp;折</font>
+							</h2>
+						</div>
+						<div style="float: right;">
+							<font style="color: gray; margin-right: 5px;">满一元可使用</font>
+						</div>
+					</div>
+					<br><br>
+					<div style="color: gray;margin-left:5px;float:left;">使用期限：2017.08.22-2017.08.31</div>
+				</div>
+				
+			</div>
+		</div>
+		
         <div id="tab2" class="weui-tab__bd-item">
           <h1>页面二</h1>
         </div>
-        <!-- <div id="tab3" class="weui-tab__bd-item">
-          <h1>页面三</h1>
-        </div> -->
+        
       </div>
     </div>
 

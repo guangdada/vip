@@ -69,4 +69,8 @@ public class MemberController {
 	public String select(HttpServletRequest request, Map<String, Object> map) {
 		return "/select.html";
 	}
+	@RequestMapping("/couponDetail")
+	public String couponDetail(HttpServletRequest request, Map<String, Object> map) {
+		return "/member_couponDetail.html";
+	}
 }
