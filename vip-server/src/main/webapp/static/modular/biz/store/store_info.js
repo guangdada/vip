@@ -142,9 +142,15 @@ StoreInfoDlg.collectData = function() {
 	var provinceId = $("#province option:selected").val();
 	var cityId = $("#city option:selected").val();
 	var areaId = $("#area option:selected").val();
+	var storePic = $("input[name='storePic']");
+	var pics = [];
+	for(var i =0;i<storePic.length;i++){
+		var pic = {'id':storePic[i].id}
+		pics.push(pic);
+	}
     this.set('id').set('name').set('name').set('servicePhone')
     .set('provinceId',provinceId).set('cityId',cityId).set('areaId',areaId)
-    .set('address').set('openTime').set('closeTime').set('description').set('logo').set('website');
+    .set('address').set('openTime').set('closeTime').set('description').set('logo').set('website').set('pics',JSON.stringify(pics));
     if(coordinate){
     	var longitude = coordinate.split(',')[0];
     	var	latitude = coordinate.split(',')[1];
@@ -199,7 +205,46 @@ StoreInfoDlg.editSubmit = function() {
     ajax.start();
 }
 
+/**
+ * 点击添加门店
+ */
+StoreInfoDlg.openPic = function (src) {
+	var pop = $('#storePicPop');
+	pop.find("img").attr("src",src);
+    var index = layer.open({
+        type: 1,
+        title: false,
+        closeBtn:0,
+        fix:false,
+        scrollbar:false,
+        area: ['300px','300px'], //宽高
+        skin:'layui-layer-rim',
+        shadeClose:true,
+        content: pop
+    });
+    this.layerIndex = index;
+};
+
+StoreInfoDlg.bindEvent = function (){
+	$(".upload-preview-img").hover(function() {
+		$(this).find(".close-modal").removeClass("hide");
+	}, function() {
+		$(this).find(".close-modal").addClass("hide");
+	});
+	
+	/*$(".upload-preview-img").bind("click",function(){
+		var src = $(this).find("input:hidden").val();
+		StoreInfoDlg.openPic(src);
+	});*/
+	
+	$(".close-modal").bind("click",function(){
+		$(this).parent().remove();
+	});
+}
+
 $(function() {
+	StoreInfoDlg.bindEvent();
+	
 	var storeId = $("#storeId").val();
 	var areaId = $("#areaId").val();
 	var provinceId = $("#provinceId").val();
@@ -215,8 +260,18 @@ $(function() {
 	});
 	
 	Feng.initValidator("storeInfoForm", StoreInfoDlg.validateFields,{});
-	// 初始化头像上传
+	// 店铺logo上传
     var avatarUp = new $WebUpload("logo");
     avatarUp.setUploadBarId("progressBar");
     avatarUp.init();
+    
+    // 店铺图片
+    var storePic = new $WebUpload("storePic");
+    storePic.setAppend(true);
+    storePic.setCallBackFun(function(){
+    	StoreInfoDlg.bindEvent();
+    });
+    storePic.setUploadUrl(Feng.ctxPath + '/upload/storePic');
+    storePic.setContent('<li class="upload-preview-img"><img src=""> <a class="js-delete-picture close-modal small hide">×</a></li>');
+    storePic.init();
 });

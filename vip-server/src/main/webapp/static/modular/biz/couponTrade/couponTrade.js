@@ -20,6 +20,7 @@ CouponTrade.initColumn = function () {
         {title: '会员名称', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '使用金额', field: 'usedValue', visible: true, align: 'center', valign: 'middle'},
+        {title: '订单号', field: 'usedOrderNo', visible: true, align: 'center', valign: 'middle'},
         {title: '使用时间', field: 'usedTime', visible: true, align: 'center', valign: 'middle'}
     ];
 };

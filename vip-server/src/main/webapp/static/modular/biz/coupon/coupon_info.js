@@ -104,7 +104,7 @@ CouponInfoDlg.collectData = function() {
 	var cardId = $("#user_level option:selected").val();
 	this.set('id').set('name').set('total').set('value').set('type',type)
 	.set('isAtLeast',isAtLeast).set('isShare',isShare).set('atLeast').set('quota',quota).set('cardId',cardId)
-	.set('description').set('servicePhone').set('startAtStr',startAt).set('endAtStr',endAt);
+	.set('description').set('servicePhone').set('startAtStr',startAt).set('endAtStr',endAt).set('storeId');
 }
 
 /**

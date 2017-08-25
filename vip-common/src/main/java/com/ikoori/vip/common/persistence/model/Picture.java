@@ -3,6 +3,7 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -14,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author chengxg
- * @since 2017-07-31
+ * @since 2017-08-23
  */
 @TableName("v_picture")
 public class Picture extends Model<Picture> {
@@ -26,6 +27,16 @@ public class Picture extends Model<Picture> {
      */
 	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
+    /**
+     * 商户id
+     */
+	@TableField("merchant_id")
+	private Long merchantId;
+    /**
+     * 店铺id
+     */
+	@TableField("store_id")
+	private Long storeId;
     /**
      * 名称
      */
@@ -39,7 +50,7 @@ public class Picture extends Model<Picture> {
      * 图片类型
      */
 	@TableField("pictype_id")
-	private Long pictypeId;
+	private Integer pictypeId;
     /**
      * 相对路径
      */
@@ -62,7 +73,8 @@ public class Picture extends Model<Picture> {
     /**
      * 状态
      */
-	private Boolean status;
+	@TableLogic
+	private Integer status;
 
 
 	public Long getId() {
@@ -71,6 +83,22 @@ public class Picture extends Model<Picture> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public Long getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(Long storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getName() {
@@ -89,11 +117,11 @@ public class Picture extends Model<Picture> {
 		this.realName = realName;
 	}
 
-	public Long getPictypeId() {
+	public Integer getPictypeId() {
 		return pictypeId;
 	}
 
-	public void setPictypeId(Long pictypeId) {
+	public void setPictypeId(Integer pictypeId) {
 		this.pictypeId = pictypeId;
 	}
 
@@ -129,11 +157,11 @@ public class Picture extends Model<Picture> {
 		this.updateTime = updateTime;
 	}
 
-	public Boolean isStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -146,6 +174,8 @@ public class Picture extends Model<Picture> {
 	public String toString() {
 		return "Picture{" +
 			"id=" + id +
+			", merchantId=" + merchantId +
+			", storeId=" + storeId +
 			", name=" + name +
 			", realName=" + realName +
 			", pictypeId=" + pictypeId +

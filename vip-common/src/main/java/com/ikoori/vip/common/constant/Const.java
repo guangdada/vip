@@ -17,6 +17,11 @@ public interface Const {
      * 管理员角色的名字
      */
     String ADMIN_NAME = "administrator";
+    
+    /**
+     * 商户角色的名字
+     */
+    String MERCHANT_NAME = "merchant";
 
     /**
      * 管理员id

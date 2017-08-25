@@ -5,6 +5,7 @@
 	<div class="ibox-content">
 		<input type="hidden"  name="id" id="id" value="${card.id}"/>
 		<input type="hidden"  name="colorCode" id="colorCode" value="${card.colorCode!}"/>
+		<input type="hidden"  name="colorValue" id="colorValue" value="${colorType.color!}"/>
 		<input type="hidden"  name="hideDiscount" id="hideDiscount" value="${discount.discount!}"/>
 		<input type="hidden"  name="hidePoint" id="hidePoint" value="${points.points!}"/>
 		<input type="hidden"  name="hideCoupon" id="hideCoupon"
@@ -18,12 +19,18 @@
 				<div class="app-entry">
 					<div class="app-config js-config-region">
 						<div class="app-field clearfix editing">
-							<h1>
+							<h1 style="margin-top: 0px;">
 								<span>会员卡</span>
 							</h1>
 
 							<div class="membercard-area">
-								<div class="card-region" style="background-color: ${colorType.color!}">
+								<div class="card-region" 
+								@if(card.coverType==0){
+									style="background-color: ${colorType.color!}"
+								@}else{
+									style="background-image: url(${coverPic!})"
+								@}
+								>
 									<!-- style="background-image: url(https://img.yzcdn.cn/upload_files/2014/12/05/cfd43da2bfd9181e53275706d850eb91.png);"> -->
 									<div class="card-header">
 										<h4 class="shop-name">
@@ -113,7 +120,11 @@
 										<div class="controls">
 											<div>
 												<label class="radio inline"> 
-													<input type="radio" name="background" value="color" checked="">背景色
+													<input type="radio" name="coverType" value="0"
+														@if(card.coverType == 0){
+															checked
+														@}
+													>背景色
 												</label>
 												<div class="dropdown hover card-color">
 													<button class="btn dropdown-toggle" data-toggle="dropdown"
@@ -129,17 +140,23 @@
 													</ul>
 												</div>
 											</div>
-											<!-- <div>
-												<label class="radio inline"> <input
-													name="background" type="radio" value="img">封面图片
-												</label> <img
-													src="https://img.yzcdn.cn/upload_files/2014/12/05/cfd43da2bfd9181e53275706d850eb91.png"
-													class="thumb-image" width="100" heigth="100"> <a
-													class="control-action js-choose-image" href="javascript:;">修改</a>
-												<span>|</span> <a href="javascript:;"
-													class="control-action js-delete-image">删除</a>
+											<div>
+												<label class="radio inline"> <input name="coverType" type="radio" value="1"
+														@if(card.coverType == 1){
+															checked
+														@}
+												>封面图片
+												</label> 
+													<div id="coverPicPreId" class="inline">
+														@if(card.coverType == 1){
+															<img src="${coverPic!}" class="thumb-image" width="100" heigth="100">
+														@}
+													</div>
+													<a id="coverPicBtnId" href="javascript:;"  class="control-action choose-image checkbox inline js-choose-image">选择图片</a>
+													<input type="hidden" id="coverPic" value="${card.coverPic!}"/>
 												<p class="help-desc">尺寸：1000*600像素，小于1M，支持jpg、png、jpeg格式</p>
-											</div> -->
+											</div>
+											<p class="error_info coverType">错误提示</p>
 										</div>
 									</div>
 								</div>

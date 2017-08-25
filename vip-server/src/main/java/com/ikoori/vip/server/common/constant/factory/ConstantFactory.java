@@ -17,6 +17,7 @@ import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.MenuMapper;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.NoticeMapper;
+import com.ikoori.vip.common.persistence.dao.PictureTypeMapper;
 import com.ikoori.vip.common.persistence.dao.RoleMapper;
 import com.ikoori.vip.common.persistence.dao.StoreMapper;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
@@ -25,7 +26,6 @@ import com.ikoori.vip.common.persistence.model.Dept;
 import com.ikoori.vip.common.persistence.model.Dict;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.Menu;
-import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Notice;
 import com.ikoori.vip.common.persistence.model.Role;
 import com.ikoori.vip.common.persistence.model.Store;
@@ -56,6 +56,7 @@ public class ConstantFactory implements IConstantFactory {
     private MemberMapper memberMapper = SpringContextHolder.getBean(MemberMapper.class);
     private CardMapper cardMapper = SpringContextHolder.getBean(CardMapper.class);
     private MerchantMapper merchantMapper = SpringContextHolder.getBean(MerchantMapper.class);
+    private PictureTypeMapper pictureTypeMapper = SpringContextHolder.getBean(PictureTypeMapper.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -150,6 +151,14 @@ public class ConstantFactory implements IConstantFactory {
         }
         return "";
     }
+    
+    /**
+     * 获取图片类型名称
+     */
+    /*@Override
+    public String getPictypeName(Long pictypeId){
+    	return pictureTypeMapper.selectById(pictypeId).getName();
+    }*/
 
     /**
      * 获取菜单的名称们(多个)
@@ -337,12 +346,4 @@ public class ConstantFactory implements IConstantFactory {
 		Member member = memberMapper.selectById(memberId);
 		return member;
 	}
-
-	@Override
-	public Merchant getMerchant(Long merchantId) {
-		// TODO Auto-generated method stub
-		Merchant merchant = merchantMapper.selectById(merchantId);
-		return merchant;
-	}
-
 }

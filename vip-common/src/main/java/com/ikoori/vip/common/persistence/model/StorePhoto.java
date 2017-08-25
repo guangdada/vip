@@ -49,7 +49,7 @@ public class StorePhoto extends Model<StorePhoto> {
     /**
      * 状态
      */
-	private Boolean status;
+	private Integer status;
 
 
 	public Long getId() {
@@ -91,12 +91,12 @@ public class StorePhoto extends Model<StorePhoto> {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public Boolean isStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

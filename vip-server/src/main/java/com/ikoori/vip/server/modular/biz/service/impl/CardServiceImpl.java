@@ -20,6 +20,7 @@ import com.ikoori.vip.common.persistence.dao.CardRightMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.CardRight;
 import com.ikoori.vip.common.util.DateUtil;
+import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.service.ICardService;
@@ -38,6 +39,8 @@ public class CardServiceImpl implements ICardService {
 	CardMapper cardMapper;
 	@Autowired
 	CardRightMapper cardRightMapper;
+	@Autowired
+	GunsProperties gunsProperties;
 
 	@Override
 	public Integer deleteById(Long id) {
@@ -76,6 +79,12 @@ public class CardServiceImpl implements ICardService {
 		}
 		if (StringUtils.isNotBlank(card.getTermEndAtStr())) {
 			card.setTermEndAt(DateUtil.parseDate(card.getTermEndAtStr()));
+		}
+		if(card.getCoverType().intValue() == 1){
+			//card.setCoverPic(gunsProperties.getImageUrl() + "/"  + card.getCoverPic());
+			card.setColorCode("");
+		}else{
+			card.setCoverPic("");
 		}
 		card.setCardNumberPrefix("");
 		if(card.getId() != null){

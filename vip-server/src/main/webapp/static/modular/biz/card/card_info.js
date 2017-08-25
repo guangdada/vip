@@ -58,8 +58,9 @@ CardInfoDlg.collectData = function() {
 	var termDaysRadio = $("input[name='termDaysRadio']:checked").val();
 	var grantType = $("input[name='grantType']:checked").val();
 	var servicePhone = $("#servicePhone").val();
-	
-	this.set('id').set('name').set('description').set('servicePhone',servicePhone).set('colorCode').set('termType',termDaysRadio)
+	var coverType = $("input[name='coverType']:checked").val();
+	var coverPic = $("#coverPic").val();
+	this.set('id').set('name').set('description').set('servicePhone',servicePhone).set('colorCode').set('termType',termDaysRadio).set('coverType',coverType).set('coverPic',coverPic)
 	.set('grantType',grantType).set('termToCardId',termToCardId).set('cardLevel',level).set('pointsLimit',pointsLimit).set('amountLimit',amountLimit).set('tradeLimit',tradeLimit)
     .set('rights',JSON.stringify(CardInfoDlg.rights));
 	
@@ -80,14 +81,6 @@ CardInfoDlg.rights = [];
  */
 CardInfoDlg.validateOther = function (){
 	var result = true;
-	var name = $("#name").val();
-	var title_help = $("#name").siblings("error1").text("").hide();
-	if(!name){
-		//$("#name").focus();
-		name_help.text("会员卡名称不能为空").show();
-		result = false;
-	}
-	
 	
 	var rights = [];
 	var isDiscount = $("input[name='isDiscount']").prop("checked");
@@ -99,6 +92,20 @@ CardInfoDlg.validateOther = function (){
 	var term_help = $(".term-block").children(".error_info").text("").hide();
 	var level_help = $("#level").siblings(".error_info").text("").hide();
 	var pointsLimit_help = $("input[name='pointsLimit']").next(".error_info").text("").hide();
+	var coverType_help = $(".error_info.coverType").text("").hide();
+	var coverType = $("input[name='coverType']:checked").val();
+	var coverPic = $("#coverPic").val();
+	if(coverType == 1 &&　!coverPic){
+		result = false;
+		coverType_help.text("请选择封面图片").show();
+	}
+	
+	var name = $("#name").val();
+	var name_help = $(".error_info.name").text("").hide();
+	if(!name){
+		name_help.text("会员卡名称不能为空").show();
+		result = false;
+	}
 	
 	if(!isCoupon && !isDiscount && !isPoints){
 		result = false;
@@ -261,6 +268,38 @@ CardInfoDlg.chooseStart = function (value) {
 	var range = $("input[name='termDaysRadio']")[2].click();
 }
 
+CardInfoDlg.chooseImage = function (){
+	var index = layer.open({
+	    type: 2,
+	    title: '添加会员卡',
+	    area: ['800px','440px'], //宽高
+	    fix: false, //不固定
+	    maxmin: true,
+	    content: Feng.ctxPath + '/card/card_add'
+	});
+	this.layerIndex = index;
+	layer.full(index);
+}
+
+CardInfoDlg.setBgColor = function (){
+	$("input[name='coverType']").eq(0).click();
+	var colorValue = $("#colorValue").val();
+	if(colorValue){
+		$(".card-region").css({"background-image":""});
+		$(".card-region").css({"background-color":colorValue});
+		$(".card-color-show").css({"background-color":colorValue});
+	}
+}
+
+CardInfoDlg.setBgImg = function (){
+	$("input[name='coverType']").eq(1).click();
+	var coverPic = $("#coverPic").val();
+	if(coverPic){
+		var pic = Feng.ctxPath + "/kaptcha/" + coverPic;
+		$(".card-region").css({"background-image":"url("+pic+")"});
+		$(".card-region").css({"background-color":""});
+	}
+}
 
 $(function() {
 	$("input[name=number],input[name=pointsNum],input[name=termDays],input[name=tradeLimit],input[name=amountLimit],input[name=pointsLimit]").bind("blur",function () {
@@ -284,9 +323,8 @@ $(function() {
 		var color = $(this).attr("data-value");
 		var code = $(this).attr("data-name");
 		$("#colorCode").val(code);
-		$(".card-region").css({"background-color":color});
-		$(".card-color-show").css({"background-color":color});
-		
+		$("#colorValue").val(color);
+		CardInfoDlg.setBgColor();
 	});
 	
 	$("#name").bind("blur",function(){
@@ -381,4 +419,22 @@ $(function() {
 		$(".item-name.discount").parent().show();
 		$(".item-name.discount").text(hideDiscount + "折");
 	}
+	
+	
+	$("input[name='coverType']").bind("change",function(){
+		var value = $(this).val();
+		if(value == '1'){
+			CardInfoDlg.setBgImg();
+		}else if(value == '0'){
+			CardInfoDlg.setBgColor();
+		}
+	});
+	// 店铺图片
+    var coverPic = new $WebUpload("coverPic");
+    coverPic.setCallBackFun(function(pictureName){
+    	$("#coverPic").val(pictureName);
+    	CardInfoDlg.setBgImg();
+    });
+    coverPic.setUploadUrl(Feng.ctxPath + '/upload/logo');
+    coverPic.init();
 });

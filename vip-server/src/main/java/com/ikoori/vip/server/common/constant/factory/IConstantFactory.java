@@ -58,6 +58,12 @@ public interface IConstantFactory {
      */
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
     String getDeptName(Integer deptId);
+    
+/*    *//**
+     * 获取图片类型名称
+     *//*
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.PICTYPE_NAME + "'+#pictypeId")
+    String getPictypeName(Long pictypeId);*/
 
     /**
      * 获取菜单的名称们(多个)
@@ -135,11 +141,4 @@ public interface IConstantFactory {
      */
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MEMBER + "'+#memberId")
     Member getMember(Long memberId);
-    
-    /**
-     * 通过商户id获取商户
-     */
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MERCHANT + "'+#merchantId")
-    Merchant getMerchant(Long merchantId);
-
 }

@@ -1,4 +1,5 @@
 @layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/store/store.css">
 <div class="ibox float-e-margins">
 	<div class="ibox-title"><h5>店铺详情</h5></div>
     <div class="ibox-content">
@@ -101,6 +102,42 @@
 				</div>
 			</div>
 			
+			<div class="form-group">
+				<label  class="col-sm-2 control-label">店铺照片:</label>
+				<div class="col-sm-7">
+					<ul class="app-image-list clearfix">
+						<div id="storePicPreId" class="js-img-list" style="display: inline-block">
+							@for(sp in storePhotos!){
+								<li class="upload-preview-img"><img src="${sp.absUrl}"> 
+								<a class="js-delete-picture close-modal small hide">×</a>
+								<input type="hidden" id="${sp.id}" value="${sp.absUrl}" name="storePic"/>
+								</li>
+							@}
+							<!-- <li class="upload-preview-img"><img
+								src="https://img.yzcdn.cn/upload_files/2017/07/14/FitJe0mORkxXgLG5Etsv10jQHCjo.png!100x100.jpg"
+								data-src="https://img.yzcdn.cn/upload_files/2017/07/14/FitJe0mORkxXgLG5Etsv10jQHCjo.png"
+								class="js-image-preview"> <a
+								class="js-delete-picture close-modal small hide">×</a></li>
+							<li class="upload-preview-img"><img
+								src="https://img.yzcdn.cn/upload_files/2017/08/23/FlgYuoL1WoT06dI7CvYhVZ1Y6aBm.jpg!100x100.jpg"
+								data-src="https://img.yzcdn.cn/upload_files/2017/08/23/FlgYuoL1WoT06dI7CvYhVZ1Y6aBm.jpg"
+								class="js-image-preview"> <a
+								class="js-delete-picture close-modal small hide">×</a></li>
+							<li class="upload-preview-img"><img
+								src="https://img.yzcdn.cn/upload_files/2017/08/23/Fr_LNnrvxo6SQ--N601UFKDknrt6.jpg!100x100.jpg"
+								data-src="https://img.yzcdn.cn/upload_files/2017/08/23/Fr_LNnrvxo6SQ--N601UFKDknrt6.jpg"
+								class="js-image-preview"> <a
+								class="js-delete-picture close-modal small hide">×</a></li> -->
+						</div>
+						<div id="storePicBtnId" style="width: 50px;height: 50px;display: inline-block;overflow: hidden;vertical-align: top;">
+							<li class="js-picture-btn-wrap"
+								style="display: inline-block; float: none; vertical-align: top;">
+								<a href="javascript:;" class="add js-add-picture">+加图</a>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
 			
             <div class="row btn-group-m-t col-sm-offset-2">
                 <div class="col-sm-12">

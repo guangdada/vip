@@ -59,7 +59,7 @@ public class PictureType extends Model<PictureType> {
     /**
      * 状态
      */
-	private Boolean status;
+	private Integer status;
 
 
 	public Long getId() {
@@ -126,11 +126,12 @@ public class PictureType extends Model<PictureType> {
 		this.updateTime = updateTime;
 	}
 
-	public Boolean isStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
