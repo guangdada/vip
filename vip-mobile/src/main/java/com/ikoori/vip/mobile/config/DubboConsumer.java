@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.dubbo.config.spring.ReferenceBean;
 import com.ikoori.vip.api.service.MemberCardApi;
+import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberService;
 
 @Configuration
@@ -25,6 +26,16 @@ public class DubboConsumer extends DubboBaseConfig {
 		ReferenceBean<MemberCardApi> ref = new ReferenceBean<MemberCardApi>();
 		ref.setVersion("myversion");
 		ref.setInterface(MemberCardApi.class);
+		ref.setTimeout(5000);
+		ref.setRetries(3);
+		ref.setCheck(false);
+		return ref;
+	}
+	@Bean
+	public ReferenceBean<MemberCouponApi> getMemberCouponApi() {
+		ReferenceBean<MemberCouponApi> ref = new ReferenceBean<MemberCouponApi>();
+		ref.setVersion("myversion");
+		ref.setInterface(MemberCouponApi.class);
 		ref.setTimeout(5000);
 		ref.setRetries(3);
 		ref.setCheck(false);

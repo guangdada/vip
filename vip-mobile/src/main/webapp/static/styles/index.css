@@ -279,7 +279,7 @@
        display:none;
     }
     .coupon-radius{
-    margin-top:15px;
+    /* margin-top:15px; */
     -webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -291,8 +291,8 @@
     }
      .coupon-margin{
        margin-top:30px;
-       margin-right:5px;
-       margin-left:5px;
+       margin-right:10px;
+       margin-left:10px;
        background-color: #f1f1f1;
        color: #fff;
 	   -webkit-box-sizing: border-box;
@@ -317,31 +317,7 @@
     background-size: 100%;
     background-size: cover;
 }
-    .coupon-weui-navbar {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    position: absolute;
-    z-index: 500;
-    top: 5;
-    width: 100%;
-    background-color: #fafafa;
-    height: 30px;
-    margin-top: 15px;
-}
-    
-    /* .coupon-weui-navbar {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    position: absolute;
-    z-index: 500;
-    top: 0;
-    width: 100%;
-    background-color: #fafafa;
-    margin-top: 15px;
-    }
-     */
+
      /* 积分 point */
     .point-demos-title {
     text-align: center;
@@ -370,3 +346,53 @@
     overflow: hidden;
 }
    
+   .card-region .coupon-card-header, .wx-card-region .coupon-card-header {
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.coupon-weui-navbar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: absolute;
+    z-index: 500;
+    top: 0;
+    width: 100%;
+    background-color: #fafafa;
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    height: 40px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border:1px solid #cacacc;
+}
+
+.coupon-weui-navbar:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 1px;
+  border-bottom: 1px solid #CCCCCC;
+  color: #CCCCCC;
+  -webkit-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+  -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+}
+.coupon-weui-navbar + .weui-tab__panel {
+  padding-top: 50px;
+  padding-bottom: 0;
+}
+.coupon-weui-navbar + .weui-tab__bd {
+  padding-top: 50px;
+}

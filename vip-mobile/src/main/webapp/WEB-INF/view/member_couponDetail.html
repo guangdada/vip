@@ -8,17 +8,22 @@
 
 <body style="background-color:#fafafa;">
 <div class="card-region" style="background-color: f1f1f1;" onclick="showQr()">
-	<div class="card-header">
+	<div class="coupon-card-header">
 		<h4 class="shop-name">
-			<span >官方韩国发货</span>
+			<span >${couponDetail.couponName!}</span>
 		</h4>
-		<div class="qr-code"></div>
+		<!-- <div class="qr-code"></div> -->
 	</div>
-	<h2  align="center">9.0折</h2>
-	<h5  align="center">订单满100元（含运费）</h5>
+	@if(couponDetail.couponType==0){
+	<h2  align="center">${couponDetail.discount!/10}折</h2>
+	@}
+	@if(couponDetail.couponType==1){
+	<h2  align="center">${couponDetail.value!}元</h2>
+	@}
+	<h5  align="center">${couponDetail.useCondition!}</h5>
 	<div class="card-content">
 		<p class="expiry-date">
-			<font align="center">有效期：2017-08-12 16:45-2017-08-31 16:45</font> 
+			<font align="center">有效期：${couponDetail.startAt!,"yyyy-MM-dd  HH:mm"}-${couponDetail.endAt!,"yyyy-MM-dd HH:mm"}</font> 
 			<!--  <span>无限期</span> -->
 		</p>
 	</div>
@@ -39,33 +44,40 @@
 <div class="bd">
       <div class="page__bd">
          <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="/member/info">
-           <!--  <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div> -->
+         <!--  <a class="weui-cell weui-cell_access" href="/member/info">
+            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p>卡券二维码</p>
             </div>
             <div class="weui-cell__ft"><img src="${ctxPath}/static/styles/images/qc_code.png" widht="20px" height="22px"/></div>
-          </a>
-      	<!--  <a class="weui-cell weui-cell_access" href="/member/point"> 
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/8.png
-            " alt="" style="width:20px;margin-right:5px;display:block"></div>
+          </a> -->
+          <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>使用商品</p>
+              <p>卡券券码</p>
             </div>
-            <div class="weui-cell__ft">全部网店商品</div>
-         </a> -->
-         
+            <div class="weui-cell__ft">${couponDetail.verifyCode}</div>
+          </div>
          <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>使用商品</p>
+              <p>卡券状态</p>
             </div>
-            <div class="weui-cell__ft">全部网店商品</div>
+            <div class="weui-cell__ft">
+            @if(!couponDetail. isInvalid){
+                                          已失效
+            @}
+            @if(couponDetail.isUsed==0){
+                                           未使用
+            @}
+            @if(couponDetail.isUsed==1){
+                                          已使用
+            @}
+            </div>
           </div>
          <div class="weui-cell">
             <div class="weui-cell__bd">
               <p>使用说明</p>
             </div>
-            <div class="weui-cell__ft">订单满100可使用</div>
+            <div class="weui-cell__ft">${couponDetail.description!}</div>
           </div>
          
           <!-- <a class="weui-cell weui-cell_access" href="/member/order">
