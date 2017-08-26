@@ -28,7 +28,8 @@ import org.apache.commons.lang3.time.DateUtils;
 
 public class DateUtil {
 
-
+	public static String dateFormat = "yyyy-MM-dd HH:mm:ss";
+	
 	/**
 	 * 获取YYYY格式
 	 *
@@ -305,7 +306,8 @@ public class DateUtil {
 //	}
 
 	public static void main(String[] args) {
-		System.out.println(getTime(new Date()));
+		long time = Long.valueOf("1502812800000");
+		System.out.println(getTime(new Date(time)));
 		System.out.println(getAfterDayWeek("3"));
 	}
 

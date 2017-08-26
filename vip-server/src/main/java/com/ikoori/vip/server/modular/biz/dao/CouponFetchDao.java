@@ -23,7 +23,7 @@ public interface CouponFetchDao {
 	可用优惠券（未使用、未失效）
 	失效优惠券（使用、失效）
 	*/
-   List<Map<String, Object>> selectCoupon(@Param("memberId") Long memberId);
+   List<Map<String, Object>> selectCoupon(@Param("openId") String openId);
    /*
   	优惠券详情
   	*/

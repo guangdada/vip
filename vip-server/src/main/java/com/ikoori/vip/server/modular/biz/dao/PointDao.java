@@ -17,4 +17,6 @@ import com.ikoori.vip.common.persistence.model.Point;
 public interface PointDao {
 
 	List<Map<String, Object>> getPointList(@Param("page") Page<Point> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+	/*得到所以积分*/
+	List<Map<String, Object>> selectPointListByMemberId(@Param("memberId") Long memberId);
 }

@@ -6,23 +6,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.ikoori.vip.api.service.MemberCouponApi;
-import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.WxUserMapper;
-import com.ikoori.vip.common.persistence.model.CouponFetch;
-import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
-import com.ikoori.vip.server.modular.biz.warpper.CouponFetchWarpper;
 
 
 @Service
-public class MemberCouponApiImpl implements MemberCouponApi {
+public class MemberOrderApiImpl implements MemberOrderApi {
 	@Autowired
 	MemberCardMapper memberCardMapper;
 	@Autowired
@@ -39,13 +34,13 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	CouponFetchDao couponFetchDao;
 	/*@Autowired
 	CouponFetchWarpper couponFetchMapper;*/
-	@Override
+	/*@Override
 	public List<Map<String, Object>> getMemberCouponByOpenId(String openId) {
-		/*Member member = memberDao.getMemberByOpenId(openId);
+		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
 			return null;
-		}*/
-		List<Map<String, Object>> result=couponFetchDao.selectCoupon(openId);
+		}
+		List<Map<String, Object>> result=couponFetchDao.selectCoupon(member.getId());
 	    if(result==null){
 	    	return null;
 	    }
@@ -61,6 +56,11 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 		}
 		return result;
 	}
-	
+	*/
+	@Override
+	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -91,7 +91,6 @@
             cf.is_used  As isUsed,
             c.is_invalid As couponIsInvalid,
 			m.sex AS sex,
-			u.headimgurl AS headImg,
 			c.`value` AS VALUE,
 			c.type AS couponType,
 			m.`name` AS memberName,
@@ -102,14 +101,11 @@
 			v_coupon_fetch cf
 		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
 		LEFT JOIN v_member m ON cf.member_id = m.id
-		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
 		WHERE
 		cf.`status` = 1
 		AND c.`status` = 1
 		AND m.`status` = 1
-        <if test="memberId != null">
-        	and cf.member_id = #{memberId}
-        </if>
+		and m.open_id = #{openId}
     </select>
     
     

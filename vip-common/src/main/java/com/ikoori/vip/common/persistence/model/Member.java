@@ -3,6 +3,9 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -69,6 +72,7 @@ public class Member extends Model<Member> {
 	/**
      * 生日
      */
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 	
 	/**
