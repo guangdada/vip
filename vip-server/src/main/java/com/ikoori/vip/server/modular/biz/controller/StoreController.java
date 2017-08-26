@@ -23,6 +23,7 @@ import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
+import com.ikoori.vip.server.modular.biz.service.IStorePhotoService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.StoreWarpper;
 
@@ -41,6 +42,8 @@ public class StoreController extends BaseController {
 	IStoreService storeService;
     @Autowired
     IMerchantService merchantService;
+    @Autowired
+    IStorePhotoService storePhotoService;
 
     /**
      * 跳转到门店首页
@@ -77,6 +80,7 @@ public class StoreController extends BaseController {
 		String coordinate = latitude + "," + longitude;
 		model.addAttribute("coordinate", coordinate);
 		model.addAttribute(store);
+		model.addAttribute("storePhotos",storePhotoService.selectStorePhoto(storeId));
 		return PREFIX + "store_edit.html";
 	}
 
@@ -100,11 +104,12 @@ public class StoreController extends BaseController {
     @RequestMapping(value = "/add")
     @Permission
     @ResponseBody
-    public Object add(Store store) {
+    public Object add(Store store,String pics) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	store.setMerchantId(merchant.getId());
-    	storeService.insert(store);
+    	//storeService.insert(store);
+    	storeService.saveStore(store, pics);
         return super.SUCCESS_TIP;
     }
 
@@ -126,11 +131,12 @@ public class StoreController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public Object update(Store store) {
+    public Object update(Store store,String pics) {
     	if (ToolUtil.isEmpty(store) || store.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	storeService.updateById(store);
+    	//storeService.updateById(store);
+    	storeService.saveStore(store, pics);
         return super.SUCCESS_TIP;
     }
 

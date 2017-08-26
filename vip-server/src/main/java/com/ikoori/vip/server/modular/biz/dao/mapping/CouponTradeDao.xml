@@ -29,6 +29,7 @@
     <select id="selectByCondition" resultType="map">
         SELECT
 			ct.id AS id,
+			ct.used_order_no as usedOrderNo,
 			m.sex AS sex,
 			u.headimgurl AS headImg,
 			c.`value` AS VALUE,

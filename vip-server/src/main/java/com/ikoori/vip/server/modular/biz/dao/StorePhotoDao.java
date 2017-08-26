@@ -1,5 +1,11 @@
 package com.ikoori.vip.server.modular.biz.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.ikoori.vip.common.persistence.model.Picture;
+
 /**
  * 店铺图片Dao
  *
@@ -8,5 +14,5 @@ package com.ikoori.vip.server.modular.biz.dao;
  */
 public interface StorePhotoDao {
 
-
+	public List<Picture> selectStorePhoto(@Param("storeId") Long storeId);
 }

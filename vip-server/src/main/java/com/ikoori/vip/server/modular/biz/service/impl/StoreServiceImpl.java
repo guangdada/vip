@@ -3,13 +3,20 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.StoreMapper;
+import com.ikoori.vip.common.persistence.dao.StorePhotoMapper;
 import com.ikoori.vip.common.persistence.model.Store;
+import com.ikoori.vip.common.persistence.model.StorePhoto;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 
@@ -25,6 +32,8 @@ public class StoreServiceImpl implements IStoreService {
 	StoreDao storeDao;
 	@Autowired
 	StoreMapper storeMapper;
+	@Autowired
+	StorePhotoMapper storePhotoMapper;
 	@Override
 	public Integer deleteById(Long id) {
 		return storeMapper.deleteById(id);
@@ -45,6 +54,31 @@ public class StoreServiceImpl implements IStoreService {
 		return storeMapper.insert(store);
 	}
 	
+	@Transactional(readOnly=false)
+	public void saveStore(Store store, String pics) {
+		if (store.getId() != null) {
+			Wrapper<StorePhoto> wrapper = new EntityWrapper<StorePhoto>();
+			wrapper.eq("store_id", store.getId());
+			storePhotoMapper.delete(wrapper);
+			storeMapper.updateById(store);
+		} else {
+			storeMapper.insert(store);
+		}
+		if (StringUtils.isNotBlank(pics)) {
+			JSONArray picA = JSONArray.parseArray(pics);
+			if (picA != null) {
+				for (int i = 0; i < picA.size(); i++) {
+					JSONObject pic = picA.getJSONObject(i);
+					Long id = pic.getLong("id");
+					StorePhoto storePhoto = new StorePhoto();
+					storePhoto.setStoreId(store.getId());
+					storePhoto.setPicId(id);
+					storePhotoMapper.insert(storePhoto);
+				}
+			}
+		}
+	}
+	
 	@Override
 	public List<Map<String, Object>> getStoreList(Page<Store> page, String name, String orderByField,
 			boolean isAsc,Long merchantId) {
@@ -53,7 +87,6 @@ public class StoreServiceImpl implements IStoreService {
 
 	@Override
 	public List<Store> selectByCondition(Map<String, Object> condition) {
-		// TODO Auto-generated method stub
 		return storeMapper.selectList(new EntityWrapper<Store>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
 	}
 }

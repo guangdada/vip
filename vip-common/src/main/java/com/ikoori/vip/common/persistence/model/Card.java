@@ -42,6 +42,12 @@ public class Card extends Model<Card> {
      */
 	@TableField("merchant_id")
 	private Long merchantId;
+	
+	/**
+	 * 卡片封面
+	 */
+	@TableField("cover_type")
+	private Integer coverType;
     /**
      * 背景颜色id
      */
@@ -461,6 +467,15 @@ public class Card extends Model<Card> {
 
 	public void setTermType(Integer termType) {
 		this.termType = termType;
+	}
+	
+	
+	public Integer getCoverType() {
+		return coverType;
+	}
+
+	public void setCoverType(Integer coverType) {
+		this.coverType = coverType;
 	}
 
 	@Override

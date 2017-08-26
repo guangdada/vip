@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.StorePhotoDao">
-
+	<select id="selectStorePhoto" parameterType="long" resultType="com.ikoori.vip.common.persistence.model.Picture">
+			SELECT
+				p.id,p.abs_url
+			FROM
+				v_picture p
+			LEFT JOIN v_store_photo sp ON p.id = sp.pic_id
+			LEFT JOIN v_store s ON s.id = sp.store_id
+			WHERE
+				sp.store_id = #{storeId};
+	</select>
 </mapper>

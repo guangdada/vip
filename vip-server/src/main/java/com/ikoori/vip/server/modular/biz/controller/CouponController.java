@@ -21,12 +21,14 @@ import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.Merchant;
+import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.ICardService;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
+import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.CouponWarpper;
 
 /**
@@ -48,6 +50,9 @@ public class CouponController extends BaseController {
     
     @Autowired
 	ICardService cardService;
+    
+    @Autowired
+    IStoreService storeService;
     /**
      * 跳转到优惠券首页
      */
@@ -63,8 +68,13 @@ public class CouponController extends BaseController {
     public String couponAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
+    	List<Store> stores=storeService.selectByCondition(condition);
+    	//查询店铺
+    	model.addAttribute("stores", stores);
+    	
     	List<Card> cards = cardService.selectByCondition(condition);
     	// 查询会员卡
     	model.addAttribute("cards", cards);
@@ -81,6 +91,11 @@ public class CouponController extends BaseController {
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
+    	
+    	List<Store> stores=storeService.selectByCondition(condition);
+    	//查询店铺
+    	model.addAttribute("stores", stores);
+    	
     	List<Card> cards = cardService.selectByCondition(condition);
     	// 查询会员卡
     	model.addAttribute("cards", cards);

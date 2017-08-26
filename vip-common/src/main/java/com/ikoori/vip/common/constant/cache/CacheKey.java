@@ -26,6 +26,8 @@ public interface CacheKey {
     String SINGLE_MERCHANT = "single_merchant_";
     
     String SINGLE_MERCHANT_USER = "single_merchant_user_";
+    
+    //String PICTYPE_NAME = "pictype_name_";
 
 
 }

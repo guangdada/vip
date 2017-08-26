@@ -5,6 +5,8 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Picture">
 		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="store_id" property="storeId" />
 		<result column="name" property="name" />
 		<result column="real_name" property="realName" />
 		<result column="pictype_id" property="pictypeId" />

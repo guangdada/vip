@@ -13,11 +13,14 @@
 		this.pictureId = pictureId;
 		this.uploadBtnId = pictureId + "BtnId";
 		this.uploadPreId = pictureId + "PreId";
-		this.uploadUrl = Feng.ctxPath + '/mgr/upload';
+		this.uploadUrl = Feng.ctxPath + '/upload/logo';
 		this.fileSizeLimit = 100 * 1024 * 1024;
 		this.picWidth = 800;
 		this.picHeight = 800;
         this.uploadBarId = null;
+        this.content = null;
+        this.append = false;
+        this.callBackFun = null;
 	};
 
 	$WebUpload.prototype = {
@@ -62,11 +65,15 @@
 		bindEvent : function(bindedObj) {
 			var me =  this;
 			bindedObj.on('fileQueued', function(file) {
-				var $li = $('<div><img width="100px" height="100px"></div>');
+				var html = me.content? me.content : '<div><img width="100px" height="100px"></div>';
+				var $li = $(html);
 				var $img = $li.find('img');
-
-				$("#" + me.uploadPreId).html($li);
-
+				if(me.append){
+					$("#" + me.uploadPreId).append($li);
+				}else{
+					$("#" + me.uploadPreId).html($li);
+				}
+				
 				// 生成缩略图
 				bindedObj.makeThumb(file, function(error, src) {
 					if (error) {
@@ -86,7 +93,18 @@
 			bindedObj.on('uploadSuccess', function(file,response) {
 				$("#"+me.uploadBarId).parent().hide();
 				Feng.success("上传成功");
-				$("#" + me.pictureId).val(response);
+				// 加图的操作
+				if(me.append){
+					var hidden = $('<input id="'+response.pictureId+'" type="hidden" value="'+response.pictureName+'" name="'+me.pictureId+'"/>');
+					$("#" + me.uploadPreId).children(":last").append(hidden);
+				}else{
+					//单图
+					$("#" + me.pictureId).val(response.pictureName);
+				}
+				// 回调函数
+				if (typeof me.callBackFun === "function"){
+					me.callBackFun(response.pictureName);
+				}
 			});
 
 			// 文件上传失败，显示上传出错。
@@ -120,6 +138,30 @@
          */
         setUploadBarId: function (id) {
             this.uploadBarId = id;
+        },
+        /**
+         * 设置预览图片的包裹html
+         */
+        setContent: function (content) {
+            this.content = content;
+        },
+        /**
+         * 是加图还是单图
+         */
+        setAppend: function (append) {
+            this.append = append;
+        },
+        /**
+         * 设置回调函数
+         */
+        setCallBackFun: function (callBackFun) {
+            this.callBackFun = callBackFun;
+        },
+        /**
+         * 设置上传路径
+         */
+        setUploadUrl: function (uploadUrl) {
+            this.uploadUrl = uploadUrl;
         }
 	};
 

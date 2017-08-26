@@ -21,15 +21,19 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.annotion.log.BussinessLog;
 import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.Dict;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
+import com.ikoori.vip.common.constant.state.PicType;
 import com.ikoori.vip.common.constant.tips.Tip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.PictureMapper;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
+import com.ikoori.vip.common.persistence.model.Picture;
 import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.core.db.Db;
@@ -64,6 +68,9 @@ public class UserMgrController extends BaseController {
 
     @Resource
     private UserMapper userMapper;
+   
+    @Resource
+    private PictureMapper pictureMapper;
 
     /**
      * 跳转到查看管理员列表的页面
@@ -332,14 +339,24 @@ public class UserMgrController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/upload")
     @ResponseBody
-    public String upload(@RequestPart("file") MultipartFile picture) {
+    public JSONObject upload(@RequestPart("file") MultipartFile picture) {
+    	JSONObject obj = new JSONObject();
         String pictureName = UUID.randomUUID().toString() + ".jpg";
         try {
             String fileSavePath = gunsProperties.getFileUploadPath();
             picture.transferTo(new File(fileSavePath + pictureName));
+            
+            Picture pic = new Picture();
+            pic.setPictypeId(PicType.LOGO.getCode());
+            pic.setRealName(picture.getOriginalFilename());
+            pic.setUrl(fileSavePath + pictureName);
+            pic.setName(pictureName);
+            Integer picId = pictureMapper.insert(pic);
+            obj.put("pictureName", pictureName);
+            obj.put("pictureId", picId);
         } catch (Exception e) {
             throw new BussinessException(BizExceptionEnum.UPLOAD_ERROR);
         }
-        return pictureName;
+        return obj;
     }
 }

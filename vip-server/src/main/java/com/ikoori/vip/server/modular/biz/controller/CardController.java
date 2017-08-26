@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
+import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.ICardRightService;
 import com.ikoori.vip.server.modular.biz.service.ICardService;
@@ -57,6 +59,9 @@ public class CardController extends BaseController {
     
     @Autowired
     ICardRightService cardRightService;
+    
+    @Autowired
+    GunsProperties gunsProperties;
 
     /**
      * 跳转到会员卡首页
@@ -121,7 +126,14 @@ public class CardController extends BaseController {
 		model.addAttribute("logo", merchant.getHeadImg());
 
 		Card card = cardService.selectById(cardId);
-		model.addAttribute("colorType", ColorType.valueOf(card.getColorCode()));
+		if(card.getCoverType().intValue() == 1){
+			model.addAttribute("coverPic",gunsProperties.getImageUrl() + "/" + card.getCoverPic());
+		}
+		if(StringUtils.isNotBlank(card.getColorCode())){
+			model.addAttribute("colorType", ColorType.valueOf(card.getColorCode()));
+		}else{
+			model.addAttribute("colorType", ColorType.Color010);
+		}
 		model.addAttribute(card);
 
 		Map<String, Object> con = new HashMap<String, Object>();
