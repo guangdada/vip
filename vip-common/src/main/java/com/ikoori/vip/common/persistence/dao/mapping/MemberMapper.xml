@@ -10,6 +10,7 @@
 		<result column="is_active" property="isActive" />
 		<result column="name" property="name" />
 		<result column="wx_code" property="wxCode" />
+		<result column="open_id" property="openId" />
 		<result column="wx_user_id" property="wxUserId" />
 		<result column="sex" property="sex" />
 		<result column="birthday" property="birthday" />
