@@ -56,6 +56,12 @@ public class Member extends Model<Member> {
      */
 	@TableField("wx_user_id")
 	private Long wxUserId;
+	
+	/**
+	 * 微信用户openId
+	 */
+	@TableField("open_id")
+	private String openId;
     /**
      * 性别
      */
@@ -293,6 +299,14 @@ public class Member extends Model<Member> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+	
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	@Override
