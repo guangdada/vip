@@ -60,4 +60,11 @@ public class CardRightServiceImpl implements ICardRightService {
 		}
 		return cardRightMapper.selectList(w);
 	}
+	
+	@Override
+	public List<CardRight> selectByCardId(Long cardId) {
+		Wrapper<CardRight> w = new EntityWrapper<CardRight>().eq("status", 1);
+		w.eq("card_id", cardId);
+		return cardRightMapper.selectList(w);
+	}
 }

@@ -22,13 +22,17 @@ public interface IMemberService {
 	public Member selectById(Long id);
 
 	public Integer insert(Member member);
-	
+
 	public Member selecByMobile(String mobile);
-	
-	public void saveMember(Member member,Long cardId);
+
+	public void saveMember(Member member, Long cardId);
+
 	public void deleteMember(Long memberId);
+
 	public void updateMember(Member member, Long cardId);
 
 	List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,
 			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	
+	public Member selectByMobileAndStoreNo(String mobile, String storeNo);
 }

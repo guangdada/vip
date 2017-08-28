@@ -12,6 +12,7 @@
 		<result column="used_value" property="usedValue" />
 		<result column="used_time" property="usedTime" />
 		<result column="used_order_no" property="usedOrderNo" />
+		<result column="used_order_id" property="usedOrderId" />
 		<result column="verify_code" property="verifyCode" />
 		<result column="wx_user_id" property="wxUserId" />
 		<result column="create_time" property="createTime" />

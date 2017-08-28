@@ -109,6 +109,15 @@ public class DateUtil {
 	public static String getAllTime() {
 		return formatDate(new Date(), "yyyyMMddHHmmss");
 	}
+	
+	/**
+	 * 获取YYYYMMDDHHmmssSSS格式
+	 *
+	 * @return
+	 */
+	public static String getMsAllTime() {
+		return formatDate(new Date(), "yyyyMMddHHmmssSSS");
+	}
 
 	/**
 	 * 获取YYYY-MM-DD HH:mm:ss格式

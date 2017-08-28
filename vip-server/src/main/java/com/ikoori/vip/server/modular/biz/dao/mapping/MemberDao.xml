@@ -34,4 +34,23 @@
 		AND wu.`status` = 1
 		AND wu.openid = #{openId};
     </select>
+    
+    <select id="selectByMobileAndStoreNo" resultType="com.ikoori.vip.common.persistence.model.Member">
+    	SELECT
+			m.*
+		FROM
+			v_member m
+		LEFT JOIN v_merchant me ON m.merchant_id = me.id
+		LEFT JOIN v_store s ON s.merchant_id = me.id
+		WHERE
+			m.`status` = 1
+		AND me.`status` = 1
+		AND s.`status` = 1
+		AND m.mobile = #{mobile}
+		AND s.storeNo = #{storeNo}
+    </select>
+    
+    <update id="updatePoint" flushCache="true">
+    	UPDATE v_member SET points = points + #{point}, version = version + 1 where id = ${memberId} AND version = #{version}
+    </update>
 </mapper>

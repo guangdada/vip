@@ -1,7 +1,7 @@
 package com.ikoori.vip.common.constant.state;
 
 /**
- * 会员卡类型
+ * 会员卡使用状态
  * @author chengxg
  *
  */

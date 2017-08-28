@@ -14,20 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
-import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.SpecType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.TicketMapper;
-import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Ticket;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.ITicketService;
-import com.ikoori.vip.server.modular.biz.warpper.MemberWarpper;
 import com.ikoori.vip.server.modular.biz.warpper.TicketWarpper;
 
 /**

@@ -18,4 +18,8 @@ public interface MemberDao {
 	List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 
 	Member getMemberByOpenId(@Param("openId") String openId);
+	
+	Member selectByMobileAndStoreNo(@Param("mobile") String mobile,@Param("storeNo") String storeNo);
+	
+	int updatePoint(Long memberId, int point , int version);
 }

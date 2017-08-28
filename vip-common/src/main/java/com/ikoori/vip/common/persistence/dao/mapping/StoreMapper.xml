@@ -8,6 +8,7 @@
 		<result column="merchant_id" property="merchantId" />
 		<result column="user_id" property="userId" />
 		<result column="name" property="name" />
+		<result column="store_num" property="storeNum" />
 		<result column="logo" property="logo" />
 		<result column="balance" property="balance" />
 		<result column="province_id" property="provinceId" />

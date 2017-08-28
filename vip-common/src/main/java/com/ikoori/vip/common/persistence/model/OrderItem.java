@@ -3,6 +3,7 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -52,8 +53,19 @@ public class OrderItem extends Model<OrderItem> {
     /**
      * 产品名称
      */
-	@TableField("product_name")
-	private String productName;
+	@TableField("goods_name")
+	private String goodsName;
+	
+	/**
+	 * 货号
+	 */
+	@TableField("goods_no")
+	private String goodsNo;
+	
+	/**
+	 * 尺码
+	 */
+	private String model;
     /**
      * 零售价格(单位:分)
      */
@@ -77,7 +89,8 @@ public class OrderItem extends Model<OrderItem> {
     /**
      * 状态
      */
-	private Boolean status;
+	@TableLogic
+	private Integer status;
 
 
 	public Long getId() {
@@ -128,12 +141,12 @@ public class OrderItem extends Model<OrderItem> {
 		this.discount = discount;
 	}
 
-	public String getProductName() {
-		return productName;
+	public String getGoodsName() {
+		return goodsName;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
 	}
 
 	public Integer getCasePrice() {
@@ -168,17 +181,33 @@ public class OrderItem extends Model<OrderItem> {
 		this.updateTime = updateTime;
 	}
 
-	public Boolean isStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(Boolean status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+
+	public String getGoodsNo() {
+		return goodsNo;
+	}
+
+	public void setGoodsNo(String goodsNo) {
+		this.goodsNo = goodsNo;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 	@Override
@@ -190,7 +219,7 @@ public class OrderItem extends Model<OrderItem> {
 			", quantity=" + quantity +
 			", originalPrice=" + originalPrice +
 			", discount=" + discount +
-			", productName=" + productName +
+			", goodsName=" + goodsName +
 			", casePrice=" + casePrice +
 			", skuNo=" + skuNo +
 			", createTime=" + createTime +

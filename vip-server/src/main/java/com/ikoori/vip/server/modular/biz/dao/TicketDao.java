@@ -16,4 +16,6 @@ import com.ikoori.vip.common.persistence.model.Ticket;
  */
 public interface TicketDao {
    List<Map<String, Object>> getTicketList(@Param("page") Page<Ticket> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+   
+   public Ticket selectByStoreNum(@Param("storeNum")  String storeNum);
 }

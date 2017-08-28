@@ -74,4 +74,72 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectByMemberId" parameterType="long" resultType="map">
+		    SELECT
+				cf.verify_code as verifyCode ,
+				c.type,
+				c.`value`,
+				cf.available_value availableValue,
+				c.`name`,
+				c.at_least atLeast,
+				c.description
+			FROM
+				v_coupon_fetch cf
+			LEFT JOIN v_member m ON cf.member_id = m.id
+			LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+			WHERE
+				cf.`status` = 1
+			AND m.`status` = 1
+			AND c.`status` = 1
+			AND cf.is_used != 1
+			AND cf.is_invalid = 1
+			AND m.id = #{memberId}
+    </select>
+    
+    <select id="selectByVerifyCode" parameterType="string" resultMap="couponFetchMap">
+    	SELECT
+			cf.id AS id,
+			cf.is_used,
+			cf.is_invalid,
+			cf.`value` cf_value,
+			cf.member_id,
+			cf.available_value,
+			cf.used_value,
+			cf.version,
+			cf.verify_code,
+			c.id AS coupon_id,
+			c.`name`,
+			c.`value` AS coupon_value,
+			c.at_least,
+			c.is_at_least,
+			c.origin_at_least
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		WHERE
+			cf.`status` = 1
+		AND c.`status` = 1
+		AND cf.verify_code = #{verifyCode}
+    </select>
+    
+    <resultMap type="com.ikoori.vip.common.persistence.model.CouponFetch" id="couponFetchMap">
+    	<result property="id" column="id"/>
+    	<result property="isUsed" column="is_used"/>
+    	<result property="isInvalid" column="is_invalid"/>
+    	<result property="value" column="cf_value"/>
+    	<result property="availableValue" column="available_value"/>
+    	<result property="usedValue" column="used_value"/>
+    	<result property="verifyCode" column="verify_code"/>
+    	<result property="version" column="version"/>
+    	<association property="coupon" javaType="com.ikoori.vip.common.persistence.model.Coupon">
+    		<id property="id" column="coupon_id"/>
+    		<result property="type" column="type"/>
+    		<result property="name" column="name"/>
+    		<result property="value" column="coupon_value"/>
+    		<result property="atLeast" column="at_least"/>
+    		<result property="isAtLeast" column="is_at_least"/>
+    		<result property="originAtLeast" column="origin_at_least" />
+    	</association>
+    </resultMap>
 </mapper>

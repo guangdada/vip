@@ -22,4 +22,16 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectByStoreNum" parameterType="java.lang.String" resultType="com.ikoori.vip.common.persistence.model.Ticket">
+    	SELECT
+			v.*
+		FROM
+			v_ticket v
+		LEFT JOIN v_store s ON v.store_id = s.id
+		WHERE
+			v.`status` = 1
+		AND s.`status` = 1
+		AND s.store_num = #{storeNum}
+    </select>
 </mapper>

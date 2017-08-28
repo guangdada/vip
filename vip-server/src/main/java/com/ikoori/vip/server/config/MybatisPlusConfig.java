@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.ikoori.vip.common.constant.DSEnum;
 import com.ikoori.vip.core.mutidatesource.DynamicDataSource;
@@ -95,6 +96,14 @@ public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
+    }
+    
+    /**
+     * 乐观锁插件
+     */
+    @Bean
+    public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+        return new OptimisticLockerInterceptor();
     }
     
     /*@Bean

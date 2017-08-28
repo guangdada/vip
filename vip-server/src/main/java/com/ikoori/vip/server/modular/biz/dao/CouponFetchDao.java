@@ -19,4 +19,8 @@ public interface CouponFetchDao {
    List<Map<String, Object>> getCouponFetchList(@Param("page") Page<CouponFetch> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
    
    List<Map<String, Object>> selectByCondition(@Param("page") Page<CouponFetchDo> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+   
+   public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
+   
+   public CouponFetch selectByVerifyCode(@Param("verifyCode") String verifyCode);
 }

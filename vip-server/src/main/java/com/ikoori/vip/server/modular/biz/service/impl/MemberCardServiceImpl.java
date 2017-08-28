@@ -3,10 +3,11 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.model.MemberCard;
@@ -49,5 +50,17 @@ public class MemberCardServiceImpl implements IMemberCardService {
 	public List<Map<String, Object>> getMemberCardList(Page<MemberCard> page, String name, String orderByField,
 			boolean isAsc,Long merchantId,String cardNumber) {
 		return memberCardDao.getMemberCardList(page, name, orderByField, isAsc,merchantId,cardNumber);
+	}
+	
+	public List<MemberCard> findByMemberId(Long memberId){
+		Wrapper<MemberCard> wrapper = new EntityWrapper<MemberCard>();
+		wrapper.eq("member_id", memberId);
+		wrapper.eq("state", 0);
+		wrapper.eq("status", 1);
+		return memberCardMapper.selectList(wrapper);
+	}
+	
+	public List<Map<String,Object>> selectByMemberId(Long memberId){
+		return memberCardDao.selectByMemberId(memberId);
 	}
 }

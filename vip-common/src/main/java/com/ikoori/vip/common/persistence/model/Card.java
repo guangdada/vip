@@ -69,7 +69,10 @@ public class Card extends Model<Card> {
 	@TableField("card_level")
 	private Integer cardLevel;
     /**
-     * 卡类型(0: 无门槛;1: 规则发放)
+     * 卡类型
+     * NO_RULE(0, "关注微信"),
+	   SUB_WX(1, "无门槛"),
+       RULE(2, "按规则");
      */
 	@TableField("grant_type")
 	private Integer grantType;
@@ -176,12 +179,22 @@ public class Card extends Model<Card> {
 	@TableField("update_time")
 	private Date updateTime;
 	
+	
+	/**
+	 * 累计支付成功
+	 */
 	@TableField("trade_limit")
 	private Integer tradeLimit;
 	
+	/**
+	 * 累计积分达到
+	 */
 	@TableField("points_limit")
 	private Integer pointsLimit;
 	
+	/**
+	 * 累计消费金额
+	 */
 	@TableField("amount_limit")
 	private BigDecimal amountLimit;
     /**

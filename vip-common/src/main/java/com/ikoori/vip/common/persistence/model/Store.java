@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotations.Version;
+
 import java.io.Serializable;
 
 /**
@@ -42,6 +44,12 @@ public class Store extends Model<Store> {
      * 店铺名称
      */
 	private String name;
+	
+	/**
+	 * 门店编号
+	 */
+	@TableField("store_no")
+	private String storeNo;
     /**
      * 店铺logo
      */
@@ -124,6 +132,9 @@ public class Store extends Model<Store> {
      */
 	@TableLogic
 	private Integer status;
+	
+	@Version
+	private Integer version;
 
 
 	public Long getId() {
@@ -292,8 +303,8 @@ public class Store extends Model<Store> {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public Integer isStatus() {
+	
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -304,6 +315,25 @@ public class Store extends Model<Store> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+
+	public String getStoreNo() {
+		return storeNo;
+	}
+
+	public void setStoreNo(String storeNo) {
+		this.storeNo = storeNo;
+	}
+	
+	
+	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	@Override

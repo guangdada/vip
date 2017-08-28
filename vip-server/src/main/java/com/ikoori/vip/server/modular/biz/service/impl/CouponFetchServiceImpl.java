@@ -56,4 +56,8 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 			boolean isAsc,Long merchantId) {
 		return couponFetchDao.selectByCondition(page, name, orderByField, isAsc,merchantId);
 	}
+	
+	public List<Map<String, Object>> selectByMemberId(Long memberId){
+		return couponFetchDao.selectByMemberId(memberId);
+	}
 }

@@ -25,4 +25,8 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectByStoreNo" parameterType="string" resultType="com.ikoori.vip.common.persistence.model.Store">
+    	SELECT * from v_store where STATUS =1 AND store_no = #{storeNo};
+    </select>
 </mapper>

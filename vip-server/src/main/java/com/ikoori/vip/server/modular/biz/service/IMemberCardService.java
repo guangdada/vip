@@ -3,8 +3,6 @@ package com.ikoori.vip.server.modular.biz.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 
@@ -20,5 +18,7 @@ public interface IMemberCardService {
 	public MemberCard selectById(Long id);
 	public Integer insert(MemberCard memberCard);
 	List<Map<String, Object>> getMemberCardList(Page<MemberCard> page,String name,String orderByField,boolean isAsc,Long merchantId,String cardNumber);
+	public List<MemberCard> findByMemberId(Long memberId);
+	List<Map<String,Object>> selectByMemberId(Long memberId);
 	
 }

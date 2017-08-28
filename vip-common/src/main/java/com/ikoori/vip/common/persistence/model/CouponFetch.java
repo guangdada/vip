@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotations.Version;
+
 import java.io.Serializable;
 
 /**
@@ -119,6 +121,18 @@ public class CouponFetch extends Model<CouponFetch> {
      */
 	@TableLogic
 	private Integer status;
+	
+	/**
+	 * 乐观锁
+	 */
+	@Version
+	private Integer version;
+	
+	/**
+	 * 关联实体
+	 */
+	@TableField(exist = false)
+	private Coupon coupon;
 
 
 	public Long getId() {
@@ -285,6 +299,24 @@ public class CouponFetch extends Model<CouponFetch> {
 
 	public void setMerchant(Merchant merchant) {
 		this.merchant = merchant;
+	}
+	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
+	
+
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 	@Override

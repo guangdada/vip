@@ -49,4 +49,8 @@ public class TicketServiceImpl implements ITicketService {
 			boolean isAsc) {
 		return ticketDao.getTicketList(page, name, orderByField, isAsc);
 	}
+	
+	public Ticket selectByStoreNum(String storeNum){
+		return ticketDao.selectByStoreNum(storeNum);
+	}
 }

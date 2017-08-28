@@ -64,6 +64,12 @@ public class CouponTrade extends Model<CouponTrade> {
      */
 	@TableField("used_order_no")
 	private String usedOrderNo;
+	
+	/**
+	 * 订单id
+	 */
+	@TableField("order_id")
+	private Long usedOrderId;
     /**
      * 券码
      */
@@ -198,6 +204,14 @@ public class CouponTrade extends Model<CouponTrade> {
 
 	public void setMerchantId(Long merchantId) {
 		this.merchantId = merchantId;
+	}
+	
+	public Long getUsedOrderId() {
+		return usedOrderId;
+	}
+
+	public void setUsedOrderId(Long usedOrderId) {
+		this.usedOrderId = usedOrderId;
 	}
 
 	@Override

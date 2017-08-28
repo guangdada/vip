@@ -21,4 +21,5 @@ public interface ICouponFetchService {
 	List<Map<String, Object>> getCouponFetchList(Page<CouponFetch> page, String name,String orderByField,boolean isAsc,Long merchantId);
 	public List<Map<String, Object>> selectByCondition(Page<CouponFetchDo> page, String name, String orderByField,
 			boolean isAsc,Long merchantId);
+	public List<Map<String, Object>> selectByMemberId(Long memberId);
 }

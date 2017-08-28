@@ -21,4 +21,5 @@ public interface ICardRightService {
 	public Integer insert(CardRight cardRight);
 	List<Map<String, Object>> getCardRightList(@Param("page") Page<CardRight> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 	public List<CardRight> selectByCondition(Map<String,Object> condition);
+	public List<CardRight> selectByCardId(Long cardId);
 }

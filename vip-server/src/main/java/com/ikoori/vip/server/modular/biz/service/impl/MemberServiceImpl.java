@@ -104,4 +104,8 @@ public class MemberServiceImpl implements IMemberService {
 	    mc.setCardId(cardId);
 		memberCardMapper.updateById(mc);
 	}
+	
+	public Member selectByMobileAndStoreNo(String mobile, String storeNo){
+		return memberDao.selectByMobileAndStoreNo(mobile, storeNo);
+	}
 }

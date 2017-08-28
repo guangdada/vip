@@ -18,4 +18,8 @@ public interface MemberCardDao {
    List<Map<String, Object>> getMemberCardList(@Param("page") Page<MemberCard> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId,@Param("cardNumber") String cardNumber);
    
    MemberCard getMemberCard(@Param("memberId") Long memberId);
+   
+   List<Map<String,Object>> selectByMemberId(@Param("memberId") Long memberId);
+   
+   int updateDefaultCard(@Param("memberId") Long memberId,@Param("cardId") Long cardId);
 }

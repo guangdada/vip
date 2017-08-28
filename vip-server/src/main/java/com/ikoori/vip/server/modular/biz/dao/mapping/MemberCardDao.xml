@@ -53,6 +53,28 @@
 		AND m.id = #{memberId};
     </select>
     
+    
+    <select id="selectByMemberId" parameterType="long" resultType="map">
+    	SELECT
+			c.id as cardId,
+			c.`name`,
+			c.description,
+			mc.card_number AS cardNumber
+		FROM
+			v_member_card mc
+		LEFT JOIN v_card c ON mc.card_id = c.id
+		LEFT JOIN v_member m ON m.id = mc.member_id
+		WHERE
+			c.`status` = 1
+		AND mc.`status` = 1
+		AND m.`status` = 1
+		AND m.id = #{memberId}
+    </select>
+    
+    <update id="updateDefaultCard">
+    	UPDATE v_member_card SET is_default = 0 where member_id = #{memberId} AND card_id != #{cardId}
+    </update>
+    
     <resultMap type="com.ikoori.vip.common.persistence.model.MemberCard" id="memberCardMap">
     	<id property="id" column="mem_card_id"/>
     	<result property="cardNumber" column="card_number"/>
@@ -72,4 +94,8 @@
     		<result property="colorCode" column="color_code"/>
     	</association>
     </resultMap>
+    
+    
+    
+    
 </mapper>

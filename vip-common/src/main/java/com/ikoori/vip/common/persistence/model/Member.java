@@ -1,14 +1,16 @@
 package com.ikoori.vip.common.persistence.model;
 
-import com.baomidou.mybatisplus.enums.IdType;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotations.Version;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -127,6 +129,13 @@ public class Member extends Model<Member> {
      * 备注
      */
 	private String tips;
+	
+	/**
+	 * 乐观锁
+	 */
+	@Version
+    private Integer version;
+    
 
 	public String getTips() {
 		return tips;
@@ -307,6 +316,15 @@ public class Member extends Model<Member> {
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	@Override

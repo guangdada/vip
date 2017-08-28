@@ -32,21 +32,20 @@ public class MemberCard extends Model<MemberCard> {
      */
 	@TableField("member_id")
 	private Long memberId;
-	private Member member;
+	
     /**
      * 商户id
      */
 	@TableField("merchant_id")
 	private Long merchantId;
 	
-	private Merchant merchant;
     /**
      * 会员卡id
      */
 	@TableField("card_id")
 	private Long cardId;
 	
-	private Card card;
+	
     /**
      * 卡号
      */
@@ -77,7 +76,13 @@ public class MemberCard extends Model<MemberCard> {
 	@TableLogic
 	private Integer status;
 
-
+	/**
+	 * 关联查询对象
+	 */
+	private Member member;
+	private Card card;
+	private Merchant merchant;
+	
 	public Long getId() {
 		return id;
 	}
@@ -187,6 +192,7 @@ public class MemberCard extends Model<MemberCard> {
 		this.card = card;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "MemberCard{" +
