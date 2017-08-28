@@ -142,4 +142,77 @@
     		<result property="originAtLeast" column="origin_at_least" />
     	</association>
     </resultMap>
+    <select id="selectCoupon" resultType="map">
+       	SELECT
+			cf.id AS id,
+			cf.verify_code As verifyCode,
+			cf.coupon_id As couponId,
+			c.`name` AS couponName,
+			c.discount As discount,
+			c.value As value,
+			c.use_condition As useCondition,
+			c.description As description,
+			c.start_at As startAt,
+			c.end_at As endAt,
+			cf.is_invalid As isInvalid,
+            cf.is_used  As isUsed,
+            c.is_invalid As couponIsInvalid,
+			m.sex AS sex,
+			c.`value` AS VALUE,
+			c.type AS couponType,
+			m.`name` AS memberName,
+			m.mobile AS mobile,
+			cf.create_time AS createTime,
+			cf.is_used AS isUsed
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		LEFT JOIN v_member m ON cf.member_id = m.id
+		WHERE
+		cf.`status` = 1
+		AND c.`status` = 1
+		AND m.`status` = 1
+		and m.open_id = #{openId}
+    </select>
+    
+    
+    <select id="selectCouponDetail" resultType="map">
+       	SELECT
+			cf.id AS id,
+			cf.verify_code As verifyCode,
+			cf.coupon_id As couponId,
+			c.`name` AS couponName,
+			c.discount As discount,
+			c.value As value,
+			c.use_condition As useCondition,
+			c.description As description,
+			c.start_at As startAt,
+			c.end_at As endAt,
+			cf.is_invalid As isInvalid,
+            cf.is_used  As isUsed,
+            c.is_invalid As couponIsInvalid,
+			m.sex AS sex,
+			u.headimgurl AS headImg,
+			c.`value` AS VALUE,
+			c.type AS couponType,
+			m.`name` AS memberName,
+			m.mobile AS mobile,
+			cf.create_time AS createTime,
+			cf.is_used AS isUsed
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		LEFT JOIN v_member m ON cf.member_id = m.id
+		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
+		WHERE
+		cf.`status` = 1
+		AND c.`status` = 1
+		AND m.`status` = 1
+        <if test="couponId != null">
+        	and cf.coupon_Id = #{couponId}
+        </if>
+         <if test="id != null">
+        	and cf.id = #{id}
+        </if>
+    </select>
 </mapper>

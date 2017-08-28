@@ -25,4 +25,18 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectPointListByMemberId" resultType="map">
+        select 
+        pt.member_id AS memberId,
+        pt.in_out,
+        pt.point AS point,
+        pt.create_time AS createTime,
+        p.rule_type AS ruleType
+        from v_point p ,v_point_trade pt 
+        where p.id=pt.point_id and pt.status = 1
+        <if test="memberId != null">
+        	and pt.member_id=#{memberId}
+        </if>
+    </select>
 </mapper>

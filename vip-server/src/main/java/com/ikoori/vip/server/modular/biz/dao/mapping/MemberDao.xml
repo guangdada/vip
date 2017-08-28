@@ -53,4 +53,13 @@
     <update id="updatePoint" flushCache="true">
     	UPDATE v_member SET points = points + #{point}, version = version + 1 where id = ${memberId} AND version = #{version}
     </update>
+    <update id="updateMemberInfoByOpenId">
+    update v_member m set
+    m.name= #{name},
+    m.sex=#{sex},
+    m.address=#{address},
+    m.birthday=#{birthday},
+    m.mobile=#{mobile}
+    where m.open_id = #{openId}
+    </update>
 </mapper>

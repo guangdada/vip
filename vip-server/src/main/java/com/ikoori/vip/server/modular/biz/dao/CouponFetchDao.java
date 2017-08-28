@@ -23,4 +23,13 @@ public interface CouponFetchDao {
    public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
    
    public CouponFetch selectByVerifyCode(@Param("verifyCode") String verifyCode);
+	 /*
+	可用优惠券（未使用、未失效）
+	失效优惠券（使用、失效）
+	*/
+   List<Map<String, Object>> selectCoupon(@Param("openId") String openId);
+   /*
+  	优惠券详情
+  	*/
+   Object selectCouponDetail(@Param("couponId") Long couponId,@Param("id") Long id);
 }

@@ -9,18 +9,45 @@
 	
     </header> 
   <div class="weui-cells__titl weui-cell weui-cell_link" >积分明细列表</div>
-
+	   @for(c in points!){
+		   <div class="weui-form-preview">
+		      <div class="weui-form-preview__bd">
+		      	<div class="weui-form-preview__item">
+		          <label class="weui-form-preview__label">积分收支</label>
+		          <span class="weui-form-preview__value" 
+		          @if(c.in_out){
+		           style="color:green;">+${c.point}</span>
+		           @}
+		          @if(!c.in_out){
+		           style="color:green;">+${c.point}</span>
+		           @}
+		        </div>
+		        <div class="weui-form-preview__item">
+		          <label class="weui-form-preview__label">日期</label>
+		          <span class="weui-form-preview__value">${c.createTime,dateFormat='YYYY-MM-dd'}</span>
+		        </div>
+		        <div class="weui-form-preview__item">
+		          <label class="weui-form-preview__label">交易方式</label>
+		          <span class="weui-form-preview__value">
+	                @if(c.ruleType==0){
+		                                        关注微信
+		             @}
+		           @if(c.ruleType==1){
+		                                          成功交易                         
+		            @}
+		           @if(c.ruleType==2){
+		                                        购物金额
+		            @}
+	              </span>
+		        </div>
+		      </div>
+		    </div>
+	   @}
     <div class="weui-form-preview">
-     <!--  <div class="weui-form-preview__hd">
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">积分收支</label>
-          <em class="weui-form-preview__value">2400</em>
-        </div>
-      </div> -->
       <div class="weui-form-preview__bd">
-         <div class="weui-form-preview__item">
+      	<div class="weui-form-preview__item">
           <label class="weui-form-preview__label">积分收支</label>
-          <span class="weui-form-preview__value" style="color:green;">+2400</span>
+          <span class="weui-form-preview__value" style="color:red;">-2400</span>
         </div>
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">日期</label>
@@ -31,18 +58,9 @@
           <span class="weui-form-preview__value">交易方式</span>
         </div>
       </div>
-     <!--  <div class="weui-form-preview__ft">
-        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</a>
-      </div> -->
     </div>
-  
-    <div class="weui-form-preview">
-   <!-- 	<div class="weui-form-preview__hd">
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">积分收支</label>
-          <em class="weui-form-preview__value">2400</em>
-        </div>
-     </div> -->
+    
+     <div class="weui-form-preview">
       <div class="weui-form-preview__bd">
       	<div class="weui-form-preview__item">
           <label class="weui-form-preview__label">积分收支</label>
@@ -66,4 +84,4 @@
         <h4 align="center">已经没有更多了</h4>
     </div>
   </body>
-@}
+ @}

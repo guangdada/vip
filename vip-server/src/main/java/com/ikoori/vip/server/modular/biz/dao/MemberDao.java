@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +23,5 @@ public interface MemberDao {
 	Member selectByMobileAndStoreNo(@Param("mobile") String mobile,@Param("storeNo") String storeNo);
 	
 	int updatePoint(Long memberId, int point , int version);
+	int updateMemberInfoByOpenId(@Param("openId") String openId,@Param("name")String name,@Param("mobile")String mobile,@Param("sex")int sex,@Param("address")String address,@Param("birthday")Date birthday);
 }

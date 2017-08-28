@@ -70,7 +70,8 @@
   	    	alert(data);
   	    },function(data){
   	    });
-  	    ajax.set({});
+  	    var mobile = $("#mobile").val();
+  	    ajax.set({"mobile":mobile,"sex":"1"});
   	    ajax.start(); */
   		makeCode();
 	});
