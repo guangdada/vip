@@ -1,14 +1,23 @@
 @layout("/common/_container.html",{title:"我的积分"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
   <body ontouchstart style="background-color:#f5f4f4;">
-
-    <header class='demos-header1' style="background-color:#39ad20;"  height="70px">
-    <br>
+  		<div class="weui-header bg-black"> 
+		  <div class="weui-header-left">
+		  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+		  </div>
+		  <h1 class="weui-header-title"></h1>
+		  <div class="weui-header-right">
+		  	<!-- <a class="icon icon-83 f-white"></a> -->
+		  </div> 
+	  	</div>
+    <header class='demos-header1' style="background-color:#39ad20;"  height="100px">
+   	  <br>
+   	  <br>
       <p class='demos-sub-title' style="color:white;">可用积分</p>
       <h3 class="point-demos-title" style="color:white;">101</h3>
-	
     </header> 
-  <div class="weui-cells__titl weui-cell weui-cell_link" >积分明细列表</div>
+  	<div class="weui-cells__titl weui-cell weui-cell_link" >积分明细列表</div>
 	   @for(c in points!){
 		   <div class="weui-form-preview">
 		      <div class="weui-form-preview__bd">
@@ -19,7 +28,7 @@
 		           style="color:green;">+${c.point}</span>
 		           @}
 		          @if(!c.in_out){
-		           style="color:green;">+${c.point}</span>
+		           style="color:red;">-${c.point}</span>
 		           @}
 		        </div>
 		        <div class="weui-form-preview__item">
@@ -27,7 +36,7 @@
 		          <span class="weui-form-preview__value">${c.createTime,dateFormat='YYYY-MM-dd'}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label">交易方式</label>
+		          <label class="weui-form-preview__label">收支方式</label>
 		          <span class="weui-form-preview__value">
 	                @if(c.ruleType==0){
 		                                        关注微信
@@ -43,42 +52,6 @@
 		      </div>
 		    </div>
 	   @}
-    <div class="weui-form-preview">
-      <div class="weui-form-preview__bd">
-      	<div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">积分收支</label>
-          <span class="weui-form-preview__value" style="color:red;">-2400</span>
-        </div>
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">日期</label>
-          <span class="weui-form-preview__value">2017-07-23</span>
-        </div>
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">交易方式</label>
-          <span class="weui-form-preview__value">交易方式</span>
-        </div>
-      </div>
-    </div>
-    
-     <div class="weui-form-preview">
-      <div class="weui-form-preview__bd">
-      	<div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">积分收支</label>
-          <span class="weui-form-preview__value" style="color:red;">-2400</span>
-        </div>
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">日期</label>
-          <span class="weui-form-preview__value">2017-07-23</span>
-        </div>
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">交易方式</label>
-          <span class="weui-form-preview__value">交易方式</span>
-        </div>
-      </div>
-      <!-- <div class="weui-form-preview__ft">
-        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:">辅助操作</a>
-        <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">操作</button>
-      </div> -->
     </div>
     <div class="weui-form-preview__bd" style="background-color:#fff;">
         <h4 align="center">已经没有更多了</h4>

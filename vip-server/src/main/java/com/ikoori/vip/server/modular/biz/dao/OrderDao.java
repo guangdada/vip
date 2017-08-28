@@ -16,4 +16,8 @@ import com.ikoori.vip.common.persistence.model.Order;
  */
 public interface OrderDao {
    List<Map<String, Object>> getOrderList(@Param("page") Page<Order> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+   /*查询某用户所有订单*/
+   List<Map<String,Object>>selectOrderListByMemberId(@Param("memberId") Long memberId);
+   /*查询某用户某订单详情*/
+   List<Map<String,Object>>selectOrderDetailListByOrderId(@Param("orderId") Long orderId);
 }

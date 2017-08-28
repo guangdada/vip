@@ -12,8 +12,10 @@ import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.WxUserMapper;
+import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
+import com.ikoori.vip.server.modular.biz.dao.OrderDao;
 
 
 @Service
@@ -32,35 +34,27 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	MerchantMapper merchantMapper;
 	@Autowired
 	CouponFetchDao couponFetchDao;
-	/*@Autowired
-	CouponFetchWarpper couponFetchMapper;*/
-	/*@Override
-	public List<Map<String, Object>> getMemberCouponByOpenId(String openId) {
+    @Autowired	
+    OrderDao orderDao;
+	@Override
+	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
 		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
 			return null;
 		}
-		List<Map<String, Object>> result=couponFetchDao.selectCoupon(member.getId());
-	    if(result==null){
-	    	return null;
-	    }
-	    return result;
-	}
-	//优惠券详细信息
-	@Override
-	public Object getMemberCouponDetailByCouponId(Long couponId,Long id) {
-		// TODO Auto-generated method stub
-		Object result=couponFetchDao.selectCouponDetail(couponId, id);
-		if(result==null){
+		List<Map<String,Object>> orders=orderDao.selectOrderListByMemberId(member.getId());
+		if(orders==null){
 			return null;
 		}
-		return result;
+		return orders;
 	}
-	*/
 	@Override
-	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, Object>> getMemberOrderDetailByOrderId(Long orderId) {
+		List<Map<String,Object>> orderDetail=orderDao.selectOrderDetailListByOrderId(orderId);
+		if (orderDetail == null) {
+			return null;
+		}
+		return orderDetail;
 	}
 
 }

@@ -65,7 +65,7 @@ public class DubboConsumer extends DubboBaseConfig {
 		return ref;
 	}
 	@Bean
-	public ReferenceBean<MemberOrderApi> getMMemberOrderApi() {
+	public ReferenceBean<MemberOrderApi> getMemberOrderApi() {
 		ReferenceBean<MemberOrderApi> ref = new ReferenceBean<MemberOrderApi>();
 		ref.setVersion("myversion");
 		ref.setInterface(MemberOrderApi.class);

@@ -1,6 +1,16 @@
 @layout("/common/_container.html",{title:"我的优惠券"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
   <body ontouchstart style="background-color:#fafafa;">
+  	<div class="weui-header bg-black"> 
+	  <div class="weui-header-left">
+	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+	  </div>
+	  <h1 class="weui-header-title"></h1>
+	  <div class="weui-header-right">
+	  	<!-- <a class="icon icon-83 f-white"></a> -->
+	  </div> 
+  	</div>
 	<div class="weui-tab coupon-radius">
       <div class="coupon-weui-navbar">
         <a class="weui-navbar__item weui-bar__item--on" href="#tab1" style="border-radius: 5px;">

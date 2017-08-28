@@ -22,4 +22,30 @@
             </otherwise>
         </choose>
     </select>
+    <select id="selectOrderListByMemberId" resultType="map">
+			select
+			   o.*,
+			   s.`name` AS storeName
+			from
+			   v_order o
+			JOIN v_store s ON s.id = o.store_id
+			where 1 = 1 and o.status = 1
+        <if test="memberId != null">
+        	and o.member_id = #{memberId}
+        </if>
+    </select>
+     <select id="selectOrderDetailListByOrderId" resultType="map">
+			select
+			   o.*,
+			   s.`name` AS storeName,
+			   i.*
+			from
+			   v_order_item i
+			LEFT JOIN v_order o ON o.id= i.order_id
+			LEFT JOIN v_store s ON s.id = o.store_id
+			where 1 = 1 and o.status = 1
+        <if test="orderId != null">
+        	and i.order_id = #{orderId}
+        </if>
+    </select>
 </mapper>

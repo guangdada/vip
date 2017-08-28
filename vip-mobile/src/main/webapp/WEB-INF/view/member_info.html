@@ -1,7 +1,16 @@
 @layout("/common/_container.html",{title:"我的资料"}){
-
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
   <body ontouchstart>
-
+   	<div class="weui-header bg-black"> 
+	  <div class="weui-header-left">
+	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+	  </div>
+	  <h1 class="weui-header-title"></h1>
+	  <div class="weui-header-right">
+	  	<!-- <a class="icon icon-83 f-white"></a> -->
+	  </div> 
+  	</div>
     <header class='demos-header' style="background:#d7d7d7;">
       <h4 align="center" style="color:white">完善个人资料</h4>
     </header>
@@ -65,7 +74,6 @@
     </div>
     <input type="hidden" value="${result!}" id="result">
    </form>
-	<script src="${ctxPath}/static/jqweui/js/jquery-weui.js"></script>
     <script src="${ctxPath}/static/jqweui/js/city-picker.js"></script>
     <script>
    		 /** 表单提交事件 */

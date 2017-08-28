@@ -3,11 +3,18 @@
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
-<style>
-</style>
-
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <body style="background-color:#fafafa;">
-<div class="card-region" style="background-color: f1f1f1;" onclick="showQr()">
+  <div class="weui-header bg-black"> 
+	  <div class="weui-header-left">
+	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+	  </div>
+	  <h1 class="weui-header-title"></h1>
+	  <div class="weui-header-right">
+	  	<!-- <a class="icon icon-83 f-white"></a> -->
+	  </div> 
+  	</div>	
+ <div class="card-region" style="background-color: f1f1f1;" onclick="showQr()">
 	<div class="coupon-card-header">
 		<h4 class="shop-name">
 			<span >${couponDetail.couponName!}</span>
