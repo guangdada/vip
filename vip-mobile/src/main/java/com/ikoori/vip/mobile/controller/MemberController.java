@@ -48,7 +48,6 @@ public class MemberController {
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
 		try {
 			String openId = "1111";
-			int count=consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			map.put("member", member);
 		} catch (Exception e) {
@@ -88,12 +87,17 @@ public class MemberController {
 		map.put("couponDetail", couponDetail);
 		return "/member_couponDetail.html";
 	}
-	@RequestMapping("/order")
+	@RequestMapping(value="/order",method={RequestMethod.GET,RequestMethod.POST})
 	public String order(HttpServletRequest request, Map<String, Object> map) {
+		String openId="1111";
+		List<Map<String,Object>> orders=consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
+		map.put("orders", orders);
 		return "/member_order.html";
 	}
-	@RequestMapping("/orderDetail")
-	public String orderDetail(HttpServletRequest request, Map<String, Object> map) {
+	@RequestMapping(value="/orderDetail",method={RequestMethod.GET,RequestMethod.POST})
+	public String orderDetail(HttpServletRequest request, Map<String, Object> map,Long orderId) {
+		List<Map<String,Object>> orderDetail=consumer.getMemberOrderApi().get().getMemberOrderDetailByOrderId(orderId);
+		map.put("orderDetail", orderDetail);
 		return "/member_orderDetail.html";
 	}
 	@RequestMapping("/store")

@@ -1,27 +1,55 @@
 @layout("/common/_container.html",{title:"我的订单"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
-
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
   <!--   <header class='demos-header1' style="background-color:gray;">
       <h1 class="demos-title"></h1>
     </header>  -->
  <!--  <div class="weui-cells__titl weui-cell weui-cell_link">订单详情</div> -->
     <body ontouchstart>
-
+	 	<div class="weui-header bg-black"> 
+		  <div class="weui-header-left">
+		  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+		  </div>
+		  <h1 class="weui-header-title"></h1>
+		  <div class="weui-header-right">
+		  	<!-- <a class="icon icon-83 f-white"></a> -->
+		  </div> 
+	  	</div>
+  	
     <div class="weui-form-preview order">
       <div class="orderdetail-weui-form-preview__hd">
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">消费总金额</label>
-          <em class="weui-form-preview__value">50</em>
+          <em class="weui-form-preview__value">
+          @for(c in orderDetail!){
+	          @if(cLP.first){
+	               ${c.payment!}
+	          @}
+          @}
+          </em>
         </div>
       </div>
       <div class="weui-form-preview__bd">
        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">交易单号</label>
-          <span class="weui-form-preview__value">2356445654444141</span>
+          <label class="weui-form-preview__label">订单号</label>
+          <span class="weui-form-preview__value">
+           @for(c in orderDetail!){
+	          @if(cLP.first){
+	               ${c.order_no!}
+	          @}
+          @}
+          </span>
         </div>
+        
         <div class="weui-form-preview__item">
           <label class="weui-form-preview__label">时间</label>
-          <span class="weui-form-preview__value">2017-07-23</span>
+          <span class="weui-form-preview__value">
+           @for(c in orderDetail!){
+	          @if(cLP.first){
+	               ${c.create_time!,dateFormat='YYYY-MM-dd'}
+	          @}
+          @}
+          </span>
         </div>
         
         <div class="orderdetail-weui-cells">
@@ -32,13 +60,17 @@
 		    </div>
 		    <div class="weui-cell__ft title">消费金额</div>
 		  </div>
-		  <div class="orderdetail-weui-cell orderItem">
-		    <div class="weui-cell__hd value">风扇</div>
+		  @for(c in orderDetail!){
+	      <div class="orderdetail-weui-cell orderItem">
+		    <div class="weui-cell__hd value">${c.goods_name!}</div>
 		    <div class="weui-cell__bd value" align="center">
 		      <p>x1</p>
 		    </div>
-		    <div class="weui-cell__ft value">￥15</div>
-		  </div>
+		    <div class="weui-cell__ft value">￥${c.case_price!}</div>
+		  </div>  
+          @}
+		  
+		  
 		</div>
     
         

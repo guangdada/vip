@@ -41,6 +41,9 @@ public class MemberCardApiImpl implements MemberCardApi {
 			return null;
 		}
 		MemberCard memberCard = memberCardDao.getMemberCard(member.getId());
+		if(memberCard == null){
+			return null;
+		}
 		Merchant merchant = memberCard.getMerchant();
 		Card card = memberCard.getCard();
 		if(merchant == null){
