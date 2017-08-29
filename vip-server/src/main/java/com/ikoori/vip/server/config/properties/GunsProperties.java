@@ -19,6 +19,10 @@ import org.springframework.stereotype.Component;
 public class GunsProperties {
 
     public static final String PREFIX = "guns";
+    
+    private boolean checkSign = false;
+    
+    private String signKey = "";
 
     private String serverUrl = "";
     
@@ -118,5 +122,31 @@ public class GunsProperties {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+
+	public boolean isCheckSign() {
+		return checkSign;
+	}
+
+	public void setCheckSign(boolean checkSign) {
+		this.checkSign = checkSign;
+	}
+
+	public String getSignKey() {
+		return signKey;
+	}
+
+	public void setSignKey(String signKey) {
+		this.signKey = signKey;
+	}
+
+	public String getUplodUrl() {
+		return uplodUrl;
+	}
+
+	public void setUplodUrl(String uplodUrl) {
+		this.uplodUrl = uplodUrl;
+	}
+	
+	
 	
 }

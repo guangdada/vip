@@ -14,6 +14,8 @@ guns:
   spring-session-open: false #是否开启spring session,如果是多机环境需要开启(true/false)
   session-invalidate-time: 1800 #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
   session-validation-interval: 900 #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+  check-sign: false #接口调用是否验证签名 正式环境改成true
+  sign-key: 123456 #签名秘钥
 
 ###################  项目启动端口  ###################
 server:

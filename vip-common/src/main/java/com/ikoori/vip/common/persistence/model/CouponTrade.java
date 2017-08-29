@@ -68,7 +68,7 @@ public class CouponTrade extends Model<CouponTrade> {
 	/**
 	 * 订单id
 	 */
-	@TableField("order_id")
+	@TableField("used_order_id")
 	private Long usedOrderId;
     /**
      * 券码

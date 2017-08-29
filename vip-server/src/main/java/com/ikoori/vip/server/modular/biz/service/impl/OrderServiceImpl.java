@@ -109,9 +109,12 @@ public class OrderServiceImpl implements IOrderService {
 	
 	@Transactional(readOnly = false)
 	public void saveOrder(OrderPayDo orderPayDo) throws Exception{
+		Store store = storeDao.selectByStoreNo(orderPayDo.getStoreNo());
+		if(store == null){
+			throw new BussinessException(500,"没有找到店铺信息");
+		}
 		// 判断积分是否足够
 		Member member = memberDao.selectByMobileAndStoreNo(orderPayDo.getMobile(), orderPayDo.getStoreNo());
-		Store store = storeDao.selectByStoreNo(orderPayDo.getStoreNo());
 		if(member == null){
 			throw new BussinessException(500,"没有找到该会员信息");
 		}
@@ -119,9 +122,7 @@ public class OrderServiceImpl implements IOrderService {
 		Order order = new Order();
 		order.setPayOrderNo(orderPayDo.getOrderNo());
 		order.setOrderNo(genOrderNo());
-		// 需要根据storeNo查询storeId
-		orderPayDo.getStoreNo();
-		order.setStoreId(null);
+		order.setStoreId(store.getId());
 		order.setBalanceDue(orderPayDo.getBalanceDue());
 		order.setPayment(orderPayDo.getPayment());
 		order.setDiscount(orderPayDo.getDiscount());
@@ -188,7 +189,7 @@ public class OrderServiceImpl implements IOrderService {
 				if(cf.getIsUsed().intValue() == CouponUseState.USED.getCode()){
 					throw new BussinessException(500,"优惠券已经被使用");
 				}
-				if(!coupon.getMerchantId().toString().equals(member.getId().toString())){
+				if(!cf.getMemberId().toString().equals(member.getId().toString())){
 					throw new BussinessException(500,"优惠券不是本人的");
 				}
 				// 现金券扣减使用金额、没使用完改成部分使用，判断余额是否足够
@@ -316,7 +317,12 @@ public class OrderServiceImpl implements IOrderService {
 		}
 	}
 	
-	
+	/**
+	 * 将会员除了cardId类别的会员卡都置为非默认状态
+	 * @param cardId
+	 * @param memberId
+	 * @return
+	 */
 	public int updateDefaultCard(Long cardId,Long memberId){
 		return memberCardDao.updateDefaultCard(memberId, cardId);
 	}

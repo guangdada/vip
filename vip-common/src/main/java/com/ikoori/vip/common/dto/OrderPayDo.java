@@ -5,6 +5,7 @@ import java.util.List;
 public class OrderPayDo {
 	private String orderNo;
 	private String mobile;
+	private String cardNumber;
 	private String storeNo;
 	private Integer balanceDue;
 	private Integer payment;
@@ -87,4 +88,11 @@ public class OrderPayDo {
 		this.orderItems = orderItems;
 	}
 
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
 }

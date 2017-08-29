@@ -32,6 +32,6 @@
 		WHERE
 			v.`status` = 1
 		AND s.`status` = 1
-		AND s.store_num = #{storeNum}
+		AND s.store_no = #{storeNum}
     </select>
 </mapper>

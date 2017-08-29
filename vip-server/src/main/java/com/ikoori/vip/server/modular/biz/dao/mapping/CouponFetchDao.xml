@@ -82,7 +82,7 @@
 				c.`value`,
 				cf.available_value availableValue,
 				c.`name`,
-				c.at_least atLeast,
+				c.origin_at_least originAtLeast,
 				c.description
 			FROM
 				v_coupon_fetch cf
@@ -110,6 +110,7 @@
 			cf.verify_code,
 			c.id AS coupon_id,
 			c.`name`,
+			c.`type`,
 			c.`value` AS coupon_value,
 			c.at_least,
 			c.is_at_least,
@@ -127,6 +128,7 @@
     	<result property="id" column="id"/>
     	<result property="isUsed" column="is_used"/>
     	<result property="isInvalid" column="is_invalid"/>
+    	<result property="memberId" column="member_id"/>
     	<result property="value" column="cf_value"/>
     	<result property="availableValue" column="available_value"/>
     	<result property="usedValue" column="used_value"/>
