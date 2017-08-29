@@ -49,6 +49,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		//obj.put("birthday", DateUtil.getTime(member.getBirthday()));
 		obj.put("birthday", member.getBirthday());
 		obj.put("mobile", member.getMobile());
+		obj.put("isActive",member.isIsActive());
 		return obj;
 	}
 

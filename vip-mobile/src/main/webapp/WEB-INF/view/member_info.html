@@ -33,12 +33,12 @@
         <div class="weui-cell__bd">
           <select class="weui-select" name="sex">
             <option value="1"
-              @if(member.sex==1){
+              @if((member.sex!)==1){
                  selected
               @}
             >男</option>
             <option value="2"
-             @if(member.sex==2){
+             @if((member.sex!)==2){
                  selected
              @}
             >女</option>
@@ -51,19 +51,19 @@
           <label class="weui-label">手机</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" id="tel" type="number" name="mobile" placeholder="请输入手机号" value="${member.mobile}">
+          <input class="weui-input" id="tel" type="number" name="mobile" placeholder="请输入手机号" value="${member.mobile!}">
         </div>
       </div>
 	  
       <div class="weui-cell">
         <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="date" name="birthday" placeholder="年/月/日" value="${member.birthday,dateFormat='YYYY-MM-dd'}">
+          <input class="weui-input" type="date" name="birthday" placeholder="年/月/日" value="${member.birthday!,dateFormat='YYYY-MM-dd'}">
         </div>
       </div>
 	  
 	<div class="weui-cell">
-        <div class="weui-cell__hd"><label for="name" class="weui-label">收货地址</label></div>
+        <div class="weui-cell__hd"><label for="name" class="weui-label">地址</label></div>
         <div class="weui-cell__bd">
           <input class="weui-input"  id="start" name="address" type="text" value="${member.address!}">
         </div>
@@ -72,7 +72,6 @@
     <div class="weui-btn-area">
       <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
     </div>
-    <input type="hidden" value="${result!}" id="result">
    </form>
     <script src="${ctxPath}/static/jqweui/js/city-picker.js"></script>
     <script>
@@ -82,7 +81,7 @@
 	        url: '${ctxPath}/member/updateMemberInfo', // 需要提交的 url
 	    	success:function(data){
 				if(data && data.code=='200'){
-					 $.toptip('修改成功！','success');
+					$.toptip('修改成功！','success');
 				}else{
 					 $.toptip('修改失败！');
 				}
@@ -104,17 +103,6 @@
           console.log(values, displayValues);
         }
      });
-	  /* $(function(){
-		  var result= $("#result").val();
-		  if(result.length==0){
-			  return;
-		  }else if(result){
-			  $.toptip('修改成功！','success');
-		  }else if(!result) {
-			  alert(result);
-			  $.toptip('修改失败！');
-		  }
-	  }); */
 	
       $("#showTooltips").click(function() {
     	var name=$.trim($("#name").val());

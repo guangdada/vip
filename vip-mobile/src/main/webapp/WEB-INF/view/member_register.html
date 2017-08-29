@@ -1,97 +1,141 @@
 @layout("/common/_container.html",{title:"会员注册"}){
-
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
   <body ontouchstart>
     <header class='demos-header' style="background:#d7d7d7;">
       <h5 align="center">激活立享会员特权</h5>
-	  <h5 align="center"  style="color:blue;"><a href="">会员卡详情></a></h5>
+      <br>
+	  <!-- <h5 align="center"  style="color:blue;"><a href="">会员卡详情></a></h5> -->
     </header>
   
-    <div class="weui-cells__title">必填信息</div>
-    <div class="weui-cells weui-cells_form">
-      <div class="weui-cell weui-cell_vcode">
-        <div class="weui-cell__hd">
-          <label class="weui-label">手机</label>
-        </div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="tel" placeholder="请输入手机号">
-        </div>
-        <div class="weui-cell__ft">
-          <button class="weui-vcode-btn">获取验证码</button>
-        </div>
-      </div>
-	   <div class="weui-cell">
-		<div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
-		<div class="weui-cell__bd">
-			<input class="weui-input" type="text"  placeholder="请输入手机验证码">
+    <div class="weui-cells__title">	请输入正确的信息 </div>
+    <form action="${ctxPath}/member/register" id="memberForm" method="post" onsubmit="return false">
+	     <div class="weui-cells weui-cells_form">
+	      <div class="weui-cell">
+			 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+			 <div class="weui-cell__bd">
+				<input class="weui-input" type="text" value="" placeholder="请输入姓名">
+		     </div>
+	      </div>
+	      
+	      <div style="display:none;" id="code">
+	      	<script type="text/javascript">
+	      		function kaptchaFlash (){
+	      			$(".kaptcha").attr('src', '${ctxPath}/kaptcha?' + Math.floor(Math.random()*100) ).fadeIn();
+	      		}
+	      		
+	      		function codeValue (e){
+	      			$("#kaptchaHide").val(e.value);
+	      		}
+	      	</script>
+	         <img class="weui-vcode-img kaptcha" src="${ctxPath}/kaptcha" id="kaptcha" onclick="kaptchaFlash()">
+	         <br>
+	         <br>
+	         <input onkeyup="codeValue(this)" class="kaptcha111" type="text" size="12" style="height:30px;font-size:16px;" placeholder="请输入验证码">
+	      </div>
+			
+			<input type="hidden" id="kaptchaHide"/>
+	      
+	      <div class="weui-cell weui-cell_vcode">
+	        <div class="weui-cell__hd">
+	          <label class="weui-label">手机</label>
+	        </div>
+	        <div class="weui-cell__bd">
+	          <input class="weui-input" type="tel" id="tel" name="mobile" placeholder="请输入手机号">
+	        </div>
+	        <div class="weui-cell__ft">
+	          <button class="weui-vcode-btn" id='show-kaptcha' onclick="showKaptcha()">获取验证码</button>
+	        </div>
+	      </div>
+		  <div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="text" name="mobileCode"  placeholder="请输入手机验证码">
+			</div>
+	      </div>
+	      
+	      <div class="weui-cell weui-cell_select weui-cell_select-after">
+	        <div class="weui-cell__hd">
+	          <label for="" class="weui-label">性别</label>
+	        </div>
+	        <div class="weui-cell__bd">
+	          <select class="weui-select" name="select2">
+	            <option value="1">男</option>
+	            <option value="2">女</option>
+	          </select>
+	        </div>
+	      </div>
+		  
+	      <div class="weui-cell">
+	        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
+	        <div class="weui-cell__bd">
+	          <input class="weui-input" type="date" name="birthday" value="">
+	        </div>
+	      </div>
+	    <!--  <div class="weui-cells__title">非填信息</div> -->
 		</div>
-    </div>
-      <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <div class="weui-cell__hd">
-          <label for="" class="weui-label">性别</label>
-        </div>
-        <div class="weui-cell__bd">
-          <select class="weui-select" name="select2">
-            <option value="1">男</option>
-            <option value="2">女</option>
-          </select>
-        </div>
-      </div>
-	  
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="date" value="">
-        </div>
-      </div>
-     
-      <div class="weui-cell weui-cell_vcode">
-        <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="number" placeholder="请输入验证码">
-        </div>
-        <div class="weui-cell__ft">
-          <img class="weui-vcode-img" src="${ctxPath}/static/jqweui/images/vcode.jpg">
-        </div>
-      </div>
-    </div>
-     <div class="weui-cells__title">非填信息</div>
-	 <div class="weui-cell">
-		<div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
-		<div class="weui-cell__bd">
-			<input class="weui-input" type="text"  placeholder="请输入姓名">
-		</div>
-    </div>
-	 <div class="weui-cell">
-		<div class="weui-cell__hd"><label class="weui-label">邮箱</label></div>
-		<div class="weui-cell__bd">
-			<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入邮箱">
-		</div>
-    </div>
-	
-	</div>
-        <a href="javascript:void(0);" class="weui-cell weui-cell_link">
-        <!--   <div class="weui-cell__bd">添加更多</div> -->
-        </a>
-     </div>
-<!--     <label for="weuiAgree" class="weui-agree">
-      <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
-      <span class="weui-agree__text">
-        阅读并同意<a href="javascript:void(0);">《相关条款》</a>
-      </span>
-    </label> -->
-
-    <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
-    </div>
-
+	        <a href="javascript:void(0);" class="weui-cell weui-cell_link">
+	        <!--   <div class="weui-cell__bd">添加更多</div> -->
+	        </a>
+	    </div>
+	<!--     <label for="weuiAgree" class="weui-agree">
+	      <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+	      <span class="weui-agree__text">
+	        阅读并同意<a href="javascript:void(0);">《相关条款》</a>
+	      </span>
+	    </label> -->
+	    <div class="weui-btn-area">
+	      <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+	    </div>
+	   </div>
+    </form>
     <script>
-      $("#showTooltips").click(function() {
-        var tel = $('#tel').val();
-        var code = $('#code').val();
-        if(!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) $.toptip('请输入手机号');
-        else if(!code || !/\d{6}/.test(code)) $.toptip('请输入六位手机验证码');
-        else $.toptip('提交成功', 'success');
-      });
+	    $(function(){
+	       /*  $(".kaptcha").on('click',function(){
+	            $(".kaptcha").attr('src', '${ctxPath}/kaptcha?' + Math.floor(Math.random()*100) ).fadeIn();
+	        }); */
+	        
+	    	$("#showTooltips").click(function() {
+		    	var name=$.trim($("#name").val());
+		        var tel = $('#tel').val();
+		        var code = $('#code').val();
+		        if(name.length==0){
+		        	$.toptip('请输入姓名');
+		        	return;
+		        }
+		        if(!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) {
+		        	$.toptip('请输入手机号');	
+		        	return;
+		        }	
+		        if(tel.length!=11){
+		          $.toptip('请输入11位手机号');
+		          return;
+		        }else{
+		        	$('#memberForm').ajaxSubmit(ajaxOption);
+		        	//$("#memberForm").submit();
+		           /*  $.toptip('提交成功', 'success'); */
+		        }
+		       
+		      });
+	    });
+	    var showKaptcha = function (){
+			var kaptcha=$("#code").html();
+			layer.open({
+				  title: [
+				    '验证码',
+				    'background-color:#8DCE16; color:#fff;'
+				  ]
+				  ,anim: 'up'
+				  ,content:kaptcha
+				  ,btn: ['确认', '取消']
+				});
+			
+	  	$(".layui-m-layerbtn span[type='1']").on('click',function(){
+		    	var hide = $("#kaptchaHide").val();
+		    	alert(hide);
+		  	});
+	  	 
+	  	}
+	  
     </script>
   </body>
 @}

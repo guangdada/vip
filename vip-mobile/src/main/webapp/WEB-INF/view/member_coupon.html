@@ -13,10 +13,10 @@
   	</div>
 	<div class="weui-tab coupon-radius">
       <div class="coupon-weui-navbar">
-        <a class="weui-navbar__item weui-bar__item--on" href="#tab1" style="border-radius: 5px;">
+        <a class="weui-navbar__item weui-bar__item--on"  id="table1" style="border-radius: 5px;">
                                             可用优惠券
         </a>
-        <a class="weui-navbar__item" href="#tab2" style="border-radius:5px;">
+        <a class="weui-navbar__item"  id="table2" style="border-radius:5px;">
                                             已失效
         </a>
        <!--  <a class="weui-navbar__item" href="#tab3">
@@ -104,10 +104,21 @@
         	</div>
 		</div>
 		
-        
-        
       </div>
     </div>
-
+    	<script>
+	    $("#table1").click(function(){
+	    	$("#table1").addClass("weui-bar__item--on");
+	    	$("#table2").removeClass("weui-bar__item--on");
+	    	$("#tab1").show();
+	    	$("#tab2").hide();
+	    });
+	    $("#table2").click(function(){
+	    	$("#table1").removeClass("weui-bar__item--on");
+	    	$("#table2").addClass("weui-bar__item--on");
+	    	$("#tab1").hide();
+	    	$("#tab2").show();
+	    });
+   	 </script>
   </body>
 @}

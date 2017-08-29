@@ -32,7 +32,8 @@
         pt.in_out,
         pt.point AS point,
         pt.create_time AS createTime,
-        p.rule_type AS ruleType
+        p.rule_type AS ruleType,
+        pt.trade_type AS tradeType
         from v_point p ,v_point_trade pt 
         where p.id=pt.point_id and pt.status = 1
         <if test="memberId != null">

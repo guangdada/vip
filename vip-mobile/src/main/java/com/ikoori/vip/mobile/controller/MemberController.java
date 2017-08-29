@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
@@ -40,6 +41,15 @@ public class MemberController {
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		String openId = "1111";
 		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+		if(member!=null){
+			if(!(member.getBoolean("isActive"))){
+				map.put("member", member);
+				return "/member_register.html";
+			}else if(member.getBoolean("isActive")){
+				map.put("member", member);
+				return "/member_info.html";
+			}
+		}
 		map.put("member", member);
 		return "/member_info.html";
 	}
@@ -71,6 +81,7 @@ public class MemberController {
 	public String point(HttpServletRequest request, Map<String, Object> map) {
 		String openId="1111";
 		List<Map<String, Object>> points=consumer.getMemberPointApi().get().getMemberPointByOpenId(openId);
+		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
 		return "/member_point.html";
 	}

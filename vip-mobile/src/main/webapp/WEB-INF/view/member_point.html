@@ -38,14 +38,10 @@
 		        <div class="weui-form-preview__item">
 		          <label class="weui-form-preview__label">收支方式</label>
 		          <span class="weui-form-preview__value">
-	                @if(c.ruleType==0){
-		                                        关注微信
-		             @}
-		           @if(c.ruleType==1){
-		                                          成功交易                         
-		            @}
-		           @if(c.ruleType==2){
-		                                        购物金额
+		            @for(p in pointTradeType){
+		              @if(p.code==c.tradeType){
+							${p.message!}
+						@}
 		            @}
 	              </span>
 		        </div>
@@ -53,8 +49,8 @@
 		    </div>
 	   @}
     </div>
-    <div class="weui-form-preview__bd" style="background-color:#fff;">
+    <!-- <div class="weui-form-preview__bd" style="background-color:#fff;">
         <h4 align="center">已经没有更多了</h4>
-    </div>
+    </div> -->
   </body>
  @}
