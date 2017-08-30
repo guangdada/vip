@@ -34,6 +34,17 @@
 		AND wu.`status` = 1
 		AND wu.openid = #{openId};
     </select>
+    <select id="getMemberByMobile" resultType="com.ikoori.vip.common.persistence.model.Member">
+    	SELECT
+			m.*
+		FROM
+			v_member m
+		WHERE
+		<if test="mobile != null">
+        	 m.mobile = #{mobile}
+        </if>
+    </select>
+    
     
     <select id="selectByMobileAndStoreNo" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
@@ -60,7 +71,8 @@
     m.sex=#{sex},
     m.address=#{address},
     m.birthday=#{birthday},
-    m.mobile=#{mobile}
+    m.mobile=#{mobile},
+    m.is_active=true
     where m.open_id = #{openId}
     </update>
 </mapper>

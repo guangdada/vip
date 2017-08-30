@@ -58,4 +58,14 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			String address) {
 		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday);
 	}
+
+	@Override
+	public Object getMemberByMobile(String mobile) {
+		// TODO Auto-generated method stub
+		Member member=memberDao.getMemberByMobile(mobile);
+		if(member==null){
+			return null;
+		}
+		return member;
+	}
 }

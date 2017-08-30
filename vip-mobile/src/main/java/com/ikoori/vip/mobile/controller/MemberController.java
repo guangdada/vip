@@ -19,6 +19,7 @@ import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.mobile.config.DubboConsumer;
+import com.google.code.kaptcha.Constants;
 
 @Controller
 @RequestMapping("/member")
@@ -56,11 +57,14 @@ public class MemberController {
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
 	@ResponseBody
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
+		String openId = "1111";
 		try {
-			String openId = "1111";
+			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			map.put("member", member);
 		} catch (Exception e) {
+			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+			map.put("member", member);
 			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
@@ -73,9 +77,46 @@ public class MemberController {
 		map.put("member", member);
 		return "/member_info.html";
 	}
+	@RequestMapping(value="/registerMember",method={RequestMethod.POST})
+	public String registerMember(HttpServletRequest request, Map<String, Object> map,@Valid Member mem,String mobileCode) {
+		Object member=consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
+		if(member!=null){
+			return "/member_register.html";
+	        }
+		try {
+			String openId = "1112";
+			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:info";
+		}
+		    return "redirect:../index";
+	}
 	@RequestMapping("/register")
 	public String register(HttpServletRequest request, Map<String, Object> map) {
 		return "/member_register.html";
+	}
+	@RequestMapping(value="/validateCode",method={RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public Object validateCode(HttpServletRequest request, Map<String, Object> map,String code) {
+		//验证验证码是否正确
+		 String code1 = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		 if(code1.equals(code)){
+			 return new SuccessTip(); 
+		 }else{
+			 return new ErrorTip(BizExceptionEnum.SERVER_ERROR); 
+		 }
+	}
+	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map,String mobile) {
+		//手机号是否唯一
+		Object member=consumer.getMemberInfoApi().get().getMemberByMobile(mobile);
+        if(member==null){
+          return new SuccessTip();
+        }else{
+          return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
+        }
 	}
 	@RequestMapping("/point")
 	public String point(HttpServletRequest request, Map<String, Object> map) {
