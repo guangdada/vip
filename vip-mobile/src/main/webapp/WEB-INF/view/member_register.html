@@ -40,7 +40,7 @@
 	         <img class="weui-vcode-img kaptcha" src="${ctxPath}/kaptcha" id="kaptcha" onclick="kaptchaFlash()">
 	         <br>
 	         <br>
-	         <input onkeyup="codeValue(this)" class="kaptcha111" type="text" size="12" style="height:30px;font-size:16px;" placeholder="请输入验证码">
+	         <input onkeyup="codeValue(this)"  type="text" size="12" style="height:30px;font-size:16px;" placeholder="请输入验证码">
 	      </div>
 			
 			<input type="hidden" id="kaptchaHide"/>
@@ -78,7 +78,7 @@
 	      <div class="weui-cell">
 	        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
 	        <div class="weui-cell__bd">
-	          <input class="weui-input" type="date" name="birthday">
+	          <input class="weui-input" type="date" name="birthday" placeholder="年/月/日">
 	        </div>
 	      </div>
 	      <div class="weui-cell">
@@ -102,17 +102,23 @@
     <script>
 	    $(function(){
     	/** 表单提交事件 */
-		/* var ajaxOption={
+		 var ajaxOption={
 			type: 'post', // 提交方式 get/post
 	        url: '${ctxPath}/member/registerMember', // 需要提交的 url
 	    	success:function(data){
-				if(data && data.code=='200'){
+	    		if(data && data.code=='411'){
+	    			$.toptip('手机验证码错误，激活失败！');
+	    		}else if(data && data.code=='412'){
+	    			$.toptip('手机号码已注册，激活失败！');
+	    		}else if(data && data.code=='200'){
 					$.toptip('激活成功！','success');
+					//window.location.href="${ctxPath}/index";
+					setTimeout(function(){window.location="${ctxPath}/index";},2000);
 				}else{
 					$.toptip('激活失败！');
 				}
 			}
-		};	 */
+		};	 
 		 $("#start").cityPicker({
 	         title: "选择出发地",
 	         onChange: function (picker, values, displayValues) {
@@ -162,9 +168,30 @@
 		          $.toptip('请输入11位手机号!');
 		          return;
 		        }else{
-		        	//$('#memberForm').ajaxSubmit(ajaxOption);
+		        	 $.ajax({
+			             //提交数据的类型 POST GET
+			             type:"POST",
+			             //提交的网址
+			             url:"${ctxPath}/member/validateMobile",
+			             //提交的数据
+			             data:{mobile:tel},
+			             //成功返回之后调用的函数             
+			             success:function(data){
+			            	 if(data && data.code=='500'){
+			 					$.toptip('手机号已注册，请重新输入！');
+			 					return;
+			 				}else{
+			 					$('#memberForm').ajaxSubmit(ajaxOption);
+			 				}
+			             },
+			             //调用出错执行的函数
+			             error: function(){
+			                 //请求出错处理
+			             }         
+			          });
+		        	
 		        	//$('#memberForm').attr("onsubmit",)
-		        	$('#memberForm').submit();
+		        	//$('#memberForm').submit();
 		           /*  $.toptip('提交成功', 'success'); */
 		        }
 		       
@@ -175,7 +202,7 @@
 			var kaptcha=$("#code").html();
 			layer.open({
 				  title: [
-				    '验证码',
+				    '验证',
 				    'background-color:#8DCE16; color:#fff;'
 				  ]
 				  ,anim: 'up'
@@ -185,17 +212,20 @@
 			
 	  	$(".layui-m-layerbtn span[type='1']").on('click',function(){
 		    	var code = $("#kaptchaHide").val();
+		    	var mobile= $.trim($("#tel").val()); 
 		    	$.ajax({
 		             //提交数据的类型 POST GET
 		             type:"POST",
 		             //提交的网址
 		             url:"${ctxPath}/member/validateCode",
 		             //提交的数据
-		             data:{code:code},
+		             data:{code:code,mobile:mobile},
 		             //成功返回之后调用的函数             
 		             success:function(data){
-		            	 if(data && data.code=='500'){
-		 					$.toptip('验证码错误，请重新获取验证码！');
+		            	 if(data && data.code=='410'){
+		 					$.toptip('手机号码不能为空！');
+		 				}else if(data && data.code=='500'){
+		 					$.toptip('验证码错误，请重新获取验证码');
 		 				}else{
 		 					$.toptip('手机短信验证码已发送！','success');
 		 				}

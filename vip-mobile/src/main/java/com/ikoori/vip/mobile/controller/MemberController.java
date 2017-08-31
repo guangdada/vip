@@ -1,10 +1,14 @@
 package com.ikoori.vip.mobile.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.code.kaptcha.Constants;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.mobile.config.DubboConsumer;
-import com.google.code.kaptcha.Constants;
+import com.ikoori.vip.mobile.constant.Constant;
+
 
 @Controller
 @RequestMapping("/member")
@@ -78,19 +84,25 @@ public class MemberController {
 		return "/member_info.html";
 	}
 	@RequestMapping(value="/registerMember",method={RequestMethod.POST})
-	public String registerMember(HttpServletRequest request, Map<String, Object> map,@Valid Member mem,String mobileCode) {
+	@ResponseBody
+	public Object registerMember(HttpServletRequest request, Map<String, Object> map,@Valid Member mem,String mobileCode) {
+		String mobileCode1=(Integer)request.getSession().getAttribute(Constant.MOBILE_CODE)+"";
 		Object member=consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
+		if(!(mobileCode1.equals(mobileCode))){
+			return new ErrorTip(BizExceptionEnum.ERROR_MOBILE_CODE);
+		}
+		//验证手机号是否唯一
 		if(member!=null){
-			return "/member_register.html";
+			 return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
 	        }
 		try {
 			String openId = "1112";
 			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "redirect:info";
+			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
-		    return "redirect:../index";
+			return new SuccessTip();
 	}
 	@RequestMapping("/register")
 	public String register(HttpServletRequest request, Map<String, Object> map) {
@@ -98,15 +110,46 @@ public class MemberController {
 	}
 	@RequestMapping(value="/validateCode",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public Object validateCode(HttpServletRequest request, Map<String, Object> map,String code) {
+	public Object validateCode(HttpServletRequest request,HttpServletResponse response, Map<String, Object> map,String code,String mobile) {
 		//验证验证码是否正确
-		 String code1 = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		 if(code1.equals(code)){
+		String code1 = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		 if(mobile.equals("")){
+			 return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
+		 }else if(code1.equals(code)){
+			 sendMessage(request,response,mobile);
 			 return new SuccessTip(); 
 		 }else{
 			 return new ErrorTip(BizExceptionEnum.SERVER_ERROR); 
 		 }
 	}
+	public void sendMessage(HttpServletRequest request, HttpServletResponse response,String mobile){
+		//Boolean checkTimeResult = checkMobileTime(request, response);
+		/*if(!checkTimeResult){
+			ResponseUtils.renderJson(response, "false");
+			return;
+		}*/
+		int max=999999;
+        int min=100000;
+        Random random = new Random();
+        int s = random.nextInt(max)%(max-min+1) + min;
+        String msg=consumer.messageConsumer().get().generateContent(s);
+		request.getSession().setAttribute(Constant.MOBILE_CODE,s);
+		request.getSession().setAttribute(Constant.MOBILE_CODE_LAST_TIME,new Date());
+		consumer.messageConsumer().get().send(mobile, msg);
+		return;
+	}
+	/*public Boolean checkMobileTime(HttpServletRequest request, HttpServletResponse response){
+		Date lastTime = (Date)request.getSession().getAttribute(Constant.MOBILE_CODE_LAST_TIME);
+		if(null == lastTime){
+			return true;
+		}
+		Long currTime = new Date().getTime();
+		long betweenMinute=(currTime-lastTime.getTime())/(1000*60);  
+		if(betweenMinute<2){
+			return false;
+		}
+		return true;
+	}*/
 	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map,String mobile) {

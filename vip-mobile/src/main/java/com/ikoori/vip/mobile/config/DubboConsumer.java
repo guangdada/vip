@@ -7,6 +7,7 @@ import com.alibaba.dubbo.config.spring.ReferenceBean;
 import com.ikoori.vip.api.service.MemberCardApi;
 import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
+import com.ikoori.vip.api.service.MemberMessageApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
 import com.ikoori.vip.api.service.MemberService;
@@ -69,6 +70,16 @@ public class DubboConsumer extends DubboBaseConfig {
 		ReferenceBean<MemberOrderApi> ref = new ReferenceBean<MemberOrderApi>();
 		ref.setVersion("myversion");
 		ref.setInterface(MemberOrderApi.class);
+		ref.setTimeout(5000);
+		ref.setRetries(3);
+		ref.setCheck(false);
+		return ref;
+	}
+	@Bean
+	public ReferenceBean<MemberMessageApi> messageConsumer() {
+		ReferenceBean<MemberMessageApi> ref = new ReferenceBean<MemberMessageApi>();
+		ref.setVersion("myversion");
+		ref.setInterface(MemberMessageApi.class);
 		ref.setTimeout(5000);
 		ref.setRetries(3);
 		ref.setCheck(false);

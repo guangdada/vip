@@ -52,6 +52,9 @@ public enum BizExceptionEnum {
 	REQUEST_NULL(400, "请求有错误"),
 	SESSION_TIMEOUT(400, "会话超时"),
 	SERVER_ERROR(500, "服务器异常"),
+	EMPTY_MOBILE(410, "手机号为空"),
+	ERROR_MOBILE_CODE(411,"短信验证码不正确"),
+	EXISTED_MOBILE(412,"菜单编号重复，不能添加"),
 	
 	/**
 	 * 会员问题
