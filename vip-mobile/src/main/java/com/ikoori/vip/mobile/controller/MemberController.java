@@ -23,6 +23,7 @@ import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
+import com.ikoori.vip.common.sms.Client;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.constant.Constant;
 
@@ -116,40 +117,22 @@ public class MemberController {
 		 if(mobile.equals("")){
 			 return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
 		 }else if(code1.equals(code)){
-			 sendMessage(request,response,mobile);
+			 sendMessage(request,mobile);
 			 return new SuccessTip(); 
 		 }else{
 			 return new ErrorTip(BizExceptionEnum.SERVER_ERROR); 
 		 }
 	}
-	public void sendMessage(HttpServletRequest request, HttpServletResponse response,String mobile){
-		//Boolean checkTimeResult = checkMobileTime(request, response);
-		/*if(!checkTimeResult){
-			ResponseUtils.renderJson(response, "false");
-			return;
-		}*/
+	public void sendMessage(HttpServletRequest request,String mobile){
 		int max=999999;
         int min=100000;
         Random random = new Random();
         int s = random.nextInt(max)%(max-min+1) + min;
-        String msg=consumer.messageConsumer().get().generateContent(s);
 		request.getSession().setAttribute(Constant.MOBILE_CODE,s);
-		request.getSession().setAttribute(Constant.MOBILE_CODE_LAST_TIME,new Date());
-		consumer.messageConsumer().get().send(mobile, msg);
+		String content="【酷锐运动】您的激活验证码是："+s;
+		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
 		return;
 	}
-	/*public Boolean checkMobileTime(HttpServletRequest request, HttpServletResponse response){
-		Date lastTime = (Date)request.getSession().getAttribute(Constant.MOBILE_CODE_LAST_TIME);
-		if(null == lastTime){
-			return true;
-		}
-		Long currTime = new Date().getTime();
-		long betweenMinute=(currTime-lastTime.getTime())/(1000*60);  
-		if(betweenMinute<2){
-			return false;
-		}
-		return true;
-	}*/
 	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map,String mobile) {
