@@ -34,15 +34,8 @@
 					<div align="left">
 						<div style="float: left;">
 							<h2 style="color: red; margin-left: 5px;">
-								@if(c.couponType==0){
-								${c.discount!/10}
-								<font size="2px">&nbsp;折</font>
-								@}
-								
-								@if(c.couponType==1){
 								${c.value!}
 								<font size="2px">&nbsp;元</font>
-								@}
 							</h2>
 						</div>
 						<div style="float: right;vertical-align: bottom;">
@@ -54,22 +47,7 @@
 				</div>
 			</a>
 			 @}
-			@}
-				<!-- <div class="coupon-margin">
-					<div style="color: gray; margin-left: 5px;">官方韩国发货</div>
-					<div align="left">
-						<div style="float: left;">
-							<h2 style="color: red; vertical-align: bottom; margin-left: 5px;">
-								9.0<font size="2px">&nbsp;折</font>
-							</h2>
-						</div>
-						<div style="float: right;">
-							<font style="color: gray; margin-right: 5px;">满一元可使用</font>
-						</div>
-					</div>
-					<br><br>
-					<div style="color: gray;margin-left:5px;float:left;">使用期限：2017.08.22-2017.08.31</div>
-				</div> -->
+			 @}
 			</div>
 			<div id="tab2" class="weui-tab__bd-item">
           	@for(c in Coupons!){
@@ -80,15 +58,8 @@
 					<div align="left">
 						<div style="float: left;">
 							<h2 style="color: red; margin-left: 5px;">
-								@if(c.couponType==0){
-								${c.discount!/10}
-								<font size="2px">&nbsp;折</font>
-								@}
-								
-								@if(c.couponType==1){
 								${c.value!}
 								<font size="2px">&nbsp;元</font>
-								@}
 							</h2>
 						</div>
 						<div style="float: right;vertical-align: bottom;">
@@ -106,19 +77,23 @@
 		
       </div>
     </div>
-    	<script>
-	    $("#table1").click(function(){
-	    	$("#table1").addClass("weui-bar__item--on");
-	    	$("#table2").removeClass("weui-bar__item--on");
-	    	$("#tab1").show();
-	    	$("#tab2").hide();
-	    });
-	    $("#table2").click(function(){
-	    	$("#table1").removeClass("weui-bar__item--on");
-	    	$("#table2").addClass("weui-bar__item--on");
-	    	$("#tab1").hide();
-	    	$("#tab2").show();
-	    });
-   	 </script>
+    <script>
+    $(function() {
+    	//可用优惠券
+        $("#table1").click(function(){
+        	$("#table1").addClass("weui-bar__item--on");
+        	$("#table2").removeClass("weui-bar__item--on");
+        	$("#tab1").show();
+        	$("#tab2").hide();
+        });
+        //已失效优惠券
+        $("#table2").click(function(){
+        	$("#table1").removeClass("weui-bar__item--on");
+        	$("#table2").addClass("weui-bar__item--on");
+        	$("#tab1").hide();
+        	$("#tab2").show();
+        });
+    });
+   </script>
   </body>
 @}

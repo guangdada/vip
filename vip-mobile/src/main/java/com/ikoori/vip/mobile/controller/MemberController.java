@@ -44,7 +44,7 @@ public class MemberController {
 		JSONObject obj = consumer.personConsumer().get().test("成");
 		return obj.getString("name");
 	}
-	
+	/*会员信息，会员没激活跳转到会员激活页面，激活跳转到会员信息页面*/
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		String openId = "1111";
@@ -61,6 +61,7 @@ public class MemberController {
 		map.put("member", member);
 		return "/member_info.html";
 	}
+	/*修改会员信息*/
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
 	@ResponseBody
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
@@ -84,6 +85,7 @@ public class MemberController {
 		map.put("member", member);
 		return "/member_info.html";
 	}
+	/*会员激活*/
 	@RequestMapping(value="/registerMember",method={RequestMethod.POST})
 	@ResponseBody
 	public Object registerMember(HttpServletRequest request, Map<String, Object> map,@Valid Member mem,String mobileCode) {
@@ -105,10 +107,8 @@ public class MemberController {
 		}
 			return new SuccessTip();
 	}
-	@RequestMapping("/register")
-	public String register(HttpServletRequest request, Map<String, Object> map) {
-		return "/member_register.html";
-	}
+	
+   /* 验证码验证*/
 	@RequestMapping(value="/validateCode",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateCode(HttpServletRequest request,HttpServletResponse response, Map<String, Object> map,String code,String mobile) {
@@ -123,6 +123,7 @@ public class MemberController {
 			 return new ErrorTip(BizExceptionEnum.SERVER_ERROR); 
 		 }
 	}
+	/*发送手机短信验证码*/
 	public void sendMessage(HttpServletRequest request,String mobile){
 		int max=999999;
         int min=100000;
@@ -133,6 +134,7 @@ public class MemberController {
 		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
 		return;
 	}
+	/*验证手机号是否唯一*/
 	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map,String mobile) {
@@ -144,6 +146,7 @@ public class MemberController {
           return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
         }
 	}
+	/*会员积分页面*/
 	@RequestMapping("/point")
 	public String point(HttpServletRequest request, Map<String, Object> map) {
 		String openId="1111";
@@ -152,6 +155,7 @@ public class MemberController {
 		map.put("points", points);
 		return "/member_point.html";
 	}
+	/*会员优惠券页面*/
 	@RequestMapping(value="/coupon",method={RequestMethod.GET,RequestMethod.POST})
 	public String coupon(HttpServletRequest request, Map<String, Object> map) {
 		String openId = "1111";
@@ -159,12 +163,14 @@ public class MemberController {
 		map.put("Coupons", Coupons);
 		return "/member_coupon.html";
 	}
+	/*会员优惠券详情页面*/
 	@RequestMapping(value="/couponDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String couponDetail(HttpServletRequest request, Map<String, Object> map,String couponId,String id) {
 		Object couponDetail=consumer.getMemberCouponApi().get().getMemberCouponDetailByCouponId(Long.valueOf(couponId), Long.valueOf(id));
 		map.put("couponDetail", couponDetail);
 		return "/member_couponDetail.html";
 	}
+	/*会员订单页面*/
 	@RequestMapping(value="/order",method={RequestMethod.GET,RequestMethod.POST})
 	public String order(HttpServletRequest request, Map<String, Object> map) {
 		String openId="1111";
@@ -172,27 +178,11 @@ public class MemberController {
 		map.put("orders", orders);
 		return "/member_order.html";
 	}
+	/*会员订单详情页面*/
 	@RequestMapping(value="/orderDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String orderDetail(HttpServletRequest request, Map<String, Object> map,Long orderId) {
 		List<Map<String,Object>> orderDetail=consumer.getMemberOrderApi().get().getMemberOrderDetailByOrderId(orderId);
 		map.put("orderDetail", orderDetail);
 		return "/member_orderDetail.html";
 	}
-	@RequestMapping("/store")
-	public String store(HttpServletRequest request, Map<String, Object> map) {
-		return "/store.html";
-	}
-	@RequestMapping("/demo")
-	public String demo(HttpServletRequest request, Map<String, Object> map) {
-		return "/demo.html";
-	}
-	@RequestMapping("/sorting")
-	public String sorting(HttpServletRequest request, Map<String, Object> map) {
-		return "/sorting.html";
-	}
-	@RequestMapping("/select")
-	public String select(HttpServletRequest request, Map<String, Object> map) {
-		return "/select.html";
-	}
-	
 }

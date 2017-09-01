@@ -14,7 +14,7 @@
 	  	<!-- <a class="icon icon-83 f-white"></a> -->
 	  </div> 
   	</div>	
- <div class="card-region" style="background-color: f1f1f1;" onclick="showQr()">
+ <div class="card-region" style="background-color: f1f1f1;">
 	<div class="coupon-card-header">
 		<h4 class="shop-name">
 			<span >${couponDetail.couponName!}</span>
@@ -83,30 +83,12 @@
             </div>
             <div class="weui-cell__ft">${couponDetail.description!}</div>
           </div>
-         
-          <!-- <a class="weui-cell weui-cell_access" href="/member/order">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>使用说明</p>
-            </div>
-            <div class="weui-cell__ft">gfgfgfddfdfdfdfdfdfdfedrfe</div>
-          </a> -->
         </div>
       </div>
  </div>
   
   <script type="text/javascript">
-  	$(function() {
-  	    /* var ajax = new $ax("${ctxPath}/memeberCard/view", function(data){
-  	    	alert(data);
-  	    },function(data){
-  	    });
-  	    ajax.set({});
-  	    ajax.start(); */
-  		makeCode();
-	});
-  	
-  	var showQr = function (){
+  /* 	var showQr = function (){
   		var src = $("#qrcode").find("img").prop("src");
 		var img = '<img src="'+src+'"/>';
   		layer.open({
@@ -114,13 +96,12 @@
   	  	  btn: '关闭',
   	  	  shadeClose: false
   	  	});
-  	}
-  	
-  	var qrcode = new QRCode("qrcode");
-  	function makeCode () { 
-  		var cardNum = $("#cardNum").val();
-  	    qrcode.makeCode(cardNum);
-  	}
+  	} */
+	//var qrcode = new QRCode("qrcode");
+	/* function makeCode () { 
+		var cardNum = $("#cardNum").val();
+	    qrcode.makeCode(cardNum);
+	} */
   </script>
   </body>
 @}

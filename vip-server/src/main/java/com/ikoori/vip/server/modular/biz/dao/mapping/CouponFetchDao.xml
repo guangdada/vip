@@ -197,6 +197,7 @@
 			u.headimgurl AS headImg,
 			c.`value` AS VALUE,
 			c.type AS couponType,
+			c.preferential_type As preferentialType,
 			m.`name` AS memberName,
 			m.mobile AS mobile,
 			cf.create_time AS createTime,
