@@ -295,8 +295,9 @@ CardInfoDlg.setBgImg = function (){
 	$("input[name='coverType']").eq(1).click();
 	var coverPic = $("#coverPic").val();
 	if(coverPic){
-		var pic = Feng.ctxPath + "/kaptcha/" + coverPic;
-		$(".card-region").css({"background-image":"url("+pic+")"});
+		/*var pic = Feng.ctxPath + "/kaptcha/" + coverPic;
+		$(".card-region").css({"background-image":"url("+pic+")"});*/
+		$(".card-region").css({"background-image":"url("+coverPic+")"});
 		$(".card-region").css({"background-color":""});
 	}
 }

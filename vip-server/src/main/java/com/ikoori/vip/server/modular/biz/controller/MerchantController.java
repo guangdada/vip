@@ -3,6 +3,8 @@ package com.ikoori.vip.server.modular.biz.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,7 @@ import com.ikoori.vip.server.modular.biz.warpper.MerchantWarpper;
 @Controller
 @RequestMapping("/merchant")
 public class MerchantController extends BaseController {
-
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	IMerchantService merchantService;
 	@Autowired
@@ -60,6 +62,7 @@ public class MerchantController extends BaseController {
      */
     @RequestMapping("/merchant_add")
     public String merchantAdd() {
+    	log.info("merchant_add");
         return PREFIX + "merchant_add.html";
     }
 
@@ -68,8 +71,14 @@ public class MerchantController extends BaseController {
      */
     @RequestMapping("/merchant_update/{merchantId}")
     public String merchantUpdate(@PathVariable Long merchantId, Model model) {
-    	Merchant merchant = merchantMapper.selectById(merchantId);
-    	model.addAttribute(merchant);
+    	log.info("--merchantId---",merchantId);
+    	try {
+			Merchant merchant = merchantMapper.selectById(merchantId);
+			model.addAttribute(merchant);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("",e);
+		}
         return PREFIX + "merchant_edit.html";
     }
 

@@ -80,7 +80,7 @@ public class UploadController extends BaseController {
 			pic.setAbsUrl(gunsProperties.getImageUrl()+ "/" +pictureName);
 			pic.setName(pictureName);
 			pictureMapper.insert(pic);
-			obj.put("pictureName", pictureName);
+			obj.put("pictureName", pic.getAbsUrl());
 			obj.put("pictureId", pic.getId());
 		} catch (Exception e) {
 			throw new BussinessException(BizExceptionEnum.UPLOAD_ERROR);
