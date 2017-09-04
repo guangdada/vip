@@ -60,7 +60,7 @@ MerchantInfoDlg.close = function() {
  * 收集数据
  */
 MerchantInfoDlg.collectData = function() {
-	this.set('id').set('name').set('mobile').set('tips').set('qq');
+	this.set('id').set('name').set('mobile').set('tips').set('qq').set('headImg');
 }
 
 /**
@@ -119,4 +119,9 @@ MerchantInfoDlg.editSubmit = function() {
 
 $(function() {
 	Feng.initValidator("merchantInfoForm", MerchantInfoDlg.validateFields);
+	
+	// 店铺logo上传
+    var avatarUp = new $WebUpload("headImg");
+    avatarUp.setUploadBarId("progressBar");
+    avatarUp.init();
 });
