@@ -4,14 +4,14 @@
     id : 头像的id
 @*/
 <div class="form-group">
-    <label class="col-sm-2 control-label head-scu-label">${name}</label>
+    <label class="col-sm-${col} control-label head-scu-label">${name}</label>
     <div class="col-sm-2 auto-width">
         <div id="${id}PreId">
             <div><img width="100px" height="100px"
                 @if(isEmpty(avatarImg)){
                       src="${ctxPath}/static/img/girl.gif"></div>
                 @}else{
-                      src="${ctxPath}/kaptcha/${avatarImg}"></div>
+                      src="${avatarImg}"></div>
                 @}
         </div>
     </div>

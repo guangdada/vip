@@ -28,7 +28,7 @@
 								@if(card.coverType==0){
 									style="background-color: ${colorType.color!}"
 								@}else{
-									style="background-image: url(${coverPic!})"
+									style="background-image: url(${card.coverPic!})"
 								@}
 								>
 									<!-- style="background-image: url(https://img.yzcdn.cn/upload_files/2014/12/05/cfd43da2bfd9181e53275706d850eb91.png);"> -->
@@ -149,7 +149,7 @@
 												</label> 
 													<div id="coverPicPreId" class="inline">
 														@if(card.coverType == 1){
-															<img src="${coverPic!}" class="thumb-image" width="100" heigth="100">
+															<img src="${card.coverPic!}" class="thumb-image" width="100" heigth="100">
 														@}
 													</div>
 													<a id="coverPicBtnId" href="javascript:;"  class="control-action choose-image checkbox inline js-choose-image">选择图片</a>

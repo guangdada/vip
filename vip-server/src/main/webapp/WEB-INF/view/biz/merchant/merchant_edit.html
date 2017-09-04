@@ -6,12 +6,15 @@
             <input type="hidden" id="id" value="${merchant.id}">
 
             <div class="row">
-                <div class="col-sm-12">
-					<#input id="name" name="商户名称" underline="false" value="${merchant.name}"/>
+            	<div class="col-sm-6">
+            		<#storeLogo id="headImg" name="商户logo:" avatarImg="${merchant.headImg}" underline="true" col="3"/>
+            		<#input id="name" name="商户名称" underline="false" value="${merchant.name}"/>
 					<#input id="mobile" name="手机号" underline="false" value="${merchant.mobile}"/>
-					<#input id="qq" name="QQ" underline="false" value="${merchant.qq}"/>
-					<#textarea id="tips" name="备注" underline="true" rows = "3" value="${merchant.tips}"/>
-                </div>
+            	</div>
+            	<div class="col-sm-6">
+            		<#input id="qq" name="QQ" underline="false" value="${merchant.qq}"/>
+					<#textArea id="tips" name="备注" underline="true" rows = "3" value="${merchant.tips}"/>
+            	</div>
             </div>
 
             <div class="row btn-group-m-t">

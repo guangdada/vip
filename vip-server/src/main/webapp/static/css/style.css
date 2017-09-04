@@ -3721,7 +3721,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 #content-main {
-    height: calc(100% - 40px);
+    height: calc(100% - 45px);
     overflow: hidden;
 }
 
@@ -7798,13 +7798,25 @@ body.skin-3 {
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 0px;
     background-color: #F5F5F5;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: #999;
 }
+
+/* ::-webkit-scrollbar {
+    width: 0px;
+    height: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+}
+ */
 
 
 /*GO HOME*/

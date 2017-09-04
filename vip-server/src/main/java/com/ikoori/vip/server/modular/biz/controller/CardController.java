@@ -126,9 +126,9 @@ public class CardController extends BaseController {
 		model.addAttribute("logo", merchant.getHeadImg());
 
 		Card card = cardService.selectById(cardId);
-		if(card.getCoverType().intValue() == 1){
+		/*if(card.getCoverType().intValue() == 1){
 			model.addAttribute("coverPic",gunsProperties.getImageUrl() + "/" + card.getCoverPic());
-		}
+		}*/
 		if(StringUtils.isNotBlank(card.getColorCode())){
 			model.addAttribute("colorType", ColorType.valueOf(card.getColorCode()));
 		}else{
