@@ -34,7 +34,7 @@ public class GunsApplication extends WebMvcConfigurerAdapter{
             registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
             registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
             // 图片上传目录映射
-            registry.addResourceHandler("/upload/**").addResourceLocations("file:///" + gunsProperties.getFileUploadPath() + "/");  
+            registry.addResourceHandler("/files/**").addResourceLocations("file:///" + gunsProperties.getFileUploadPath() + "/");  
         }
     }
 
