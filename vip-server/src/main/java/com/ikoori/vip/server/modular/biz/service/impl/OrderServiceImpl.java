@@ -102,9 +102,10 @@ public class OrderServiceImpl implements IOrderService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getOrderList(Page<Order> page, String name, String orderByField,
-			boolean isAsc) {
-		return orderDao.getOrderList(page, name, orderByField, isAsc);
+	public List<Map<String, Object>> getOrderList(Page<Map<String, Object>> page, String memName, String orderByField,
+			boolean isAsc, Long merchantId, Long storeId, String mobile, Long orderSource, String orderNo) {
+		return orderDao.getOrderList(page, memName, orderByField, isAsc, merchantId, storeId, mobile, orderSource,
+				orderNo);
 	}
 	
 	@Transactional(readOnly = false)

@@ -39,6 +39,12 @@ public class Order extends Model<Order> {
 	private String orderNo;
 	
 	/**
+     * 订单号
+     */
+	@TableField("order_source")
+	private Integer orderSource;
+	
+	/**
 	 * 外部订单号
 	 */
 	@TableField("pay_order_no")
@@ -334,6 +340,14 @@ public class Order extends Model<Order> {
 	}
 	
 	
+
+	public Integer getOrderSource() {
+		return orderSource;
+	}
+
+	public void setOrderSource(Integer orderSource) {
+		this.orderSource = orderSource;
+	}
 
 	public String getPayOrderNo() {
 		return payOrderNo;

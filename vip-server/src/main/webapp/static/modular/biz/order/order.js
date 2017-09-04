@@ -14,7 +14,16 @@ var Order = {
 Order.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'}
+        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '订单号', field: 'order_no', visible: true, align: 'center', valign: 'middle'},
+        {title: '会员名称', field: 'member_name', visible: true, align: 'center', valign: 'middle'},
+        {title: '支付单号', field: 'pay_order_no', visible: true, align: 'center', valign: 'middle'},
+        {title: '订单状态', field: 'pay_status', visible: true, align: 'center', valign: 'middle'},
+        {title: '支付金额', field: 'payment', visible: true, align: 'center', valign: 'middle'},
+        {title: '优惠金额', field: 'discount', visible: true, align: 'center', valign: 'middle'},
+        {title: '总金额', field: 'balance_due', visible: true, align: 'center', valign: 'middle'},
+        {title: '商品数量', field: 'product_num', visible: true, align: 'center', valign: 'middle'},
+        {title: '订单时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -85,7 +94,11 @@ Order.delete = function () {
  */
 Order.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['memName'] = $("#memName").val();
+    queryData['storeId'] = $("#storeId").val();
+    queryData['orderNo'] = $("#orderNo").val();
+    queryData['mobile'] = $("#mobile").val();
+    queryData['orderSource'] = $("#orderSource").val();
     Order.table.refresh({query: queryData});
 };
 

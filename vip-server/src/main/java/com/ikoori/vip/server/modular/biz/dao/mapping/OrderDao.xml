@@ -2,9 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.OrderDao">
 	<select id="getOrderList" resultType="map">
-        select * from v_order where 1 = 1 and status = 1
-        <if test="name != null and name !=''">
-            and name like CONCAT('%',#{name},'%')
+        select o.* , m.name as member_name from v_order o left join v_member m on o.member_id = m.id where 1 = 1 and o.status = 1
+        <if test="memName != null and memName !=''">
+            and m.name like CONCAT('%',#{memName},'%')
+        </if>
+        <if test="mobile != null and mobile !=''">
+            and m.mobile like CONCAT('%',#{mobile},'%')
+        </if>
+        <if test="orderSource != null and orderSource !=''">
+            and o.order_source = #{orderSource}
+        </if>
+        <if test="storeId != null and storeId !=''">
+            and o.store_id = #{storeId}
+        </if>
+        <if test="orderNo != null and orderNo !=''">
+            and o.order_no like CONCAT('%',#{orderNo},'%')
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -18,7 +30,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by create_time DESC
+                order by o.create_time DESC
             </otherwise>
         </choose>
     </select>

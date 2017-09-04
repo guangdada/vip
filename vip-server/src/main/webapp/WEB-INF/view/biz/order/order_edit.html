@@ -7,17 +7,61 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-
+					单据编号：${order.orderNo}
                 </div>
 
                 <div class="col-sm-6">
+					订单日期：${order.createTime,dateFormat='YYYY-MM-dd HH:mm:ss'}
+                </div>
+            </div>
+            
+            <br>
+            
+            <div class="row">
+                <div class="col-sm-12">
+					<table class="table">
+                        <thead>
+                        <tr>
+                            <th>商品名称</th>
+                            <th>货号</th>
+                            <th>尺码</th>
+                            <th>数量</th>
+                            <th>零售价</th>
+                            <th>实收金额</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @for(oi in orderItems){
+                        	<tr>
+	                            <td>${oi.goodsName}</td>
+	                            <td>${oi.goodsNo}</td>
+	                            <td>${oi.model}</td>
+	                            <td>${oi.quantity}</td>
+	                            <td>${oi.casePrice/100}</td>
+	                            <td>${(oi.quantity * oi.casePrice)/100}</td>
+	                        </tr>
+                        @}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <hr/>
+            
+            <div class="row">
+                <div class="col-sm-9">
+                </div>
 
+                <div class="col-sm-3 ">
+					<div class="row">总计金额：¥ ${order.balanceDue / 100}</div>
+					<div class="row">优惠方式：${order.discountInfo}</div>
+					<div class="row">优惠金额：¥ ${order.discount / 100}</div>
+					<div class="row">支付金额：¥ ${order.payment / 100}</div>
                 </div>
             </div>
 
             <div class="row btn-group-m-t">
                 <div class="col-sm-12 text-right">
-                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OrderInfoDlg.editSubmit()"/>
                     <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
                 </div>
             </div>

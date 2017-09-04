@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.OrderItemMapper;
 import com.ikoori.vip.common.persistence.model.OrderItem;
@@ -49,4 +51,14 @@ public class OrderItemServiceImpl implements IOrderItemService {
 			boolean isAsc) {
 		return orderItemDao.getOrderItemList(page, name, orderByField, isAsc);
 	}
+
+	@Override
+	public List<OrderItem> selectByOrderId(Long orderId) {
+		Wrapper<OrderItem> w = new EntityWrapper<OrderItem>();
+		w.eq("order_id", orderId);
+		w.eq("status", 1);
+		return orderItemMapper.selectList(w);
+	}
+	
+	
 }
