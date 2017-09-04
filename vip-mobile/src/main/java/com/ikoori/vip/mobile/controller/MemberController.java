@@ -66,7 +66,7 @@ public class MemberController {
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
 		String openId = "1111";
 		try {
-			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
+			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			map.put("member", member);
 		} catch (Exception e) {
@@ -99,7 +99,7 @@ public class MemberController {
 	        }
 		try {
 			String openId = "1112";
-			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
+			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(),null,1,null,null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);

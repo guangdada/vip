@@ -21,12 +21,12 @@
     <div class="weui-cells__title">	请输入正确的信息 </div>
     <form action="${ctxPath}/member/registerMember" id="memberForm" method="post">
 	     <div class="weui-cells weui-cells_form">
-	      <div class="weui-cell">
+	      <!-- <div class="weui-cell">
 			 <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
 			 <div class="weui-cell__bd">
 				<input class="weui-input" type="text" name="name" id="name" value="" placeholder="请输入姓名" >
 		     </div>
-	      </div>
+	      </div> -->
 	      
 	      <div style="display:none;" id="code">
 	      	<script type="text/javascript">
@@ -63,7 +63,7 @@
 			</div>
 	      </div>
 	      
-	      <div class="weui-cell weui-cell_select weui-cell_select-after">
+	      <!-- <div class="weui-cell weui-cell_select weui-cell_select-after">
 	        <div class="weui-cell__hd">
 	          <label for="" class="weui-label">性别</label>
 	        </div>
@@ -73,8 +73,8 @@
 	            <option value="2">女</option>
 	          </select>
 	        </div>
-	      </div>
-		  
+	      </div> -->
+		  <!-- 
 	      <div class="weui-cell">
 	        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
 	        <div class="weui-cell__bd">
@@ -86,17 +86,16 @@
 	        <div class="weui-cell__bd">
 	          <input class="weui-input"  id="start" name="address" type="text" value="湖北省 武汉市 武昌区">
 	        </div>
-          </div>
+          </div> -->
     
-	    <!--  <div class="weui-cells__title">非填信息</div> -->
-		  <div>
+		  <!-- <div>
 	         <a href="javascript:void(0);" class="weui-cell weui-cell_link">
 	         </a>
-	      </div>
-	      <div class="weui-btn-area">
+	      </div> -->
+	 </div> 
+	  <div class="weui-btn-area">
 	       	 <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">激活</a>
-	      </div>
-	 </div>   
+	  </div>  
 	</form>
     <script src="${ctxPath}/static/jqweui/js/city-picker.js"></script>
     <script>
@@ -151,7 +150,7 @@
 	//提交会员表单信息
    	$("#showTooltips").click(function() {
     	var name=$.trim($("#name").val());
-        var tel = $.trim(('#tel').val());
+        var tel = $.trim($('#tel').val());
         var code = $('#code').val();
         var mobileCode=$.trim($("#mobileCode").val());
         if(name.length==0){
