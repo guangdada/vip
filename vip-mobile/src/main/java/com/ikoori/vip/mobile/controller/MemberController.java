@@ -48,17 +48,13 @@ public class MemberController {
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		String openId = "1111";
 		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-		if(member!=null){
 			if(!(member.getBoolean("isActive"))){
 				map.put("member", member);
 				return "/member_register.html";
-			}else if(member.getBoolean("isActive")){
+			}else {
 				map.put("member", member);
 				return "/member_info.html";
 			}
-		}
-		map.put("member", member);
-		return "/member_info.html";
 	}
 	/*修改会员信息*/
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
