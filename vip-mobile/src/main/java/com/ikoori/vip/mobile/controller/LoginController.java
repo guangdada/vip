@@ -21,77 +21,66 @@ import com.ikoori.vip.mobile.util.WeChatAPI;
 
 /**
  * 微信网页授权后回调地址
+ * 
  * @author Administrator
  *
  */
 @Controller
 @RequestMapping(value = "/login")
-public class LoginController 
-{
+public class LoginController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	DubboConsumer consumer;
-    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-    public String index(HttpServletRequest request,HttpServletResponse response, Map<String, Object> map) throws Exception
-    {
-    	HttpSession session = request.getSession();
+
+	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
+	public String index(HttpServletRequest request, HttpServletResponse response, Map<String, Object> map)
+			throws Exception {
+		HttpSession session = request.getSession();
 		// 判断是否为网页授权后返回的state,保证只能网页授权回调该登录方法
 		String queryString = request.getQueryString();
 		if (StringUtils.isNotBlank(queryString)) {
-			// 获得state
+			// 截取36位state
 			String state = null;
 			int stateIndex = queryString.indexOf("state");
 			if (stateIndex != -1) {
-				state = queryString.substring(stateIndex + 6, stateIndex+42);
+				state = queryString.substring(stateIndex + 6, stateIndex + 42);
 			}
-			Object user_state = session.getAttribute(Const.SESSION_USER_STATE);
-			if (StringUtils.isBlank(state) || user_state == null || !state.equals(user_state.toString())) {
+			Object session_state = session.getAttribute(Const.SESSION_USER_STATE);
+			if (StringUtils.isBlank(state) || session_state == null || !state.equals(session_state.toString())) {
 				log.error("state 信息不正确");
 				throw new Exception("state 信息不正确");
 			}
-		}else{
+		} else {
 			log.error("state 信息不正确");
 			throw new Exception("state 信息不正确");
 		}
-		
-    	
+
 		String openid = request.getParameter("openid");
-    	UserInfo userInfo = WeChatAPI.getUserInfo(session);
-    	if(userInfo == null){
-    		userInfo = WeChatAPI.getUserInfo(openid);
-    	}
-    	if(userInfo == null){
-			log.error("没有找到用户");
-    		throw new Exception("没有找到用户");
+		UserInfo userInfo = WeChatAPI.getUserInfo(session);
+		if (userInfo == null) {
+			userInfo = WeChatAPI.getUserInfo(openid);
 		}
-    	
-    	// 新用户生成会员信息
-    	try {
+		if (userInfo == null) {
+			log.error("没有找到用户");
+			throw new Exception("没有找到用户");
+		}
+
+		// 新用户生成会员信息
+		try {
 			consumer.getMemberInfoApi().get().saveMemberInfo(userInfo);
 		} catch (Exception e) {
-			log.error("保存会员信息失败",e);
+			log.error("保存会员信息失败", e);
 			throw new Exception("保存会员信息失败");
 		}
-    	
-    	// 保存用户session
-    	session.setAttribute(Const.SESSION_USER_INFO,userInfo);
-    	
-    	String lastAccessUrl = request.getParameter("lastAccessUrl");
-    	// 返回初始访问页面，如果是/login ，避免出现循环访问，不处理
-    	if(StringUtils.isNotBlank(lastAccessUrl) && !lastAccessUrl.contains("/login")){
-    		return "redirect:" + lastAccessUrl;
-    	}
-    	return "redirect:index";
-    }
-    
-    public static void main(String[] args) {
-    	String queryString = "lastAccessUrl=http://localhost:8088/?null?state=b9b3fabb-a4b2-443f-bd16-9294b8fbdba4&openid=o19yZsw5CT7CDk_ikBRiGNbyu7Tw";
-    	int stateIndex = queryString.indexOf("state");
-    	String state = null;
-		if (stateIndex != -1) {
-			state = queryString.substring(stateIndex + 6, stateIndex+42);
-		}
-		System.out.println(state);
-	}
 
+		// 保存用户session
+		session.setAttribute(Const.SESSION_USER_INFO, userInfo);
+
+		String lastAccessUrl = request.getParameter("lastAccessUrl");
+		// 返回初始访问页面，action参数采用rest方式配置，不要使用?号
+		if (StringUtils.isNotBlank(lastAccessUrl)) {
+			return "redirect:" + lastAccessUrl;
+		}
+		return "redirect:index";
+	}
 }
