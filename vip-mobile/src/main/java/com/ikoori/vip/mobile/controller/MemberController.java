@@ -1,6 +1,5 @@
 package com.ikoori.vip.mobile.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,61 +18,76 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
-import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
+import com.ikoori.vip.common.sms.Client;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.constant.Constant;
+import com.ikoori.vip.mobile.util.WeChatAPI;
 
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	DubboConsumer consumer;
-	
+
+
+	/*会员信息，会员没激活跳转到会员激活页面，激活跳转到会员信息页面*/
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
-		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-		if(member!=null){
+		try {
+			String openId = WeChatAPI.getOpenId(request.getSession());
+			if(openId == null){
+				throw new Exception("登录信息有误");
+			}
+			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			if(!(member.getBoolean("isActive"))){
 				map.put("member", member);
 				return "/member_register.html";
-			}else if(member.getBoolean("isActive")){
+			}else {
 				map.put("member", member);
 				return "/member_info.html";
 			}
+		} catch (Exception e) {
+			log.error("会员激活页面跳转失败",e);
+			return "redirect:../index";
 		}
-		map.put("member", member);
-		return "/member_info.html";
 	}
+	/*修改会员信息*/
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
 	@ResponseBody
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		try {
-			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
+			String openId = WeChatAPI.getOpenId(request.getSession());
+			if(openId == null){
+				throw new Exception("登录信息有误");
+			}
+			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			map.put("member", member);
 		} catch (Exception e) {
-			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-			map.put("member", member);
-			e.printStackTrace();
+			log.error("会员信息修改失败",e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		    return new SuccessTip();
 	}
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.GET})
-	public String updateInfoGet(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
+	public String updateInfoGet(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
 		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 		map.put("member", member);
 		return "/member_info.html";
 	}
+	/*会员激活*/
 	@RequestMapping(value="/registerMember",method={RequestMethod.POST})
 	@ResponseBody
 	public Object registerMember(HttpServletRequest request, Map<String, Object> map,@Valid Member mem,String mobileCode) {
@@ -83,20 +99,22 @@ public class MemberController {
 		//验证手机号是否唯一
 		if(member!=null){
 			 return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
-	        }
+        }
 		try {
-			String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
-			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
+			String openId = WeChatAPI.getOpenId(request.getSession());
+			if(openId == null){
+				return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
+			}
+			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(),null,1,null,null);
 		} catch (Exception e) {
+			log.error("会员激活失败",e);
 			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 			return new SuccessTip();
 	}
-	@RequestMapping("/register")
-	public String register(HttpServletRequest request, Map<String, Object> map) {
-		return "/member_register.html";
-	}
+	
+   /* 验证码验证*/
 	@RequestMapping(value="/validateCode",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateCode(HttpServletRequest request,HttpServletResponse response, Map<String, Object> map,String code,String mobile) {
@@ -105,40 +123,24 @@ public class MemberController {
 		 if(mobile.equals("")){
 			 return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
 		 }else if(code1.equals(code)){
-			 sendMessage(request,response,mobile);
+			 sendMessage(request,mobile);
 			 return new SuccessTip(); 
 		 }else{
 			 return new ErrorTip(BizExceptionEnum.SERVER_ERROR); 
 		 }
 	}
-	public void sendMessage(HttpServletRequest request, HttpServletResponse response,String mobile){
-		//Boolean checkTimeResult = checkMobileTime(request, response);
-		/*if(!checkTimeResult){
-			ResponseUtils.renderJson(response, "false");
-			return;
-		}*/
+	/*发送手机短信验证码*/
+	public void sendMessage(HttpServletRequest request,String mobile){
 		int max=999999;
         int min=100000;
         Random random = new Random();
         int s = random.nextInt(max)%(max-min+1) + min;
-        String msg=consumer.messageConsumer().get().generateContent(s);
 		request.getSession().setAttribute(Constant.MOBILE_CODE,s);
-		request.getSession().setAttribute(Constant.MOBILE_CODE_LAST_TIME,new Date());
-		consumer.messageConsumer().get().send(mobile, msg);
+		String content="【酷锐运动】您的激活验证码是："+s;
+		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
 		return;
 	}
-	/*public Boolean checkMobileTime(HttpServletRequest request, HttpServletResponse response){
-		Date lastTime = (Date)request.getSession().getAttribute(Constant.MOBILE_CODE_LAST_TIME);
-		if(null == lastTime){
-			return true;
-		}
-		Long currTime = new Date().getTime();
-		long betweenMinute=(currTime-lastTime.getTime())/(1000*60);  
-		if(betweenMinute<2){
-			return false;
-		}
-		return true;
-	}*/
+	/*验证手机号是否唯一*/
 	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map,String mobile) {
@@ -150,55 +152,62 @@ public class MemberController {
           return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
         }
 	}
+	/*会员积分页面*/
 	@RequestMapping("/point")
-	public String point(HttpServletRequest request, Map<String, Object> map) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
+	public String point(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
 		List<Map<String, Object>> points=consumer.getMemberPointApi().get().getMemberPointByOpenId(openId);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
 		return "/member_point.html";
 	}
+	/*会员优惠券页面*/
 	@RequestMapping(value="/coupon",method={RequestMethod.GET,RequestMethod.POST})
-	public String coupon(HttpServletRequest request, Map<String, Object> map) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
+	public String coupon(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
 		List<Map<String, Object>> Coupons=consumer.getMemberCouponApi().get().getMemberCouponByOpenId(openId);
 		map.put("Coupons", Coupons);
 		return "/member_coupon.html";
 	}
+	/*会员优惠券详情页面*/
 	@RequestMapping(value="/couponDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String couponDetail(HttpServletRequest request, Map<String, Object> map,String couponId,String id) {
 		Object couponDetail=consumer.getMemberCouponApi().get().getMemberCouponDetailByCouponId(Long.valueOf(couponId), Long.valueOf(id));
 		map.put("couponDetail", couponDetail);
 		return "/member_couponDetail.html";
 	}
+	/*会员订单页面*/
 	@RequestMapping(value="/order",method={RequestMethod.GET,RequestMethod.POST})
-	public String order(HttpServletRequest request, Map<String, Object> map) {
-		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
+	public String order(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
 		List<Map<String,Object>> orders=consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
 		map.put("orders", orders);
 		return "/member_order.html";
 	}
+	/*会员订单详情页面*/
 	@RequestMapping(value="/orderDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String orderDetail(HttpServletRequest request, Map<String, Object> map,Long orderId) {
 		List<Map<String,Object>> orderDetail=consumer.getMemberOrderApi().get().getMemberOrderDetailByOrderId(orderId);
 		map.put("orderDetail", orderDetail);
 		return "/member_orderDetail.html";
 	}
-	@RequestMapping("/store")
+	/*附近门店*/
+	@RequestMapping(value="/store",method={RequestMethod.GET,RequestMethod.POST})
 	public String store(HttpServletRequest request, Map<String, Object> map) {
 		return "/store.html";
 	}
-	@RequestMapping("/demo")
-	public String demo(HttpServletRequest request, Map<String, Object> map) {
-		return "/demo.html";
+	/*附近门店详细信息*/
+	@RequestMapping(value="/storeDetail",method={RequestMethod.GET,RequestMethod.POST})
+	public String storeDetail(HttpServletRequest request, Map<String, Object> map) {
+		return "/storeDetail.html";
 	}
-	@RequestMapping("/sorting")
-	public String sorting(HttpServletRequest request, Map<String, Object> map) {
-		return "/sorting.html";
-	}
-	@RequestMapping("/select")
-	public String select(HttpServletRequest request, Map<String, Object> map) {
-		return "/select.html";
-	}
-	
 }

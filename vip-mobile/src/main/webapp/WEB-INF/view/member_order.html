@@ -11,11 +11,7 @@
 	  	<!-- <a class="icon icon-83 f-white"></a> -->
 	  </div> 
   	</div>
-  <!--   <header class='demos-header1' style="background-color:gray;">
-      <h1 class="demos-title"></h1>
-    </header>  -->
- <!--  <div class="weui-cells__titl weui-cell weui-cell_link">订单详情</div> -->
- <div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
+ 	<div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
  	@for(c in orders!){
 	   <div class="weui-form-preview">
 	    <a href="/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
@@ -38,12 +34,6 @@
 	          <label class="weui-form-preview__label">消费时间</label>
 	          <span class="weui-form-preview__value">${c.create_time!,dateFormat='YYYY-MM-dd'}</span>
 	        </div>
-	       <!--  <hr style="height:1px;border:none;border-top:1px dashed gray;" >  -->
-	        <!-- <div class="weui-form-preview__item">
-	          <label class="weui-form-preview__label"><font color="black" size="2px">查看详情</font></label>
-	          <span class="order-weui-form-preview__value">点击</span> 
-	          <div class="order-weui-cell__ft"></div>
-       	 	</div> -->
 	      </div>
 	     
 	    </div>
@@ -60,25 +50,9 @@
 	    <div style="background-color:#fafafa;height:10px;"></div>
 	 @}
    
-   
-   <!-- <div class="weui-form-preview">
-    <a href="/member/orderDetail">
-      <div class="weui-form-preview__bd">
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">流水号：34556667778898989</label>
-           <span class="order-weui-form-preview__value">￥50</span> 
-	       <div class="order-weui-cell__ft"></div>
-        </div>
-        <div class="weui-form-preview__item">
-          <label class="weui-form-preview__label">长沙家乐福店</label>
-          <span class="weui-form-preview__value">50</span>
-        </div>
-      </div>
-       </a>
-    </div> -->
      <div class="weui-form-preview__bd" style="background-color:#fff;">
         <h4 align="center">(⊙０⊙)啊哦，没有更多订单啦</h4>
-    </div>
+     </div>
   </body>
   </body>
 @}

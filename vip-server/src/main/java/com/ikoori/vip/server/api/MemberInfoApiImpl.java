@@ -79,7 +79,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 
 	@Transactional(readOnly = false)
 	@Override
-	public int updetaMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
+	public int updateMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address) {
 		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday);
 	}

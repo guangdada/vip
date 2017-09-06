@@ -452,3 +452,9 @@
 .bg-black{/*黑色*/
   background-color: #0a0a0a;
 }
+.store-weui-form-preview__bd {
+  padding: 10px 15px 30px 15px;
+  font-size: .9em;
+  text-align: right;
+  color: #999999;
+}
