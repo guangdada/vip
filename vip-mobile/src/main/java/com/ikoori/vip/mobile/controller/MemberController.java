@@ -1,6 +1,5 @@
 package com.ikoori.vip.mobile.controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ import com.ikoori.vip.mobile.constant.Constant;
 public class MemberController {
 	//@Reference(version = "1.0.0")
 	//private MemberService memberService;
+	 private Logger log = LoggerFactory.getLogger(this.getClass());
 	 @Autowired
 	 DubboConsumer consumer;
 
@@ -47,7 +49,8 @@ public class MemberController {
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		String openId = "1111";
-		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+		try {
+			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			if(!(member.getBoolean("isActive"))){
 				map.put("member", member);
 				return "/member_register.html";
@@ -55,6 +58,10 @@ public class MemberController {
 				map.put("member", member);
 				return "/member_info.html";
 			}
+		} catch (Exception e) {
+			log.error("会员激活页面跳转失败",e);
+			return "redirect:../index";
+		}
 	}
 	/*修改会员信息*/
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
@@ -66,9 +73,7 @@ public class MemberController {
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			map.put("member", member);
 		} catch (Exception e) {
-			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-			map.put("member", member);
-			e.printStackTrace();
+			log.error("会员信息修改失败",e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		    return new SuccessTip();
@@ -97,6 +102,7 @@ public class MemberController {
 			String openId = "1112";
 			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(),null,1,null,null);
 		} catch (Exception e) {
+			log.error("会员激活失败",e);
 			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
@@ -179,5 +185,15 @@ public class MemberController {
 		List<Map<String,Object>> orderDetail=consumer.getMemberOrderApi().get().getMemberOrderDetailByOrderId(orderId);
 		map.put("orderDetail", orderDetail);
 		return "/member_orderDetail.html";
+	}
+	/*附近门店*/
+	@RequestMapping(value="/store",method={RequestMethod.GET,RequestMethod.POST})
+	public String store(HttpServletRequest request, Map<String, Object> map) {
+		return "/store.html";
+	}
+	/*附近门店详细信息*/
+	@RequestMapping(value="/storeDetail",method={RequestMethod.GET,RequestMethod.POST})
+	public String storeDetail(HttpServletRequest request, Map<String, Object> map) {
+		return "/storeDetail.html";
 	}
 }
