@@ -5,7 +5,7 @@
 ###################  guns配置  ###################
 guns:
   server-url: http://localhost #服务器地址
-  image-url:  http://localhost/files #图片访问action
+  image-url:  http://localhost/files #图片访问路径
   swagger-open: true #是否开启swagger (true/false)
   kaptcha-open: false #是否开启登录时验证码 (true/false)
   session-open: false #是否开启session超时验证（受影响的类SessionTimeoutInterceptor） (true/false)
@@ -16,6 +16,7 @@ guns:
   session-validation-interval: 900 #多久检测一次失效的session(只在单机环境下生效) 单位：秒
   check-sign: false #接口调用是否验证签名 正式环境改成true
   sign-key: 123456 #签名秘钥
+  merchant-id: 2 #商户id
 
 ###################  项目启动端口  ###################
 server:
@@ -88,10 +89,10 @@ spring:
 ###################  dubbo配置  ###################
 dubbo:
   application-name: krvip.provider
-  #registry-address: 127.0.0.1:2181
-  #registry-protocol: zookeeper
-  registry-address: 224.5.6.7:1234
-  registry-protocol: multicast
+  registry-address: 127.0.0.1:2181
+  registry-protocol: zookeeper
+  #registry-address: 224.5.6.7:1234
+  #registry-protocol: multicast
   monitor-protocol: registry
   protocol-port: 20880
 #多数据源

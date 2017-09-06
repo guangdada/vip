@@ -16,4 +16,6 @@ import com.ikoori.vip.common.persistence.model.Card;
  */
 public interface CardDao {
    List<Map<String, Object>> getCardList(@Param("page") Page<Card> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+   
+   public Card getCardByGrantTypeAndMerchantId(@Param("merchatId") Long merchatId, @Param("grantType") Integer grantType);
 }

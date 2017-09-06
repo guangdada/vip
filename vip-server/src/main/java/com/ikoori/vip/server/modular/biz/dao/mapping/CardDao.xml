@@ -25,4 +25,15 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="getCardByGrantTypeAndMerchantId" resultType="com.ikoori.vip.common.persistence.model.Card">
+    	SELECT
+			*
+		FROM
+			v_card
+		WHERE
+			grant_type = #{grantType}
+		AND merchant_id = #{merchatId}
+		AND `status` = 1
+    </select>
 </mapper>

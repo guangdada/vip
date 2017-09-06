@@ -25,14 +25,12 @@
     
     <select id="getMemberByOpenId" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
-			m.*
+			*
 		FROM
-			v_member m
-		LEFT JOIN v_wx_user wu ON m.wx_user_id = wu.id
+			v_member
 		WHERE
-			m.id = 1
-		AND wu.`status` = 1
-		AND wu.openid = #{openId};
+			STATUS = 1
+		AND open_id = #{openId};
     </select>
     <select id="getMemberByMobile" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT

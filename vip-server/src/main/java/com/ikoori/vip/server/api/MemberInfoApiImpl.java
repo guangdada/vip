@@ -1,19 +1,37 @@
 package com.ikoori.vip.server.api;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberInfoApi;
-import com.ikoori.vip.common.persistence.dao.CardMapper;
+import com.ikoori.vip.api.vo.UserInfo;
+import com.ikoori.vip.common.constant.state.CouponUseState;
+import com.ikoori.vip.common.constant.state.GrantType;
+import com.ikoori.vip.common.constant.state.MemSourceType;
+import com.ikoori.vip.common.constant.state.RightType;
+import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
+import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
-import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.WxUserMapper;
+import com.ikoori.vip.common.persistence.model.Card;
+import com.ikoori.vip.common.persistence.model.CardRight;
+import com.ikoori.vip.common.persistence.model.Coupon;
+import com.ikoori.vip.common.persistence.model.CouponFetch;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.util.DateUtil;
+import com.ikoori.vip.common.persistence.model.MemberCard;
+import com.ikoori.vip.common.persistence.model.WxUser;
+import com.ikoori.vip.common.util.RandomUtil;
+import com.ikoori.vip.server.config.properties.GunsProperties;
+import com.ikoori.vip.server.modular.biz.dao.CardDao;
+import com.ikoori.vip.server.modular.biz.dao.CardRightDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 
@@ -21,7 +39,7 @@ import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 @Service
 public class MemberInfoApiImpl implements MemberInfoApi {
 	@Autowired
-	MemberCardMapper memberCardMapper;
+	GunsProperties gunsProperties;
 	@Autowired
 	MemberDao memberDao;
 	@Autowired
@@ -29,11 +47,17 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Autowired
 	MemberMapper memberMapper;
 	@Autowired
-	CardMapper cardMapper;
-	@Autowired
-	MerchantMapper merchantMapper;
-	@Autowired
 	CouponFetchDao couponFetchDao;
+	@Autowired
+	CouponFetchMapper couponFetchMapper;
+	@Autowired
+	CardDao cardDao;
+	@Autowired
+	CardRightDao cardRightDao;
+	@Autowired
+	CouponMapper couponMapper;
+	@Autowired
+	MemberCardMapper memberCardMapper;
 
 	@Override
 	public JSONObject getMemberInfoByOpenId(String openId) {
@@ -53,6 +77,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		return obj;
 	}
 
+	@Transactional(readOnly = false)
 	@Override
 	public int updetaMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address) {
@@ -67,5 +92,92 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			return null;
 		}
 		return member;
+	}
+
+	@Transactional(readOnly = false)
+	@Override
+	public int saveMemberInfo(UserInfo userInfo) throws Exception {
+		Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
+		if (member == null) {
+			// 保存微信用户
+			WxUser wxUser = new WxUser();
+			setWxUserInfo(userInfo, wxUser);
+			wxUserMapper.insert(wxUser);
+			
+			// 保存会员
+			member = new Member();
+			member.setOpenId(wxUser.getOpenid());
+			member.setWxUserId(wxUser.getId());
+			member.setIsActive(false);
+			// 需要根据appid获得商户id
+			member.setMerchantId(gunsProperties.getMerchantId());
+			member.setPoints(0);
+			member.setSourceType(MemSourceType.wechat.getCode());
+			memberMapper.insert(member);
+
+			// 查询获取类型为“关注微信”的会员卡
+			Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(), GrantType.SUB_WX.getCode());
+			if (card == null) {
+				throw new BussinessException(500, "没有找到会员卡类型");
+			}
+			MemberCard memberCard = new MemberCard();
+			memberCard.setMemberId(member.getId());
+			memberCard.setCardId(card.getId());
+			memberCard.setCardNumber(RandomUtil.generateCardNum(card.getCardNumberPrefix()));
+			memberCardMapper.insert(memberCard);
+
+			// 获取会员卡权益
+			List<CardRight> cardRights = cardRightDao.selectByCardId(card.getId());
+			if (CollectionUtils.isNotEmpty(cardRights)) {
+				for (CardRight cardRight : cardRights) {
+					if (RightType.COUPON.getCode().equals(cardRight.getRightType())) {
+						Coupon coupon = couponMapper.selectById(cardRight.getCouponId());
+						Integer number = cardRight.getNumber();
+						if (number != null) {
+							for (int i = 0; i < number.intValue(); i++) {
+								CouponFetch couponFetch = new CouponFetch();
+								couponFetch.setMemberId(member.getId());
+								couponFetch.setCouponId(cardRight.getCouponId());
+								couponFetch.setAvailableValue(coupon.getOriginValue());
+								couponFetch.setExpireTime(coupon.getEndAt());
+								couponFetch.setValidTime(coupon.getStartAt());
+								couponFetch.setIsInvalid(true);
+								couponFetch.setIsUsed(CouponUseState.NO_USED.getCode());
+								couponFetch.setMerchantId(coupon.getMerchantId());
+								couponFetch.setMessage("谢谢关注！");
+								couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
+								couponFetch.setValue(coupon.getOriginValue());
+								couponFetch.setStoreId(coupon.getStoreId());
+								couponFetch.setUsedValue(0);
+								couponFetchMapper.insert(couponFetch);
+							}
+						}
+					} else if (RightType.POINTS.getCode().equals(cardRight.getRightType())) {
+						member.setPoints(cardRight.getPoints());
+						memberMapper.updateById(member);
+					}
+				}
+			}
+		} else {
+			WxUser wxUser = wxUserMapper.selectById(member.getWxUserId());
+			setWxUserInfo(userInfo, wxUser);
+			wxUserMapper.updateById(wxUser);
+		}
+		return 0;
+	}
+
+	private void setWxUserInfo(UserInfo userInfo, WxUser wxUser) {
+		wxUser.setCity(userInfo.getCity());
+		wxUser.setCountry(userInfo.getCity());
+		wxUser.setHeadimgurl(userInfo.getHeadimgurl());
+		wxUser.setIsSubscribe(true);
+		wxUser.setLanguage(userInfo.getLanguage());
+		wxUser.setNickname(userInfo.getNickname());
+		wxUser.setOpenid(userInfo.getOpenid());
+		wxUser.setProvince(userInfo.getProvince());
+		wxUser.setRemark(userInfo.getRemark());
+		wxUser.setSex(userInfo.getSex());
+		wxUser.setUnionid(userInfo.getUnionid());
+		wxUser.setSubscribeTime(new Date());
 	}
 }

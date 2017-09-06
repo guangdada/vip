@@ -10,21 +10,9 @@ import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.service.MemberMessageApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
-import com.ikoori.vip.api.service.MemberService;
 
 @Configuration
 public class DubboConsumer extends DubboBaseConfig {
-	@Bean
-	public ReferenceBean<MemberService> personConsumer() {
-		ReferenceBean<MemberService> ref = new ReferenceBean<MemberService>();
-		ref.setVersion("myversion");
-		ref.setInterface(MemberService.class);
-		ref.setTimeout(5000);
-		ref.setRetries(3);
-		ref.setCheck(false);
-		return ref;
-	}
-	
 	@Bean
 	public ReferenceBean<MemberCardApi> getMemberCardApi() {
 		ReferenceBean<MemberCardApi> ref = new ReferenceBean<MemberCardApi>();

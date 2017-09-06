@@ -81,12 +81,11 @@ public class CardServiceImpl implements ICardService {
 			card.setTermEndAt(DateUtil.parseDate(card.getTermEndAtStr()));
 		}
 		if(card.getCoverType().intValue() == 1){
-			//card.setCoverPic(gunsProperties.getImageUrl() + "/"  + card.getCoverPic());
 			card.setColorCode("");
 		}else{
 			card.setCoverPic("");
 		}
-		card.setCardNumberPrefix("");
+		card.setCardNumberPrefix("KR");
 		if(card.getId() != null){
 			Integer c = cardMapper.updateById(card);
 			if(c > 0){

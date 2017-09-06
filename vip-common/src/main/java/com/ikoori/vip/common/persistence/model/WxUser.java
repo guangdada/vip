@@ -58,7 +58,7 @@ public class WxUser extends Model<WxUser> {
     /**
      * unionId
      */
-	private String unionId;
+	private String unionid;
     /**
      * 用户语言
      */
@@ -155,13 +155,12 @@ public class WxUser extends Model<WxUser> {
 	public void setProvince(String province) {
 		this.province = province;
 	}
-
-	public String getUnionId() {
-		return unionId;
+	public String getUnionid() {
+		return unionid;
 	}
 
-	public void setUnionId(String unionId) {
-		this.unionId = unionId;
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
 	}
 
 	public String getLanguage() {
@@ -236,7 +235,7 @@ public class WxUser extends Model<WxUser> {
 			", city=" + city +
 			", country=" + country +
 			", province=" + province +
-			", unionId=" + unionId +
+			", unionId=" + unionid +
 			", language=" + language +
 			", headimgurl=" + headimgurl +
 			", subscribeTime=" + subscribeTime +

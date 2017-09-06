@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
+import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
@@ -29,23 +30,12 @@ import com.ikoori.vip.mobile.constant.Constant;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	//@Reference(version = "1.0.0")
-	//private MemberService memberService;
-	 @Autowired
-	 DubboConsumer consumer;
-
-
-	@RequestMapping("/login")
-	@ResponseBody
-	public String login() {
-		//memberService.test();
-		JSONObject obj = consumer.personConsumer().get().test("成");
-		return obj.getString("name");
-	}
+	@Autowired
+	DubboConsumer consumer;
 	
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
-		String openId = "1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 		if(member!=null){
 			if(!(member.getBoolean("isActive"))){
@@ -62,7 +52,7 @@ public class MemberController {
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.POST})
 	@ResponseBody
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
-		String openId = "1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		try {
 			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 			JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
@@ -77,7 +67,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.GET})
 	public String updateInfoGet(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
-		String openId = "1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		JSONObject member=consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 		map.put("member", member);
 		return "/member_info.html";
@@ -95,7 +85,7 @@ public class MemberController {
 			 return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
 	        }
 		try {
-			String openId = "1112";
+			String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 			consumer.getMemberInfoApi().get().updetaMemberInofByOpenId(openId, mem.getMobile(), mem.getName(), mem.getSex(), mem.getBirthday(), mem.getAddress());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,7 +152,7 @@ public class MemberController {
 	}
 	@RequestMapping("/point")
 	public String point(HttpServletRequest request, Map<String, Object> map) {
-		String openId="1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		List<Map<String, Object>> points=consumer.getMemberPointApi().get().getMemberPointByOpenId(openId);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
@@ -170,7 +160,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="/coupon",method={RequestMethod.GET,RequestMethod.POST})
 	public String coupon(HttpServletRequest request, Map<String, Object> map) {
-		String openId = "1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		List<Map<String, Object>> Coupons=consumer.getMemberCouponApi().get().getMemberCouponByOpenId(openId);
 		map.put("Coupons", Coupons);
 		return "/member_coupon.html";
@@ -183,7 +173,7 @@ public class MemberController {
 	}
 	@RequestMapping(value="/order",method={RequestMethod.GET,RequestMethod.POST})
 	public String order(HttpServletRequest request, Map<String, Object> map) {
-		String openId="1111";
+		String openId = (String)request.getSession().getAttribute(Const.SESSION_USER_INFO);
 		List<Map<String,Object>> orders=consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
 		map.put("orders", orders);
 		return "/member_order.html";

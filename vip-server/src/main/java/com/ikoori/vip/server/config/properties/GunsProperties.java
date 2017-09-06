@@ -20,6 +20,9 @@ public class GunsProperties {
 
     public static final String PREFIX = "guns";
     
+    // 默认的商户id
+    private Long merchantId = 1L;
+    
     private boolean checkSign = false;
     
     private String signKey = "";
@@ -145,6 +148,14 @@ public class GunsProperties {
 
 	public void setUplodUrl(String uplodUrl) {
 		this.uplodUrl = uplodUrl;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
 	}
 	
 	

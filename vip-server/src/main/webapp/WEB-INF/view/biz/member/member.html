@@ -13,7 +13,7 @@
                                 <#NameCon id="condition" name="姓名" />
                             </div>
                             <div class="col-sm-3">
-                                <#button name="搜索" icon="fa-search" clickFun="Member.search()"/>
+                                <#button name="搜索" icon="fa-search" clickFun="Member.search()" btnCss="white"/>
                             </div>
                         </div>
                         <div class="hidden-xs" id="MemberTableToolbar" role="group">
@@ -21,10 +21,10 @@
                                 <#button name="添加" icon="fa-plus" clickFun="Member.openAddMember()"/>
                             @}
                             @if(shiro.hasPermission("/member/update")){
-                                <#button name="修改" icon="fa-plus" clickFun="Member.openMemberDetail()" space="true"/>
+                                <#button name="修改" icon="fa-cog" clickFun="Member.openMemberDetail()" space="true" btnCss="info"/>
                             @}
                             @if(shiro.hasPermission("/member/delete")){
-                                <#button name="删除" icon="fa-plus" clickFun="Member.delete()" space="true"/>
+                                <#button name="删除" icon="fa-minus-square" clickFun="Member.delete()" space="true" btnCss="danger"/>
                             @}
                         </div>
                         <#table id="MemberTable"/>

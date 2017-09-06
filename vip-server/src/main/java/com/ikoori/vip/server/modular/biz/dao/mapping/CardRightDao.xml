@@ -22,4 +22,14 @@
             </otherwise>
         </choose>
     </select>
+    
+    <select id="selectByCardId" resultType="com.ikoori.vip.common.persistence.model.CardRight">
+    	SELECT
+			*
+		FROM
+			v_card_right
+		WHERE
+			`status` = 1
+		AND card_id = #{cardId};
+    </select>
 </mapper>
