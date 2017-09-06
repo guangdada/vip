@@ -18,5 +18,5 @@ public interface IOrderItemService {
 	public OrderItem selectById(Long id);
 	public Integer insert(OrderItem orderItem);
 	List<Map<String, Object>> getOrderItemList(Page<OrderItem> page, String name,String orderByField, boolean isAsc);
-	
+	public List<OrderItem> selectByOrderId(Long orderId);
 }

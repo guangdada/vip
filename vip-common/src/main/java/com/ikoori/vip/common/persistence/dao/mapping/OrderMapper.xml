@@ -7,6 +7,7 @@
 		<id column="id" property="id" />
 		<result column="store_id" property="storeId" />
 		<result column="order_no" property="orderNo" />
+		<result column="order_source" property="orderSource" />
 		<result column="pay_order_no" property="payOrderNo" />
 		<result column="return_status" property="returnStatus" />
 		<result column="pay_status" property="payStatus" />

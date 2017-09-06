@@ -5,7 +5,7 @@
 ###################  guns配置  ###################
 guns:
   server-url: http://localhost #服务器地址
-  image-url:  http://localhost/upload #图片访问action
+  image-url:  http://localhost/files #图片访问action
   swagger-open: true #是否开启swagger (true/false)
   kaptcha-open: false #是否开启登录时验证码 (true/false)
   session-open: false #是否开启session超时验证（受影响的类SessionTimeoutInterceptor） (true/false)

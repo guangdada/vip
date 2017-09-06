@@ -10,10 +10,48 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#NameCon id="orderNo" name="订单号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="会员手机号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="memName" name="会员名" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Order.search()"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                               	<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      销售店铺
+								        </button>
+								    </div>
+								    <select class="form-control" id="storeId">
+								        <option value="" selected="">请选择</option>
+				                         @for(c in stores!){ 
+										  <option value="${c.id}">${c.name}</option> 
+										 @}
+								    </select>
+								</div>
+                            </div>
+                            
+                            <div class="col-sm-3">
+								<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      订单来源
+								        </button>
+								    </div>
+								    <select class="form-control" id="orderSource">
+								        <option value="" selected="">请选择</option>
+								        <option value="0">门店</option>
+								        <option value="1">天猫</option>
+								    </select>
+								</div>
                             </div>
                         </div>
                         <div class="hidden-xs" id="OrderTableToolbar" role="group">
@@ -25,6 +63,9 @@
                             @}
                             @if(shiro.hasPermission("/order/delete")){
                                 <#button name="删除" icon="fa-plus" clickFun="Order.delete()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/order/detail")){
+                                <#button name="查看" icon="fa-plus" clickFun="Order.openOrderDetail()" space="true"/>
                             @}
                         </div>
                         <#table id="OrderTable"/>

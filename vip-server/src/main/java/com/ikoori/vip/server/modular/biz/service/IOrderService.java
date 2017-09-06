@@ -18,6 +18,7 @@ public interface IOrderService {
 	public Integer updateById(Order order);
 	public Order selectById(Long id);
 	public Integer insert(Order order);
-	List<Map<String, Object>> getOrderList(Page<Order> page,String name,String orderByField,  boolean isAsc);
+	List<Map<String, Object>> getOrderList(Page<Map<String, Object>> page, String memName, String orderByField,
+			boolean isAsc, Long merchantId, Long storeId, String mobile, Long orderSource, String orderNo);
 	public void saveOrder(OrderPayDo orderPayDo) throws Exception;
 }
