@@ -17,17 +17,18 @@
 	</header>
   
    <!-- <div class="weui-cells"></div> -->
+   @for(c in store!){
    <div class="weui-form-preview">
-    <a href="/member/storeDetail">
+    <a href="/member/storeDetail?storeId=${c.id}">
       <div class="store-weui-form-preview__bd">
         <div style="margin-right:50px;">
 	      	<div style="height:40px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
 		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">长沙万象店</font></label>
-		          <span class="order-weui-form-preview__value">5.05公里</span> 
+		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">${c.name!}</font></label>
+		          <span class="order-weui-form-preview__value">${c.distance!}公里</span> 
 		        </div>
 		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label">湖南省长沙市星沙万象汇2楼1221室22222222222</label>
+		          <label class="weui-form-preview__label">${c.address!}</label>
 		        <!--   <span class="weui-form-preview__value">50</span> -->
 		        </div>
 	        </div>
@@ -38,49 +39,28 @@
      </div> 
     </a>
    </div>
-   
-   <div class="weui-form-preview">
+   @}
+   <!-- <div class="weui-form-preview">
     <a href="/member/storeDetail">
       <div class="store-weui-form-preview__bd">
         <div style="margin-right:50px;">
-	      	<div style="height:36px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">长沙万象店</font></label>
-		          <span class="order-weui-form-preview__value">5.05公里</span> 
-		        </div>
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label">湖南省长沙市星沙万象汇</label>
-		        <!--   <span class="weui-form-preview__value">50</span> -->
-		        </div>
-	        </div>
-        </div>
-        <div style="margin-right:5px;float:right;height:36px;position:relative;top:-35px;">
-        	<img src="${ctxPath}/static/jqweui/images/map.png" width="26px" height="26px" >
-        </div>
-     </div> 
-    </a>
-   </div>
-   
-   <div class="weui-form-preview">
-    <a href="/member/storeDetail">
-      <div class="store-weui-form-preview__bd">
-        <div style="margin-right:50px;">
-	      	<div style="height:36px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
+	      	<div style="height:40px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
 		        <div class="weui-form-preview__item">
 		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">长沙万象店</font></label>
 		          <span class="order-weui-form-preview__value">5.05公里</span> 
 		        </div>
 		        <div class="weui-form-preview__item">
 		          <label class="weui-form-preview__label">湖南省长沙市星沙万象汇2楼1221室22222222222</label>
-		        <!--   <span class="weui-form-preview__value">50</span> -->
+		          <span class="weui-form-preview__value">50</span>
 		        </div>
 	        </div>
         </div>
-        <div style="margin-right:5px;float:right;height:36px;position:relative;top:-35px;">
+        <div style="margin-right:5px;float:right;position:relative;top:-35px;">
         	<img src="${ctxPath}/static/jqweui/images/map.png" width="26px" height="26px" >
         </div>
      </div> 
     </a>
-   </div>
+   </div> -->
+   
 @}
     

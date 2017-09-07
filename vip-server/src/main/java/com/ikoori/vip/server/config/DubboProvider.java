@@ -7,7 +7,7 @@ import com.alibaba.dubbo.config.spring.ServiceBean;
 import com.ikoori.vip.api.service.MemberCardApi;
 import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
-import com.ikoori.vip.api.service.MemberMessageApi;
+import com.ikoori.vip.api.service.StoreApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
 
@@ -70,12 +70,12 @@ public class DubboProvider extends DubboBaseConfig {
 		return serviceBean;
 	}
 	@Bean
-	public ServiceBean<MemberMessageApi> messageProvider(MemberMessageApi messageApi) {
-		ServiceBean<MemberMessageApi> serviceBean = new ServiceBean<MemberMessageApi>();
+	public ServiceBean<StoreApi> storeProvider(StoreApi storeApi) {
+		ServiceBean<StoreApi> serviceBean = new ServiceBean<StoreApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
-		serviceBean.setInterface(MemberMessageApi.class.getName());
-		serviceBean.setRef(messageApi);
+		serviceBean.setInterface(StoreApi.class.getName());
+		serviceBean.setRef(storeApi);
 		serviceBean.setTimeout(5000);
 		serviceBean.setRetries(3);
 		return serviceBean;

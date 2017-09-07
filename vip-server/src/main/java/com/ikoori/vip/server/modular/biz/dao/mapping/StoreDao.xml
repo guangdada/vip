@@ -29,4 +29,19 @@
     <select id="selectByStoreNo" parameterType="string" resultType="com.ikoori.vip.common.persistence.model.Store">
     	SELECT * from v_store where STATUS =1 AND store_no = #{storeNo};
     </select>
+    
+    <select id="getStore" resultType="map">
+	    SELECT id, name, address, longitude, latitude, open_time,close_time,service_phone,
+	    ROUND(lat_lng_distance(#{lat}, #{lon}, lat, lon), 2) AS distance 
+	    FROM v_store 
+	    WHERE 
+    <![CDATA[ 
+    	AND lat > #{minLat} AND lat < #{maxLat} AND lon > #{minLng} AND lon < #{maxLng} 
+    ]]>
+	    ORDER BY distance ASC 
+   </select>
+   
+   <select id="getStoreDetail"  resultType="com.ikoori.vip.common.persistence.model.Store">
+    	SELECT * from v_store where STATUS =1 AND id = #{storeId};
+    </select>
 </mapper>

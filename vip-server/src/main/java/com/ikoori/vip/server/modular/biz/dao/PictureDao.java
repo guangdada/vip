@@ -16,4 +16,5 @@ import com.ikoori.vip.common.persistence.model.Picture;
  */
 public interface PictureDao {
    List<Map<String, Object>> getPictureList(@Param("page") Page<Picture> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+   List<Map<String, Object>> getPictureByStoreId(@Param("storeId") Long storeId);
 }

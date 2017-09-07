@@ -20,6 +20,8 @@ public class GunsProperties {
 
     public static final String PREFIX = "guns";
     
+    // 附近门店查询半径
+    private Long raidus;
     // 默认的商户id
     private Long merchantId = 1L;
     
@@ -156,6 +158,14 @@ public class GunsProperties {
 
 	public void setMerchantId(Long merchantId) {
 		this.merchantId = merchantId;
+	}
+
+	public Long getRaidus() {
+		return raidus;
+	}
+
+	public void setRaidus(Long raidus) {
+		this.raidus = raidus;
 	}
 	
 	

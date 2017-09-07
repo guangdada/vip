@@ -1,8 +1,11 @@
 package com.ikoori.vip.mobile.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -202,12 +205,51 @@ public class MemberController {
 	}
 	/*附近门店*/
 	@RequestMapping(value="/store",method={RequestMethod.GET,RequestMethod.POST})
-	public String store(HttpServletRequest request, Map<String, Object> map) {
+	public String store(HttpServletRequest request, Map<String, Object> map,double lat,double lon) {
+		Object ret=this.getWxConfig(request);
+		map.put("ret", ret);
+		List<Map<String,Object>> store=consumer.storeConsumer().get().loadStore(lat, lon);
+		map.put("store", store);
 		return "/store.html";
 	}
 	/*附近门店详细信息*/
 	@RequestMapping(value="/storeDetail",method={RequestMethod.GET,RequestMethod.POST})
-	public String storeDetail(HttpServletRequest request, Map<String, Object> map) {
+	public String storeDetail(HttpServletRequest request, Map<String, Object> map,Long storeId) {
+		JSONObject storeDetail=consumer.storeConsumer().get().getStoreDetail(storeId);
+		List<Map<String,Object>> picture=consumer.storeConsumer().get().getStorePicture(storeId);
+		map.put("storeDetail", storeDetail);
+		map.put("picture", picture);
 		return "/storeDetail.html";
 	}
+	
+	@RequestMapping(value = "/getWxConfig", method = {RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+    public Object getWxConfig(HttpServletRequest request){
+    	System.out.println("进入getWxConfig!!");
+		Map<String, Object> ret = new HashMap<String, Object>();
+    	try {
+			String appId = WeChatAPI.APPID; // 必填，公众号的唯一标识
+			String jsapi_ticket = "sM4AOVdWfPE4DxkXGEs8VI8_1qp7mq1sZrbjRQMutON2DrljGfr1bpR6eueU1yIF64Z-M4GDQ2yobZeqtKpvng";
+			System.out.println("jsapi_ticket:" + jsapi_ticket);
+			String timestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
+			String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
+			//注意这里参数名必须全部小写，且必须有序
+			String[] paramArr = new String[] { "jsapi_ticket=" + jsapi_ticket, "noncestr=" + nonceStr,
+			        "timestamp=" + timestamp};
+			Arrays.sort(paramArr);
+			// 将排序后的结果拼接成一个字符串
+			String sign = paramArr[0].concat("&" + paramArr[1]).concat("&" + paramArr[2]);
+			String signature = WeChatAPI.SHA1(sign);
+			ret.put("appId", appId);
+			ret.put("timestamp", timestamp);
+			ret.put("nonceStr", nonceStr);
+			ret.put("signature", signature);
+			ret.put("jsapi_ticket", jsapi_ticket);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	System.out.println("出去getWxConfig!!" + ret.toString());
+		return ret;
+    }
+
 }
