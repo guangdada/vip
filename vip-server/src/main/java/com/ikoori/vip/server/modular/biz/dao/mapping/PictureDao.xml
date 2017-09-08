@@ -27,10 +27,11 @@
     </select>
     
     <select id="getPictureByStoreId" resultType="map">
-        select * from v_picture where 1 = 1 and status = 1
+    	select * from v_picture p 
+    	JOIN v_store_photo sp  on sp.pic_id=p.id 
+    	where 1 = 1 AND sp.`status`=1 AND p.status=1
         <if test="storeId != null">
-        	and store_id = #{storeId}
+        	and sp.store_id = #{storeId}
         </if>
-       
     </select>
 </mapper>

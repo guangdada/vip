@@ -18,26 +18,19 @@
      		<div class="weui-cells">
      		<!-- window.location.href = "http://apis.map.qq.com/uri/v1/marker?marker=coord:"+pr["latitude"]+","+pr["longitude"]+";title:"+pr["shopname"]+";addr:"+pr["address"]+";tel:"+pr["tel"]+"&referer=酷锐百货"; -->
      		<!-- http://apis.map.qq.com/uri/v1/marker?marker=coord:"+pr["latitude"]+","+pr["longitude"]+";title:"+pr["shopname"]+";addr:"+pr["address"]+";tel:"+pr["tel"]+"&referer=酷锐百货" -->
-     		 <!-- 'http://apis.map.qq.com/uri/v1/marker?marker=coord:"+113.237711+","+28.164432+";title:"+长沙国际机场+";addr:"+长沙国际机场+";tel:"+15674911643+"&referer=酷锐百货"' -->
+     		 <!-- 'http://apis.map.qq.com/uri/v1/marker?marker=coord:"+${storeDetail.longitude!}+","+${storeDetail.latitude!}+";title:"+11+";addr:"+${storeDetail.address!}+";tel:"+${storeDetail.servicePhone!}+"&referer=酷锐百货"' -->
      		  <a class="weui-cell weui-cell_access" href='http://apis.map.qq.com/uri/v1/marker?marker=coord:28.164432,113.237711;title:长沙黄花国际机场;addr:长沙黄花国际机场;tel:15674911643&referer=酷锐百货'>
 	            <div class="weui-cell__bd">
 	              <p><font style="font-size:15px;" color="#989696">位置</font></p>
 	            </div>
-	            <div class="weui-cell__ft"><font style="font-size:12px;font-weight: bold;" color="black">湖南省长沙市星沙万象汇2楼1221室22222222222</font></div>
+	            <div class="weui-cell__ft"><font style="font-size:12px;font-weight: bold;" color="black">${storeDetail.address!}</font></div>
               </a>
      		  
-	         <!--  <div class="weui-cell">
-	            <div class="weui-cell__bd">
-	              <p><font style="font-size:15px;" color="#989696">位置</font></p>
-	            </div>
-	            <div class="weui-cell__ft"><font style="font-size:12px;font-weight: bold;" color="black">湖南省长沙市星沙万象汇2楼1221室22222222222</font></div>
-	          </div> -->
-        	
 	          <div class="weui-cell">
 	            <div class="weui-cell__bd">
 	              <p><font style="font-size:15px;" color="#989696">电话</font></p>
 	            </div>
-	            <div class="weui-cell__ft" align="center"><font style="font-size:12px;font-weight: bold;" color="black">0731-84066757</font></div>
+	            <div class="weui-cell__ft" align="center"><font style="font-size:12px;font-weight: bold;" color="black">${storeDetail.servicePhone!}</font></div>
 	          </div>
         	
 	          <div class="weui-cell">
@@ -46,9 +39,10 @@
 	            </div>
 	            <div class="weui-cell__ft">
 	          <!--   <font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font> -->
-	               <img src="${ctxPath}/static/jqweui/images/11.png" width="50px" height="50px">
-	               <img src="${ctxPath}/static/jqweui/images/10.png" width="50px" height="50px">
-	               <img src="${ctxPath}/static/jqweui/images/10.png" width="50px" height="50px">
+	               @for(c in storeDetail.pictures!){
+	               <img src="${c.abs_url}" width="50px" height="50px">
+	               <!-- <img src="${ctxPath}/static/jqweui/images/11.png" width="50px" height="50px"> -->
+	               @}
 	            </div>
 	          </div>
 	          

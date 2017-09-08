@@ -8,12 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.StoreApi;
+import com.ikoori.vip.common.persistence.model.Picture;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.MapUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.PictureDao;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
+import com.ikoori.vip.server.modular.biz.dao.StorePhotoDao;
 
+/**  
+* @ClassName: StoreApiImpl  
+* @Description: 附近门店
+* @author :huanglin 
+* @date 2017年9月8日  
+*    
+*/  
 @Service
 public class StoreApiImpl implements StoreApi {
 	@Autowired
@@ -22,6 +31,8 @@ public class StoreApiImpl implements StoreApi {
 	PictureDao pictureDao;
 	@Autowired
 	GunsProperties gunsProperties;
+	@Autowired
+	private StorePhotoDao storePhotoDao;
 	@Override
 	public List<Map<String, Object>> loadStore(double lat, double lon) {
 		long raidus = gunsProperties.getRaidus() == null ? 10000 : gunsProperties.getRaidus(); // 半径10km
@@ -36,6 +47,7 @@ public class StoreApiImpl implements StoreApi {
 	public JSONObject getStoreDetail(Long storeId) {
 		Store store=storeDao.getStoreDetail(storeId);
 		JSONObject obj = new JSONObject();
+		List<Picture> pictures=storePhotoDao.selectStorePhoto(storeId);
 		obj.put("id", store.getId());
 		obj.put("name", store.getName());
 		obj.put("address",store.getAddress());
@@ -44,18 +56,7 @@ public class StoreApiImpl implements StoreApi {
 		obj.put("servicePhone", store.getServicePhone());
 		obj.put("openTime", store.getOpenTime());
 		obj.put("closeTime", store.getCloseTime());
+		obj.put("pictures",pictures);
 		return obj;
 	}
-	/**
-	 * @param storeId 店铺Id
-	 * @return 店铺图片
-	 */
-	public List<Map<String, Object>> getStorePicture(Long storeId){
-		List<Map<String,Object>> picture=pictureDao.getPictureByStoreId(storeId);
-		if(picture==null){
-			return null;
-		}
-		return picture;
-	}
-
 }

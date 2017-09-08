@@ -32,6 +32,13 @@ import com.ikoori.vip.mobile.constant.Constant;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
 
+/**  
+* @ClassName: MemberController  
+* @Description:会员
+* @author :huanglin 
+* @date 2017年9月8日  
+*    
+*/  
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -40,8 +47,15 @@ public class MemberController {
 	@Autowired
 	DubboConsumer consumer;
 
-
-	/*会员信息，会员没激活跳转到会员激活页面，激活跳转到会员信息页面*/
+	/** 
+	* @Title: info 
+	* @Description: 会员信息，会员没激活跳转到会员激活页面，激活跳转到会员信息页面
+	* @param @param request
+	* @param @param map
+	* @param @return    
+	* @return String     
+	* @throws 
+	*/
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		try {
@@ -216,9 +230,9 @@ public class MemberController {
 	@RequestMapping(value="/storeDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String storeDetail(HttpServletRequest request, Map<String, Object> map,Long storeId) {
 		JSONObject storeDetail=consumer.storeConsumer().get().getStoreDetail(storeId);
-		List<Map<String,Object>> picture=consumer.storeConsumer().get().getStorePicture(storeId);
+		/*List<Map<String,Object>> picture=consumer.storeConsumer().get().getStorePicture(storeId);*/
 		map.put("storeDetail", storeDetail);
-		map.put("picture", picture);
+		/*map.put("picture", picture);*/
 		return "/storeDetail.html";
 	}
 	
