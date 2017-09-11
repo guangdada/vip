@@ -7,13 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ikoori.vip.api.service.MemberOrderApi;
-import com.ikoori.vip.common.persistence.dao.CardMapper;
-import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
-import com.ikoori.vip.common.persistence.dao.MemberMapper;
-import com.ikoori.vip.common.persistence.dao.MerchantMapper;
-import com.ikoori.vip.common.persistence.dao.WxUserMapper;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.OrderDao;
 
@@ -21,21 +15,17 @@ import com.ikoori.vip.server.modular.biz.dao.OrderDao;
 @Service
 public class MemberOrderApiImpl implements MemberOrderApi {
 	@Autowired
-	MemberCardMapper memberCardMapper;
-	@Autowired
 	MemberDao memberDao;
-	@Autowired
-	WxUserMapper wxUserMapper;
-	@Autowired
-	MemberMapper memberMapper;
-	@Autowired
-	CardMapper cardMapper;
-	@Autowired
-	MerchantMapper merchantMapper;
-	@Autowired
-	CouponFetchDao couponFetchDao;
     @Autowired	
     OrderDao orderDao;
+    
+	/**   
+	 * <p>Title: getMemberOrderByOpenId</p>   
+	 * <p>Description: 获取会员订单</p>   
+	 * @param openId
+	 * @return   
+	 * @see com.ikoori.vip.api.service.MemberOrderApi#getMemberOrderByOpenId(java.lang.String)   
+	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
 		Member member = memberDao.getMemberByOpenId(openId);
@@ -48,6 +38,15 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 		}
 		return orders;
 	}
+	
+	
+	/**   
+	 * <p>Title: getMemberOrderDetailByOrderId</p>   
+	 * <p>Description:获取会员订单详情 </p>   
+	 * @param orderId
+	 * @return   
+	 * @see com.ikoori.vip.api.service.MemberOrderApi#getMemberOrderDetailByOrderId(java.lang.Long)   
+	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderDetailByOrderId(Long orderId) {
 		List<Map<String,Object>> orderDetail=orderDao.selectOrderDetailListByOrderId(orderId);

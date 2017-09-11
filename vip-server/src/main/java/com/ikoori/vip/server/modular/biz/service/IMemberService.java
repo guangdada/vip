@@ -31,8 +31,8 @@ public interface IMemberService {
 
 	public void updateMember(Member member, Long cardId);
 
-	List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,
-			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName,Integer memSex, String memNickName,String memMobile,String orderByField,
+			boolean isAsc);
 	
 	public Member selectByMobileAndStoreNo(String mobile, String storeNo);
 }

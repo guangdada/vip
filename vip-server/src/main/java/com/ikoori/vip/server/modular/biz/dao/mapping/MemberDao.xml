@@ -2,9 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.MemberDao">
 	<select id="getMemberList" resultType="map">
-        select * from v_member where 1 = 1 and status = 1
-        <if test="name != null and name !=''">
-            and name like CONCAT('%',#{name},'%')
+        select m.*,wu.nickname from v_member m 
+        LEFT JOIN v_wx_user wu on wu.id=m.wx_user_id
+        where 1 = 1 and m.status = 1
+        <if test="memName != null and memName !=''">
+            and m.name like CONCAT('%',#{memName},'%')
+        </if>
+        <if test="memMobile != null and memMobile !=''">
+            and m.mobile like CONCAT('%',#{memMobile},'%')
+        </if>
+        <if test="memNickName != null and memNickName !=''">
+            and wu.nickname like CONCAT('%',#{memNickName},'%')
+        </if>
+        <if test="memSex != null and memSex !=''">
+            and m.sex = #{memSex}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

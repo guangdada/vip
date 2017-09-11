@@ -62,10 +62,6 @@ public class MemberServiceImpl implements IMemberService {
 		return memberMapper.insert(member);
 	}
 
-	@Override
-	public List<Map<String, Object>> getMemberList(Page<Member> page, String name, String orderByField, boolean isAsc) {
-		return memberDao.getMemberList(page, name, orderByField, isAsc);
-	}
 
 	@Override
 	@Transactional(readOnly=false)
@@ -107,5 +103,24 @@ public class MemberServiceImpl implements IMemberService {
 	
 	public Member selectByMobileAndStoreNo(String mobile, String storeNo){
 		return memberDao.selectByMobileAndStoreNo(mobile, storeNo);
+	}
+
+	/**   
+	 * <p>Title: getMemberList</p>   
+	 * <p>Description: 按条件查找会员</p>   
+	 * @param page
+	 * @param memName 会员姓名
+	 * @param memSex 会员性别
+	 * @param memNickName 会员昵称
+	 * @param memMobile 会员手机号
+	 * @param orderByField
+	 * @param isAsc
+	 * @return   
+	 * @see com.ikoori.vip.server.modular.biz.service.IMemberService#getMemberList(com.baomidou.mybatisplus.plugins.Page, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, boolean)   
+	 */  
+	@Override
+	public List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
+			String memNickName, String memMobile, String orderByField, boolean isAsc) {
+		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, orderByField, isAsc);
 	}
 }

@@ -33,30 +33,49 @@ public class StoreApiImpl implements StoreApi {
 	GunsProperties gunsProperties;
 	@Autowired
 	private StorePhotoDao storePhotoDao;
+	
+	/**   
+	 * <p>Title: loadStore</p>   
+	 * <p>Description: 会员附近门店 </p>   
+	 * @param lat 纬度
+	 * @param lon 经度
+	 * @return   
+	 * @see com.ikoori.vip.api.service.StoreApi#loadStore(double, double)   
+	 */  
 	@Override
 	public List<Map<String, Object>> loadStore(double lat, double lon) {
 		long raidus = gunsProperties.getRaidus() == null ? 10000 : gunsProperties.getRaidus(); // 半径10km
 		Map<String, Object> param = MapUtil.loadGeoSquare(lat, lon, raidus);
-		List<Map<String, Object>> store= storeDao.getStore(lat, lon, (Double)param.get("minLat"),(Double)param.get("minLng"),(Double)param.get("maxLat"),(Double)param.get("maxLng"));
-	    if(store==null){
-	    	return null;
-	    }
+		List<Map<String, Object>> store = storeDao.getStore(lat, lon, (Double) param.get("minLat"),
+				(Double) param.get("minLng"), (Double) param.get("maxLat"), (Double) param.get("maxLng"));
+		if (store == null) {
+			return null;
+		}
 		return store;
 	}
+	
+	
+	/**   
+	 * <p>Title: getStoreDetail</p>   
+	 * <p>Description: 会员门店详情</p>   
+	 * @param storeId 门店id
+	 * @return   
+	 * @see com.ikoori.vip.api.service.StoreApi#getStoreDetail(java.lang.Long)   
+	 */  
 	@Override
 	public JSONObject getStoreDetail(Long storeId) {
-		Store store=storeDao.getStoreDetail(storeId);
+		Store store = storeDao.getStoreDetail(storeId);
 		JSONObject obj = new JSONObject();
-		List<Picture> pictures=storePhotoDao.selectStorePhoto(storeId);
+		List<Picture> pictures = storePhotoDao.selectStorePhoto(storeId);
 		obj.put("id", store.getId());
 		obj.put("name", store.getName());
-		obj.put("address",store.getAddress());
+		obj.put("address", store.getAddress());
 		obj.put("latitude", store.getLatitude());
 		obj.put("longitude", store.getLongitude());
 		obj.put("servicePhone", store.getServicePhone());
 		obj.put("openTime", store.getOpenTime());
 		obj.put("closeTime", store.getCloseTime());
-		obj.put("pictures",pictures);
+		obj.put("pictures", pictures);
 		return obj;
 	}
 }

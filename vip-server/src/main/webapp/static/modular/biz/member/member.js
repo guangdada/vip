@@ -19,7 +19,7 @@ Member.initColumn = function () {
         {title: '手机号码', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '性别', field: 'sex', visible: true, align: 'center', valign: 'middle'},
         {title: '生日', field: 'birthday', visible: true, align: 'center', valign: 'middle'},
-        {title: '微信号', field: 'wx_code', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信号', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
         {title: '余额', field: 'balance', visible: true, align: 'center', valign: 'middle'}
     ];
@@ -99,7 +99,10 @@ Member.delete = function () {
  */
 Member.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['memName'] = $("#memName").val();
+    queryData['memMobile']=$("#memMobile").val();
+    queryData['memSex']=$("#memSex").find("option:selected").val();
+    queryData['memNickName']=$('#memNickName').val();
     Member.table.refresh({query: queryData});
 };
 

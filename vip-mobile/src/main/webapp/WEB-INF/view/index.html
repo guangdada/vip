@@ -97,21 +97,53 @@
   	    qrcode.makeCode(cardNum);
   	}
   	
-  	wx.config({
-	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-	    appId: '${ret.appId!}', // 必填，公众号的唯一标识
-	    timestamp:'${ret.timestamp}', // 必填，生成签名的时间戳
-	    nonceStr: '${ret.nonceStr}', // 必填，生成签名的随机串
-	    signature: '${ret.signature}',// 必填，签名，见附录1
-	    jsApiList: [getLocation] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-	});
- 	wx.ready(function(){
-    });
-  
-    wx.error(function(res){
-    });
-   
     function submitStoreInfoClick(){
+    	$.ajax({
+            //提交数据的类型 POST GET
+            type:"POST",
+            //提交的网址
+            url:"${ctxPath}/member/getWxConfig",
+            //成功返回之后调用的函数             
+            success:function(data){
+           	 if(data){
+           		wx.config({
+            	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            	    appId: '${data.appId!}', // 必填，公众号的唯一标识
+            	    timestamp:'${data.timestamp}', // 必填，生成签名的时间戳
+            	    nonceStr: '${data.nonceStr}', // 必填，生成签名的随机串
+            	    signature: '${data.signature}',// 必填，签名，见附录1
+            	    jsApiList: [getLocation] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            	});
+           		
+           		wx.ready(function(){
+                });
+              
+                wx.error(function(res){
+                });
+                
+				}
+            },
+            //调用出错执行的函数
+            error: function(){
+                //请求出错处理
+            }         
+        });
+    	
+    	/* wx.config({
+    	    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    	    appId: '${ret.appId!}', // 必填，公众号的唯一标识
+    	    timestamp:'${ret.timestamp}', // 必填，生成签名的时间戳
+    	    nonceStr: '${ret.nonceStr}', // 必填，生成签名的随机串
+    	    signature: '${ret.signature}',// 必填，签名，见附录1
+    	    jsApiList: [getLocation] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    	});
+    	
+     	wx.ready(function(){
+        });
+      
+        wx.error(function(res){
+        }); */
+    	
     	wx.getLocation({
     	    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
     	    success: function (res) {
@@ -123,8 +155,10 @@
     	    }
     	   fail: function(error) {
     	       AlertUtil.error("获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！");
+    	       /* $.toptip('获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！'); */
     	   }
     	});
+        
  	 }
   </script>
 
