@@ -32,6 +32,7 @@
 			ct.used_order_no as usedOrderNo,
 			m.sex AS sex,
 			u.headimgurl AS headImg,
+			u.nickname AS nickname,
 			c.`value` AS VALUE,
 			c.`name` AS couponName,
 			c.type AS couponType,
@@ -54,6 +55,15 @@
         </if>
         <if test="merchantId != null">
         	and ct.merchant_id = #{merchantId}
+        </if>
+        <if test="type != null">
+            and c.`type` = #{type}
+        </if>
+        <if test="mobile != null and mobile !=''">
+            and m.`mobile` = #{mobile}
+        </if>
+        <if test="nickname != null and nickname !=''">
+            and u.`nickname` like CONCAT('%',#{nickname},'%')
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

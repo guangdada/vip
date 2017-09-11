@@ -48,6 +48,7 @@ public class StoreController extends BaseController {
     /**
      * 跳转到门店首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "store.html";
@@ -56,6 +57,7 @@ public class StoreController extends BaseController {
     /**
      * 跳转到添加门店
      */
+    @Permission
     @RequestMapping("/store_add")
     public String storeAdd() {
         return PREFIX + "store_add.html";
@@ -64,17 +66,10 @@ public class StoreController extends BaseController {
     /**
      * 跳转到修改门店
      */
+    @Permission
     @RequestMapping("/store_update/{storeId}")
 	public String storeUpdate(@PathVariable Long storeId, Model model) {
 		Store store = storeService.selectById(storeId);
-		/*String servicePhone = store.getServicePhone();
-		if (StringUtils.isNotBlank(servicePhone)) {
-			if (servicePhone.contains("-")) {
-				String[] s = servicePhone.split("-");
-				model.addAttribute("servicePhonePre", s[0]);
-				model.addAttribute("servicePhoneSub", s[1]);
-			}
-		}*/
 		String latitude = StringUtils.isNotBlank(store.getLatitude()) ? store.getLatitude() : "";
 		String longitude = StringUtils.isNotBlank(store.getLongitude()) ? store.getLongitude() : "";
 		String coordinate = latitude + "," + longitude;
@@ -87,6 +82,7 @@ public class StoreController extends BaseController {
     /**
      * 获取门店列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {

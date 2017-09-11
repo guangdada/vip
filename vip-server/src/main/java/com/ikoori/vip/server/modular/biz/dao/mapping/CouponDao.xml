@@ -6,6 +6,21 @@
         <if test="name != null and name !=''">
             and name like CONCAT('%',#{name},'%')
         </if>
+        <if test="isExpired != null">
+            and is_expired = #{isExpired}
+        </if>
+        <if test="isInvalid != null">
+            and is_invalid = #{isInvalid}
+        </if>
+        <if test="storeId != null">
+            and store_id = #{storeId}
+        </if>
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        <if test="merchantId != null">
+            and merchant_id = #{merchantId}
+        </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
                 <choose>

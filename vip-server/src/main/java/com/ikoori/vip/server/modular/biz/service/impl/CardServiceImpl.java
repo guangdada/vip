@@ -13,13 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.common.constant.state.GrantType;
 import com.ikoori.vip.common.constant.state.RightType;
+import com.ikoori.vip.common.exception.BizExceptionEnum;
+import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.CardRightMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.CardRight;
-import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
@@ -73,13 +76,14 @@ public class CardServiceImpl implements ICardService {
 
 	@Transactional(readOnly = false)
 	public void saveCard(Card card, String rights) {
+		if (card.getGrantType().intValue() == GrantType.RULE.getCode()
+				&& !checkCardLevel(card.getId(), card.getCardLevel(),card.getMerchantId())) {
+			throw new BussinessException(BizExceptionEnum.INVALID_cardLevel);
+		}
+		if(!checkCardName(card.getId(), card.getName(),card.getMerchantId())){
+			throw new BussinessException(BizExceptionEnum.INVALID_cardName);
+		}
 		card.setCreateUserId(Long.valueOf(ShiroKit.getUser().getId()));
-		if (StringUtils.isNotBlank(card.getTermStartAtStr())) {
-			card.setTermStartAt(DateUtil.parseDate(card.getTermStartAtStr()));
-		}
-		if (StringUtils.isNotBlank(card.getTermEndAtStr())) {
-			card.setTermEndAt(DateUtil.parseDate(card.getTermEndAtStr()));
-		}
 		if(card.getCoverType().intValue() == 1){
 			card.setColorCode("");
 		}else{
@@ -148,5 +152,32 @@ public class CardServiceImpl implements ICardService {
 				cardRightMapper.insert(cardRight);
 			}
 		}
+	}
+	
+	public boolean checkCardName(Long id, String cardName,Long merchantId) {
+		Wrapper<Card> card = new EntityWrapper<>();
+		card.eq("merchant_id", merchantId);
+		card.eq("status", 1);
+		if (id != null) {
+			card.ne("id", id);
+		}
+		if (StringUtils.isNotBlank(cardName)) {
+			card.eq("name", cardName);
+		}
+		return cardMapper.selectCount(card) == 0;
+	}
+	
+	public boolean checkCardLevel(Long id, Integer cardLevel,Long merchantId) {
+		Wrapper<Card> card = new EntityWrapper<>();
+		card.eq("grant_type",GrantType.RULE.getCode());
+		card.eq("merchant_id", merchantId);
+		card.eq("status", 1);
+		if (id != null) {
+			card.ne("id", id);
+		}
+		if (cardLevel != null) {
+			card.eq("card_level", cardLevel);
+		}
+		return cardMapper.selectCount(card) == 0;
 	}
 }

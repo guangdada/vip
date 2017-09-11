@@ -48,6 +48,7 @@ public class PictureController extends BaseController {
     /**
      * 跳转到图片首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "picture.html";
@@ -56,6 +57,7 @@ public class PictureController extends BaseController {
     /**
      * 跳转到添加图片
      */
+    @Permission
     @RequestMapping("/picture_add")
     public String pictureAdd(Model model) {
     	List<PictureType> picTypes = pictureTypeService.getAllPictureType();
@@ -66,6 +68,7 @@ public class PictureController extends BaseController {
     /**
      * 跳转到修改图片
      */
+    @Permission
     @RequestMapping("/picture_update/{pictureId}")
     public String pictureUpdate(@PathVariable Long pictureId, Model model) {
     	Picture picture = pictureService.selectById(pictureId);
@@ -76,6 +79,7 @@ public class PictureController extends BaseController {
     /**
      * 获取图片列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
@@ -101,9 +105,9 @@ public class PictureController extends BaseController {
     /**
      * 跳转到图片选择框
      */
+    @Permission
     @RequestMapping("/picture_upload")
     public String pictureUpload(Model model) {
-    	//model.addAttribute(picture);
         return PREFIX + "picture_upload.html";
     }
 

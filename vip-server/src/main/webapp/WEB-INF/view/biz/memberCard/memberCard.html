@@ -10,22 +10,67 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="会员卡号" />
+                                <#NameCon id="cardNumber" name="会员卡号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="nickname" name="微信昵称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="手机号" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="MemberCard.search()" btnCss="white"/>
                             </div>
                         </div>
+                        <div class="row">
+                        	<div class="col-sm-3">
+                                <div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								        	会员卡
+								        </button>
+								    </div>
+								    <select class="form-control" id="cardId">
+								    	<option value="" selected="">请选择</option>
+								    	@for(c in cards!){ 
+										  <option value="${c.id}">${c.name}</option> 
+										@}
+								    </select>
+								</div>
+                            </div>
+                        	<div class="col-sm-3">
+                                <div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								        	会员卡类型
+								        </button>
+								    </div>
+								    <select class="form-control" id="grantType">
+								    	<option value="" selected="">请选择</option>
+								    	@for(c in grantType!){ 
+										  <option value="${c.code}">${c.message}</option> 
+										@}
+								    </select>
+								</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								        	状态
+								        </button>
+								    </div>
+								    <select class="form-control" id="state">
+								    	<option value="" selected="">请选择</option>
+								    	@for(c in state!){ 
+										  <option value="${c.code}">${c.message}</option> 
+										@}
+								    </select>
+								</div>
+                            </div>
+                        </div>
                         <div class="hidden-xs" id="MemberCardTableToolbar" role="group">
-                            @if(shiro.hasPermission("/memberCard/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="MemberCard.openAddMemberCard()"/>
-                            @}
-                            @if(shiro.hasPermission("/memberCard/update")){
-                                <#button name="修改" icon="fa-plus" clickFun="MemberCard.openMemberCardDetail()" space="true"/>
-                            @}
-                            @if(shiro.hasPermission("/memberCard/delete")){
-                                <#button name="删除" icon="fa-plus" clickFun="MemberCard.delete()" space="true"/>
-                            @}
+                            
                         </div>
                         <#table id="MemberCardTable"/>
                     </div>

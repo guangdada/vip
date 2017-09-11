@@ -70,6 +70,7 @@ public class StoreEmployeeController extends BaseController {
     /**
      * 跳转到员工管理首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "storeEmployee.html";
@@ -78,6 +79,7 @@ public class StoreEmployeeController extends BaseController {
     /**
      * 跳转到添加员工管理
      */
+    @Permission
     @RequestMapping("/storeEmployee_add")
     public String storeEmployeeAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -94,6 +96,7 @@ public class StoreEmployeeController extends BaseController {
     /**
      * 跳转到修改员工管理
      */
+    @Permission
     @RequestMapping("/storeEmployee_update/{storeEmployeeId}")
     public String storeEmployeeUpdate(@PathVariable Long storeEmployeeId, Model model) {
     	StoreEmployee storeEmployee = storeEmployeeService.selectById(storeEmployeeId);
@@ -120,6 +123,7 @@ public class StoreEmployeeController extends BaseController {
     /**
      * 获取员工管理列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
 	public Object list(String condition) {

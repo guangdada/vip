@@ -1,11 +1,9 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.model.Coupon;
-import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
 
@@ -50,9 +47,9 @@ public class CouponServiceImpl implements ICouponService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getCouponList(Page<Coupon> page, String name, String orderByField,
+	public List<Map<String, Object>> getCouponList(Long merchantId,Boolean isExpired,Boolean isInvalid,Integer type,Long storeId,Page<Coupon> page, String name, String orderByField,
 			boolean isAsc) {
-		return couponDao.getCouponList(page, name, orderByField, isAsc);
+		return couponDao.getCouponList(merchantId,isExpired,isInvalid,type,storeId,page, name, orderByField, isAsc);
 	}
 
 	@Override
@@ -62,21 +59,17 @@ public class CouponServiceImpl implements ICouponService {
 	
 	public void saveCoupon(Coupon coupon){
 		if (coupon.getValue() != null) {
-			coupon.setOriginValue(coupon.getValue().multiply(new BigDecimal(100)).intValue());
+			coupon.setOriginValue(coupon.getValue() * 100);
+		}
+		if(!coupon.isIsAtLeast()){
+			coupon.setAtLeast(null);
+			coupon.setOriginAtLeast(null);
 		}
 		if (coupon.getAtLeast() != null) {
-			coupon.setOriginAtLeast(coupon.getAtLeast().multiply(new BigDecimal(100)).intValue());
+			coupon.setOriginAtLeast(coupon.getAtLeast() * 100);
 		}
-		if (StringUtils.isNotBlank(coupon.getStartAtStr())) {
-			Date startD = DateUtil.parseTime(coupon.getStartAtStr());
-			coupon.setStartAt(startD);
-			coupon.setStartTime(startD.getTime());
-		}
-		if (StringUtils.isNotBlank(coupon.getEndAtStr())) {
-			Date endD = DateUtil.parseTime(coupon.getEndAtStr());
-			coupon.setEndAt(endD);
-			coupon.setEndTime(endD.getTime());
-		}
+		coupon.setStartTime(coupon.getStartAt().getTime());
+		coupon.setEndTime(coupon.getEndAt().getTime());
 		if(coupon.getId() != null){
 			couponMapper.updateById(coupon);
 		}else{

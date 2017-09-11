@@ -6,7 +6,8 @@
 	<div class="ibox-content">
 		<div class="app-design clearfix">
 		
-		
+			
+			
 			<div class="page-tradeincard">
 				<div class="app-preview">
 					<div class="app-header"></div>
@@ -95,7 +96,7 @@
 					<div class="arrow"></div>
 					<div class="app-sidebar-inner js-sidebar-region">
 						<div>
-							<form class="form-horizontal" novalidate="">
+							<form class="form-horizontal" id="couponForm">
 								<h1 class="config-title">优惠券基础信息</h1>
 								<div class="control-group">
 									<label class="control-label"><em class="required">*</em>可用店铺：</label>
@@ -123,7 +124,7 @@
 									<label class="control-label"><em class="required">*</em>优惠券名称：</label>
 									<div class="controls">
 										<input type="text"  id="name" name="name" maxlength="10" value="" placeholder="最多支持10个字">
-										<p class="help-desc error_info">错误提示</p>
+										
 									</div>
 								</div>
 
@@ -131,8 +132,8 @@
 									<label class="control-label"><em class="required">*</em>发放总量：</label>
 									<div class="controls">
 										<div class="input-append">
-											<input type="number" id="total" name="total" value="" class="input-small"> <span class="add-on">张</span>
-											<p class="help-desc error_info">错误提示</p>
+											<input type="text" id="total" name="total" value="" class="input-small"> <span class="add-on">张</span>
+											
 										</div>
 									</div>
 								</div>
@@ -141,8 +142,8 @@
 									<label class="control-label"><em class="required">*</em>面值：</label>
 									<div class="controls">
 										<div>
-											<input type="text" id="value" name="value" value="" class="input-small">
-											<p class="help-desc error_info">错误提示</p>
+											<input type="text" id="value" name="value" value="" class="input-small"> <span class="add-on">元</span>
+											
 
 											<!-- <p class="help-desc">同步至微信卡包, 不支持金额随机</p> -->
 
@@ -163,9 +164,9 @@
 									<div class="controls">
 										<label class="radio inline"> 
 											<input style="margin-top: 6px;" name="is_at_least" type="radio" value="1" checked="checked">满 
-											<input type="text" id="atLeast" name="at_least" value="" class="input-small js-price" data-value-type="Number"> 元可使用
+											<input type="text" id="atLeast" name="at_least" value="" class="input-mini js-price" data-value-type="Number"> 元可使用
 										</label>
-										<p class="help-desc error_info">错误提示</p>
+										
 									</div>
 								</div>
 
@@ -323,7 +324,7 @@
 									<div class="controls">
 										<input type="text" id="startAt" name="start_at" value=""
 											class="js-start-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.startDate,istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
-										<p class="help-desc error_info">错误提示</p>
+										
 									</div>
 								</div>
 
@@ -332,7 +333,7 @@
 									<div class="controls">
 										<input type="text" id="endAt" name="end_at" value=""
 											class="js-end-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.endDate,istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
-										<p class="help-desc error_info">错误提示</p>
+										
 									</div>
 								</div>
 
@@ -430,7 +431,7 @@
 									<div class="controls">
 										<textarea id="description" name="description" style="width: 280px;"
 											cols="30" rows="2" placeholder="填写活动的详细说明，支持换行;"></textarea>
-										<p class="help-desc error_info">错误提示</p>
+										
 									</div>
 								</div>
 								<div class="control-group">
@@ -449,18 +450,17 @@
 
 
 
-
 		</div>
-
+	
+		<div class="row  text-center">
+			<div class="col-sm-12" style="margin-top:10px;">
+				<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
+					clickFun="CouponInfoDlg.addSubmit()" />
+				<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"
+					clickFun="CouponInfoDlg.close()" />
+			</div>
+		</div>
 </div>
-</div>
-<div class="row btn-group-m-t text-center">
-	<div class="col-sm-12" style="margin-top:10px;">
-		<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
-			clickFun="CouponInfoDlg.addSubmit()" />
-		<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"
-			clickFun="CouponInfoDlg.close()" />
-	</div>
 </div>
 <script src="${ctxPath}/static/modular/biz/coupon/coupon_info.js"></script>
 @}

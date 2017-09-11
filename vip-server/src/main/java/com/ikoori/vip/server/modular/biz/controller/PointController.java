@@ -46,6 +46,7 @@ public class PointController extends BaseController {
     /**
      * 跳转到积分管理首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "point.html";
@@ -54,6 +55,7 @@ public class PointController extends BaseController {
     /**
      * 跳转到添加积分管理
      */
+    @Permission
     @RequestMapping("/point_add")
     public String pointAdd() {
         return PREFIX + "point_add.html";
@@ -105,6 +107,7 @@ public class PointController extends BaseController {
     /**
      * 删除积分管理
      */
+    @Permission
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Object delete(Long pointId) {
@@ -116,6 +119,7 @@ public class PointController extends BaseController {
     /**
      * 修改积分管理
      */
+    @Permission
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(Point point,String pointsLimitTemp) {

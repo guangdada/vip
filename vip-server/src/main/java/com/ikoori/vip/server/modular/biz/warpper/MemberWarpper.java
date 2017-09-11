@@ -20,7 +20,7 @@ public class MemberWarpper extends BaseControllerWarpper {
     @Override
     public void warpTheMap(Map<String, Object> map) {
     	/*map.put("sexName", ConstantFactory.me().getSexName((Integer) map.get("sex")));*/
-    	map.put("sex", SexType.valueOf(Integer.valueOf(map.get("sex").toString())));
+    	map.put("sex", map.get("sex") == null ? "" : SexType.valueOf(Integer.valueOf(map.get("sex").toString())));
     }
 
 }

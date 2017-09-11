@@ -1,3 +1,43 @@
+// 新规则要求值必须与第一个参数相同
+$.validator.addMethod("coverPic" , function(value, element, param) {
+	var coverType = $("input[name='coverType']:checked").val();
+	var coverPic = $("#coverPic").val();
+	if(coverType == 1){
+		return coverPic ? true : false;
+	}else{
+		return true;
+	}
+});
+
+//新规则要求值必须与第一个参数相同
+$.validator.addMethod("compareDate" , function(value, element, param) {
+	var type = $("input[name='grantType']:checked").attr("data-name");
+	var day = $("#termDaysRadio2").prop("checked");
+	var termStartAt = $("#js-stime").val();
+	var termEndAt = $("#js-etime").val();
+	if(type=='SUB_WX' &&　day && termStartAt){
+		return termEndAt > termStartAt;
+	}else{
+		return true;
+	}
+});
+
+//新规则要求值必须与第一个参数相同
+$.validator.addMethod("grantType" , function(value, element, param) {
+	var type = $("input[name='grantType']:checked").attr("data-name");
+	var tradeLimit = $("input[name='tradeLimit']").val();
+	var amountLimit = $("input[name='amountLimit']").val();
+	var pointsLimit = $("input[name='pointsLimit']").val();
+	if(type=='RULE'){
+		if(!tradeLimit && !amountLimit && !pointsLimit){
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return true;
+	}
+});
 
 /**
  * 初始化会员卡管理详情对话框
@@ -67,7 +107,7 @@ CardInfoDlg.collectData = function() {
 	if (termDaysRadio == '1'){
 		this.set('termDays',termDays)
 	}else if (termDaysRadio == '2'){
-		this.set('termStartAtStr',termStartAt).set('termEndAtStr',termEndAt);
+		this.set('termStartAt',termStartAt).set('termEndAt',termEndAt);
 	}
 }
 
@@ -75,42 +115,16 @@ CardInfoDlg.collectData = function() {
  * 权益值json
  */
 CardInfoDlg.rights = [];
-
 /**
- * 验证其他需要条件判断的项目
+ * 初始化权益值json
  */
-CardInfoDlg.validateOther = function (){
-	var result = true;
-	
+CardInfoDlg.initRights = function (){
 	var rights = [];
-	var isDiscount = $("input[name='isDiscount']").prop("checked");
-	var isCoupon = $("input[name='isCoupon']").prop("checked");
-	var isPoints = $("input[name='isPoints']").prop("checked");
+	var isDiscount = $("#isDiscount").prop("checked");
+	var isCoupon = $("#isCoupon").prop("checked");
+	var isPoints = $("#isPoints").prop("checked");
 	var discount = $("input[name='discount']").val();
 	var pointsNum = $("input[name='pointsNum']").val();
-	var rules_help = $(".upgrade-rules").next(".error_info").text("").hide();
-	var term_help = $(".term-block").children(".error_info").text("").hide();
-	var level_help = $("#level").siblings(".error_info").text("").hide();
-	var pointsLimit_help = $("input[name='pointsLimit']").next(".error_info").text("").hide();
-	var coverType_help = $(".error_info.coverType").text("").hide();
-	var coverType = $("input[name='coverType']:checked").val();
-	var coverPic = $("#coverPic").val();
-	if(coverType == 1 &&　!coverPic){
-		result = false;
-		coverType_help.text("请选择封面图片").show();
-	}
-	
-	var name = $("#name").val();
-	var name_help = $(".error_info.name").text("").hide();
-	if(!name){
-		name_help.text("会员卡名称不能为空").show();
-		result = false;
-	}
-	
-	if(!isCoupon && !isDiscount && !isPoints){
-		result = false;
-		rules_help.text("请至少为会员卡选择一种权益").show();
-	}
 	if(isCoupon){
 		var coupon = [];
 		var couponSelect = $(".coupon-select");
@@ -118,86 +132,19 @@ CardInfoDlg.validateOther = function (){
 			$.each(couponSelect,function () {
 				var number =  $(this).next("input").val();
 				var couponId = $(this).find("option:selected").val();
-				if(!number){
-					result = false;
-					rules_help.text("优惠券数量不能为空").show();
-				} else if(couponId == 0){
-					result = false;
-					rules_help.text("请选择要赠送的优惠券").show();
-				} else{
-					coupon.push({couponId:couponId,number:number});
-				}
+				coupon.push({couponId:couponId,number:number});
 			});
 			rights.push({type:'coupon',coupon:coupon});
 		}
-		if(coupon.length == 0){
-			result = false;
-			rules_help.text("优惠券信息填写不正确").show();
-		}
 	}
 	if(isDiscount){
-		if(!discount){
-			result = false;
-			rules_help.text("折扣不能为空").show();
-		}else{
-			rights.push({type:'discount',discount:discount});
-		}
+		rights.push({type:'discount',discount:discount});
 	}
 	if(isPoints){
-		if(!pointsNum){
-			result = false;
-			rules_help.text("积分不能为空").show();
-		}else{
-			rights.push({type:'points',points:pointsNum});
-		}
+		rights.push({type:'points',points:pointsNum});
 	}
 	// 设置权益信息
 	CardInfoDlg.rights = rights;
-	
-	var description = $("#description").val();
-	var description_help = $("#description").next(".error_info").text("").hide();
-	if(!description){
-		description_help.text("使用须知不能为空").show();
-		result = false;
-	}
-	
-	var grantType = $("input[name='grantType']:checked").attr('data-name');
-	if(grantType=='NO_RULE' || grantType=='SUB_WX'){
-		var term = $("input[name='termDaysRadio']:checked").val();
-		if(term == '1'){
-			var termDays = $("input[name='termDays']").val();
-			if(!termDays){
-				result = false;
-				term_help.text("会员卡有效期天数不能为空").show();
-			}
-		}else if(term == '2'){
-			var termStartAt = $("input[name='termStartAt']").val();
-			var termEndAt = $("input[name='termEndAt']").val();
-			if(!termStartAt){
-				result = false;
-				term_help.text("会员卡有效期开始时间不能为空").show();
-			}else if(!termEndAt){
-				result = false;
-				term_help.text("会员卡有效期结束时间不能为空").show();
-			}
-		}
-	}else if(grantType=='RULE'){
-		var tradeLimit = $("input[name='tradeLimit']").val();
-		var amountLimit = $("input[name='amountLimit']").val();
-		var pointsLimit = $("input[name='pointsLimit']").val();
-		var level =  $("#level option:selected").val();
-		if(!tradeLimit && !amountLimit && !pointsLimit){
-			result = false;
-			pointsLimit_help.text("请至少为会员卡设置一种升级条件").show();
-		}
-		if(!level || level == '0'){
-			result = false;
-			level_help.text("请选择等级").show();
-		}
-	}
-	
-	
-	return result;
 }
 
 /**
@@ -206,9 +153,13 @@ CardInfoDlg.validateOther = function (){
 CardInfoDlg.addSubmit = function() {
 
     this.clearData();
-    if (!this.validateOther()) {
-        return;
+    var valid = $("#cardForm").valid();
+    if(!valid){
+    	return;
     }
+    
+    CardInfoDlg.initRights();
+    
     this.collectData();
 
     //提交信息
@@ -229,9 +180,12 @@ CardInfoDlg.addSubmit = function() {
 CardInfoDlg.editSubmit = function() {
 
     this.clearData();
-    if (!this.validateOther()) {
-        return;
+    var valid = $("#cardForm").valid();
+    if(!valid){
+    	return;
     }
+    CardInfoDlg.initRights();
+    
     this.collectData();
 
     //提交信息
@@ -303,6 +257,137 @@ CardInfoDlg.setBgImg = function (){
 }
 
 $(function() {
+	$("#cardForm").validate({
+		errorPlacement: function(error, element) {
+			var name = element.attr("name");
+			if(name == "coverType" || name == "pointsNum"){
+				error.appendTo(element.parents(".controls:eq(0)"));
+			}else if(name == "cardRight"){
+				error.appendTo(element.parents(".upgrade-rules"));
+			}else if(name == "grantType"){
+				error.appendTo($("#tradeLimitError"));
+			}else{
+				error.appendTo(element.parent());
+			}
+		},
+		rules: {
+	    	name: {
+	    		required :true,
+	    		rangelength:[1,10],
+	    		remote: {
+	    		    url: Feng.ctxPath + "/card/checkName",     //后台处理程序
+	    		    type: "post",               //数据发送方式
+	    		    dataType: "json",           //接受数据格式   
+	    		    data: {                     //要传递的数据
+	    		        cardName: function() {
+	    		            return $("#name").val();
+	    		        },
+	    		        id:function(){
+	    		        	var id = $("#id").val();
+	    		        	return id ? id : "";
+	    		        }
+	    		    }
+	    		}
+	    	},
+	    	description:"required",
+	    	coverType:"coverPic",
+	    	cardRight:{
+	    		required:true,
+	    		minlength:1
+	    	},
+	    	discount:{
+	    		required:"#isDiscount:checked"
+	    	},
+	    	number:{
+	    		required:"#isCoupon:checked"
+	    	},
+	    	couponId:{
+	    		required:"#isCoupon:checked"
+	    	},
+	    	pointsNum:{
+	    		required:"#isPoints:checked"
+	    	},
+	    	termDays:{
+	    		required :function(){
+	    			var type = $("input[name='grantType']:checked").attr("data-name");
+	    			var day = $("#termDaysRadio1").prop("checked");
+	    			if(type=='SUB_WX' &&　day){
+	    				return true;
+	    			}else{
+	    				return false;
+	    			}
+	    		},
+	    		maxlength: 5
+	    	},
+	    	termStartAt:{
+	    		required :function(){
+	    			var type = $("input[name='grantType']:checked").attr("data-name");
+	    			var day = $("#termDaysRadio2").prop("checked");
+	    			if(type=='SUB_WX' &&　day){
+	    				return true;
+	    			}else{
+	    				return false;
+	    			}
+	    		}
+	    	},
+	    	termEndAt:{
+	    		compareDate:true
+	    	},
+	    	grantType:"grantType",
+	    	level:{
+	    		required:"#grantTypeRULE:checked",
+	    		remote: {
+	    		    url: Feng.ctxPath + "/card/checkLevel",     //后台处理程序
+	    		    type: "post",               //数据发送方式
+	    		    dataType: "json",           //接受数据格式   
+	    		    data: {                     //要传递的数据
+	    		        cardLevel: function() {
+	    		            return $("#level").val();
+	    		        },
+	    		        id:function(){
+	    		        	var id = $("#id").val();
+	    		        	return id ? id : "";
+	    		        }
+	    		    }
+	    		}
+	    	},
+	    	tradeLimit:{
+	    		digits:true
+	    	},
+	    	amountLimit:{
+	    		digits:true
+	    	},
+	    	pointsLimit:{
+	    		digits:true
+	    	}
+	    },
+	    messages: {
+	    	name: {
+	    		required:"会员卡名称不能为空",
+	    		rangelength:"会员卡名称必须在 1-20 个字内",
+	    		remote:"会员卡名称已存在 "
+	    	},
+	    	description: "使用须知不能为空",
+	    	coverType: "请选择封面图片",
+	    	cardRight: "请至少为会员卡选择一种权益",
+	    	discount:"折扣不能为空",
+	    	number:"优惠券数量不能为空",
+	    	couponId:"请选择优惠券",
+	    	pointsNum:"积分不能为空",
+	    	termDays:"有效期天数不能为空",
+	    	termStartAt:"开始时间不能为空",
+	    	termEndAt:"结束时间不能小于开始时间",
+	    	grantType:"请至少为会员卡设置一种升级条件",
+	    	pointsLimit:"请输入整数",
+	    	tradeLimit:"请输入整数",
+	    	amountLimit:"请输入整数",
+	    	level:{
+	    		remote:"该会员卡等级已经存在",
+	    		required:"请选择等级"
+	    	}
+	    }
+	});
+	
 	$("input[name=number],input[name=pointsNum],input[name=termDays],input[name=tradeLimit],input[name=amountLimit],input[name=pointsLimit]").bind("blur",function () {
 		var number = $(this).val() ? $(this).val() : "";
 		if(!CardInfoDlg.num.test(number)){
@@ -389,7 +474,6 @@ $(function() {
 	});
 	
 	$("input[name='grantType']").bind("click",function(){
-		var code = $(this).val();
 		var type = $(this).attr("data-name");
 		if(type=='NO_RULE'){
 			$(".rule-group").hide();
@@ -403,7 +487,6 @@ $(function() {
 		}
 	});
 	
-	$(".error_info").hide();
 	
 	var id = $("#id").val();
 	var hideDiscount = $("#hideDiscount").val();
@@ -430,6 +513,7 @@ $(function() {
 			CardInfoDlg.setBgColor();
 		}
 	});
+	
 	// 店铺图片
     var coverPic = new $WebUpload("coverPic");
     coverPic.setCallBackFun(function(pictureName){

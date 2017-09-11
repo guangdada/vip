@@ -33,6 +33,7 @@ public class PictureTypeController extends BaseController {
     /**
      * 跳转到图片类型首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "pictureType.html";
@@ -41,6 +42,7 @@ public class PictureTypeController extends BaseController {
     /**
      * 跳转到添加图片类型
      */
+    @Permission
     @RequestMapping("/pictureType_add")
     public String pictureTypeAdd() {
         return PREFIX + "pictureType_add.html";
@@ -49,6 +51,7 @@ public class PictureTypeController extends BaseController {
     /**
      * 跳转到修改图片类型
      */
+    @Permission
     @RequestMapping("/pictureType_update/{pictureTypeId}")
     public String pictureTypeUpdate(@PathVariable Long pictureTypeId, Model model) {
     	PictureType pictureType = pictureTypeService.selectById(pictureTypeId);
@@ -59,6 +62,7 @@ public class PictureTypeController extends BaseController {
     /**
      * 获取图片类型列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {

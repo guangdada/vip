@@ -6,8 +6,8 @@ package com.ikoori.vip.common.constant.state;
  *
  */
 public enum GrantType {
-	NO_RULE(1, "无门槛"),
 	SUB_WX(0, "关注微信"),
+	/*NO_RULE(1, "无门槛"),*/
     RULE(2, "按规则");
 
     int code;

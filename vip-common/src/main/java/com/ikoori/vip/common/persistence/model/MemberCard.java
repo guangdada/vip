@@ -79,8 +79,11 @@ public class MemberCard extends Model<MemberCard> {
 	/**
 	 * 关联查询对象
 	 */
+	@TableField(exist=false)
 	private Member member;
+	@TableField(exist=false)
 	private Card card;
+	@TableField(exist=false)
 	private Merchant merchant;
 	
 	public Long getId() {

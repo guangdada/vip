@@ -19,7 +19,7 @@ public interface ICouponFetchService {
 	public CouponFetch selectById(Long id);
 	public Integer insert(CouponFetch couponFetch);
 	List<Map<String, Object>> getCouponFetchList(Page<CouponFetch> page, String name,String orderByField,boolean isAsc,Long merchantId);
-	public List<Map<String, Object>> selectByCondition(Page<CouponFetchDo> page, String name, String orderByField,
+	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Integer isUsed,Page<Object> page, String name, String orderByField,
 			boolean isAsc,Long merchantId);
 	public List<Map<String, Object>> selectByMemberId(Long memberId);
 }

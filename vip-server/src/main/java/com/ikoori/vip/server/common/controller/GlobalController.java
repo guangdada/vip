@@ -23,6 +23,16 @@ public class GlobalController {
     public String errorPage() {
         return "/404.html";
     }
+    
+    /**
+     * 跳转到405页面
+     *
+     * @author chengxg
+     */
+    @RequestMapping(path = "/autherror")
+    public String autherrorPage() {
+        return "/405.html";
+    }
 
     /**
      * 跳转到session超时页面

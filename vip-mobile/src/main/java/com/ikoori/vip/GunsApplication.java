@@ -22,11 +22,11 @@ public class GunsApplication extends WebMvcConfigurerAdapter{
 
     protected final static Logger logger = LoggerFactory.getLogger(GunsApplication.class);
     
-    @Override
+    /*@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new WechatLogin()).excludePathPatterns("/login").excludePathPatterns("/kaptcha")
 				.excludePathPatterns("/global/error").excludePathPatterns("/error").addPathPatterns("/**");
-	}
+	}*/
     
     /**
      *  微信登录过滤器

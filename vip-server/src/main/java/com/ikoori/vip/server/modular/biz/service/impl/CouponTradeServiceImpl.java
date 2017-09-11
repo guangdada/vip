@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +52,8 @@ public class CouponTradeServiceImpl implements ICouponTradeService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectByCondition(Page<Object> page, String name, String orderByField,
+	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Page<Object> page, String name, String orderByField,
 			boolean isAsc,Long merchantId) {
-		return couponTradeDao.selectByCondition(page, name, orderByField, isAsc,merchantId);
+		return couponTradeDao.selectByCondition(nickname,type,mobile,page, name, orderByField, isAsc,merchantId);
 	}
 }

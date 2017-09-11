@@ -15,5 +15,5 @@ import com.ikoori.vip.common.persistence.model.Coupon;
  * @Date 2017-08-04 12:20:55
  */
 public interface CouponDao {
-   List<Map<String, Object>> getCouponList(@Param("page") Page<Coupon> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+   List<Map<String, Object>> getCouponList(@Param("merchantId") Long merchantId,@Param("isExpired") Boolean isExpired,@Param("isInvalid") Boolean isInvalid,@Param("type") Integer type,@Param("storeId") Long storeId,@Param("page") Page<Coupon> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 }

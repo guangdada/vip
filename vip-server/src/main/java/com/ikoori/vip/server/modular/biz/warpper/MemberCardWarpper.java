@@ -24,15 +24,10 @@ public class MemberCardWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
-    	Long cardId = Long.valueOf(map.get("card_id").toString());
-    	Long memberId = Long.valueOf(map.get("member_id").toString());
-    	Integer state = Integer.valueOf(map.get("state").toString());
-    	Card card = ConstantFactory.me().getCard(cardId);
-    	Member member = ConstantFactory.me().getMember(memberId);
-    	map.put("mobile", member == null ? "-" : member.getMobile());
-    	map.put("cardName", card == null ? "-" : card.getName());
-    	map.put("grantType", card == null ? "-" : GrantType.valueOf(card.getGrantType()));
-    	map.put("state", MemCardState.valueOf(state));
+    	String grantType = map.get("grant_type").toString();
+    	String state = map.get("state").toString();
+    	map.put("grantType", grantType == null ? "-" : GrantType.valueOf(Integer.valueOf(grantType)));
+    	map.put("state", state == null ? "-" : MemCardState.valueOf(Integer.valueOf(state)));
     }
 
 }

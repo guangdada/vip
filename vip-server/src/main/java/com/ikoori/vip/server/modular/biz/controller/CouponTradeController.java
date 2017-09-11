@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.CouponTrade;
@@ -44,14 +45,17 @@ public class CouponTradeController extends BaseController {
     /**
      * 跳转到使用记录首页
      */
+    @Permission
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+    	model.addAttribute("couponType", CouponType.values());
         return PREFIX + "couponTrade.html";
     }
 
     /**
      * 跳转到添加使用记录
      */
+    @Permission
     @RequestMapping("/couponTrade_add")
     public String couponTradeAdd() {
         return PREFIX + "couponTrade_add.html";
@@ -60,6 +64,7 @@ public class CouponTradeController extends BaseController {
     /**
      * 跳转到修改使用记录
      */
+    @Permission
     @RequestMapping("/couponTrade_update/{couponTradeId}")
     public String couponTradeUpdate(@PathVariable Long couponTradeId, Model model) {
     	CouponTrade couponTrade = couponTradeService.selectById(couponTradeId);
@@ -70,18 +75,14 @@ public class CouponTradeController extends BaseController {
     /**
      * 获取使用记录列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(String couponName,String mobile,Integer type,String nickname) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	/*Page<CouponTrade> page = new PageFactory<CouponTrade>().defaultPage();
-    	List<Map<String, Object>> result = couponTradeService.getCouponTradeList(page, condition, page.getOrderByField(), page.isAsc(),merchant.getId());
-    	page.setRecords((List<CouponTrade>) new CouponTradeWarpper(result).warp());
-        return super.packForBT(page);*/
-    	
     	Page<Object> page = new PageFactory<Object>().defaultPage();
-    	List<Map<String, Object>> result = couponTradeService.selectByCondition(page, condition, page.getOrderByField(), page.isAsc(),merchant.getId());
+    	List<Map<String, Object>> result = couponTradeService.selectByCondition(nickname,type,mobile,page, couponName, page.getOrderByField(), page.isAsc(),merchant.getId());
     	page.setRecords((List<Object>) new CouponTradeWarpper(result).warp());
         return super.packForBT(page);
     }

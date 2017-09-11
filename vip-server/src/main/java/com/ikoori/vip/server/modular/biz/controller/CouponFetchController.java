@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.CouponType;
+import com.ikoori.vip.common.constant.state.CouponUseState;
 import com.ikoori.vip.common.dto.CouponFetchDo;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -45,14 +47,18 @@ public class CouponFetchController extends BaseController {
     /**
      * 跳转到领取记录首页
      */
+    @Permission
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+    	model.addAttribute("couponUseState", CouponUseState.values());
+    	model.addAttribute("couponType", CouponType.values());
         return PREFIX + "couponFetch.html";
     }
 
     /**
      * 跳转到添加领取记录
      */
+    @Permission
     @RequestMapping("/couponFetch_add")
     public String couponFetchAdd() {
         return PREFIX + "couponFetch_add.html";
@@ -61,6 +67,7 @@ public class CouponFetchController extends BaseController {
     /**
      * 跳转到修改领取记录
      */
+    @Permission
     @RequestMapping("/couponFetch_update/{couponFetchId}")
     public String couponFetchUpdate(@PathVariable Long couponFetchId, Model model) {
     	CouponFetch couponFetch = couponFetchService.selectById(couponFetchId);
@@ -73,12 +80,13 @@ public class CouponFetchController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    @Permission
+    public Object list(String couponName,Integer isUsed,Integer type,String mobile,String nickname) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	Page<CouponFetchDo> page = new PageFactory<CouponFetchDo>().defaultPage();
-    	List<Map<String, Object>> result = couponFetchService.selectByCondition(page, condition, page.getOrderByField(), page.isAsc(),merchant.getId());
-    	page.setRecords((List<CouponFetchDo>) new CouponFetchWarpper(result).warp());
+    	Page<Object> page = new PageFactory<Object>().defaultPage();
+    	List<Map<String, Object>> result = couponFetchService.selectByCondition(nickname,type,mobile,isUsed,page, couponName, page.getOrderByField(), page.isAsc(),merchant.getId());
+    	page.setRecords((List<Object>) new CouponFetchWarpper(result).warp());
         return super.packForBT(page);
     }
 

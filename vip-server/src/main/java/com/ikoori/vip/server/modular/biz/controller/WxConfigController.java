@@ -47,6 +47,7 @@ public class WxConfigController extends BaseController {
     /**
      * 跳转到公众号管理首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "wxConfig.html";
@@ -55,6 +56,7 @@ public class WxConfigController extends BaseController {
     /**
      * 跳转到添加公众号管理
      */
+    @Permission
     @RequestMapping("/wxConfig_add")
     public String wxConfigAdd() {
         return PREFIX + "wxConfig_add.html";
@@ -63,6 +65,7 @@ public class WxConfigController extends BaseController {
     /**
      * 跳转到修改公众号管理
      */
+    @Permission
     @RequestMapping("/wxConfig_update/{wxConfigId}")
     public String wxConfigUpdate(@PathVariable Integer wxConfigId, Model model) {
     	WxConfig wxConfig = wxConfigMapper.selectById(wxConfigId);
@@ -123,6 +126,7 @@ public class WxConfigController extends BaseController {
     /**
      * 公众号管理详情
      */
+    @Permission
     @RequestMapping(value = "/detail/{wxConfigId}")
     @ResponseBody
     public Object detail(@PathVariable Long wxConfigId,Model model) {

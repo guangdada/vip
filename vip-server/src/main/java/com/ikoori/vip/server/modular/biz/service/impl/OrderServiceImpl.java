@@ -1,7 +1,5 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -42,10 +40,13 @@ import com.ikoori.vip.common.persistence.model.Point;
 import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.DateUtil;
+import com.ikoori.vip.common.util.RandomUtil;
+import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.OrderDao;
+import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IOrderService;
 
@@ -81,6 +82,10 @@ public class OrderServiceImpl implements IOrderService {
 	CouponTradeMapper couponTradeMapper;
 	@Autowired
 	StoreDao storeDao;
+	@Autowired
+	PointDao pointDao;
+	@Autowired
+	CardDao cardDao;
 	@Override
 	public Integer deleteById(Long id) {
 		return orderMapper.deleteById(id);
@@ -235,7 +240,7 @@ public class OrderServiceImpl implements IOrderService {
 			}
 		}
 		// 根据积分规则返还积分
-		List<Point> points = new ArrayList<Point>();
+		List<Point> points = pointDao.selectByMerchantId(member.getMerchantId());
 		if(points != null){
 			for(Point point : points){
 				// 生成积分使用记录
@@ -272,7 +277,7 @@ public class OrderServiceImpl implements IOrderService {
 		
 		// 判断是否满足会员卡升级条件
 		// 查询所有的"按规则"类别的会员卡，按等级排序后，逐个判断是否满足升级到改卡
-		List<Card> cards = new ArrayList<Card>();
+		List<Card> cards = cardDao.selectByMerchantId(member.getMerchantId());
 		if (CollectionUtils.isNotEmpty(cards)) {
 			// 获得累计订单数量
 			int orderCount = getMemOrderCount(member.getId(), 0L);
@@ -284,14 +289,13 @@ public class OrderServiceImpl implements IOrderService {
 			for (Card card : cards) {
 				Integer tradeLimit = card.getTradeLimit();
 				Integer pointsLimit = card.getPointsLimit();
-				BigDecimal amountLimit = card.getAmountLimit();
+				Integer amountLimit = card.getAmountLimit();
 				boolean upgrade = false;
 				if (tradeLimit != null && orderCount >= tradeLimit) {
 					upgrade = true;
 				} else if (pointsLimit != null && point >= pointsLimit) {
 					upgrade = true;
-				} else if (amountLimit != null
-						&& totalPayment >= (amountLimit.multiply(new BigDecimal(100)).intValue())) {
+				} else if (amountLimit != null && totalPayment >= (amountLimit * 100)) {
 					upgrade = true;
 				}
 				// 满足升级条件，升级到该会员卡
@@ -305,7 +309,7 @@ public class OrderServiceImpl implements IOrderService {
 						// 没有该级别会员卡
 						MemberCard memCard = new MemberCard();
 						memCard.setCardId(card.getId());
-						memCard.setCardNumber("");
+						memCard.setCardNumber(RandomUtil.generateCardNum(card.getCardNumberPrefix()));
 						memCard.setMemberId(mem.getId());
 						memCard.setMerchantId(mem.getMerchantId());
 						memCard.setState(MemCardState.USED.getCode());

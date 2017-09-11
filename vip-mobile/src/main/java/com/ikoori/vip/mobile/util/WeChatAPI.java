@@ -28,7 +28,14 @@ public class WeChatAPI {
 	public static final String findUserInfo = "http://krvip.ikoori.com/findUserInfo";
 	/** 发起网页授权 */
 	public static final String weboauth = "http://krvip.ikoori.com/oauth/weixin/weboauth";
+	/** 获得jsApiTicket*/
+	public static final String jsapiTicket = "http://krvip.ikoori.com/getJsApiTicket";
 
+	/**
+	 * 根据网页授权后得到的openid得到用户信息
+	 * @param openid
+	 * @return
+	 */
 	public static UserInfo getUserInfo(String openid) {
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("openid", openid);
@@ -44,12 +51,37 @@ public class WeChatAPI {
 		return userInfo;
 	}
 	
+	public String getJsApiTicket(HttpSession session){
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("openid", getOpenId(session));
+		String ticket = HttpKit.sendGet(findUserInfo, param);
+		return ticket;
+	}
+	
+	/**
+	 * 取得sessioin中保存的用户信息
+	 * @param session
+	 * @return
+	 */
 	public static UserInfo getUserInfo(HttpSession session) {
 		Object obj = session.getAttribute(Const.SESSION_USER_INFO);
 		if (obj != null) {
 			return ((UserInfo) obj);
 		}
 		return null;
+	}
+	
+	/**
+	 * 取得session中保存的openid
+	 * @param session
+	 * @return
+	 */
+	public static String getOpenId(HttpSession session) {
+		Object obj = session.getAttribute(Const.SESSION_USER_INFO);
+		if (obj != null) {
+			return ((UserInfo) obj).getOpenid();
+		}
+		return "1111";
 	}
 	
 	/** 
@@ -82,16 +114,4 @@ public class WeChatAPI {
         }
         return null;
     }
-	
-	public static String getOpenId(HttpSession session) {
-		/*Object obj = session.getAttribute(Const.SESSION_USER_INFO);
-		if (obj != null) {
-			return ((UserInfo) obj).getOpenid();
-		}
-		return null;*/
-		return "1111";
-	}
-	
-	
-
 }

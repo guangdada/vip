@@ -13,11 +13,16 @@ var MemberCard = {
  */
 MemberCard.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        /*{field: 'selectItem', radio: true},*/
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '头像', field: 'headImg', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	var img = '<img src="'+row.headimgurl+'" width="50px" height="50px"/>';
+        	return img;
+        }},
         {title: '领取时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'},
         {title: '会员卡号', field: 'card_number', visible: true, align: 'center', valign: 'middle'},
-        {title: '会员', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
+        {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '会员卡', field: 'cardName', visible: true, align: 'center', valign: 'middle'},
         {title: '类型', field: 'grantType', visible: true, align: 'center', valign: 'middle'},
         {title: '状态', field: 'state', visible: true, align: 'center', valign: 'middle'}
@@ -91,7 +96,12 @@ MemberCard.delete = function () {
  */
 MemberCard.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['cardNumber'] = $("#cardNumber").val();
+    queryData['mobile'] = $("#mobile").val();
+    queryData['state'] = $("#state").val();
+    queryData['grantType'] = $("#grantType").val();
+    queryData['cardId'] = $("#cardId").val();
+    queryData['nickname'] = $("#nickname").val();
     MemberCard.table.refresh({query: queryData});
 };
 

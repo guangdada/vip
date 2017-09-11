@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.controller;
 
+import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.server.common.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 跳转到店铺图片首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "storePhoto.html";
@@ -30,6 +32,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 跳转到添加店铺图片
      */
+    @Permission
     @RequestMapping("/storePhoto_add")
     public String storePhotoAdd() {
         return PREFIX + "storePhoto_add.html";
@@ -38,6 +41,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 跳转到修改店铺图片
      */
+    @Permission
     @RequestMapping("/storePhoto_update/{storePhotoId}")
     public String storePhotoUpdate(@PathVariable Integer storePhotoId, Model model) {
         return PREFIX + "storePhoto_edit.html";
@@ -46,6 +50,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 获取店铺图片列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
@@ -55,6 +60,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 新增店铺图片
      */
+    @Permission
     @RequestMapping(value = "/add")
     @ResponseBody
     public Object add() {
@@ -64,6 +70,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 删除店铺图片
      */
+    @Permission
     @RequestMapping(value = "/delete")
     @ResponseBody
     public Object delete() {
@@ -74,6 +81,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 修改店铺图片
      */
+    @Permission
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update() {
@@ -83,6 +91,7 @@ public class StorePhotoController extends BaseController {
     /**
      * 店铺图片详情
      */
+    @Permission
     @RequestMapping(value = "/detail")
     @ResponseBody
     public Object detail() {

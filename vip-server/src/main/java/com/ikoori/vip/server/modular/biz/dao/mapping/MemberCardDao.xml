@@ -2,12 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.MemberCardDao">
 	<select id="getMemberCardList" resultType="map">
-        select * from v_member_card where 1 = 1 and status = 1
+        SELECT
+			mc.card_number,
+			mc.create_time,
+			m.mobile,
+			wu.headimgurl,
+			wu.nickname,
+			c.grant_type,
+			mc.state,
+			c.`name` as cardName
+		FROM
+			v_member_card mc
+		LEFT JOIN v_member m ON mc.member_id = m.id
+		LEFT JOIN v_card c ON mc.card_id = c.id
+		LEFT JOIN v_wx_user wu ON m.wx_user_id = wu.id
+		WHERE
+			mc.`status` = 1
+		AND m.`status` = 1
+		AND c.`status` = 1
+		AND wu.`status` = 1
         <if test="cardNumber != null and cardNumber !=''">
-            and card_number like CONCAT('%',#{cardNumber},'%')
+            and mc.card_number like CONCAT('%',#{cardNumber},'%')
+        </if>
+        <if test="cardId != null">
+            and c.id =#{cardId}
         </if>
         <if test="merchantId != null">
-        	and merchant_id = #{merchantId}
+        	and mc.merchant_id = #{merchantId}
+        </if>
+        <if test="grantType != null">
+        	and c.grant_type = #{grantType}
+        </if>
+        <if test="nickname != null and nickname != ''">
+        	and wu.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="state != null">
+        	and mc.state = #{state}
+        </if>
+        <if test="mobile != null and mobile != ''">
+        	and m.mobile = #{mobile}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -21,7 +54,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by create_time DESC
+                order by mc.create_time DESC
             </otherwise>
         </choose>
     </select>

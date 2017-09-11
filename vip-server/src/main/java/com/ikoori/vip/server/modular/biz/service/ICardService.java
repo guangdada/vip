@@ -22,4 +22,6 @@ public interface ICardService {
 	public List<Card> selectByCondition(Map<String, Object> condition);
 	List<Map<String, Object>> getCardList(@Param("page") Page<Card> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 	public void saveCard(Card card, String rights);
+	public boolean checkCardName(Long id, String cardName,Long merchantId);
+	public boolean checkCardLevel(Long id, Integer cardLevel,Long merchantId);
 }

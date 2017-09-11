@@ -3,8 +3,6 @@ package com.ikoori.vip.server.modular.biz.service;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.model.Coupon;
 
@@ -19,7 +17,7 @@ public interface ICouponService {
 	public Integer updateById(Coupon coupon);
 	public Coupon selectById(Long id);
 	public Integer insert(Coupon coupon);
-	List<Map<String, Object>> getCouponList(@Param("page") Page<Coupon> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	List<Map<String, Object>> getCouponList(Long merchantId,Boolean isExpired,Boolean isInvalid,Integer type,Long storeId,Page<Coupon> page, String name,String orderByField, boolean isAsc);
 	List<Coupon> selectByCondition(Map<String,Object> condition);
 	public void saveCoupon(Coupon coupon);
 }

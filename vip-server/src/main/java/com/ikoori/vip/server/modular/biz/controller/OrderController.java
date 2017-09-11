@@ -54,6 +54,7 @@ public class OrderController extends BaseController {
     /**
      * 跳转到订单首页
      */
+    @Permission
     @RequestMapping("")
     public String index(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -69,6 +70,7 @@ public class OrderController extends BaseController {
     /**
      * 跳转到添加订单
      */
+    @Permission
     @RequestMapping("/order_add")
     public String orderAdd() {
         return PREFIX + "order_add.html";
@@ -77,6 +79,7 @@ public class OrderController extends BaseController {
     /**
      * 跳转到修改订单
      */
+    @Permission
     @RequestMapping("/order_update/{orderId}")
     public String orderUpdate(@PathVariable Long orderId, Model model) {
     	Order order = orderService.selectById(orderId);
@@ -89,6 +92,7 @@ public class OrderController extends BaseController {
     /**
      * 获取订单列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
 	public Object list(String memName, Long storeId, String mobile, Long orderSource, String orderNo) {

@@ -34,6 +34,16 @@
 		WHERE
 			grant_type = #{grantType}
 		AND merchant_id = #{merchatId}
+		AND `status` = 1 limit 1
+    </select>
+    
+    <select id="selectByMerchantId" resultType="com.ikoori.vip.common.persistence.model.Card">
+    	SELECT
+			*
+		FROM
+			v_card
+		WHERE
+			merchant_id = #{merchatId}
 		AND `status` = 1
     </select>
 </mapper>

@@ -18,7 +18,7 @@ import com.ikoori.vip.common.persistence.model.CouponFetch;
 public interface CouponFetchDao {
    List<Map<String, Object>> getCouponFetchList(@Param("page") Page<CouponFetch> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
    
-   List<Map<String, Object>> selectByCondition(@Param("page") Page<CouponFetchDo> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+   List<Map<String, Object>> selectByCondition(@Param("nickname") String nickname,@Param("type") Integer type ,@Param("mobile") String mobile ,@Param("isUsed") Integer isUsed,@Param("page") Page<Object> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
    
    public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
    

@@ -46,6 +46,7 @@ public class TicketController extends BaseController {
     /**
      * 跳转到小票首页
      */
+    @Permission
     @RequestMapping("")
     public String index(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -61,6 +62,7 @@ public class TicketController extends BaseController {
     /**
      * 跳转到添加小票
      */
+    @Permission
     @RequestMapping("/ticket_add")
     public String ticketAdd() {
         return PREFIX + "ticket_add.html";
@@ -69,6 +71,7 @@ public class TicketController extends BaseController {
     /**
      * 跳转到修改小票
      */
+    @Permission
     @RequestMapping("/ticket_update/{ticketId}")
     public String ticketUpdate(@PathVariable Long ticketId, Model model) {
     	Ticket ticket = ticketService.selectById(ticketId);
@@ -79,6 +82,7 @@ public class TicketController extends BaseController {
     /**
      * 获取小票列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition,Model model) {
@@ -128,6 +132,7 @@ public class TicketController extends BaseController {
     /**
      * 小票详情
      */
+    @Permission
     @RequestMapping(value = "/detail")
     @ResponseBody
     public Object detail() {

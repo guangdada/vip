@@ -110,7 +110,7 @@ MenuInfoDlg.addSubmit = function () {
     var ajax = new $ax(Feng.ctxPath + "/menu/add", function (data) {
         Feng.success("添加成功!");
         window.parent.Menu.table.refresh();
-        MenuInfoDlg.close();
+        //MenuInfoDlg.close();
     }, function (data) {
         Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
@@ -134,7 +134,7 @@ MenuInfoDlg.editSubmit = function () {
     var ajax = new $ax(Feng.ctxPath + "/menu/edit", function (data) {
         Feng.success("修改成功!");
         window.parent.Menu.table.refresh();
-        MenuInfoDlg.close();
+        //MenuInfoDlg.close();
     }, function (data) {
         Feng.error("修改失败!" + data.responseJSON.message + "!");
     });

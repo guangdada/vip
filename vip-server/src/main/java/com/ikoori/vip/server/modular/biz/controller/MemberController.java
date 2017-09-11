@@ -55,6 +55,7 @@ public class MemberController extends BaseController {
     /**
      * 跳转到会员首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "member.html";
@@ -63,6 +64,7 @@ public class MemberController extends BaseController {
     /**
      * 跳转到添加会员
      */
+    @Permission
     @RequestMapping("/member_add")
     public String memberAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -78,6 +80,7 @@ public class MemberController extends BaseController {
     /**
      * 跳转到修改会员
      */
+    @Permission
     @RequestMapping("/member_update/{memberId}")
     public String memberUpdate(@PathVariable Long memberId, Model model) {
     	Member member = memberService.selectById(memberId);

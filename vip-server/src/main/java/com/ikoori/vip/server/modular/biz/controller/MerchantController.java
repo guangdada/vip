@@ -52,6 +52,7 @@ public class MerchantController extends BaseController {
     /**
      * 跳转到商户首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "merchant.html";
@@ -60,6 +61,7 @@ public class MerchantController extends BaseController {
     /**
      * 跳转到添加商户
      */
+    @Permission
     @RequestMapping("/merchant_add")
     public String merchantAdd() {
     	log.info("merchant_add");
@@ -69,6 +71,7 @@ public class MerchantController extends BaseController {
     /**
      * 跳转到修改商户
      */
+    @Permission
     @RequestMapping("/merchant_update/{merchantId}")
     public String merchantUpdate(@PathVariable Long merchantId, Model model) {
     	log.info("--merchantId---",merchantId);
@@ -85,8 +88,8 @@ public class MerchantController extends BaseController {
     /**
      * 获取商户列表
      */
+    @Permission
     @RequestMapping(value = "/list",method = RequestMethod.POST)
-    @Permission(Const.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(name="merName",required = false) String merName) {
     	Page<Merchant> page = new PageFactory<Merchant>().defaultPage();
@@ -137,6 +140,7 @@ public class MerchantController extends BaseController {
     /**
      * 商户详情
      */
+    @Permission
     @RequestMapping(value = "/merchant_detail/{merchantId}")
     public Object detail(@PathVariable Long merchantId, Model model) {
     	Merchant merchant = merchantMapper.selectById(merchantId);

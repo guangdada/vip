@@ -46,7 +46,7 @@ Member.openAddMember = function () {
     var index = layer.open({
         type: 2,
         title: '添加会员',
-        area: ['800px', '420px'], //宽高
+        area: ['800px', '500px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: Feng.ctxPath + '/member/member_add'
@@ -62,7 +62,7 @@ Member.openMemberDetail = function () {
         var index = layer.open({
             type: 2,
             title: '会员详情',
-            area: ['800px', '420px'], //宽高
+            area: ['800px', '500px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: Feng.ctxPath + '/member/member_update/' + Member.seItem.id
@@ -76,14 +76,21 @@ Member.openMemberDetail = function () {
  */
 Member.delete = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/member/delete", function (data) {
-            Feng.success("删除成功!");
-            Member.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("memberId",this.seItem.id);
-        ajax.start();
+    	//询问框
+    	layer.confirm('确认要删除吗？', {
+    	  btn: ['确认','取消'] //按钮
+    	}, function(index){
+	        var ajax = new $ax(Feng.ctxPath + "/member/delete", function (data) {
+	            Feng.success("删除成功!");
+	            Member.table.refresh();
+	        }, function (data) {
+	            Feng.error("删除失败!" + data.responseJSON.message + "!");
+	        });
+	        ajax.set("memberId",Member.seItem.id);
+	        ajax.start();
+	        layer.close(index);
+    	}, function(){
+    	});
     }
 };
 

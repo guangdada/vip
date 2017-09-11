@@ -1,58 +1,15 @@
+// 新规则要求值必须与第一个参数相同
+$.validator.addMethod("conpareDate" , function(value, element, param) {
+	var endAt =$("#endAt").val();
+	var startAt =$("#startAt").val();
+   return endAt > startAt;
+},"过期时间必须大于生效时间");
 /**
  * 初始化优惠券管理详情对话框
  */
 var CouponInfoDlg = {
     couponInfoData : {},
-    num : /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/,
-    validateFields: {
-        name: {
-            validators: {
-                notEmpty: {
-                    message: '优惠券名称不能为空'
-                },
-                stringLength: {
-                    min: 1,
-                    max: 10,
-                    message: '优惠券名称必须在 1-10 个字内'
-                }
-            }
-        },
-        total:{
-            validators: {
-            	notEmpty: {
-                    message: '发放总量不能为空'
-                }
-            }
-        },
-        value:{
-            validators: {
-            	notEmpty: {
-                    message: '面值不能为空'
-                }
-            }
-        },
-        startAt:{
-            validators: {
-            	notEmpty: {
-                    message: '生效时间不能为空'
-                }
-            }
-        },
-        endAt:{
-            validators: {
-            	notEmpty: {
-                    message: '过期时间不能为空'
-                }
-            }
-        },
-        description:{
-            validators: {
-            	notEmpty: {
-                    message: '使用说明不能为空'
-                }
-            }
-        }
-    }
+    num : /^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/
 };
 
 /**
@@ -104,7 +61,7 @@ CouponInfoDlg.collectData = function() {
 	var cardId = $("#user_level option:selected").val();
 	this.set('id').set('name').set('total').set('value').set('type',type)
 	.set('isAtLeast',isAtLeast).set('isShare',isShare).set('atLeast').set('quota',quota).set('cardId',cardId)
-	.set('description').set('servicePhone').set('startAtStr',startAt).set('endAtStr',endAt).set('storeId');
+	.set('description').set('servicePhone').set('startAt',startAt).set('endAt',endAt).set('storeId');
 }
 
 /**
@@ -113,9 +70,13 @@ CouponInfoDlg.collectData = function() {
 CouponInfoDlg.addSubmit = function() {
 
     this.clearData();
-    if (!this.validateOther()) {
-        return;
+    var valid = $("#couponForm").valid();
+    if(!valid){
+    	return;
     }
+    /*if (!this.validateOther()) {
+        return;
+    }*/
     this.collectData();
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/coupon/add", function(data){
@@ -135,9 +96,13 @@ CouponInfoDlg.addSubmit = function() {
 CouponInfoDlg.editSubmit = function() {
 
     this.clearData();
-    if (!this.validateOther()) {
-        return;
+    var valid = $("#couponForm").valid();
+    if(!valid){
+    	return;
     }
+    /*if (!this.validateOther()) {
+        return;
+    }*/
     this.collectData();
 
     //提交信息
@@ -164,9 +129,6 @@ CouponInfoDlg.endDate = function (endAt) {
 	$(".promote-date").text(datestr);
 }
 
-CouponInfoDlg.hideHelp = function (){
-	$(".help-desc.error_info").text("").hide();
-}
 /**
  * 验证其他需要条件判断的项目
  */
@@ -233,7 +195,53 @@ CouponInfoDlg.validateOther = function (){
 
 
 $(function() {
-	CouponInfoDlg.hideHelp();
+	 $("#couponForm").validate({
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());  
+		},
+		rules: {
+	    	name: {
+	    		required :true,
+	    		minlength: 1,
+	    		maxlength: 10
+	    	},
+	    	description:"required",
+	    	total:{
+	    		required :true,
+	    		digits:true,
+	    		minlength: 1,
+	    		maxlength: 3
+	    	},
+	    	value:{
+	    		required :true,
+	    		digits:true,
+	    		minlength: 1,
+	    		maxlength: 3
+	    	},
+	    	at_least: {
+		        required: function(){
+		        	var isAtLeast = $("input[name='is_at_least']:checked").val();
+		        	return isAtLeast == 1;
+		        }
+		    },
+		    start_at:"required",
+		    end_at:{
+		    	conpareDate:true,
+		    	required:true
+		    }
+	    },
+	    messages: {
+	    	name: "优惠券名称必须在 1-10 个字内",
+	    	description: "请输入使用说明",
+	    	total: "发放总量必须是1-3位的整数",
+	    	value: "优惠券面值必须是1-3位的整数",
+	    	at_least:"订单限制金额必须大于等于优惠券的面值",
+	    	start_at:"必须选择一个生效时间",
+	    	end_at:"过期时间必须大于生效时间"
+	    }
+	});
+	
+	 
 	$(".card-bgcolor-box").bind("click",function (){
 		var bgColor = $(this).attr("data-value");
 		$("#bgColor").val(bgColor);
@@ -282,7 +290,6 @@ $(function() {
 	
 	$("input[name='name']").attr("maxlength",10);
 	$("#description").attr("maxlength",250);
-	$("#servicePhone").attr("maxlength",20);
 	$("#servicePhone").attr("maxlength",20);
 	$("#value").attr("maxlength",7);
 	$("#atLeast").attr("maxlength",7);

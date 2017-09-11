@@ -13,10 +13,15 @@ var CouponTrade = {
  */
 CouponTrade.initColumn = function () {
 	return [
-        {field: 'selectItem', radio: true},
+        /*{field: 'selectItem', radio: true},*/
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '头像', field: 'headImg', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	var img = '<img src="'+row.headImg+'" width="50px" height="50px"/>';
+        	return img;
+        }},
         {title: '优惠券名称', field: 'couponName', visible: true, align: 'center', valign: 'middle'},
         {title: '券类型', field: 'couponType', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '会员名称', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '使用金额', field: 'usedValue', visible: true, align: 'center', valign: 'middle'},
@@ -92,7 +97,10 @@ CouponTrade.delete = function () {
  */
 CouponTrade.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['couponName'] = $("#couponName").val();
+    queryData['type'] = $("#type").val();
+    queryData['mobile'] = $("#mobile").val();
+    queryData['nickname'] = $("#nickname").val();
     CouponTrade.table.refresh({query: queryData});
 };
 

@@ -19,9 +19,12 @@ import com.ikoori.vip.common.constant.state.PicType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.PictureMapper;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Picture;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.config.properties.GunsProperties;
+import com.ikoori.vip.server.core.shiro.ShiroKit;
+import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 
 /**
  * 问价上传控制器
@@ -36,6 +39,8 @@ public class UploadController extends BaseController {
 	private GunsProperties gunsProperties;
 	@Resource
 	private PictureMapper pictureMapper;
+	@Resource
+	private IMerchantService merchantService;
 
 	/**
 	 * 上传LOGO图片(上传到项目的webapp/static/img)
@@ -71,10 +76,16 @@ public class UploadController extends BaseController {
 		JSONObject obj = new JSONObject();
 		String pictureName = UUID.randomUUID().toString() + ".jpg";
 		try {
+			Long userId = Long.valueOf(ShiroKit.getUser().getId());
+	    	
 			String fileSavePath = gunsProperties.getFileUploadPath() + pictureName;
 			picture.transferTo(new File(fileSavePath));
 
 			Picture pic = new Picture();
+			if(ShiroKit.hasRole(Const.MERCHANT_NAME)){
+				Merchant merchant = merchantService.getMerchantUserId(userId);
+				pic.setMerchantId(merchant.getId());
+			}
 			pic.setPictypeId(picType.getCode());
 			pic.setRealName(picture.getOriginalFilename());
 			pic.setAbsUrl(gunsProperties.getImageUrl()+ "/" +pictureName);

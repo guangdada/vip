@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,9 +48,11 @@ public class MemberCardServiceImpl implements IMemberCardService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getMemberCardList(Page<MemberCard> page, String name, String orderByField,
-			boolean isAsc,Long merchantId,String cardNumber) {
-		return memberCardDao.getMemberCardList(page, name, orderByField, isAsc,merchantId,cardNumber);
+	public List<Map<String, Object>> getMemberCardList(Long cardId, Integer grantType, Integer state, String mobile,
+			Page<MemberCard> page, String nickname, String orderByField, boolean isAsc, Long merchantId,
+			String cardNumber) {
+		return memberCardDao.getMemberCardList(cardId, grantType, state, mobile, page, nickname, orderByField, isAsc,
+				merchantId, cardNumber);
 	}
 	
 	public List<MemberCard> findByMemberId(Long memberId){

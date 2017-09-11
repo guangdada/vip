@@ -52,9 +52,9 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectByCondition(Page<CouponFetchDo> page, String name, String orderByField,
+	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Integer isUsed,Page<Object> page, String name, String orderByField,
 			boolean isAsc,Long merchantId) {
-		return couponFetchDao.selectByCondition(page, name, orderByField, isAsc,merchantId);
+		return couponFetchDao.selectByCondition(nickname,type,mobile,isUsed,page, name, orderByField, isAsc,merchantId);
 	}
 	
 	public List<Map<String, Object>> selectByMemberId(Long memberId){

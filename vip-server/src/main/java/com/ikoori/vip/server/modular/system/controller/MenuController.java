@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.system.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.annotion.log.BussinessLog;
 import com.ikoori.vip.common.constant.Const;
@@ -115,9 +118,72 @@ public class MenuController extends BaseController {
         }
         //设置父级菜单编号
         menuSetPcode(menu);
-
         this.menuMapper.updateById(menu);
-        return SUCCESS_TIP;
+        
+        if(!menu.getCode().equals("0") && menu.getIsmenu().intValue() == 1){
+       	 Wrapper<Menu> wrapper = new EntityWrapper<>();
+       	 wrapper.eq("pcode", menu.getCode());
+            List<Menu> submenus = menuMapper.selectList(wrapper);
+            Map<String,Boolean> map = new HashMap<String,Boolean>();
+            map.put(menu.getUrl() + "/add", false);
+            map.put(menu.getUrl() + "/update", false);
+            map.put(menu.getUrl() + "/delete", false);
+            map.put(menu.getUrl() + "/detail", false);
+            map.put(menu.getUrl() + "/list", false);
+            map.put(menu.getUrl() + "/" + menu.getCode() +"_add", false);
+            map.put(menu.getUrl() + "/" + menu.getCode() + "_update", false);
+            for(Menu m : submenus){
+           	 if(map.get(m.getUrl()) != null){
+           		 map.put(m.getUrl(), true);
+           	 }
+            }
+            
+            for(String key : map.keySet()){
+           	 if(!map.get(key)){
+           		 Menu subMenu = new Menu();
+           		 
+           		 if(key.equals(menu.getUrl() + "/add")){
+           			 subMenu.setName(menu.getName() + "添加");
+               		 subMenu.setCode(menu.getCode()+"_add");
+           		 }else if(key.equals(menu.getUrl() + "/update")){
+           			 subMenu.setName(menu.getName() + "修改");
+               		 subMenu.setCode(menu.getCode()+"_update");
+           		 }else if(key.equals(menu.getUrl() + "/delete")){
+           			 subMenu.setName(menu.getName() + "删除");
+           			 subMenu.setCode(menu.getCode()+"_delete");
+           		 }else if(key.equals(menu.getUrl() + "/detail")){
+           			 subMenu.setName(menu.getName() + "详情");
+               		 subMenu.setCode(menu.getCode()+"_detail");
+           		 }else if(key.equals(menu.getUrl() + "/list")){
+           			 subMenu.setName(menu.getName() + "查询");
+               		 subMenu.setCode(menu.getCode()+"_list");
+           		 }else if(key.equals(menu.getUrl() + "/" + menu.getCode() +"_add")){
+           			 subMenu.setName(menu.getName() + "跳转添加");
+               		 subMenu.setCode("to_"+menu.getCode()+"_add");
+           		 }else if(key.equals(menu.getUrl() + "/" + menu.getCode() + "_update")){
+           			 subMenu.setName(menu.getName() + "跳转修改");
+           			 subMenu.setCode("to_"+menu.getCode()+"_update");
+           		 }
+           		 subMenu.setIsmenu(0);
+           		 subMenu.setPcode(menu.getId().toString());
+           		 subMenu.setNum(1);
+           		 subMenu.setUrl(key);
+           		 subMenu.setStatus(1);
+           		//判断是否存在该编号
+       	        String existedMenuName = ConstantFactory.me().getMenuNameByCode(subMenu.getCode());
+       	        if (ToolUtil.isNotEmpty(existedMenuName)) {
+       	            throw new BussinessException(BizExceptionEnum.EXISTED_THE_MENU);
+       	        }
+
+       	        //设置父级菜单编号
+       	        menuSetPcode(subMenu);
+
+       	        subMenu.setStatus(MenuStatus.ENABLE.getCode());
+       	        this.menuMapper.insert(subMenu);
+           	 }
+            }
+       }
+       return SUCCESS_TIP;
     }
 
     /**

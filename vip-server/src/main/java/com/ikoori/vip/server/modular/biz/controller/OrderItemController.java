@@ -33,6 +33,7 @@ public class OrderItemController extends BaseController {
     /**
      * 跳转到订单明细首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "orderItem.html";
@@ -41,6 +42,7 @@ public class OrderItemController extends BaseController {
     /**
      * 跳转到添加订单明细
      */
+    @Permission
     @RequestMapping("/orderItem_add")
     public String orderItemAdd() {
         return PREFIX + "orderItem_add.html";
@@ -49,6 +51,7 @@ public class OrderItemController extends BaseController {
     /**
      * 跳转到修改订单明细
      */
+    @Permission
     @RequestMapping("/orderItem_update/{orderItemId}")
     public String orderItemUpdate(@PathVariable Long orderItemId, Model model) {
     	OrderItem orderItem = orderItemService.selectById(orderItemId);
@@ -59,6 +62,7 @@ public class OrderItemController extends BaseController {
     /**
      * 获取订单明细列表
      */
+    @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {

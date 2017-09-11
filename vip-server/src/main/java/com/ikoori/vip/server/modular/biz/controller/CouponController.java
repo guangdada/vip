@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
+import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
@@ -56,14 +59,24 @@ public class CouponController extends BaseController {
     /**
      * 跳转到优惠券首页
      */
+    @Permission
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+    	model.addAttribute("couponType", CouponType.values());
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	
+    	Map<String,Object> condition = new HashMap<String,Object>();
+    	condition.put("merchantId", merchant.getId());
+    	List<Store> stores=storeService.selectByCondition(condition);
+    	model.addAttribute("stores", stores);
         return PREFIX + "coupon.html";
     }
 
     /**
      * 跳转到添加优惠券
      */
+    @Permission
     @RequestMapping("/coupon_add")
     public String couponAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -85,6 +98,7 @@ public class CouponController extends BaseController {
     /**
      * 跳转到修改优惠券
      */
+    @Permission
     @RequestMapping("/coupon_update/{couponId}")
     public String couponUpdate(@PathVariable Long couponId, Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -108,10 +122,13 @@ public class CouponController extends BaseController {
      * 获取优惠券列表
      */
     @RequestMapping(value = "/list")
+    @Permission
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(String couponName,Long storeId,Boolean isExpired,Boolean isInvalid,Integer type) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Page<Coupon> page = new PageFactory<Coupon>().defaultPage();
-        List<Map<String, Object>> result = couponService.getCouponList(page,condition,page.getOrderByField(), page.isAsc());
+        List<Map<String, Object>> result = couponService.getCouponList(merchant.getId(),isExpired,isInvalid,type,storeId,page,couponName,page.getOrderByField(), page.isAsc());
         page.setRecords((List<Coupon>) new CouponWarpper(result).warp());
         return super.packForBT(page);
     }
@@ -151,7 +168,7 @@ public class CouponController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public Object update(Coupon coupon) {
+    public Object update(@Valid Coupon coupon) {
     	if (ToolUtil.isEmpty(coupon) || coupon.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }

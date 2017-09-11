@@ -1,14 +1,16 @@
 package com.ikoori.vip.common.persistence.model;
 
-import com.baomidou.mybatisplus.enums.IdType;
+import java.io.Serializable;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -135,19 +137,17 @@ public class Card extends Model<Card> {
     /**
      * 生效时间
      */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@TableField("term_start_at")
 	private Date termStartAt;
 	
-	@TableField(exist=false)
-	private String termStartAtStr;
     /**
      * 失效时间
      */
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@TableField("term_end_at")
 	private Date termEndAt;
 	
-	@TableField(exist=false)
-	private String termEndAtStr;
     /**
      * 过期后调整至会员卡
      */
@@ -196,7 +196,7 @@ public class Card extends Model<Card> {
 	 * 累计消费金额
 	 */
 	@TableField("amount_limit")
-	private BigDecimal amountLimit;
+	private Integer amountLimit;
     /**
      * 状态
      */
@@ -437,11 +437,11 @@ public class Card extends Model<Card> {
 		this.pointsLimit = pointsLimit;
 	}
 
-	public BigDecimal getAmountLimit() {
+	public Integer getAmountLimit() {
 		return amountLimit;
 	}
 
-	public void setAmountLimit(BigDecimal amountLimit) {
+	public void setAmountLimit(Integer amountLimit) {
 		this.amountLimit = amountLimit;
 	}
 
@@ -458,21 +458,6 @@ public class Card extends Model<Card> {
 		this.servicePhone = servicePhone;
 	}
 
-	public String getTermStartAtStr() {
-		return termStartAtStr;
-	}
-
-	public void setTermStartAtStr(String termStartAtStr) {
-		this.termStartAtStr = termStartAtStr;
-	}
-
-	public String getTermEndAtStr() {
-		return termEndAtStr;
-	}
-
-	public void setTermEndAtStr(String termEndAtStr) {
-		this.termEndAtStr = termEndAtStr;
-	}
 	
 	public Integer getTermType() {
 		return termType;

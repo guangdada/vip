@@ -3,6 +3,9 @@ package com.ikoori.vip.common.persistence.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.math.BigDecimal;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -72,7 +75,7 @@ public class Coupon extends Model<Coupon> {
     /**
      * 面值
      */
-	private BigDecimal value;
+	private Integer value;
     /**
      * 面值(单位:分)
      */
@@ -86,7 +89,7 @@ public class Coupon extends Model<Coupon> {
      * 使用门槛(单位:元)
      */
 	@TableField("at_least")
-	private BigDecimal atLeast;
+	private Integer atLeast;
     /**
      * 使用门槛(单位:分)
      */
@@ -109,10 +112,9 @@ public class Coupon extends Model<Coupon> {
      * 生效时间
      */
 	@TableField("start_at")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date startAt;
 	
-	@TableField(exist=false)
-	private String startAtStr;
     /**
      * 生效时间(long值)
      */
@@ -122,10 +124,9 @@ public class Coupon extends Model<Coupon> {
      * 失效时间
      */
 	@TableField("end_at")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date endAt;
 	
-	@TableField(exist=false)
-	private  String endAtStr;
 	
     /**
      * 失效时间(long值)
@@ -312,11 +313,11 @@ public class Coupon extends Model<Coupon> {
 		this.alias = alias;
 	}
 
-	public BigDecimal getValue() {
+	public Integer getValue() {
 		return value;
 	}
 
-	public void setValue(BigDecimal value) {
+	public void setValue(Integer value) {
 		this.value = value;
 	}
 
@@ -336,11 +337,11 @@ public class Coupon extends Model<Coupon> {
 		this.quota = quota;
 	}
 
-	public BigDecimal getAtLeast() {
+	public Integer getAtLeast() {
 		return atLeast;
 	}
 
-	public void setAtLeast(BigDecimal atLeast) {
+	public void setAtLeast(Integer atLeast) {
 		this.atLeast = atLeast;
 	}
 
@@ -573,22 +574,6 @@ public class Coupon extends Model<Coupon> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
-	}
-	
-	public String getStartAtStr() {
-		return startAtStr;
-	}
-
-	public void setStartAtStr(String startAtStr) {
-		this.startAtStr = startAtStr;
-	}
-
-	public String getEndAtStr() {
-		return endAtStr;
-	}
-
-	public void setEndAtStr(String endAtStr) {
-		this.endAtStr = endAtStr;
 	}
 
 	@Override

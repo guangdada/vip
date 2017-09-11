@@ -75,14 +75,21 @@ Point.openPointDetail = function () {
  */
 Point.delete = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/point/delete", function (data) {
-            Feng.success("删除成功!");
-            Point.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("pointId",this.seItem.id);
-        ajax.start();
+    	//询问框
+    	layer.confirm('确认要删除吗？', {
+    	  btn: ['确认','取消'] //按钮
+    	}, function(index){
+	        var ajax = new $ax(Feng.ctxPath + "/point/delete", function (data) {
+	            Feng.success("删除成功!");
+	            Point.table.refresh();
+	        }, function (data) {
+	            Feng.error("删除失败!" + data.responseJSON.message + "!");
+	        });
+	        ajax.set("pointId",Point.seItem.id);
+	        ajax.start();
+	        layer.close(index);
+    	}, function(){
+    	});
     }
 };
 

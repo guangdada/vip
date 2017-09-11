@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
+import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.GrantType;
@@ -46,7 +49,8 @@ import com.ikoori.vip.server.modular.biz.warpper.CardWarpper;
 @Controller
 @RequestMapping("/card")
 public class CardController extends BaseController {
-
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
     private String PREFIX = "/biz/card/";
     @Autowired
 	ICardService cardService;
@@ -55,6 +59,7 @@ public class CardController extends BaseController {
     IMerchantService merchantService;
     
     @Autowired
+    
     ICouponService couponService;
     
     @Autowired
@@ -66,6 +71,7 @@ public class CardController extends BaseController {
     /**
      * 跳转到会员卡首页
      */
+    @Permission
     @RequestMapping("")
     public String index() {
         return PREFIX + "card.html";
@@ -74,6 +80,7 @@ public class CardController extends BaseController {
     /**
      * 跳转到添加会员卡
      */
+    @Permission
     @RequestMapping("/card_add")
     public String cardAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -103,6 +110,7 @@ public class CardController extends BaseController {
     /**
      * 跳转到修改会员卡
      */
+    @Permission
     @RequestMapping("/card_update/{cardId}")
 	public String cardUpdate(@PathVariable Long cardId, Model model) {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -160,6 +168,7 @@ public class CardController extends BaseController {
      * 获取会员卡列表
      */
     @RequestMapping(value = "/list")
+    @Permission
     @ResponseBody
     public Object list(String condition) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -177,10 +186,10 @@ public class CardController extends BaseController {
     @Permission
     @ResponseBody
     public Object add(Card card,String rights) {
-    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
-    	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	card.setMerchantId(merchant.getId());
-    	cardService.saveCard(card, rights);
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+		Merchant merchant = merchantService.getMerchantUserId(userId);
+		card.setMerchantId(merchant.getId());
+		cardService.saveCard(card, rights);
         return super.SUCCESS_TIP;
     }
 
@@ -209,13 +218,39 @@ public class CardController extends BaseController {
     	cardService.saveCard(card,rights);
         return super.SUCCESS_TIP;
     }
+    
+    /**
+     * 验证会员卡名称是否存在
+     * @return
+     */
+    @RequestMapping("/checkName")
+    @Permission(Const.MERCHANT_NAME)
+    @ResponseBody
+    public Object checkName(Long id , String cardName){
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	return cardService.checkCardName(id, cardName,merchant.getId());
+    }
+    
+    /**
+     * 验证会员卡级别是否存在
+     * @return
+     */
+    @RequestMapping("/checkLevel")
+    @Permission(Const.MERCHANT_NAME)
+    @ResponseBody
+    public Object checkLevel(Long id , Integer cardLevel){
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	return cardService.checkCardLevel(id, cardLevel,merchant.getId());
+    }
 
     /**
      * 会员卡详情
      */
     @RequestMapping(value = "/detail")
     @ResponseBody
-    public Object detail() {
-        return null;
+    public Object detail(Long id, String cardName) {
+       return null;
     }
 }

@@ -61,7 +61,9 @@ public enum BizExceptionEnum {
 	 * @param code
 	 * @param message
 	 */
-	INVALID_MEMBER(500,"没有找到该会员信息");
+	INVALID_MEMBER(500,"没有找到该会员信息"),
+	INVALID_cardName(500,"会员卡名称已存在"),
+	INVALID_cardLevel(500,"会员卡级别已存在");
 
 	BizExceptionEnum(int code, String message) {
 		this.friendlyCode = code;

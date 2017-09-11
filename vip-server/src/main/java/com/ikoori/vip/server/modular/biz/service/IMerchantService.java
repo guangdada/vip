@@ -17,4 +17,6 @@ public interface IMerchantService {
 	
 	@Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MERCHANT_USER + "'+#userId")
 	public Merchant getMerchantUserId(Long userId);
+	
+	public Long getCurrentMerchantId();
 }

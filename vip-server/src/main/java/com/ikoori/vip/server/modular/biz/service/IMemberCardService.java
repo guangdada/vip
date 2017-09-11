@@ -17,7 +17,9 @@ public interface IMemberCardService {
 	public Integer updateById(MemberCard memberCard);
 	public MemberCard selectById(Long id);
 	public Integer insert(MemberCard memberCard);
-	List<Map<String, Object>> getMemberCardList(Page<MemberCard> page,String name,String orderByField,boolean isAsc,Long merchantId,String cardNumber);
+	List<Map<String, Object>> getMemberCardList(Long cardId, Integer grantType, Integer state, String mobile,
+			Page<MemberCard> page, String nickname, String orderByField, boolean isAsc, Long merchantId,
+			String cardNumber);
 	public List<MemberCard> findByMemberId(Long memberId);
 	List<Map<String,Object>> selectByMemberId(Long memberId);
 	
