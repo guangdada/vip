@@ -31,6 +31,7 @@ import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.ICardService;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
+import com.ikoori.vip.server.modular.biz.warpper.CouponFetchWarpper;
 import com.ikoori.vip.server.modular.biz.warpper.MemberWarpper;
 
 /**
@@ -101,10 +102,13 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/list")
     @Permission
     @ResponseBody
-    public Object list(String condition) {
-    	Page<Member> page = new PageFactory<Member>().defaultPage();
-        List<Map<String, Object>> result = memberService.getMemberList(page,condition,page.getOrderByField(), page.isAsc());
-        page.setRecords((List<Member>) new MemberWarpper(result).warp());
+    public Object list(String memName,String memMobile,Integer memSex,String memNickName) {
+    	/*Page<Member> page = new PageFactory<Member>().defaultPage();*/
+    	Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
+    	List<Map<String,Object>> result=memberService.getMemberList(page, memName, memSex, memNickName, memMobile, page.getOrderByField(), page.isAsc());
+    	page.setRecords(result);
+    	page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
+    	/*page.setRecords(List<Map<String,Object>>) new MemberWarpper(result).warp());*/
         return super.packForBT(page);
     }
 
@@ -126,6 +130,7 @@ public class MemberController extends BaseController {
     	memberService.saveMember(member, cardId);
         return super.SUCCESS_TIP;
     }
+    
     /**
      * 删除会员
      */
@@ -136,6 +141,7 @@ public class MemberController extends BaseController {
        memberService.deleteMember(memberId);
         return SUCCESS_TIP;
     }
+    
     /**
      * 修改会员
      */

@@ -33,10 +33,16 @@ import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.dao.CardRightDao;
-import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 
 
+/**  
+* @ClassName: MemberInfoApiImpl  
+* @Description: 会员信息（我的资料）
+* @author :huanglin 
+* @date 2017年9月11日  
+*    
+*/  
 @Service
 public class MemberInfoApiImpl implements MemberInfoApi {
 	@Autowired
@@ -48,8 +54,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Autowired
 	MemberMapper memberMapper;
 	@Autowired
-	CouponFetchDao couponFetchDao;
-	@Autowired
 	CouponFetchMapper couponFetchMapper;
 	@Autowired
 	CardDao cardDao;
@@ -60,6 +64,13 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Autowired
 	MemberCardMapper memberCardMapper;
 
+	/**   
+	 * <p>Title: getMemberInfoByOpenId</p>   
+	 * <p>Description:获取会员信息 </p>   
+	 * @param openId
+	 * @return   
+	 * @see com.ikoori.vip.api.service.MemberInfoApi#getMemberInfoByOpenId(java.lang.String)   
+	 */  
 	@Override
 	public JSONObject getMemberInfoByOpenId(String openId) {
 		Member member = memberDao.getMemberByOpenId(openId);
@@ -78,6 +89,19 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		return obj;
 	}
 
+	
+	/**   
+	 * <p>Title: updateMemberInofByOpenId</p>   
+	 * <p>Description: 修改会员信息 </p>   
+	 * @param openId
+	 * @param mobile 会员手机号
+	 * @param name  会员姓名
+	 * @param sex  会员性别
+	 * @param birthday 会员生日
+	 * @param address 会员地址
+	 * @return   
+	 * @see com.ikoori.vip.api.service.MemberInfoApi#updateMemberInofByOpenId(java.lang.String, java.lang.String, java.lang.String, int, java.util.Date, java.lang.String)   
+	 */  
 	@Transactional(readOnly = false)
 	@Override
 	public int updateMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
@@ -85,6 +109,13 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday);
 	}
 
+	/**   
+	 * <p>Title: getMemberByMobile</p>   
+	 * <p>Description:根据会员手机号获取会员</p>   
+	 * @param mobile  会员手机号
+	 * @return   
+	 * @see com.ikoori.vip.api.service.MemberInfoApi#getMemberByMobile(java.lang.String)   
+	 */  
 	@Override
 	public Object getMemberByMobile(String mobile) {
 		// TODO Auto-generated method stub

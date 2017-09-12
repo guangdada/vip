@@ -16,12 +16,18 @@ import com.ikoori.vip.common.persistence.model.Member;
  * @Date 2017-08-02 12:31:42
  */
 public interface MemberDao {
-	List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
-
+	/*List<Map<String, Object>> getMemberList(@Param("page") Page<Member> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);*/
+    
+	List<Map<String, Object>> getMemberList(@Param("page") Page<Map<String, Object>> page,
+			@Param("memName") String memName, @Param("memSex") Integer memSex,@Param("memNickName") String memNickName,@Param("memMobile") String memMobile,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+	
 	Member getMemberByOpenId(@Param("openId") String openId);
 	
 	Member selectByMobileAndStoreNo(@Param("mobile") String mobile,@Param("storeNo") String storeNo);
+	
 	Member getMemberByMobile(@Param("mobile") String mobile);
+	
 	int updatePoint(Long memberId, int point , int version);
+	
 	int updateMemberInfoByOpenId(@Param("openId") String openId,@Param("name")String name,@Param("mobile")String mobile,@Param("sex")int sex,@Param("address")String address,@Param("birthday")Date birthday);
 }

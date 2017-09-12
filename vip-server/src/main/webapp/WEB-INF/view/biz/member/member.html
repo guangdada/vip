@@ -10,10 +10,34 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="姓名" />
+                                <#NameCon id="memName" name="姓名" />
                             </div>
                             <div class="col-sm-3">
+                                 <#NameCon id="memMobile" name="手机" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                               	<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      性别
+								        </button>
+								    </div>
+								    <select class="form-control" id="memSex">
+								         <option value="" selected="">请选择</option>
+										 <option value="1">男</option>
+										 <option value="2">女</option> 
+								    </select>
+								</div>
+                            </div>
+                            
+                            <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Member.search()" btnCss="white"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-sm-3">
+                                 <#NameCon id="memNickName" name="微信昵称" />
                             </div>
                         </div>
                         <div class="hidden-xs" id="MemberTableToolbar" role="group">
