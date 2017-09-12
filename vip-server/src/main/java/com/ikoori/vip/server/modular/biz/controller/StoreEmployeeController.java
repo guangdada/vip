@@ -33,6 +33,7 @@ import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IStoreEmployeeService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
+import com.ikoori.vip.server.modular.biz.warpper.MemberWarpper;
 import com.ikoori.vip.server.modular.biz.warpper.StoreEmployeeWarpper;
 import com.ikoori.vip.server.modular.system.dao.UserMgrDao;
 import com.ikoori.vip.server.modular.system.service.IRoleService;
@@ -72,7 +73,16 @@ public class StoreEmployeeController extends BaseController {
      */
     @Permission
     @RequestMapping("")
-    public String index() {
+    public String index(Model model) {
+    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	Map<String,Object> condition = new HashMap<String,Object>();
+    	condition.put("merchantId", merchant.getId());
+    	List<Store> stores=storeService.selectByCondition(condition);
+    	//查询店铺
+    	model.addAttribute("stores", stores);
+    	//角色
+    	model.addAttribute("roles", RoleType.values());
         return PREFIX + "storeEmployee.html";
     }
 
@@ -126,13 +136,13 @@ public class StoreEmployeeController extends BaseController {
     @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
-	public Object list(String condition) {
-		Page<StoreEmployee> page = new PageFactory<StoreEmployee>().defaultPage();
-		List<Map<String, Object>> result = storeEmployeeService.getStoreEmployeeList(page, condition,
-				page.getOrderByField(), page.isAsc());
-		page.setRecords((List<StoreEmployee>) new StoreEmployeeWarpper(result).warp());
-		return super.packForBT(page);
-	}
+	public Object list(String employeeName,String mobile,Long storeId,Long roleId) {
+	    Page<Map<String,Object>> page=new PageFactory<Map<String,Object>>().defaultPage();
+	    List<Map<String,Object>> result=storeEmployeeService.getStoreEmployeeList(page, employeeName, mobile, storeId, roleId, page.getOrderByField(), page.isAsc());
+	    page.setRecords((List<Map<String, Object>>) new StoreEmployeeWarpper(result).warp());
+	    return super.packForBT(page);
+    }
+    
 
     /**
      * 新增员工管理

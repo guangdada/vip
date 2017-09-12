@@ -36,14 +36,34 @@
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col-sm-3">
-                                 <#NameCon id="memNickName" name="微信昵称" />
-                            </div>
+	                        <div class="col-sm-3">
+	                                 <#NameCon id="memNickName" name="微信昵称" />
+	                        </div>
+                            
+                            <div class="col-sm-3">
+	                                 <#NameCon id="cardNumber" name="会员卡号" />
+	                        </div>
+                            
+	                        <div class="col-sm-3">
+	                                <div class="input-group">
+									    <div class="input-group-btn">
+									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+									        	会员卡
+									        </button>
+									    </div>
+									    <select class="form-control" id="cardId">
+									    	<option value="" selected="">请选择</option>
+									    	@for(c in cards!){ 
+											  <option value="${c.id}">${c.name!}</option> 
+											@}
+									    </select>
+									</div>
+	                        </div>
+                        
                         </div>
+                        
+                       
                         <div class="hidden-xs" id="MemberTableToolbar" role="group">
-                            @if(shiro.hasPermission("/member/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="Member.openAddMember()"/>
-                            @}
                             @if(shiro.hasPermission("/member/update")){
                                 <#button name="修改" icon="fa-cog" clickFun="Member.openMemberDetail()" space="true" btnCss="info"/>
                             @}

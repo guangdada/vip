@@ -58,9 +58,16 @@ public class MemberController extends BaseController {
      */
     @Permission
     @RequestMapping("")
-    public String index() {
-        return PREFIX + "member.html";
-    }
+	public String index(Model model) {
+		// 查询会员卡
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+		Merchant merchant = merchantService.getMerchantUserId(userId);
+		Map<String, Object> condition = new HashMap<String, Object>();
+		condition.put("merchantId", merchant.getId());
+		List<Card> cards = cardService.selectByCondition(condition);
+		model.addAttribute("cards", cards);
+		return PREFIX + "member.html";
+	}
 
     /**
      * 跳转到添加会员
@@ -86,6 +93,12 @@ public class MemberController extends BaseController {
     public String memberUpdate(@PathVariable Long memberId, Model model) {
     	Member member = memberService.selectById(memberId);
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	
+    	MemberCard memberCard=new MemberCard();
+    	memberCard.setMemberId(member.getId());
+    	memberCard=memberCardMapper.selectOne(memberCard);
+    	model.addAttribute("memberCard",memberCard);
+    	
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
@@ -99,17 +112,15 @@ public class MemberController extends BaseController {
     /**
      * 获取会员列表
      */
-    @RequestMapping(value = "/list")
+	@RequestMapping(value = "/list")
     @Permission
     @ResponseBody
-    public Object list(String memName,String memMobile,Integer memSex,String memNickName) {
-    	/*Page<Member> page = new PageFactory<Member>().defaultPage();*/
+    public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber) {
     	Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
-    	List<Map<String,Object>> result=memberService.getMemberList(page, memName, memSex, memNickName, memMobile, page.getOrderByField(), page.isAsc());
+    	List<Map<String,Object>> result=memberService.getMemberList(page, memName, memSex, memNickName, memMobile,cardId,cardNumber, page.getOrderByField(), page.isAsc());
     	page.setRecords(result);
     	page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
-    	/*page.setRecords(List<Map<String,Object>>) new MemberWarpper(result).warp());*/
-        return super.packForBT(page);
+    	return super.packForBT(page);
     }
 
     /**
@@ -124,9 +135,6 @@ public class MemberController extends BaseController {
     	if(memberRe!=null){
     		 throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
     	}
-    	if (StringUtils.isNotBlank(member.getBirthdayStr())) {
-			member.setBirthday(DateUtil.parseDate(member.getBirthdayStr()));
-		}
     	memberService.saveMember(member, cardId);
         return super.SUCCESS_TIP;
     }
@@ -148,14 +156,11 @@ public class MemberController extends BaseController {
     @RequestMapping(value = "/update")
     @Permission
     @ResponseBody
-    public Object update(Member member,Long cardId) {
+    public Object update(Member member,Long cardId,int point) {
     	if (ToolUtil.isEmpty(member) || member.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	if (StringUtils.isNotBlank(member.getBirthdayStr())) {
-			member.setBirthday(DateUtil.parseDate(member.getBirthdayStr()));
-		}
-    	memberService.updateMember(member, cardId);
+    	memberService.updateMember(member, cardId,point);
         return super.SUCCESS_TIP;
     }
 

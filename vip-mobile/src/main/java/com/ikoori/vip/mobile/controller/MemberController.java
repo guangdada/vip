@@ -34,7 +34,7 @@ import com.ikoori.vip.mobile.util.WeChatAPI;
 
 /**
  * @ClassName: MemberController
- * @Description:会员
+ * @Description:会员控制器
  * @author :huanglin
  * @date 2017年9月8日
  * 

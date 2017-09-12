@@ -24,14 +24,6 @@ StoreEmployee.initColumn = function () {
 };
 
 /**
- * 查询员工列表
- */
-StoreEmployee.search = function () {
-    var queryData = {};
-    queryData['condition'] = $("#condition").val();
-    Store.table.refresh({query: queryData});
-};
-/**
  * 检查是否选中
  */
 StoreEmployee.check = function () {
@@ -105,7 +97,10 @@ StoreEmployee.delete = function () {
  */
 StoreEmployee.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['employeeName'] = $("#employeeName").val();
+    queryData['mobile']=$("#mobile").val();
+    queryData['storeId']=$("#storeName").find("option:selected").val();
+    queryData['roleId']=$("#roleType").find("option:selected").val();
     StoreEmployee.table.refresh({query: queryData});
 };
 

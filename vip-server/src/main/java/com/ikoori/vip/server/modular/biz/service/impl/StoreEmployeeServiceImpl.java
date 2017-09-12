@@ -59,11 +59,25 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 		return storeEmployeeMapper.insert(storeEmployee);
 	}
 	
+	/**   
+	 * <p>Title: getStoreEmployeeList</p>   
+	 * <p>Description: </p>   
+	 * @param page
+	 * @param employeeName 员工姓名
+	 * @param mobile 员工手机号
+	 * @param storeId 店铺id
+	 * @param roleId 角色id
+	 * @param orderByField
+	 * @param isAsc
+	 * @return   
+	 * @see com.ikoori.vip.server.modular.biz.service.IStoreEmployeeService#getStoreEmployeeList(com.baomidou.mybatisplus.plugins.Page, java.lang.String, java.lang.String, java.lang.Long, java.lang.Long, java.lang.String, boolean)   
+	 */  
 	@Override
-	public List<Map<String, Object>> getStoreEmployeeList(Page<StoreEmployee> page, String name, String orderByField,
+	public List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Long storeId,Long roleId ,String orderByField,
 			boolean isAsc) {
-		return storeEmployeeDao.getStoreEmployeeList(page, name, orderByField, isAsc);
+		return storeEmployeeDao.getStoreEmployeeList(page, employeeName, mobile, storeId, roleId,orderByField, isAsc);
 	}
+	
 	@Transactional(readOnly=false)
 	public void saveEmployee(StoreEmployee storeEmployee,String password, String sex) {
 		if(storeEmployee.getId() == null){
@@ -78,6 +92,7 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 	        user.setStatus(ManagerStatus.OK.getCode());
 	        user.setCreatetime(new Date());
 	        userMapper.insert(user);
+	       
 	        long userId=user.getId().longValue();
 	        storeEmployee.setUserId(userId);
 	    	this.insert(storeEmployee);
@@ -89,6 +104,7 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 			dbUser.setPhone(storeEmployee.getMobile());
 			dbUser.setSex(Integer.valueOf(sex));
 	        userMapper.updateById(dbUser);
+	       
 	        storeEmployeeMapper.updateById(storeEmployee);
 		}
 	}

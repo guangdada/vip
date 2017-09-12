@@ -76,11 +76,6 @@ public class Member extends Model<Member> {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date birthday;
 	
-	/**
-	 * 生日(接收参数)
-	 */
-	@TableField(exist=false)
-	private String birthdayStr;
     /**
      * 来源(0:关注微信;1:导入)
      */
@@ -299,13 +294,6 @@ public class Member extends Model<Member> {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-	public String getBirthdayStr() {
-		return birthdayStr;
-	}
-
-	public void setBirthdayStr(String birthdayStr) {
-		this.birthdayStr = birthdayStr;
 	}
 
 	@Override

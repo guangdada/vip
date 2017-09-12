@@ -20,6 +20,8 @@ public interface IMemberService {
 	public Integer updateById(Member member);
 
 	public Member selectById(Long id);
+	
+	public Member selectByMemberId(Long memberId);
 
 	public Integer insert(Member member);
 
@@ -29,9 +31,9 @@ public interface IMemberService {
 
 	public void deleteMember(Long memberId);
 
-	public void updateMember(Member member, Long cardId);
+	public void updateMember(Member member, Long cardId,int point);
 
-	List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName,Integer memSex, String memNickName,String memMobile,String orderByField,
+	List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName,Integer memSex, String memNickName,String memMobile,Long cardId,String cardNumber,String orderByField,
 			boolean isAsc);
 	
 	public Member selectByMobileAndStoreNo(String mobile, String storeNo);

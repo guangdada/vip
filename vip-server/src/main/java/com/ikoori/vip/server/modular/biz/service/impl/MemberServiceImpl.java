@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
+import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Merchant;
+import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
@@ -35,6 +37,9 @@ public class MemberServiceImpl implements IMemberService {
 	MemberCardMapper memberCardMapper;
     @Autowired
 	IMerchantService merchantService;
+    @Autowired
+    PointTradeMapper pointTradeMapper;
+    
 	@Override
 	public Integer deleteById(Long id) {
 		return memberMapper.deleteById(id);
@@ -71,6 +76,8 @@ public class MemberServiceImpl implements IMemberService {
     	Merchant merchant = merchantService.getMerchantUserId(createUserId);
     	/*member.setIsActive(false);*/
     	this.insert(member);
+    	
+    	//会员卡
 		MemberCard mc=new MemberCard();
         mc.setMemberId(member.getId());
         mc.setMerchantId(merchant.getId());
@@ -90,10 +97,45 @@ public class MemberServiceImpl implements IMemberService {
 		this.deleteById(memberId);
 	}
 
+	/**   
+	 * <p>Title: updateMember</p>   
+	 * <p>Description: 修改会员</p>   
+	 * @param member
+	 * @param cardId 会员卡号
+	 * @param point  交易积分
+	 * @see com.ikoori.vip.server.modular.biz.service.IMemberService#updateMember(com.ikoori.vip.common.persistence.model.Member, java.lang.Long, int)   
+	 */  
 	@Override
 	@Transactional(readOnly=false)
-	public void updateMember(Member member,Long cardId) {
+	public void updateMember(Member member,Long cardId,int point) {
+		int points=member.getPoints();
+		if(points+point>0){
+			Member db = memberMapper.selectById(member.getId());
+			// 乐观锁
+			member.setVersion(db.getVersion());
+			member.setPoints(points+point);
+		}
 		this.updateById(member);
+		member=this.selectById(member.getId());
+		
+		//更新交易积分
+		if(point!=0){
+			PointTrade pointTrade=new PointTrade();
+			pointTrade.setMemberId(member.getId());
+			pointTrade.setMerchantId(member.getMerchantId());
+			pointTrade.setTradeType(3);
+			boolean inOut=false;
+			if(point>0){
+				inOut=false;
+			}else{
+				inOut=true;
+			}
+			pointTrade.setInOut(inOut);
+			pointTrade.setPoint(point);
+			pointTradeMapper.insert(pointTrade);
+		}
+		
+		//更新会员卡
 		MemberCard mc=new MemberCard();
 	    mc.setMemberId(member.getId());
 	    mc=memberCardMapper.selectOne(mc);
@@ -120,7 +162,12 @@ public class MemberServiceImpl implements IMemberService {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
-			String memNickName, String memMobile, String orderByField, boolean isAsc) {
-		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, orderByField, isAsc);
+			String memNickName, String memMobile,Long cardId,String cardNumber,String orderByField, boolean isAsc) {
+		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, cardId,cardNumber,orderByField, isAsc);
+	}
+
+	@Override
+	public Member selectByMemberId(Long memberId) {
+		return memberDao.selectByMemberId(memberId);
 	}
 }

@@ -2,9 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.MemberDao">
 	<select id="getMemberList" resultType="map">
-        select m.*,wu.nickname from v_member m 
+        select m.*,wu.nickname ,
+        mc.card_number AS cardNumber
+        from v_member m 
         LEFT JOIN v_wx_user wu on wu.id=m.wx_user_id
-        where 1 = 1 and m.status = 1
+        LEFT JOIN v_member_card mc on mc.member_id=m.id
+        where 1 = 1 and m.status = 1 and mc.is_default=1
         <if test="memName != null and memName !=''">
             and m.name like CONCAT('%',#{memName},'%')
         </if>
@@ -16,6 +19,12 @@
         </if>
         <if test="memSex != null and memSex !=''">
             and m.sex = #{memSex}
+        </if>
+        <if test="cardId != null and cardId !=''">
+            and mc.card_id =#{cardId}
+        </if>
+        <if test="cardNumber != null and cardNumber !=''">
+            and mc.card_number =#{cardNumber}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -75,13 +84,26 @@
     </update>
     
     <update id="updateMemberInfoByOpenId">
-    update v_member m set
-    m.name= #{name},
-    m.sex=#{sex},
-    m.address=#{address},
-    m.birthday=#{birthday},
-    m.mobile=#{mobile},
-    m.is_active=true
-    where m.open_id = #{openId}
+	    update v_member m set
+	    m.name= #{name},
+	    m.sex=#{sex},
+	    m.address=#{address},
+	    m.birthday=#{birthday},
+	    m.mobile=#{mobile},
+	    m.is_active=true
+	    where m.open_id = #{openId}
     </update>
+    
+     <select id="selectByMemberId" resultType="com.ikoori.vip.common.persistence.model.Member">
+    	SELECT
+			m.*,wu.nickname AS nickname
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu  ON wu.id=m.wx_user_id	
+		WHERE
+		<if test="memberId != null">
+        	 m.id = #{memberId}
+        </if>
+    </select>
+    
 </mapper>

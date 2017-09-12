@@ -15,5 +15,5 @@ import com.ikoori.vip.common.persistence.model.StoreEmployee;
  * @Date 2017-08-09 11:12:10
  */
 public interface StoreEmployeeDao {
-   List<Map<String, Object>> getStoreEmployeeList(@Param("page") Page<StoreEmployee> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
+   List<Map<String, Object>> getStoreEmployeeList(@Param("page") Page<Map<String, Object>> page, @Param("employeeName") String employeeName,@Param("mobile") String mobile,@Param("storeId")Long storeId,@Param("roleId") Long roleId,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 }

@@ -10,12 +10,51 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="员工姓名" />
+                                <#NameCon id="employeeName" name="员工姓名" />
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="账号" />
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+									    <div class="input-group-btn">
+									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+									        	店铺名称
+									        </button>
+									    </div>
+									    <select class="form-control" id="storeName">
+									    	<option value="" selected="">请选择</option>
+									    	@for(c in stores!){ 
+											  <option value="${c.id}">${c.name!}</option> 
+											@}
+									    </select>
+									</div>
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="StoreEmployee.search()" btnCss="white"/>
                             </div>
                         </div>
+                        
+                        <div class="row">
+	                        <div class="col-sm-3">
+	                                <div class="input-group">
+									    <div class="input-group-btn">
+									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+									        	权限
+									        </button>
+									    </div>
+									    <select class="form-control" id="roleType">
+									    	<option value="" selected="">请选择</option>
+									    	@for(c in roles!){ 
+											  <option value="${c.code!}">${c.message!}</option> 
+											@}
+									    </select>
+									</div>
+	                        </div>
+                        
+                        </div>
+                        
                         <div class="hidden-xs" id="StoreEmployeeTableToolbar" role="group">
                             @if(shiro.hasPermission("/storeEmployee/add")){
                                 <#button name="添加" icon="fa-plus" clickFun="StoreEmployee.openAddStoreEmployee()"/>

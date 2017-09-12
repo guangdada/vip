@@ -9,11 +9,11 @@ var MemberInfoDlg = {
 				notEmpty : {
 					message : '员工姓名不能为空'
 				},
-				 stringLength: {
-                     min: 2,
-                     max: 20,
-                     message: '用户名长度必须在2到20之间'
-                 },
+				stringLength : {
+					min : 2,
+					max : 20,
+					message : '用户名长度必须在2到20之间'
+				},
 			}
 		},
 		mobile : {
@@ -21,17 +21,30 @@ var MemberInfoDlg = {
 				notEmpty : {
 					message : '手机号码不能为空'
 				},
-		   stringLength: {
-            min: 11,
-            max: 11,
-            message: '请输入11位手机号码'
-          },
-        regexp: {
-            regexp: /^1[3|5|8]{1}[0-9]{9}$/,
-            message: '请输入正确的手机号码'
-                }
+				stringLength : {
+					min : 11,
+					max : 11,
+					message : '请输入11位手机号码'
+				},
+				regexp : {
+					regexp : /^1[3|5|8]{1}[0-9]{9}$/,
+					message : '请输入正确的手机号码'
+				}
 			}
-		}
+		},
+		
+		point:{
+			validators : {
+				notEmpty : {
+					message : '请输入正确的积分'
+				},
+				regexp: {
+					 regexp: /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/,
+			         message: '请输入正确的积分'
+				}
+			}
+		},
+		
 	}
 };
 
@@ -75,7 +88,7 @@ MemberInfoDlg.close = function() {
 MemberInfoDlg.collectData = function() {
 	var cardId = $("select[id='cards'] option:selected").val();
 	var sex = $("select[id='sex'] option:selected").val();
-    this.set('id').set('name').set('mobile').set('cardId',cardId).set('wxCode').set('sex',sex).set("tips").set('birthdayStr');
+    this.set('id').set('name').set('mobile').set('cardId',cardId).set('wxCode').set('sex',sex).set("tips").set('birthday').set('points').set('point');
 }
 
 /**

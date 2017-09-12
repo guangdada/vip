@@ -17,11 +17,17 @@ import com.ikoori.vip.common.persistence.model.StoreEmployee;
  */
 public interface IStoreEmployeeService {
 	public Integer deleteById(Long id);
-	public Integer updateById(StoreEmployee storeEmployee);
-	public StoreEmployee selectById(Long id);
-	public Integer insert(StoreEmployee storeEmployee);
-	public void deleteEmployee(long storeEmployeeId);
-	public void saveEmployee(StoreEmployee storeEmployee, String password, String sex);
-	List<Map<String, Object>> getStoreEmployeeList(@Param("page") Page<StoreEmployee> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc);
 	
+	public Integer updateById(StoreEmployee storeEmployee);
+	
+	public StoreEmployee selectById(Long id);
+	
+	public Integer insert(StoreEmployee storeEmployee);
+	
+	public void deleteEmployee(long storeEmployeeId);
+	
+	public void saveEmployee(StoreEmployee storeEmployee, String password, String sex);
+	
+	List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Long storeId,Long roleId ,String orderByField,
+			boolean isAsc);
 }
