@@ -3,6 +3,8 @@ package com.ikoori.vip.server.modular.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +35,7 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/web/order")
 public class WebOrderController extends BaseController {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	IOrderService orderService;
 	@Autowired
@@ -88,11 +91,11 @@ public class WebOrderController extends BaseController {
 				orderService.saveOrder(orderPayDo);
 			}
 		} catch (BussinessException e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", e.getCode());
 			result.put("msg", e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}

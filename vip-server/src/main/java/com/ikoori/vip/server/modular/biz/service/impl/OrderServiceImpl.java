@@ -2,7 +2,6 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,6 @@ import com.ikoori.vip.common.persistence.model.OrderItem;
 import com.ikoori.vip.common.persistence.model.Point;
 import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.common.persistence.model.Store;
-import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
@@ -113,6 +111,13 @@ public class OrderServiceImpl implements IOrderService {
 				orderNo);
 	}
 	
+	/**
+	 * 保存门店订单数据
+	 * 扣减使用的优惠券
+	 * 扣减 使用的积分
+	 * 根据积分规则累加积分
+	 * 根据会员卡规则升级会员卡
+	 */
 	@Transactional(readOnly = false)
 	public void saveOrder(OrderPayDo orderPayDo) throws Exception{
 		Store store = storeDao.selectByStoreNo(orderPayDo.getStoreNo());
@@ -127,7 +132,7 @@ public class OrderServiceImpl implements IOrderService {
 		// 保存order
 		Order order = new Order();
 		order.setPayOrderNo(orderPayDo.getOrderNo());
-		order.setOrderNo(genOrderNo());
+		order.setOrderNo(RandomUtil.generateOrderNo());
 		order.setStoreId(store.getId());
 		order.setBalanceDue(orderPayDo.getBalanceDue());
 		order.setPayment(orderPayDo.getPayment());
@@ -150,7 +155,7 @@ public class OrderServiceImpl implements IOrderService {
 		// 扣减使用的积分
 		if (orderPayDo.getPoint() != null && (orderPayDo.getPoint() > 0)) {
 			if(member.getPoints() < orderPayDo.getPoint()){
-				throw new BussinessException(500,"积分不足");
+				throw new BussinessException(500,"积分不足，剩余积分"+member.getPoints());
 			}
 			member.setPoints(member.getPoints() - orderPayDo.getPoint());
 			member.setVersion(member.getVersion());
@@ -177,47 +182,48 @@ public class OrderServiceImpl implements IOrderService {
 			for(CouponPayDo couPayDo : orderPayDo.getCoupons()){
 				Integer usedValue =couPayDo.getUsedValue();
 				String verifyCode = couPayDo.getVerifyCode();
+				String msg = "优惠券:"+verifyCode;
 				// 根据券码获得优惠券
 				CouponFetch cf = couponFetchDao.selectByVerifyCode(verifyCode);
 				if(cf == null){
-					throw new BussinessException(500,"该优惠券没有找到");
+					throw new BussinessException(500,msg+",没有找到");
 				}
 				Coupon coupon  = cf.getCoupon();
 				if(coupon.isIsAtLeast()){
 					if(coupon.getOriginAtLeast() < orderPayDo.getBalanceDue()){
-						throw new BussinessException(500,"购物满" + coupon.getAtLeast() + "元才能使用");
+						throw new BussinessException(500,msg+",购物满" + coupon.getAtLeast() + "元才能使用");
 					}
 				}
 				// 代金券判断是否已经使用，改成已使用
 				if(!cf.getIsInvalid()){
-					throw new BussinessException(500,"优惠券已经失效");
+					throw new BussinessException(500,msg+",已经失效");
 				}
 				if(cf.getIsUsed().intValue() == CouponUseState.USED.getCode()){
-					throw new BussinessException(500,"优惠券已经被使用");
+					throw new BussinessException(500,msg+",已经被使用");
 				}
 				if(!cf.getMemberId().toString().equals(member.getId().toString())){
-					throw new BussinessException(500,"优惠券不是本人的");
+					throw new BussinessException(500,msg + ",不是本人的");
+				}
+				if(usedValue > cf.getValue()){
+					throw new BussinessException(500,msg +"面值为"+cf.getValue()/100+"元,余额不足");
 				}
 				// 现金券扣减使用金额、没使用完改成部分使用，判断余额是否足够
 				if(coupon.getType().intValue() == CouponType.XJQ.getCode()){
-					if(usedValue > cf.getValue()){
-						throw new BussinessException(500,"现金券余额不足");
-					}
 					if(usedValue > cf.getAvailableValue()){
-						throw new BussinessException(500,"现金券余额不足");
+						throw new BussinessException(500,msg +"可用金额为"+cf.getAvailableValue()/100+"元,余额不足");
 					}
 					// 扣减现金券使用金额
 					cf.setUsedValue(cf.getUsedValue() + usedValue);
 					cf.setAvailableValue(cf.getAvailableValue() - usedValue);
 					//使用完了
-					if(usedValue == cf.getAvailableValue()){
+					if(cf.getAvailableValue() == 0){
 						cf.setIsUsed(CouponUseState.USED.getCode());
 						cf.setIsInvalid(false);
 					}else{
 						cf.setIsUsed(CouponUseState.PART_USED.getCode());
 					}
 				}else {
-					// 代金券修改为已使用状态
+					// 优惠券修改为已使用状态
 					cf.setIsUsed(CouponUseState.USED.getCode());
 					cf.setIsInvalid(false);
 				}
@@ -256,7 +262,7 @@ public class OrderServiceImpl implements IOrderService {
 				if(point.getRuleType().intValue() == PointType.PAY_ORDER.getCode()){
 					// 查询上一次按购买数量获得积分的记录id
 					Long lastOrderId = getLastOrderId(member.getId());
-					// 获得之后的购买次数+1
+					// 获得之后的购买次数+1(当前算一次)
 					int orderCount = getMemOrderCount(member.getId(),lastOrderId);
 					// 判断累加后的数量是否大于等于限制条件
 					if((orderCount + 1) >= point.getPointsLimit()){
@@ -271,6 +277,15 @@ public class OrderServiceImpl implements IOrderService {
 					pointTrade.setMerchantId(member.getMerchantId());
 					pointTrade.setStoreId(store.getId());
 					pointTradeMapper.insert(pointTrade);
+					
+					member = memberMapper.selectById(member.getId());
+					member.setPoints(member.getPoints() + pointTrade.getPoint());
+					member.setVersion(member.getVersion());
+					int count = memberMapper.updateById(member);
+					//修改会员积分
+					if(count == 0 ){
+						throw new BussinessException(500,"累加积分失败");
+					}
 				}
 			}
 		}
@@ -386,11 +401,5 @@ public class OrderServiceImpl implements IOrderService {
 		Wrapper<Order> w = new EntityWrapper<Order>();
 		w.setSqlSelect("sum(payment)").eq("member_id", memberId).gt("id", lastOrderId);
 		return orderMapper.selectCount(w);
-	}
-	
-	public static String genOrderNo(){
-		Random random = new Random();
-		int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
-		return DateUtil.getMsAllTime() +rannum;
 	}
 }

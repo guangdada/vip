@@ -17,6 +17,7 @@ import com.ikoori.vip.common.persistence.dao.StoreMapper;
 import com.ikoori.vip.common.persistence.dao.StorePhotoMapper;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.StorePhoto;
+import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 
@@ -62,6 +63,7 @@ public class StoreServiceImpl implements IStoreService {
 			storePhotoMapper.delete(wrapper);
 			storeMapper.updateById(store);
 		} else {
+			store.setStoreNo(RandomUtil.generateStoreNum());
 			storeMapper.insert(store);
 		}
 		if (StringUtils.isNotBlank(pics)) {

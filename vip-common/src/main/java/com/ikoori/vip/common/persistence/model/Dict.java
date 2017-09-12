@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
 /**
@@ -14,6 +15,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @author stylefeng
  * @since 2017-07-11
  */
+@TableName("v_dict")
 public class Dict extends Model<Dict> {
 
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,7 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/web/member")
 public class WebMemberController extends BaseController {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	IMemberCardService memberCardService;
 
@@ -82,7 +85,7 @@ public class WebMemberController extends BaseController {
 				result.put("content", obj);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -122,7 +125,7 @@ public class WebMemberController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -184,7 +187,7 @@ public class WebMemberController extends BaseController {
 				result.put("content", content);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -241,7 +244,7 @@ public class WebMemberController extends BaseController {
 				result.put("content", content);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}

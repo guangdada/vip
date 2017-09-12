@@ -13,6 +13,7 @@ import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.state.CouponUseState;
 import com.ikoori.vip.common.constant.state.GrantType;
+import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.MemSourceType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -94,6 +95,11 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		return member;
 	}
 
+	/**
+	 * 会员访问公众号时，判断是否已经是 会员
+	 * 如果不是会员，默认发送一张“关注微信”类别的会员卡
+	 * 根据会员卡的权益，赠送优惠券和积分
+	 */
 	@Transactional(readOnly = false)
 	@Override
 	public int saveMemberInfo(UserInfo userInfo) throws Exception {
@@ -124,6 +130,9 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			memberCard.setMemberId(member.getId());
 			memberCard.setCardId(card.getId());
 			memberCard.setCardNumber(RandomUtil.generateCardNum(card.getCardNumberPrefix()));
+			memberCard.setIsDefault(true);
+			memberCard.setMerchantId(gunsProperties.getMerchantId());
+			memberCard.setState(MemCardState.USED.getCode());
 			memberCardMapper.insert(memberCard);
 
 			// 获取会员卡权益
@@ -163,7 +172,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			setWxUserInfo(userInfo, wxUser);
 			wxUserMapper.updateById(wxUser);
 		}
-		return 0;
+		return 1;
 	}
 
 	private void setWxUserInfo(UserInfo userInfo, WxUser wxUser) {

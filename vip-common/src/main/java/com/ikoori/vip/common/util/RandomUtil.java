@@ -1,6 +1,7 @@
 package com.ikoori.vip.common.util;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class RandomUtil {
 	public static final String ALLCHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -151,8 +152,31 @@ public class RandomUtil {
 		return sb.toString().toUpperCase();
 	}
 	
+	/**
+	 * 返回会员卡号
+	 * @param prefix 店铺前缀
+	 * @return
+	 */
 	public static String generateCardNum(String prefix){
 		return prefix + generateOnlyNumber(10) + "88";
+	}
+	
+	/**
+	 * 返回店铺编号
+	 * @return
+	 */
+	public static String generateStoreNum(){
+		return UUID.randomUUID().toString().replaceAll("-", "");
+	}
+	
+	/**
+	 * 生成订单号
+	 * @return
+	 */
+	public static String generateOrderNo(){
+		Random random = new Random();
+		int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
+		return DateUtil.getMsAllTime() +rannum;
 	}
 
 	public static void main(String[] args) {

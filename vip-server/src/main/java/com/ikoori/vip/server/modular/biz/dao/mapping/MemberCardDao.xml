@@ -83,7 +83,7 @@
 		AND mc.`status` = 1
 		AND c.`status` = 1
 		AND mc.is_default = 1
-		AND m.id = #{memberId};
+		AND m.id = #{memberId}
     </select>
     
     
