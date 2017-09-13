@@ -420,7 +420,7 @@ public class MemberController {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		try {
 			String appId = WeChatAPI.APPID; // 必填，公众号的唯一标识
-			String jsapi_ticket = "sM4AOVdWfPE4DxkXGEs8VI8_1qp7mq1sZrbjRQMutON2DrljGfr1bpR6eueU1yIF64Z-M4GDQ2yobZeqtKpvng";
+			String jsapi_ticket = WeChatAPI.getJsApiTicket(request.getSession());
 			System.out.println("jsapi_ticket:" + jsapi_ticket);
 			String timestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
 			String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串

@@ -51,7 +51,7 @@ public class WeChatAPI {
 		return userInfo;
 	}
 	
-	public String getJsApiTicket(HttpSession session){
+	public static String getJsApiTicket(HttpSession session){
 		Map<String, String> param = new HashMap<String, String>();
 		param.put("openid", getOpenId(session));
 		String ticket = HttpKit.sendGet(findUserInfo, param);
