@@ -81,14 +81,16 @@ public class CouponFetchController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     @Permission
-    public Object list(String couponName,Integer isUsed,Integer type,String mobile,String nickname) {
-    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
-    	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	Page<Object> page = new PageFactory<Object>().defaultPage();
-    	List<Map<String, Object>> result = couponFetchService.selectByCondition(nickname,type,mobile,isUsed,page, couponName, page.getOrderByField(), page.isAsc(),merchant.getId());
-    	page.setRecords((List<Object>) new CouponFetchWarpper(result).warp());
-        return super.packForBT(page);
-    }
+	public Object list(String couponName, Integer isUsed, Integer type, String mobile, String nickname,
+			String verifyCode) {
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+		Merchant merchant = merchantService.getMerchantUserId(userId);
+		Page<Object> page = new PageFactory<Object>().defaultPage();
+		List<Map<String, Object>> result = couponFetchService.selectByCondition(verifyCode, nickname, type, mobile,
+				isUsed, page, couponName, page.getOrderByField(), page.isAsc(), merchant.getId());
+		page.setRecords((List<Object>) new CouponFetchWarpper(result).warp());
+		return super.packForBT(page);
+	}
 
     /**
      * 新增领取记录

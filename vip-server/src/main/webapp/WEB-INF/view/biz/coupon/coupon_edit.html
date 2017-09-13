@@ -132,12 +132,19 @@
 												@if(coupon.type==0){
 													checked
 												@}
+												
+												@if(coupon.IsInvalid){
+													disabled
+												@}
 											>优惠券
 										</label>
 										<label class="radio inline"> 
 											<input name="type" type="radio" value="1"
 												@if(coupon.type==1){
 													checked
+												@}
+												@if(coupon.IsInvalid){
+													disabled
 												@}
 											>现金券
 										</label>
@@ -165,7 +172,12 @@
 									<label class="control-label"><em class="required">*</em>面值：</label>
 									<div class="controls">
 										<div>
-											<input type="text" id="value" name="value" value="${coupon.value!}" class="input-small"> <span class="add-on">元</span>
+											<input type="text" id="value" name="value" value="${coupon.value!}" class="input-small"
+												@if(coupon.IsInvalid){
+													disabled
+												@}
+											
+											> <span class="add-on">元</span>
 											
 
 											<!-- <p class="help-desc">同步至微信卡包, 不支持金额随机</p> -->
@@ -182,6 +194,10 @@
 											@if(isNotEmpty(coupon.IsAtLeast) && !coupon.IsAtLeast){
 							                    checked
 							                @}
+							                
+							                @if(coupon.IsInvalid){
+												disabled
+											@}
 										> 不限制
 										</label>
 									</div>
@@ -191,12 +207,20 @@
 									<label class="control-label"></label>
 									<div class="controls">
 										<label class="radio inline"> 
-											<input style="margin-top: 6px;" name="is_at_least" type="radio" value="1" 
+											<input style="margin-top: 6px;" name="is_at_least" type="radio" value="1"
 												@if(isNotEmpty(coupon.AtLeast) && coupon.IsAtLeast){
 							                    	checked
 								                @}
+								                
+								                @if(coupon.IsInvalid){
+													disabled
+												@}
 											>满 
-											<input type="text" id="atLeast" name="at_least" value="${coupon.atLeast!}" class="input-mini js-price" data-value-type="Number"> 元可使用
+											<input type="text" id="atLeast" name="at_least" value="${coupon.atLeast!}" class="input-mini js-price" data-value-type="Number"
+												@if(coupon.IsInvalid){
+													disabled
+												@}
+											> 元可使用
 										</label>
 										
 									</div>
@@ -318,7 +342,11 @@
 									<label class="control-label"><em class="required">*</em>会员等级：</label>
 									<div class="controls">
 										<!-- <div class="control-action">所有用户领取</div> -->
-										<select id="user_level" name="user_level" data-value-type="Number">
+										<select id="user_level" name="user_level" data-value-type="Number"
+											@if(coupon.IsInvalid){
+												disabled
+											@}
+										>
 					                        <option value="0" selected="">所有会员等级</option>
 					                        @for(c in cards!){
 												<option value="${c.id}"
@@ -336,7 +364,11 @@
 								<div class="control-group">
 									<label class="control-label"><em class="required">*</em>每人限领：</label>
 									<div class="controls">
-										<select id="quota" name="quota" data-value-type="Number">
+										<select id="quota" name="quota" data-value-type="Number"
+											@if(coupon.IsInvalid){
+												disabled
+											@}
+										>
 
 											<option value="0" selected="">不限张</option>
 											@for(var i = 1;i<=5;i++){
@@ -365,7 +397,11 @@
 									<label class="control-label"><em class="required">*</em>生效时间：</label>
 									<div class="controls">
 										<input type="text" readonly="" id="startAt" name="start_at" value="${coupon.startAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
-											class="js-start-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.startDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
+											class="js-start-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.startDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})"
+											@if(coupon.IsInvalid){
+												disabled
+											@}
+										>
 										
 									</div>
 								</div>
@@ -374,7 +410,11 @@
 									<label class="control-label"><em class="required">*</em>过期时间：</label>
 									<div class="controls">
 										<input type="text" readonly="" id="endAt" name="end_at" value="${coupon.endAt,dateFormat='YYYY-MM-dd hh:mm:ss'}"
-											class="js-end-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.endDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})">
+											class="js-end-time hasDatepicker" onclick="laydate({choose:CouponInfoDlg.endDate(this),istime: true,issure: false,istoday: false, format: 'YYYY-MM-DD hh:mm:ss'})"
+											@if(coupon.IsInvalid){
+												disabled
+											@}	
+										>
 										
 									</div>
 								</div>

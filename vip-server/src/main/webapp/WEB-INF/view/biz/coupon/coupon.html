@@ -6,6 +6,8 @@
                 <h5>优惠券管理</h5>
             </div>
             <div class="ibox-content">
+            	<!-- 二维码隐藏div -->
+            	<div id="qrcode" style="display: none;"></div> 
                 <div class="row row-lg">
                     <div class="col-sm-12">
                         <div class="row">
@@ -57,7 +59,7 @@
 								    </div>
 								    <select class="form-control" id="isInvalid">
 								    	<option value="">请选择</option>
-								    	<option value="1">生效</option>
+								    	<option value="1">已生效</option>
 								    	<option value="0">未生效</option>
 								    </select>
 								</div>
@@ -87,6 +89,9 @@
                             @}
                             @if(shiro.hasPermission("/coupon/delete")){
                                 <#button name="删除" icon="fa-minus-square" clickFun="Coupon.delete()" space="true" btnCss="danger"/>
+                            @}
+                            @if(shiro.hasPermission("/coupon/valid")){
+                                <#button name="生效" icon="fa fa-exclamation-triangle" clickFun="Coupon.valid()" space="true" btnCss="warning"/>
                             @}
                         </div>
                         <#table id="CouponTable"/>

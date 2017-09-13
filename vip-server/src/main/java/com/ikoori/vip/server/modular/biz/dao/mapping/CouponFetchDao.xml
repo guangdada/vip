@@ -34,6 +34,7 @@
     <select id="selectByCondition" resultType="map">
     	SELECT
 			cf.id AS id,
+			cf.verify_code as verifyCode,
 			m.sex AS sex,
 			u.headimgurl AS headImg,
 			u.nickname AS nickname,
@@ -70,6 +71,9 @@
         </if>
         <if test="nickname != null and nickname !=''">
         	and u.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="verifyCode != null and verifyCode !=''">
+        	and cf.verify_code like CONCAT('%',#{verifyCode},'%')
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

@@ -16,7 +16,7 @@
                                 <div class="input-group">
 								    <div class="input-group-btn">
 								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-								        	类型
+								        	券类型
 								        </button>
 								    </div>
 								    <select class="form-control" id="type">
@@ -28,7 +28,7 @@
 								</div>
                             </div>
                             <div class="col-sm-3">
-                                <#NameCon id="mobile" name="手机号" />
+                                <#NameCon id="verifyCode" name="券码" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="CouponFetch.search()" btnCss="white"/>
@@ -52,6 +52,9 @@
                             </div>
                             <div class="col-sm-3">
                                 <#NameCon id="nickname" name="微信昵称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="手机号" />
                             </div>
                         </div>
                         <div class="hidden-xs" id="CouponFetchTableToolbar" role="group">

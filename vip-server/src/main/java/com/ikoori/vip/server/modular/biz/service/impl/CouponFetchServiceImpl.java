@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,9 +53,10 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Integer isUsed,Page<Object> page, String name, String orderByField,
-			boolean isAsc,Long merchantId) {
-		return couponFetchDao.selectByCondition(nickname,type,mobile,isUsed,page, name, orderByField, isAsc,merchantId);
+	public List<Map<String, Object>> selectByCondition(String verifyCode, String nickname, Integer type, String mobile,
+			Integer isUsed, Page<Object> page, String name, String orderByField, boolean isAsc, Long merchantId) {
+		return couponFetchDao.selectByCondition(verifyCode,nickname, type, mobile, isUsed, page, name, orderByField, isAsc,
+				merchantId);
 	}
 	
 	public List<Map<String, Object>> selectByMemberId(Long memberId){

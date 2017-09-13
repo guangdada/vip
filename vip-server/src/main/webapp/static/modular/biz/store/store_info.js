@@ -211,14 +211,12 @@ StoreInfoDlg.editSubmit = function() {
 StoreInfoDlg.openPic = function (src) {
 	var pop = $('#storePicPop');
 	pop.find("img").attr("src",src);
+	layer.closeAll();
     var index = layer.open({
         type: 1,
         title: false,
-        closeBtn:0,
         fix:false,
-        scrollbar:false,
-        area: ['300px','300px'], //宽高
-        skin:'layui-layer-rim',
+        area: ['500px','500px'], //宽高
         shadeClose:true,
         content: pop
     });
@@ -232,10 +230,10 @@ StoreInfoDlg.bindEvent = function (){
 		$(this).find(".close-modal").addClass("hide");
 	});
 	
-	/*$(".upload-preview-img").bind("click",function(){
+	$(".upload-preview-img").bind("click",function(){
 		var src = $(this).find("input:hidden").val();
 		StoreInfoDlg.openPic(src);
-	});*/
+	});
 	
 	$(".close-modal").bind("click",function(){
 		$(this).parent().remove();

@@ -19,6 +19,7 @@ public class CouponWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
+    	map.put("is_invalid", Boolean.valueOf(map.get("is_invalid").toString()) ? "已生效" : "未生效");
     }
 
 }

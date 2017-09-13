@@ -143,7 +143,6 @@ public class CouponController extends BaseController {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
 		coupon.setMerchantId(merchant.getId());
-		coupon.setType(CouponType.YHQ.getCode());
 		coupon.setCreateUserId(userId);
 		coupon.setStock(coupon.getTotal());
 		couponService.saveCoupon(coupon);
@@ -157,7 +156,27 @@ public class CouponController extends BaseController {
     @Permission
     @ResponseBody
     public Object delete(@RequestParam Long couponId) {
+    	Coupon coupon = couponService.selectById(couponId);
+    	if(coupon.isIsInvalid()){
+    		throw new BussinessException(500,"优惠券已经生效，不能删除");
+    	}
         couponService.deleteById(couponId);
+        return SUCCESS_TIP;
+    }
+    
+    /**
+     * 生效优惠券
+     */
+    @RequestMapping(value = "/valid")
+    @Permission
+    @ResponseBody
+    public Object valid(@RequestParam Long couponId) {
+    	Coupon coupon = couponService.selectById(couponId);
+    	if(coupon.isIsInvalid()){
+    		throw new BussinessException(500,"优惠券已经生效");
+    	}
+    	coupon.setIsInvalid(true);
+        couponService.updateById(coupon);
         return SUCCESS_TIP;
     }
 

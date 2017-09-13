@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ikoori.vip.common.dto.CouponFetchDo;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
 
 /**
@@ -19,7 +18,7 @@ public interface ICouponFetchService {
 	public CouponFetch selectById(Long id);
 	public Integer insert(CouponFetch couponFetch);
 	List<Map<String, Object>> getCouponFetchList(Page<CouponFetch> page, String name,String orderByField,boolean isAsc,Long merchantId);
-	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Integer isUsed,Page<Object> page, String name, String orderByField,
-			boolean isAsc,Long merchantId);
+	public List<Map<String, Object>> selectByCondition(String verifyCode, String nickname, Integer type, String mobile,
+			Integer isUsed, Page<Object> page, String name, String orderByField, boolean isAsc, Long merchantId);
 	public List<Map<String, Object>> selectByMemberId(Long memberId);
 }

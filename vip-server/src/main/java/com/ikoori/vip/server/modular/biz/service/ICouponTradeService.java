@@ -18,6 +18,6 @@ public interface ICouponTradeService {
 	public CouponTrade selectById(Long id);
 	public Integer insert(CouponTrade couponTrade);
 	List<Map<String, Object>> getCouponTradeList(Page<CouponTrade> page,String name,String orderByField,boolean isAsc,Long merchantId);
-	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Page<Object> page, String name, String orderByField,
+	public List<Map<String, Object>> selectByCondition(String verifyCode,String nickname,Integer type ,String mobile,Page<Object> page, String name, String orderByField,
 			boolean isAsc,Long merchantId);
 }

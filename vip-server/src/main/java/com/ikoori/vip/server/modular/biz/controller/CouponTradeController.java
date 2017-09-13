@@ -78,14 +78,15 @@ public class CouponTradeController extends BaseController {
     @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String couponName,String mobile,Integer type,String nickname) {
-    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
-    	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	Page<Object> page = new PageFactory<Object>().defaultPage();
-    	List<Map<String, Object>> result = couponTradeService.selectByCondition(nickname,type,mobile,page, couponName, page.getOrderByField(), page.isAsc(),merchant.getId());
-    	page.setRecords((List<Object>) new CouponTradeWarpper(result).warp());
-        return super.packForBT(page);
-    }
+	public Object list(String couponName, String mobile, Integer type, String nickname, String verifyCode) {
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+		Merchant merchant = merchantService.getMerchantUserId(userId);
+		Page<Object> page = new PageFactory<Object>().defaultPage();
+		List<Map<String, Object>> result = couponTradeService.selectByCondition(verifyCode, nickname, type, mobile,
+				page, couponName, page.getOrderByField(), page.isAsc(), merchant.getId());
+		page.setRecords((List<Object>) new CouponTradeWarpper(result).warp());
+		return super.packForBT(page);
+	}
 
     /**
      * 新增使用记录

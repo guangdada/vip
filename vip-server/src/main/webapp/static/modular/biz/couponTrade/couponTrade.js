@@ -20,6 +20,7 @@ CouponTrade.initColumn = function () {
         	return img;
         }},
         {title: '优惠券名称', field: 'couponName', visible: true, align: 'center', valign: 'middle'},
+        {title: '券码', field: 'verifyCode', visible: true, align: 'center', valign: 'middle'},
         {title: '券类型', field: 'couponType', visible: true, align: 'center', valign: 'middle'},
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '会员名称', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
@@ -101,6 +102,7 @@ CouponTrade.search = function () {
     queryData['type'] = $("#type").val();
     queryData['mobile'] = $("#mobile").val();
     queryData['nickname'] = $("#nickname").val();
+    queryData['verifyCode'] = $("#verifyCode").val();
     CouponTrade.table.refresh({query: queryData});
 };
 

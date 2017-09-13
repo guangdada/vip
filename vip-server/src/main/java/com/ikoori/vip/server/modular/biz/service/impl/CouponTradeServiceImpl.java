@@ -52,8 +52,8 @@ public class CouponTradeServiceImpl implements ICouponTradeService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectByCondition(String nickname,Integer type ,String mobile,Page<Object> page, String name, String orderByField,
+	public List<Map<String, Object>> selectByCondition(String verifyCode,String nickname,Integer type ,String mobile,Page<Object> page, String name, String orderByField,
 			boolean isAsc,Long merchantId) {
-		return couponTradeDao.selectByCondition(nickname,type,mobile,page, name, orderByField, isAsc,merchantId);
+		return couponTradeDao.selectByCondition(verifyCode,nickname,type,mobile,page, name, orderByField, isAsc,merchantId);
 	}
 }

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.model.Coupon;
+import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
 
@@ -26,6 +27,8 @@ public class CouponServiceImpl implements ICouponService {
 	CouponDao couponDao;
 	@Autowired
 	CouponMapper couponMapper;
+	@Autowired
+	GunsProperties gunsProperties;
 	@Override
 	public Integer deleteById(Long id) {
 		return couponMapper.deleteById(id);
@@ -64,16 +67,21 @@ public class CouponServiceImpl implements ICouponService {
 		if(!coupon.isIsAtLeast()){
 			coupon.setAtLeast(null);
 			coupon.setOriginAtLeast(null);
+			coupon.setUseCondition("不限制");
 		}
 		if (coupon.getAtLeast() != null) {
 			coupon.setOriginAtLeast(coupon.getAtLeast() * 100);
+			coupon.setUseCondition("满" + coupon.getAtLeast() + "元使用");
 		}
+		
 		coupon.setStartTime(coupon.getStartAt().getTime());
 		coupon.setEndTime(coupon.getEndAt().getTime());
 		if(coupon.getId() != null){
 			couponMapper.updateById(coupon);
 		}else{
 			couponMapper.insert(coupon);
+			coupon.setUrl(gunsProperties.getCouponUrl() + coupon.getId());
+			couponMapper.updateById(coupon);
 		}
 	}
 }

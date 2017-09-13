@@ -15,7 +15,12 @@ import com.ikoori.vip.common.persistence.model.CouponTrade;
  * @Date 2017-08-14 16:15:04
  */
 public interface CouponTradeDao {
-   List<Map<String, Object>> getCouponTradeList(@Param("page") Page<CouponTrade> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc, @Param("merchantId") Long merchantId);
-   
-   List<Map<String, Object>> selectByCondition(@Param("nickname") String nickname,@Param("type") Integer type ,@Param("mobile") String mobile,@Param("page") Page<Object> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc, @Param("merchantId") Long merchantId);
+	List<Map<String, Object>> getCouponTradeList(@Param("page") Page<CouponTrade> page, @Param("name") String name,
+			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,
+			@Param("merchantId") Long merchantId);
+
+	List<Map<String, Object>> selectByCondition(@Param("verifyCode") String verifyCode,@Param("nickname") String nickname, @Param("type") Integer type,
+			@Param("mobile") String mobile, @Param("page") Page<Object> page, @Param("name") String name,
+			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,
+			@Param("merchantId") Long merchantId);
 }

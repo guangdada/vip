@@ -65,6 +65,11 @@
 	padding-left:0;
 }
 
+.top-little{
+	margin-top:4px;
+}
+
+
 .right-little{
 	margin-right:2px;
 	padding-right:0;
@@ -80,15 +85,6 @@
 	padding-left:0;
 }
 
-.no-right{
-	margin-right:0;
-	padding-right:0;
-}
-
-.no-left{
-	margin-left:0;
-	padding-left:0;
-}
 .auto-width{
 	width:auto;
 }
