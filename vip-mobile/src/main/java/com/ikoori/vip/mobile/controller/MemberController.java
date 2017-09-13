@@ -366,7 +366,7 @@ public class MemberController {
 	}
 	
 	
-	/** 
+	/** 按照经纬度查找附近门店
 	* @Title: store 
 	* @Description: 附近门店
 	* @param @param request
@@ -376,12 +376,21 @@ public class MemberController {
 	* @param @return    
 	* @return String     
 	* @throws 
-	*/
+	*//*
 	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
 	public String store(HttpServletRequest request, Map<String, Object> map, double lat, double lon) {
-		/*Object ret = this.getWxConfig(request);
-		map.put("ret", ret);*/
+		Object ret = this.getWxConfig(request);
+		map.put("ret", ret);
 		List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);
+		map.put("store", store);
+		return "/store.html";
+	}*/
+	
+	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
+	public String store(HttpServletRequest request, Map<String, Object> map) {
+		/*List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);*/
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		List<Map<String,Object>> store=consumer.storeConsumer().get().getStore(openId);
 		map.put("store", store);
 		return "/store.html";
 	}

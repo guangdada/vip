@@ -1,6 +1,7 @@
 @layout("/common/_container.html",{title:"附近门店"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+<script type='text/javascript' src='${ctxPath}/static/jqweui/js/swiper.js' charset='utf-8'></script>
   <body ontouchstart style="background-color:#fafafa;">
    	<div class="weui-header bg-black"> 
 	  <div class="weui-header-left">
@@ -37,10 +38,10 @@
 	            <div class="weui-cell__bd">
 	              <p><font style="font-size:15px;" color="#989696">图集</font></p>
 	            </div>
-	            <div class="weui-cell__ft">
+	            <div class="weui-cell__ft" id="pb1">
 	          <!--   <font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font> -->
 	               @for(c in storeDetail.pictures!){
-	               <img src="${c.abs_url}" width="50px" height="50px">
+	               <img src="${c.absUrl!}" width="50px" height="50px">
 	               <!-- <img src="${ctxPath}/static/jqweui/images/11.png" width="50px" height="50px"> -->
 	               @}
 	            </div>
@@ -65,6 +66,28 @@
      	</div>
      </div>
   </body>
+  <script type="text/javascript">
+  var pb1 = $.photoBrowser({
+      items: [
+    	  @for(c in storeDetail.pictures!){
+    		  "${c.absUrl!}" ,
+    	  @}
+      ],
 
+      onSlideChange: function(index) {
+        console.log(this, index);
+      },
+
+      onOpen: function() {
+        console.log("onOpen", this);
+      },
+      onClose: function() {
+        console.log("onClose", this);
+      }
+    });
+    $("#pb1").click(function() {
+      pb1.open();
+    });
+</script>
 
 @}
