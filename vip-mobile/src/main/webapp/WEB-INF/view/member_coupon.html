@@ -26,7 +26,7 @@
 			<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
 			@for(c in Coupons!){
 				@if(c.isInvalid && c.couponIsInvalid && c.isUsed==0){
-				<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+				<a href="${ctxPath}/member/couponDetail?couponId=${c.couponId}&id=${c.id}">
 					<div class="coupon-margin">
 						<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
 							<div align="left">
@@ -50,7 +50,7 @@
 			<div id="tab2" class="weui-tab__bd-item">
           	@for(c in Coupons!){
 				@if((!c.isInvalid)||(!c.couponIsInvalid)|| c.isUsed==1){
-				<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+				<a href="${ctxPath}/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
 					<div class="coupon-margin">
 						<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
 						<div align="left">

@@ -14,7 +14,7 @@
  	<div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
  	@for(c in orders!){
 	   <div class="weui-form-preview">
-	    <a href="/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
+	    <a href="${ctxPath}/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
 	      <div class="weui-form-preview__bd">
 	       <div class="weui-form-preview__item">
 	          <label class="weui-form-preview__label">订单号</label>
