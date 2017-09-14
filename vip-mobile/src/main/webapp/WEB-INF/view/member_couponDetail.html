@@ -14,7 +14,7 @@
 	  	<!-- <a class="icon icon-83 f-white"></a> -->
 	  </div> 
   	</div>	
- <div class="card-region" style="background-color: f1f1f1;">
+ <div class="card-region" style="background-color: f1f1f1;background-image:url(${ctxPath}/static/styles/images/background-red.png)" >
 	<div class="coupon-card-header">
 		<h4 class="shop-name">
 			<span >${couponDetail.couponName!}</span>
@@ -29,8 +29,8 @@
 	@}
 	<h5  align="center">${couponDetail.useCondition!}</h5>
 	<div class="card-content">
-		<p class="expiry-date">
-			<font align="center">有效期：${couponDetail.startAt!,"yyyy-MM-dd  HH:mm"}-${couponDetail.endAt!,"yyyy-MM-dd HH:mm"}</font> 
+		<p align="center">
+			<font  color="#f9c1c1" size="2px" >有效期：${couponDetail.startAt!,"yyyy-MM-dd  HH:mm"}-${couponDetail.endAt!,"yyyy-MM-dd HH:mm"}</font> 
 			<!--  <span>无限期</span> -->
 		</p>
 	</div>

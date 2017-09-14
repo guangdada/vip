@@ -13,53 +13,30 @@
     <header style="background-color:gray;width:100%;height:50px;"">
     <br>
 		<!-- <h5 style="color:white;" align="center">仅展示距离你最近的10家门店</h5> -->
-		<p class='demos-sub-title' style="color:white;">仅展示距离你最近的门店</p>
+		<p class='demos-sub-title' style="color:white;">附近门店</p>
 	</header>
   
    <!-- <div class="weui-cells"></div> -->
-   @for(c in store!){
-   <div class="weui-form-preview">
-    <a href="/member/storeDetail?storeId=${c.id}">
-      <div class="store-weui-form-preview__bd">
-        <div style="margin-right:50px;">
-	      	<div style="height:40px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">${c.name!}</font></label>
-		          <!-- <span class="order-weui-form-preview__value">${c.distance!}公里</span> --> 
-		        </div>
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label">${c.address!}</label>
-		        <!--   <span class="weui-form-preview__value">50</span> -->
-		        </div>
-	        </div>
-        </div>
-        <div style="margin-right:5px;float:right;position:relative;top:-35px;">
-        	<img src="${ctxPath}/static/jqweui/images/map.png" width="26px" height="26px" >
-        </div>
-     </div> 
-    </a>
-   </div>
-   @}
-   <!-- <div class="weui-form-preview">
-    <a href="/member/storeDetail">
-      <div class="store-weui-form-preview__bd">
-        <div style="margin-right:50px;">
-	      	<div style="height:40px;margin-right:5px;margin-top:5px;margin-bottom:5px;border-right:2px solid #e4e4e4;">
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label"><font style="font-size:15px;font-weight: bold;" color="black">长沙万象店</font></label>
-		          <span class="order-weui-form-preview__value">5.05公里</span> 
-		        </div>
-		        <div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label">湖南省长沙市星沙万象汇2楼1221室22222222222</label>
-		          <span class="weui-form-preview__value">50</span>
-		        </div>
-	        </div>
-        </div>
-        <div style="margin-right:5px;float:right;position:relative;top:-35px;">
-        	<img src="${ctxPath}/static/jqweui/images/map.png" width="26px" height="26px" >
-        </div>
-     </div> 
-    </a>
-   </div> -->
+   	@for(c in store!){
+   	<div class="page__bd">
+	   	<div class="weui-panel weui-panel_access">
+			<div class="weui-panel__bd">
+		          <a href="/member/storeDetail?storeId=${c.id}" class="weui-media-box weui-media-box_appmsg">
+		            <div class="weui-media-box__hd">
+		              <img class="weui-media-box__thumb" src=${c.logo!} alt=""  height="60px">
+		            </div>
+		            <div class="weui-media-box__bd">
+		              <h4 class="weui-media-box__title">${c.name!}</h4>
+		              <p class="weui-media-box__desc">${c.address!}</p>
+		              <p class="weui-media-box__desc">${c.service_phone!}</p>
+		            </div>
+		            <div class="weui-media-box__hd" style="margin-right:0px;">
+		     			<img class="weui-media-box__thumb" src="${ctxPath}/static/jqweui/images/icon_nav_address.png" alt=""  height="60px" width="45px">
+					</div>
+		          </a>
+			</div>
+		</div>
+   	</div>
+	@}
 @}
     

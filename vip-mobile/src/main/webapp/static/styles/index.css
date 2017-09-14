@@ -293,7 +293,7 @@
        margin-top:30px;
        margin-right:10px;
        margin-left:10px;
-       background-color: #f1f1f1;
+       background-color: #ffffff;
        color: #fff;
 	   -webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
@@ -458,3 +458,27 @@
   text-align: right;
   color: #999999;
 }
+.background-green{
+	background-color:#39ad20;
+}
+.background-img-blue{
+	background-image:url(images/background-blue.png);
+	background-repeat:no-repeat; 
+	background-size:100% 100%;
+	-moz-background-size:100% 100%;
+}
+
+.background-img-red{
+	background-image:url(images/background-red.png);
+	background-repeat:no-repeat; 
+	background-size:100% 100%;
+	-moz-background-size:100% 100%;
+}
+
+.background-img-green{
+	background-image:url(images/background-green.png);
+	background-repeat:no-repeat; 
+	background-size:100% 100%;
+	-moz-background-size:100% 100%;
+}
+

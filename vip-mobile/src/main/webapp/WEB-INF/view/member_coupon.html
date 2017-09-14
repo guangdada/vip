@@ -1,16 +1,17 @@
 @layout("/common/_container.html",{title:"我的优惠券"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
-  <body ontouchstart style="background-color:#fafafa;">
-  	<div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  	<!-- <a class="icon icon-83 f-white"></a> -->
-	  </div> 
-  	</div>
+  <body ontouchstart style="background-color:#f8f8f8;">
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white"
+				onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right">
+			<!-- <a class="icon icon-83 f-white"></a> -->
+		</div>
+	</div>
 	<div class="weui-tab coupon-radius">
       <div class="coupon-weui-navbar">
         <a class="weui-navbar__item weui-bar__item--on"  id="table1" style="border-radius: 5px;">
@@ -19,58 +20,55 @@
         <a class="weui-navbar__item"  id="table2" style="border-radius:5px;">
                                             已失效
         </a>
-       <!--  <a class="weui-navbar__item" href="#tab3">
-                                              选项三
-        </a> -->
       </div>
       
       <div class="weui-tab__bd">
 			<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
 			@for(c in Coupons!){
-			 @if(c.isInvalid && c.couponIsInvalid && c.isUsed==0){
-			<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
-				<div class="coupon-margin">
-					<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
-					<div align="left">
-						<div style="float: left;">
-							<h2 style="color: red; margin-left: 5px;">
-								${c.value!}
-								<font size="2px">&nbsp;元</font>
-							</h2>
-						</div>
-						<div style="float: right;vertical-align: bottom;">
-							<font style="color: gray; margin-right: 5px;">${c.useCondition!}</font>
-						</div>
+				@if(c.isInvalid && c.couponIsInvalid && c.isUsed==0){
+				<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+					<div class="coupon-margin">
+						<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
+							<div align="left">
+								<div style="float: left;">
+									<h2 style="color: red; margin-left: 5px;">
+										${c.value!}
+										<font size="2px">&nbsp;元</font>
+									</h2>
+								</div>
+								<div style="float: right;vertical-align: bottom;">
+									<font style="color: gray; margin-right: 5px;">${c.useCondition!}</font>
+								</div>
+							</div>
+						<br><br>
+						<div style="color: gray;margin-left:5px;float:left;font-size:13px;" >使用期限：${c.startAt!,"yyyy-MM-dd  HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
 					</div>
-					<br><br>
-					<div style="color: gray;margin-left:5px;float:left;font-size:13px;">使用期限：${c.startAt!,"yyyy-MM-dd  HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
-				</div>
-			</a>
-			 @}
+				</a>
+			 	@}
 			 @}
 			</div>
 			<div id="tab2" class="weui-tab__bd-item">
           	@for(c in Coupons!){
-			 @if((!c.isInvalid)||(!c.couponIsInvalid)|| c.isUsed==1){
-			<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
-				<div class="coupon-margin">
-					<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
-					<div align="left">
-						<div style="float: left;">
-							<h2 style="color: red; margin-left: 5px;">
-								${c.value!}
-								<font size="2px">&nbsp;元</font>
-							</h2>
+				@if((!c.isInvalid)||(!c.couponIsInvalid)|| c.isUsed==1){
+				<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+					<div class="coupon-margin">
+						<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
+						<div align="left">
+							<div style="float: left;">
+								<h2 style="color: red; margin-left: 5px;">
+									${c.value!}
+									<font size="2px">&nbsp;元</font>
+								</h2>
+							</div>
+							<div style="float: right;vertical-align: bottom;">
+								<font style="color: gray; margin-right: 5px;">${c.useCondition!}</font>
+							</div>
 						</div>
-						<div style="float: right;vertical-align: bottom;">
-							<font style="color: gray; margin-right: 5px;">${c.useCondition!}</font>
-						</div>
+						<br><br>
+						<div style="color: gray;margin-left:5px;float:left;font-size:13px;">使用期限：${c.startAt!,"yyyy-MM-dd  HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
 					</div>
-					<br><br>
-					<div style="color: gray;margin-left:5px;float:left;font-size:13px;">使用期限：${c.startAt!,"yyyy-MM-dd  HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
-				</div>
-			</a>
-			 @}
+				</a>
+			 	@}
 			 @}
         	</div>
 		</div>

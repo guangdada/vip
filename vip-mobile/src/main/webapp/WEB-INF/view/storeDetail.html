@@ -11,16 +11,14 @@
 	  <div class="weui-header-right">
 	  </div> 
   	</div>
-    <header class='demos-header' style="background:#d7d7d7;">
+    <header class='demos-header background-green' style="background-color:#39ad20;">
       <h4 align="center" style="color:white">长沙万象汇店</h4>
     </header>
      <div class="bd">
      	<div class="page__bd">
      		<div class="weui-cells">
-     		<!-- window.location.href = "http://apis.map.qq.com/uri/v1/marker?marker=coord:"+pr["latitude"]+","+pr["longitude"]+";title:"+pr["shopname"]+";addr:"+pr["address"]+";tel:"+pr["tel"]+"&referer=酷锐百货"; -->
-     		<!-- http://apis.map.qq.com/uri/v1/marker?marker=coord:"+pr["latitude"]+","+pr["longitude"]+";title:"+pr["shopname"]+";addr:"+pr["address"]+";tel:"+pr["tel"]+"&referer=酷锐百货" -->
-     		 <!-- 'http://apis.map.qq.com/uri/v1/marker?marker=coord:"+${storeDetail.longitude!}+","+${storeDetail.latitude!}+";title:"+11+";addr:"+${storeDetail.address!}+";tel:"+${storeDetail.servicePhone!}+"&referer=酷锐百货"' -->
-     		  <a class="weui-cell weui-cell_access" href='http://apis.map.qq.com/uri/v1/marker?marker=coord:28.164432,113.237711;title:长沙黄花国际机场;addr:长沙黄花国际机场;tel:15674911643&referer=酷锐百货'>
+     		
+     		  <a class="weui-cell weui-cell_access" href='http://apis.map.qq.com/uri/v1/marker?marker=coord:28.164432,113.237711;title:${storeDetail.name!};addr:${storeDetail.address!};tel:${storeDetail.servicePhone!}&referer=酷锐百货'>
 	            <div class="weui-cell__bd">
 	              <p><font style="font-size:15px;" color="#989696">位置</font></p>
 	            </div>
@@ -38,7 +36,7 @@
 	            <div class="weui-cell__bd">
 	              <p><font style="font-size:15px;" color="#989696">图集</font></p>
 	            </div>
-	            <div class="weui-cell__ft" id="pb1">
+	            <div class="weui-cell__ft" id="pb1">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 	          <!--   <font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font> -->
 	               @for(c in storeDetail.pictures!){
 	               <img src="${c.absUrl!}" width="50px" height="50px">

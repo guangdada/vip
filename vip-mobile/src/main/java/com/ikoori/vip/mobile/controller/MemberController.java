@@ -50,9 +50,8 @@ public class MemberController {
 	/** 
 	* @Title: info 
 	* @Description: 会员信息，会员没激活跳转到会员激活页面，激活跳转到会员信息页面
-	* @param @param request
-	* @param @param map
-	* @param @return    
+	* @param  request
+	* @param  map
 	* @return String     
 	* @throws 
 	*/
@@ -83,10 +82,9 @@ public class MemberController {
 	/** 
 	* @Title: updateInfo 
 	* @Description: 修改会员信息
-	* @param @param request
-	* @param @param map
-	* @param @param mem
-	* @param @return    
+	* @param request
+	* @param  map
+	* @param  mem
 	* @return Object     
 	* @throws 
 	*/
@@ -117,10 +115,9 @@ public class MemberController {
 	/** 
 	* @Title: updateInfoGet 
 	* @Description: 修改会员信息
-	* @param @param request
-	* @param @param map
-	* @param @param mem
-	* @param @return
+	* @param  request
+	* @param  map
+	* @param  mem
 	* @param @throws Exception    
 	* @return String     
 	* @throws 
@@ -142,11 +139,10 @@ public class MemberController {
 	/** 
 	* @Title: registerMember 
 	* @Description: 会员激活
-	* @param @param request
-	* @param @param map
-	* @param @param mem
-	* @param @param mobileCode 手机短信验证码
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  mem
+	* @param  mobileCode 手机短信验证码
 	* @return Object     
 	* @throws 
 	*/
@@ -186,11 +182,10 @@ public class MemberController {
 	/** 
 	* @Title: validateCode 
 	* @Description: 验证码验证
-	* @param @param request
-	* @param @param map
-	* @param @param code   随机验证码
-	* @param @param mobile 手机号
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  code   随机验证码
+	* @param  mobile 手机号
 	* @return Object     
 	* @throws 
 	*/
@@ -214,8 +209,8 @@ public class MemberController {
 	/** 
 	* @Title: sendMessage 
 	* @Description: 发送手机短信验证码
-	* @param @param request
-	* @param @param mobile  手机号 
+	* @param  request
+	* @param  mobile  手机号 
 	* @return void     
 	* @throws 
 	*/
@@ -234,10 +229,9 @@ public class MemberController {
 	/** 
 	* @Title: validateMoblie 
 	* @Description: 验证手机号是否唯一
-	* @param @param request
-	* @param @param map
-	* @param @param mobile 手机号
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  mobile 手机号
 	* @return Object     
 	* @throws 
 	*/
@@ -257,9 +251,8 @@ public class MemberController {
 	/** 
 	* @Title: point 
 	* @Description: 会员积分页面
-	* @param @param request
-	* @param @param map
-	* @param @return
+	* @param  request
+	* @param  map
 	* @param @throws Exception    
 	* @return String     
 	* @throws 
@@ -282,9 +275,8 @@ public class MemberController {
 	/** 
 	* @Title: coupon 
 	* @Description: 会员优惠券页面
-	* @param @param request
-	* @param @param map
-	* @param @return
+	* @param  request
+	* @param  map
 	* @param @throws Exception    
 	* @return String     
 	* @throws 
@@ -306,11 +298,10 @@ public class MemberController {
 	/** 
 	* @Title: couponDetail 
 	* @Description: 会员优惠券详细信息
-	* @param @param request
-	* @param @param map
-	* @param @param couponId 优惠券id
-	* @param @param id 优惠券领取id
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  couponId 优惠券id
+	* @param  id 优惠券领取id
 	* @return String     
 	* @throws 
 	*/
@@ -326,9 +317,8 @@ public class MemberController {
 	/** 
 	* @Title: order 
 	* @Description: 会员订单页面
-	* @param @param request
-	* @param @param map
-	* @param @return
+	* @param  request
+	* @param  map
 	* @param @throws Exception    
 	* @return String     
 	* @throws 
@@ -350,10 +340,9 @@ public class MemberController {
 	/** 
 	* @Title: orderDetail 
 	* @Description: 会员订单详情页面
-	* @param @param request
-	* @param @param map
-	* @param @param orderId 订单id
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  orderId 订单id
 	* @return String     
 	* @throws 
 	*/
@@ -369,11 +358,10 @@ public class MemberController {
 	/** 按照经纬度查找附近门店
 	* @Title: store 
 	* @Description: 附近门店
-	* @param @param request
-	* @param @param map
-	* @param @param lat 纬度
-	* @param @param lon 经度
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  lat 纬度
+	* @param  lon 经度
 	* @return String     
 	* @throws 
 	*//*
@@ -386,6 +374,13 @@ public class MemberController {
 		return "/store.html";
 	}*/
 	
+	/**   
+	 * @Title: store   
+	 * @date:   2017年9月14日 下午2:12:46 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
 	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
 	public String store(HttpServletRequest request, Map<String, Object> map) {
 		/*List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);*/
@@ -399,10 +394,9 @@ public class MemberController {
 	/** 
 	* @Title: storeDetail 
 	* @Description: 附近门店详细信息
-	* @param @param request
-	* @param @param map
-	* @param @param storeId 门店id
-	* @param @return    
+	* @param  request
+	* @param  map
+	* @param  storeId 门店id
 	* @return String     
 	* @throws 
 	*/
@@ -417,8 +411,7 @@ public class MemberController {
 	/** 
 	* @Title: getWxConfig 
 	* @Description: 微信配置信息
-	* @param @param request
-	* @param @return    
+	* @param  request
 	* @return Object     
 	* @throws 
 	*/
