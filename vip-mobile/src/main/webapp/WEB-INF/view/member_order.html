@@ -1,58 +1,59 @@
 @layout("/common/_container.html",{title:"我的订单"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
-  <body ontouchstart style="background-color:#fbfafa;">
-   	<div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  	<!-- <a class="icon icon-83 f-white"></a> -->
-	  </div> 
-  	</div>
- 	<div class="weui-cells__titl weui-cell weui-cell_link">订单列表</div>
- 	@for(c in orders!){
-	   <div class="weui-form-preview">
-	    <a href="${ctxPath}/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
-	      <div class="weui-form-preview__bd">
-	       <div class="weui-form-preview__item">
-	          <label class="weui-form-preview__label">订单号</label>
-	          <span class="weui-form-preview__value">${c.order_no!}</span> 
-	          <!-- <div class="order-weui-cell__ft"></div> -->
-	        </div>
-	        <div class="weui-form-preview__item">
-	          <label class="weui-form-preview__label">支付金额</label>
-	          <span class="weui-form-preview__value">￥${c.payment!}</span> 
-	          <!-- <div class="order-weui-cell__ft"></div> -->
-	        </div>
-	        <div class="weui-form-preview__item">
-	          <label class="weui-form-preview__label">消费店铺</label>
-	          <span class="weui-form-preview__value">${c.storeName!}</span>
-	        </div>
-	        <div class="weui-form-preview__item">
-	          <label class="weui-form-preview__label">消费时间</label>
-	          <span class="weui-form-preview__value">${c.create_time!,dateFormat='YYYY-MM-dd'}</span>
-	        </div>
-	      </div>
-	     
-	    </div>
-	    <div class="weui-form-preview">
-	    	<div class="weui-form-preview__bd">
-		    	<div class="weui-form-preview__item">
-		          <label class="weui-form-preview__label"><font color="black" size="2px">查看详情</font></label>
-		          <span class="order-weui-form-preview__value">点击</span> 
-		          <div class="order-weui-cell__ft"></div>
-	       	 	</div>
-	    	</div>
-	    </div>
-	    </a>
-	    <div style="background-color:#fafafa;height:10px;"></div>
-	 @}
-   
-     <div class="weui-form-preview__bd" style="background-color:#fff;">
-        <h4 align="center">(⊙０⊙)啊哦，没有更多订单啦</h4>
-     </div>
-  </body>
-  </body>
+<body ontouchstart style="background-color:#fbfafa;">
+	<!--   返回 -->
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white"
+				onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right">
+			<!-- <a class="icon icon-83 f-white"></a> -->
+		</div>
+	</div>
+
+	<div class="weui-cells__titl weui-cell weui-cell_link" style="background-color:#f1f1f1;">订单列表</div>
+	@for(c in orders!){
+	<a href="${ctxPath}/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
+		<div class="weui-form-preview">
+			<div class="weui-form-preview__bd">
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">订单号</label>
+					<span class="weui-form-preview__value" style="color: black;">${c.order_no!}</span>
+					<!-- <div class="order-weui-cell__ft"></div> -->
+				</div>
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">支付金额</label> 
+					<span class="weui-form-preview__value" style="color: black;">￥${c.payment!}</span>
+					<!-- <div class="order-weui-cell__ft"></div> -->
+				</div>
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">消费店铺</label>
+					<span class="weui-form-preview__value" style="color: black;">${c.storeName!}</span>
+				</div>
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">消费时间</label>
+					<span class="weui-form-preview__value" style="color: black;">${c.create_time!,dateFormat='YYYY-MM-dd'}</span>
+				</div>
+			</div>
+		</div>
+		<div class="weui-form-preview">
+			<div class="weui-form-preview__bd">
+				<div class="weui-form-preview__item">
+					<label class="weui-form-preview__label">
+					<font color="black" size="2px">查看详情</font></label>
+					<span class="order-weui-form-preview__value">点击</span>
+					<div class="order-weui-cell__ft"></div>
+				</div>
+			</div>
+		</div>
+	</a>
+	<div style="background-color: #fafafa; height: 10px;"></div>
+	@}
+	<div class="weui-form-preview__bd" style="background-color: #fff;">
+		<h4 align="center">(⊙０⊙)啊哦，没有更多订单啦</h4>
+	</div>
+</body>
 @}

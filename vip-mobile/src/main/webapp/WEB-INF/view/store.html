@@ -1,43 +1,44 @@
 @layout("/common/_container.html",{title:"附近门店"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
-  <body ontouchstart>
-    <div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  </div> 
-  	</div>
-    <header style="width:100%;height:50px;background-color:gray">
-    <br>
+<body ontouchstart>
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right"></div>
+	</div>
+	<header style="width: 100%; height: 50px; background-color: gray">
+		<br>
 		<!-- <h5 style="color:white;" align="center">仅展示距离你最近的10家门店</h5> -->
 		<!-- <p class='demos-sub-title' style="color:white;">附近门店</p> -->
-		<h4 style="color:white;" align="center">附近门店</h4>
+		<h4 style="color: white;" align="center">附近门店</h4>
 	</header>
-  
-   <!-- <div class="weui-cells"></div> -->
-   	@for(c in store!){
-   	<div class="page__bd">
-	   	<div class="weui-panel weui-panel_access">
+
+	<!-- <div class="weui-cells"></div> -->
+	@for(c in store!){
+	<div class="page__bd">
+		<div class="weui-panel weui-panel_access">
 			<div class="weui-panel__bd">
-		          <a href="${ctxPath}/member/storeDetail?storeId=${c.id}" class="weui-media-box weui-media-box_appmsg">
-		            <div class="weui-media-box__hd">
-		              <img class="weui-media-box__thumb" src=${c.logo!} alt=""  height="60px">
-		            </div>
-		            <div class="weui-media-box__bd">
-		              <h4 class="weui-media-box__title">${c.name!}</h4>
-		              <p class="weui-media-box__desc">${c.address!}</p>
-		              <p class="weui-media-box__desc">${c.service_phone!}</p>
-		            </div>
-		            <div class="weui-media-box__hd" style="margin-right:0px;">
-		     			<img class="weui-media-box__thumb" src="${ctxPath}/static/jqweui/images/icon_nav_address.png" alt=""  height="60px" width="45px">
+				<a href="${ctxPath}/member/storeDetail?storeId=${c.id}"
+					class="weui-media-box weui-media-box_appmsg">
+					<div class="weui-media-box__hd">
+						<img class="weui-media-box__thumb" src=${c.logo!} alt=""
+							height="60px">
 					</div>
-		          </a>
+					<div class="weui-media-box__bd">
+						<h4 class="weui-media-box__title">${c.name!}</h4>
+						<p class="weui-media-box__desc">${c.address!}</p>
+						<p class="weui-media-box__desc">${c.service_phone!}</p>
+					</div>
+					<div class="weui-media-box__hd" style="margin-right: 0px;">
+						<img class="store-weui-media-box__thumb" src="${ctxPath}/static/jqweui/images/icon_nav_address.png" alt="" >
+					</div>
+				</a>
 			</div>
 		</div>
-   	</div>
+	</div>
 	@}
+</body>
 @}
-    

@@ -2,69 +2,80 @@
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <script type='text/javascript' src='${ctxPath}/static/jqweui/js/swiper.js' charset='utf-8'></script>
-  <body ontouchstart style="background-color:#fafafa;">
-   	<div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  </div> 
-  	</div>
-    <header class='demos-header background-img-green'>
-      <h4 align="center" style="color:white">长沙万象汇店</h4>
-    </header>
-     <div class="bd">
-     	<div class="page__bd">
-     		<div class="weui-cells">
-     		
-     		  <a class="weui-cell weui-cell_access" href='http://apis.map.qq.com/uri/v1/marker?marker=coord:28.164432,113.237711;title:${storeDetail.name!};addr:${storeDetail.address!};tel:${storeDetail.servicePhone!}&referer=酷锐百货'>
-	            <div class="weui-cell__bd">
-	              <p><font style="font-size:15px;" color="#989696">位置</font></p>
-	            </div>
-	            <div class="weui-cell__ft"><font style="font-size:12px;font-weight: bold;" color="black">${storeDetail.address!}</font></div>
-              </a>
-     		  
-	          <div class="weui-cell">
-	            <div class="weui-cell__bd">
-	              <p><font style="font-size:15px;" color="#989696">电话</font></p>
-	            </div>
-	            <div class="weui-cell__ft" align="center"><font style="font-size:12px;font-weight: bold;" color="black">${storeDetail.servicePhone!}</font></div>
-	          </div>
-        	
-	          <div class="weui-cell">
-	            <div class="weui-cell__bd">
-	              <p><font style="font-size:15px;" color="#989696">图集</font></p>
-	            </div>
-	            <div class="weui-cell__ft" id="pb1">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-	          <!--   <font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font> -->
-	               @for(c in storeDetail.pictures!){
-	               <img src="${c.absUrl!}" width="50px" height="50px">
-	               <!-- <img src="${ctxPath}/static/jqweui/images/11.png" width="50px" height="50px"> -->
-	               @}
-	            </div>
-	          </div>
-	          
-        	</div>
-     	</div>
-     </div>
-     
-     <div class="bd">
-     	<div class="page__bd">
-     		<div class="weui-cells">
-        	
-	          <div class="weui-cell">
-	            <div class="weui-cell__bd">
-	              <p><font style="font-size:15px;" color="#989696">营业时间</font></p>
-	            </div>
-	            <div class="weui-cell__ft"><font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font></div>
-	          </div>
-	          
-        	</div>
-     	</div>
-     </div>
-  </body>
-  <script type="text/javascript">
+<body ontouchstart style="background-color: #fafafa;">
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right"></div>
+	</div>
+	<header class='demos-header background-img-green'>
+		<h4 align="center" style="color: white">长沙万象汇店</h4>
+	</header>
+	<div class="bd">
+		<div class="page__bd">
+			<div class="weui-cells">
+				<a class="weui-cell weui-cell_access" href='http://apis.map.qq.com/uri/v1/marker?marker=coord:28.164432,113.237711;title:${storeDetail.name!};addr:${storeDetail.address!};tel:${storeDetail.servicePhone!}&referer=酷锐百货'>
+					<div class="weui-cell__bd">
+						<p>
+							<font style="font-size: 15px;" color="#989696">位置</font>
+						</p>
+					</div>
+					<div class="weui-cell__ft">
+						<font style="font-size: 12px; font-weight: bold;" color="black">${storeDetail.address!}</font>
+					</div>
+				</a>
+
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<p>
+							<font style="font-size: 15px;" color="#989696">电话</font>
+						</p>
+					</div>
+					<div class="weui-cell__ft" align="center">
+						<font style="font-size: 12px; font-weight: bold;" color="black">${storeDetail.servicePhone!}</font>
+					</div>
+				</div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<p>
+							<font style="font-size: 15px;" color="#989696">图集</font>
+						</p>
+					</div>
+					<div class="weui-cell__ft" id="pb1">
+						<!--   <font style="font-size:12px;font-weight: bold;" color="black">10:00-22:00</font> -->
+						@for(c in storeDetail.pictures!){
+						<img src="${c.absUrl!}" width="50px" height="50px">
+						<!-- <img src="${ctxPath}/static/jqweui/images/11.png" width="50px" height="50px"> -->
+						@}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="bd">
+		<div class="page__bd">
+			<div class="weui-cells">
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<p>
+							<font style="font-size: 15px;" color="#989696">营业时间</font>
+						</p>
+					</div>
+					<div class="weui-cell__ft">
+						<font style="font-size: 12px; font-weight: bold;" color="black">10:00-22:00</font>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</body>
+<script type="text/javascript">
   var pb1 = $.photoBrowser({
       items: [
     	  @for(c in storeDetail.pictures!){

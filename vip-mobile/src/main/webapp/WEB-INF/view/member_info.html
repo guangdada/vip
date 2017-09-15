@@ -1,85 +1,88 @@
 @layout("/common/_container.html",{title:"我的资料"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
-  <body ontouchstart>
-   	<div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  	<!-- <a class="icon icon-83 f-white"></a> -->
-	  </div> 
+<body ontouchstart>
+    <!-- 返回 -->
+	<div class="weui-header bg-black"> 
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right">
+	  		<!-- <a class="icon icon-83 f-white"></a> -->
+		</div> 
   	</div>
+  	
     <header class='demos-header background-img-green'>
       <h4 align="center" style="color:white">完善个人资料</h4>
     </header>
     
     <div class="weui-cells__title" style="color:blue">请填写真实信息，获得生日赠礼！</div>
     <form name="memberForm" action="${ctxPath}/member/updateMemberInfo" id="memberForm"  method="post">
-    <div class="weui-cells weui-cells_form">
-	  <input type="hidden" name="id" value="${member.id!}"/>
-	  <div class="weui-cell">
-		<div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
-		<div class="weui-cell__bd">
-			<input class="weui-input" type="text" id="name" name="name" placeholder="请输入昵称" value="${member.name!}">
-		</div>
-      </div>
-	  
-	  <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <div class="weui-cell__hd">
-          <label for="" class="weui-label">性别</label>
-        </div>
-        <div class="weui-cell__bd">
-          <select class="weui-select" name="sex">
-            <option value="1"
-              @if((member.sex!)==1){
-                 selected
-              @}
-            >男</option>
-            <option value="2"
-             @if((member.sex!)==2){
-                 selected
-             @}
-            >女</option>
-          </select>
-        </div>
-      </div>
+		<div class="weui-cells weui-cells_form">
+	  		<input type="hidden" name="id" value="${member.id!}"/>
+			<div class="weui-cell">
+				<div class="weui-cell__hd"><label class="weui-label">昵称</label></div>
+				<div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="name" name="name" placeholder="请输入昵称" value="${member.name!}">
+				</div>
+		    </div>
+		    
+		  	<div class="weui-cell weui-cell_select weui-cell_select-after">
+		        <div class="weui-cell__hd">
+		        	<label for="" class="weui-label">性别</label>
+		        </div>
+		        <div class="weui-cell__bd">
+			        <select class="weui-select" name="sex">
+					        <option value="1"
+						        @if((member.sex!)==1){
+						        	selected
+						        @}
+					        >男</option>
+					        <option value="2"
+						        @if((member.sex!)==2){
+						        	selected
+						        @}
+					        >女</option>
+			        </select>
+		        </div>
+	        </div>
 	
-      <div class="weui-cell">
-        <div class="weui-cell__hd">
-          <label class="weui-label">手机</label>
-        </div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" id="tel" type="number" name="mobile" placeholder="请输入手机号" value="${member.mobile!}" readonly>
-        </div>
-      </div>
+      		<div class="weui-cell">
+		        <div class="weui-cell__hd">
+		          <label class="weui-label">手机</label>
+		        </div>
+		        <div class="weui-cell__bd">
+		          <input class="weui-input" id="tel" type="number" name="mobile" placeholder="请输入手机号" value="${member.mobile!}" readonly>
+		        </div>
+      		</div>
+      		
+		    <div class="weui-cell">
+		    	<div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
+			    <div class="weui-cell__bd">
+			    	<input class="weui-input" type="date" name="birthday" placeholder="年/月/日" value="${member.birthday!,dateFormat='YYYY-MM-dd'}">
+			    </div>
+		    </div>
 	  
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label for="" class="weui-label">生日</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input" type="date" name="birthday" placeholder="年/月/日" value="${member.birthday!,dateFormat='YYYY-MM-dd'}">
-        </div>
-      </div>
-	  
-	<div class="weui-cell">
-        <div class="weui-cell__hd"><label for="name" class="weui-label">地址</label></div>
-        <div class="weui-cell__bd">
-          <input class="weui-input"  id="start" name="address" type="text" value="${member.address!}">
-        </div>
-      </div>
-    </div>
-    
-   <!--  <div class="weui-cell">
-		<div class="weui-cell__hd"><label class="weui-label">收货地址</label></div>
-		<div class="weui-cell__bd">
-			<input class="weui-input" type="text" id="name" name="name" placeholder="请输入详细地址" value="${member.name!}">
+			<div class="weui-cell">
+        		<div class="weui-cell__hd"><label for="name" class="weui-label">地址</label></div>
+		        <div class="weui-cell__bd">
+		        	<input class="weui-input"  id="start" name="address" type="text" value="${member.address!}">
+		        </div>
+      		</div>
+      		
 		</div>
-    </div> -->
-    <div class="weui-btn-area">
-      <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
-    </div>
-   </form>
+    
+	   <!--  <div class="weui-cell">
+			<div class="weui-cell__hd"><label class="weui-label">收货地址</label></div>
+			<div class="weui-cell__bd">
+				<input class="weui-input" type="text" id="name" name="name" placeholder="请输入详细地址" value="${member.name!}">
+			</div>
+	    </div> -->
+	    <div class="weui-btn-area">
+	    	<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+	    </div>
+	</form>
     <script src="${ctxPath}/static/jqweui/js/city-picker.js"></script>
     <script>
     $(function() {
@@ -135,5 +138,5 @@
 			}
 	 };
     </script>
-  </body>
+</body>
 @}
