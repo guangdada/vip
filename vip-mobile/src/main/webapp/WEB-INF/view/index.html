@@ -4,7 +4,8 @@
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 
-<div class="card-region" style="background-image: url(${card.coverPic!});" onclick="showQr()">
+<div class="card-region"
+	style="background-image: url(${card.coverPic!});" onclick="showQr()">
 	<div class="card-header">
 		<h4 class="shop-name">
 			<span class="shop-logo"
@@ -22,54 +23,62 @@
 	</div>
 </div>
 
-<input type="hidden" id="cardNum" value="${card.cardNum}"/>
+<input type="hidden" id="cardNum" value="${card.cardNum}" />
 <div id="qrcode" style="display: none;"></div>
 
 <div class="bd">
-      <div class="page__bd">
-         <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="/member/info">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>我的资料</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/member/point">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/8.png
-            " alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>我的积分</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/member/order">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>我的订单</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-          <a class="weui-cell weui-cell_access" href="/member/coupon">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/7.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>我的优惠券</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-           <a class="weui-cell weui-cell_access"  onclick="submitStoreInfoClick();">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>附近门店</p>
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-        </div>
-      </div>
- </div>
-  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-  <script src="${ctxPath}/static/styles/styles/js/weixin_share.js"></script>
-  <script type="text/javascript">
+	<div class="page__bd">
+		<div class="weui-cells">
+			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/info">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>我的资料</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a> 
+			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/point">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/8.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>我的积分</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/order">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>我的订单</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+			<a class="weui-cell weui-cell_access"
+				href="${ctxPath}/member/coupon">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/7.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>我的优惠券</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/store">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>附近门店</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
   	$(function() {
   	    /* var ajax = new $ax("${ctxPath}/memeberCard/view", function(data){
   	    	alert(data);
@@ -149,4 +158,4 @@
 
 @}
 
-	
+

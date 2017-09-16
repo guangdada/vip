@@ -152,7 +152,7 @@ public class ShiroConfig {
         hashMap.put("/area", "anon");
         hashMap.put("/global/sessionError", "anon");
         hashMap.put("/kaptcha", "anon");
-        hashMap.put("/files", "anon");
+        hashMap.put("/files/**", "anon");
         // 外部接口目录
         hashMap.put("/api", "anon");
         hashMap.put("/**", "user");

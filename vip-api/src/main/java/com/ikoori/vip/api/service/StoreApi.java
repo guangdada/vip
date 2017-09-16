@@ -7,5 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 
 public interface StoreApi {
 	public List<Map<String, Object>> loadStore(double lat, double lon);
+	public List<Map<String,Object>> getStore(String openId);
 	public JSONObject getStoreDetail(Long storeId);
 }

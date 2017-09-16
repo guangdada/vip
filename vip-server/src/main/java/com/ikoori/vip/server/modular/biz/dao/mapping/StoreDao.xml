@@ -43,5 +43,14 @@
    
    <select id="getStoreDetail"  resultType="com.ikoori.vip.common.persistence.model.Store">
     	SELECT * from v_store where STATUS =1 AND id = #{storeId};
-    </select>
+   </select>
+    
+   <select id="getStoreByOpenId" resultType="map">
+    	SELECT s.* from v_store  s
+		LEFT JOIN v_member m ON m.merchant_id=s.merchant_id
+		WHERE 1 = 1 and s.status = 1
+        <if test="openId != null">
+        	and m.open_id = #{openId}
+        </if>
+   </select>
 </mapper>

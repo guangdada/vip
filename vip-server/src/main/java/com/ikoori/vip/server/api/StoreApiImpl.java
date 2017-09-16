@@ -78,4 +78,21 @@ public class StoreApiImpl implements StoreApi {
 		obj.put("pictures", pictures);
 		return obj;
 	}
+
+
+	/**   
+	 * <p>Title: getStore</p>   
+	 * <p>Description: 获取附近门店</p>   
+	 * @param openId 
+	 * @return   
+	 * @see com.ikoori.vip.api.service.StoreApi#getStore(java.lang.String)   
+	 */  
+	@Override
+	public List<Map<String, Object>> getStore(String openId) {
+		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId);
+		if (store == null) {
+			return null;
+		}
+		return store;
+	}
 }

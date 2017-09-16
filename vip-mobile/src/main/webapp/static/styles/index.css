@@ -1,19 +1,20 @@
-.index-head{
+.index-head {
 	background-color: black;
-	width:100%;
-    height:50px;
+	width: 100%;
+	height: 50px;
 }
+
 .point-demos-header {
-  padding: 20px 0;
+	padding: 20px 0;
 }
 
 .member-weui-form-preview__label {
-  float: left;
-  margin-right: 1em;
-  min-width: 4em;
-  color: black;
-  text-align: justify;
-  text-align-last: justify;
+	float: left;
+	margin-right: 1em;
+	min-width: 4em;
+	color: black;
+	text-align: justify;
+	text-align-last: justify;
 }
 
 /* .weui-form-preview__label {
@@ -25,126 +26,134 @@
   text-align-last: justify;
 } */
 /* 订单  order */
-.order .orderItem{
-	padding:10px 0px;
+.order .orderItem {
+	padding: 10px 0px;
 }
 
-.order .orderItem .title{
+.order .orderItem .title {
 	font-size: 15px;
 }
 
-.order .orderItem .value{
+.order .orderItem .value {
 	font-size: .9em;
 }
+
 .order-weui-form-preview__value {
-  display: block;
-  overflow: hidden;
-  word-break: normal;
-  word-wrap: break-word;
- /*  font-size:20px; */
-  color:black;
-  margin-right: 15px;
+	display: block;
+	overflow: hidden;
+	word-break: normal;
+	word-wrap: break-word;
+	/*  font-size:20px; */
+	color: black;
+	margin-right: 15px;
 }
-  /* 订单详情  orderdetail */
-  .orderdetail-weui-cells {
-  margin-top: 1.17647059em;
-  background-color: #FFFFFF;
-  line-height: 1.41176471;
-  font-size: 17px;
-  overflow: hidden;
-  position: relative;
+/* 订单详情  orderdetail */
+.orderdetail-weui-cells {
+	margin-top: 1.17647059em;
+	background-color: #FFFFFF;
+	line-height: 1.41176471;
+	font-size: 17px;
+	overflow: hidden;
+	position: relative;
 }
 
 .orderdetail-weui-cell {
-  padding: 10px 15px;
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+	padding: 10px 15px;
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
+
 .orderdetail-weui-cell:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 1px;
- /*  border-top: 1px solid #D9D9D9; */
-  color: #D9D9D9;
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
-  -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
-  left: 15px;
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 1px;
+	/*  border-top: 1px solid #D9D9D9; */
+	color: #D9D9D9;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+	left: 15px;
 }
+
 .orderdetail-weui-cells:before {
-  content: " ";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 1px;
-  border-top: 1px solid #D9D9D9;
-  color: #D9D9D9;
-  -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
-  -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
+	content: " ";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	height: 1px;
+	border-top: 1px solid #D9D9D9;
+	color: #D9D9D9;
+	-webkit-transform-origin: 0 0;
+	transform-origin: 0 0;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
 }
+
 .orderdetail-weui-cells:after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1px;
- /*  border-bottom: 1px solid #D9D9D9; */
-  color: #D9D9D9;
-  -webkit-transform-origin: 0 100%;
-          transform-origin: 0 100%;
-  -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
+	content: " ";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 1px;
+	/*  border-bottom: 1px solid #D9D9D9; */
+	color: #D9D9D9;
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
 }
+
 .orderdetail-weui-form-preview__hd {
-  position: relative;
-  padding: 10px 15px;
-  text-align: right;
-  line-height: 2.5em;
+	position: relative;
+	padding: 10px 15px;
+	text-align: right;
+	line-height: 2.5em;
 }
+
 .orderdetail-weui-form-preview__hd:after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1px;
-  border-bottom: 1px solid #D9D9D9;
-  color: #D9D9D9;
-  -webkit-transform-origin: 0 100%;
-          transform-origin: 0 100%;
-  -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
-   left:0px;  
+	content: " ";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 1px;
+	border-bottom: 1px solid #D9D9D9;
+	color: #D9D9D9;
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
+	left: 0px;
 }
+
 .orderdetail-weui-form-preview__hd .weui-form-preview__value {
-  font-style: normal;
-  font-size: 1.6em;
+	font-style: normal;
+	font-size: 1.6em;
 }
+
 .orderdetail-weui-form-preview__label {
-  float: left;
-  margin: auto;
-  min-width: 4em;
-  color: #999999;
-  text-align: justify;
-  text-align-last: justify;
+	float: left;
+	margin: auto;
+	min-width: 4em;
+	color: #999999;
+	text-align: justify;
+	text-align-last: justify;
 }
 
 .coupon-weui-cell__ft {
-    text-align: right;
-    color: #1b731a;
+	text-align: right;
+	color: #1b731a;
 }
 
 /* .order-weui-form-preview__value {
@@ -156,309 +165,366 @@
     color: black;
     margin-right: 15px;
 } */
-
 .order-weui-cell_access {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  color: inherit;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	color: inherit;
 }
+
 .order-weui-cell_access:active {
-  background-color: #ECECEC;
+	background-color: #ECECEC;
 }
+
 .order-weui-cell_access .order-weui-cell__ft {
-  padding-right: 13px;
-  position: relative;
+	padding-right: 13px;
+	position: relative;
 }
+
 .order-weui-cell_access .order-weui-cell__ft:after {
-    content: " ";
-    display: inline-block;
-    height: 8px;
-    width: 8px;
-    border-width: 2px 2px 0 0;
-    border-color: #c8c8cd;
-    border-style: solid;
-    -webkit-transform: matrix(.71,.71,-.71,.71,0,0);
-    transform: matrix(.71,.71,-.71,.71,0,0);
-    position: relative;
-    top: -2px;
-    position: absolute;
-    top: 50%;
-    margin-top: -19px;
-    right: 1px;
+	content: " ";
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	border-width: 2px 2px 0 0;
+	border-color: #c8c8cd;
+	border-style: solid;
+	-webkit-transform: matrix(.71, .71, -.71, .71, 0, 0);
+	transform: matrix(.71, .71, -.71, .71, 0, 0);
+	position: relative;
+	top: -2px;
+	position: absolute;
+	top: 50%;
+	margin-top: -19px;
+	right: 1px;
 }
+
 .order-weui-cell__ft {
-  text-align: right;
-  color: #999999;
+	text-align: right;
+	color: #999999;
 }
 
 /* 首页会员卡样式 */
 .card-region, .wx-card-region {
-        background-color: #ccc;
-        padding: 20px;
-        margin: 10px;
-        color: #fff;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        -webkit-border-radius: 5px;
-        border-radius: 5px;
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: 100%;
-        background-size: cover
-    }
-
-    .card-region .card-header, .wx-card-region .card-header {
-        height: 35px;
-        line-height: 35px;
-        font-size: 16px;
-        margin-bottom: 30px;
-        position: relative;
-        overflow: hidden
-    }
-
-    .card-region .qr-code, .wx-card-region .qr-code {
-        margin-top: 0px;
-        float: right;
-        width: 25px;
-        height: 25px;
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: 25px;
-        margin-top: 5px;
-        background-image: url("images/qc_code.png")
-    }
-   
-
-    .card-region .shop-logo {
-        width: 30px;
-        height: 30px;
-        display: inline-block;
-        vertical-align: top;
-        background-size: 30px;
-        -webkit-border-radius: 15px;
-        border-radius: 15px;
-        background-position: 50%;
-        background-repeat: no-repeat
-    }
-
-    .card-region .shop-name {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        float: left;
-        background-size: 30px;
-        height: 30px;
-        line-height: 30px;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
-    }
-
-    .card-region .member-type {
-        margin-top: 0px;
-        font-size: 20px;
-        line-height: 24px;
-        height: 24px;
-        margin-bottom: 10px;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
-    }
-
-    .card-region .card-content {
-        font-size: 14px;
-        overflow: hidden
-    }
-
-    .card-region .expiry-date {
-        float: left;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
-    }
-
-    .card-region .card-state {
-        float: right;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
-    }
-    /* 优惠券coupon */
-    .coupondetail{
-       display:none;
-    }
-    .coupon-radius{
-    /* margin-top:15px; */
-    -webkit-box-sizing: border-box;
+	background-color: #ccc;
+	padding: 20px;
+	margin: 10px;
+	color: #fff;
+	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-    /* border: 1px solid #CCC; */
-    margin-right:8px;
-    margin-left:8px;
-    }
-     .coupon-margin{
-       margin-top:30px;
-       margin-right:10px;
-       margin-left:10px;
-       background-color: #f1f1f1;
-       color: #fff;
-	   -webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-	   box-sizing: border-box;
-	   -webkit-border-radius: 5px;
-	   border-radius: 5px;
-	   height:110px;
-    }
-    .coupon-card-region, .wx-card-region {
-    background-color: #ccc;
-    padding: 20px;
-    margin: 10px;
-    color: #fff;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-size: cover;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-size: cover
 }
 
-     /* 积分 point */
-    .point-demos-title {
-    text-align: center;
-    font-size: 25px;
-    color: #3cc51f;
-    font-weight: 400;
-    margin: 0 15%;
-    }
-    
-    /*优惠券详细   coupondetail*/
-    .coupondetail-weui-btn {
-    position: relative;
-    display: block;
-    margin-left: 15px;
-    margin-right: 15px;
-    padding-left: 14px;
-    padding-right: 14px;
-    box-sizing: border-box;
-    font-size: 18px;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    line-height: 2.1;
-    border-radius: 5px;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    overflow: hidden;
+.card-region .card-header, .wx-card-region .card-header {
+	height: 35px;
+	line-height: 35px;
+	font-size: 16px;
+	margin-bottom: 30px;
+	position: relative;
+	overflow: hidden
 }
-   
-   .card-region .coupon-card-header, .wx-card-region .coupon-card-header {
-    height: 25px;
-    line-height: 25px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
+
+.card-region .qr-code, .wx-card-region .qr-code {
+	margin-top: 0px;
+	float: right;
+	width: 25px;
+	height: 25px;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: 25px;
+	margin-top: 5px;
+	background-image: url("images/qc_code.png")
+}
+
+.card-region .shop-logo {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	vertical-align: top;
+	background-size: 30px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	background-position: 50%;
+	background-repeat: no-repeat
+}
+
+.card-region .shop-name {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	float: left;
+	background-size: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+}
+
+.card-region .member-type {
+	margin-top: 0px;
+	font-size: 20px;
+	line-height: 24px;
+	height: 24px;
+	margin-bottom: 10px;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+}
+
+.card-region .card-content {
+	font-size: 14px;
+	overflow: hidden
+}
+
+.card-region .expiry-date {
+	float: left;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+}
+
+.card-region .card-state {
+	float: right;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+}
+/* 优惠券coupon */
+.coupondetail {
+	display: none;
+}
+
+.coupon-radius {
+	/* margin-top:15px; */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	/* border: 1px solid #CCC; */
+	margin-right: 8px;
+	margin-left: 8px;
+}
+
+.coupon-margin{
+	margin-top: 25px;
+	margin-right: 10px;
+	margin-left: 10px;
+	background-color: #ffffff;
+	color: #fff;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	height: 110px;
+	border:1px solid #c9c9c9;
+}
+
+.coupon-card-region, .wx-card-region {
+	background-color: #ccc;
+	padding: 20px;
+	margin: 10px;
+	color: #fff;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-size: cover;
+}
+
+/* 积分 point */
+.point-demos-title {
+	text-align: center;
+	font-size: 25px;
+	color: #3cc51f;
+	font-weight: 400;
+	margin: 0 15%;
+}
+
+/*优惠券详细   coupondetail*/
+.coupondetail-weui-btn {
+	position: relative;
+	display: block;
+	margin-left: 15px;
+	margin-right: 15px;
+	padding-left: 14px;
+	padding-right: 14px;
+	box-sizing: border-box;
+	font-size: 18px;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	line-height: 2.1;
+	border-radius: 5px;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	overflow: hidden;
+}
+
+.card-region .coupon-card-header, .wx-card-region .coupon-card-header {
+	height: 25px;
+	line-height: 25px;
+	font-size: 16px;
+	margin-bottom: 20px;
+	position: relative;
+	overflow: hidden;
 }
 
 .coupon-weui-navbar {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    position: absolute;
-    z-index: 500;
-    top: 0;
-    width: 100%;
-    background-color: #fafafa;
-    margin-top: 20px; 
-    margin-bottom: 20px;
-    height: 40px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border:1px solid #cacacc;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	position: absolute;
+	z-index: 500;
+	top: 0;
+	width: 100%;
+	background-color: #fafafa;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	height: 40px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #cacacc;
 }
 
 .coupon-weui-navbar:after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1px;
-  border-bottom: 1px solid #CCCCCC;
-  color: #CCCCCC;
-  -webkit-transform-origin: 0 100%;
-          transform-origin: 0 100%;
-  -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
+	content: " ";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 1px;
+	border-bottom: 1px solid #CCCCCC;
+	color: #CCCCCC;
+	-webkit-transform-origin: 0 100%;
+	transform-origin: 0 100%;
+	-webkit-transform: scaleY(0.5);
+	transform: scaleY(0.5);
 }
-.coupon-weui-navbar + .weui-tab__panel {
-  padding-top: 50px;
-  padding-bottom: 0;
+
+.coupon-weui-navbar+.weui-tab__panel {
+	padding-top: 50px;
+	padding-bottom: 0;
 }
-.coupon-weui-navbar + .weui-tab__bd {
-  padding-top: 50px;
+
+.coupon-weui-navbar+.weui-tab__bd {
+	padding-top: 50px;
 }
 
 /*header*/
 .weui-header {
-  position: relative;
-  padding: 3px 0;
-  -webkit-box-sizing: border-box;
- 
-}
-.weui-header .weui-header-title,.weui-header h1 {
-  margin: 0 88px;
-  margin-left: 100px;
-  line-height: 40px;
-  text-align: center;
-  height: 40px;
-  font-size: 18px;
-  font-weight: 400;
-  width: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #fff
-}
-.weui-header .weui-header-title a,.weui-header .weui-header-title a:active,.weui-header h1 a,.weui-header h1 a:active {
-  color: #fff
-}
-.weui-header .weui-header-left,.weui-header .weui-header-right {
-  position: absolute;
-  top: 14px;
-  display: block;
-  font-size: 16px;
-  line-height: 21px;
-  color:#FFF;
-}
-.weui-header .weui-header-left a,.weui-header .weui-header-left button,.weui-header .weui-header-right a,.weui-header .weui-header-right button {
-  float: left;
-  margin-right: 8px;
-}
-.weui-header .weui-header-left a:active,.weui-header .weui-header-left button:active,.weui-header .weui-header-right a:active,.weui-header .weui-header-right button:active {
-  opacity: .8
-}
-.weui-header .weui-header-left {
-  left: 18px
-}
-.weui-header .weui-header-right {
-  right: 15px
-}
-.weui-header .weui-header-right a,.weui-header .weui-header-right button {
-  margin-left: 8px;
-  margin-right: 0
-}
-.bg-blue {/*蓝色*/
-  background-color: #18b4ed;
-}
-.bg-black{/*黑色*/
-  background-color: #0a0a0a;
-}
-.store-weui-form-preview__bd {
-  padding: 10px 15px 30px 15px;
-  font-size: .9em;
-  text-align: right;
-  color: #999999;
+	position: relative;
+	padding: 3px 0;
+	-webkit-box-sizing: border-box;
 }
 
+.weui-header .weui-header-title, .weui-header h1 {
+	margin: 0 88px;
+	margin-left: 100px;
+	line-height: 40px;
+	text-align: center;
+	height: 40px;
+	font-size: 18px;
+	font-weight: 400;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #fff
+}
+
+.weui-header .weui-header-title a, .weui-header .weui-header-title a:active,
+	.weui-header h1 a, .weui-header h1 a:active {
+	color: #fff
+}
+
+.weui-header .weui-header-left, .weui-header .weui-header-right {
+	position: absolute;
+	top: 14px;
+	display: block;
+	font-size: 16px;
+	line-height: 21px;
+	color: #FFF;
+}
+
+.weui-header .weui-header-left a, .weui-header .weui-header-left button,
+	.weui-header .weui-header-right a, .weui-header .weui-header-right button
+	{
+	float: left;
+	margin-right: 8px;
+}
+
+.weui-header .weui-header-left a:active, .weui-header .weui-header-left button:active,
+	.weui-header .weui-header-right a:active, .weui-header .weui-header-right button:active
+	{
+	opacity: .8
+}
+
+.weui-header .weui-header-left {
+	left: 18px
+}
+
+.weui-header .weui-header-right {
+	right: 15px
+}
+
+.weui-header .weui-header-right a, .weui-header .weui-header-right button
+	{
+	margin-left: 8px;
+	margin-right: 0
+}
+
+.bg-blue { /*蓝色*/
+	background-color: #18b4ed;
+}
+
+.bg-black { /*黑色*/
+	background-color: #0a0a0a;
+}
+
+.store-weui-form-preview__bd {
+	padding: 10px 15px 30px 15px;
+	font-size: .9em;
+	text-align: right;
+	color: #999999;
+}
+
+.weui-media-box_appmsg .store-weui-media-box__thumb {
+  /* width: 100%; */
+  /* max-height: 100%; */
+  width:50px;
+  height:50px;
+  vertical-align: bottom;
+  margin-left: 25px;
+}
+
+.background-green {
+	background-color: #39ad20;
+}
+
+.background-img-blue {
+	background-image: url(images/background-blue.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
+
+.background-img-red {
+	background-image: url(images/background-red.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
+
+.background-img-green {
+	background-image: url(images/background-green.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+}
 
 /*优惠券领取样式开始*/
 .app-preview .promote-card {

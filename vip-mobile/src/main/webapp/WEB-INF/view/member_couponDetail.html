@@ -5,87 +5,93 @@
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <body style="background-color:#fafafa;">
-  <div class="weui-header bg-black"> 
-	  <div class="weui-header-left">
-	  	<a class="icon icon-109 f-white" onClick="javascript :history.back(-1);">返回</a>  
-	  </div>
-	  <h1 class="weui-header-title"></h1>
-	  <div class="weui-header-right">
-	  	<!-- <a class="icon icon-83 f-white"></a> -->
-	  </div> 
-  	</div>	
- <div class="card-region" style="background-color: f1f1f1;">
-	<div class="coupon-card-header">
-		<h4 class="shop-name">
-			<span >${couponDetail.couponName!}</span>
-		</h4>
-		<!-- <div class="qr-code"></div> -->
+	<!-- 返回 -->
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white"
+				onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right">
+			<!-- <a class="icon icon-83 f-white"></a> -->
+		</div>
 	</div>
-	@if(couponDetail.couponType==0){
-	<h2  align="center">${couponDetail.discount!/10}折</h2>
-	@}
-	@if(couponDetail.couponType==1){
-	<h2  align="center">${couponDetail.value!}元</h2>
-	@}
-	<h5  align="center">${couponDetail.useCondition!}</h5>
-	<div class="card-content">
-		<p class="expiry-date">
-			<font align="center">有效期：${couponDetail.startAt!,"yyyy-MM-dd  HH:mm"}-${couponDetail.endAt!,"yyyy-MM-dd HH:mm"}</font> 
-			<!--  <span>无限期</span> -->
-		</p>
+	
+	<div class="card-region" style="background-color: f1f1f1;background-image:url(${ctxPath}/static/styles/images/background-red.png)" >
+		<div class="coupon-card-header">
+			<h4 class="shop-name">
+				<span >${couponDetail.couponName!}</span>
+			</h4>
+			<!-- <div class="qr-code"></div> -->
+		</div>
+		<h2  align="center">${couponDetail.value!}元</h2>
+		<h5  align="center">${couponDetail.useCondition!}</h5>
+		<div class="card-content">
+			<p align="center">
+				<font  color="#f9c1c1" size="2px" >有效期：${couponDetail.startAt!,"yyyy-MM-dd  HH:mm"}-${couponDetail.endAt!,"yyyy-MM-dd HH:mm"}</font> 
+				<!--  <span>无限期</span> -->
+			</p>
+		</div>
 	</div>
-</div>
 
- <div class="weui-msg__opr-area">
-    <p class="weui-btn-area">
-      <a href="javascript:;" class="coupondetail-weui-btn weui-btn_primary">立即使用</a>
-    </p>
-  </div>
-  <div align="center">
-  <a href="/member/coupon"><font size="2px" color="blue">查看我的卡券</font></a>
-  </div>
+	<div class="weui-msg__opr-area">
+	    <p class="weui-btn-area">
+	      <a href="javascript:;" class="coupondetail-weui-btn weui-btn_primary">立即使用</a>
+	    </p>
+	</div>
+  	<div align="center">
+  		<a href="${ctxPath}/member/coupon"><font size="2px" color="blue">查看我的卡券</font></a>
+  	</div>
 
-<input type="hidden" id="cardNum" value="fdfd"/>
-<div id="qrcode" style="display: none;"></div>
+	<!-- <input type="hidden" id="cardNum" value="fdfd"/> -->
+	<!-- <div id="qrcode" style="display: none;"></div> -->
 
-<div class="bd">
-      <div class="page__bd">
-         <div class="weui-cells">
-         <!--  <a class="weui-cell weui-cell_access" href="/member/info">
-            <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
-            <div class="weui-cell__bd">
-              <p>卡券二维码</p>
-            </div>
-            <div class="weui-cell__ft"><img src="${ctxPath}/static/styles/images/qc_code.png" widht="20px" height="22px"/></div>
-          </a> -->
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p>卡券券码</p>
-            </div>
-            <div class="weui-cell__ft">${couponDetail.verifyCode}</div>
-          </div>
-         <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p>卡券状态</p>
-            </div>
-            <div class="weui-cell__ft">
-            @if(!couponDetail. isInvalid){
-                                          已失效
-            @}
-            @if(couponDetail.isUsed==0){
-                                           未使用
-            @}
-            </div>
-          </div>
-         <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p>使用说明</p>
-            </div>
-            <div class="weui-cell__ft">${couponDetail.description!}</div>
-          </div>
-        </div>
-      </div>
- </div>
+	<div class="bd">
+		<div class="page__bd">
+        	<div class="weui-cells">
+        		
+		        <!--  <a class="weui-cell weui-cell_access" href="/member/info">
+		           <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+		           <div class="weui-cell__bd">
+		             <p>卡券二维码</p>
+		           </div>
+		           <div class="weui-cell__ft"><img src="${ctxPath}/static/styles/images/qc_code.png" widht="20px" height="22px"/></div>
+		        </a> -->
+	            <div class="weui-cell">
+		      	  	<div class="weui-cell__bd">
+		        	    <p>卡券券码</p>
+		            </div>
+	              	<div class="weui-cell__ft">${couponDetail.verifyCode}</div>
+	           	</div>
+
+				<div class="weui-cell">
+					<div class="weui-cell__bd">
+						<p>卡券状态</p>
+					</div>
+					<div class="weui-cell__ft">
+						@if(!couponDetail. isInvalid){ 
+							已失效
+						@}
+						@if(couponDetail.isUsed==0){
+						 	未使用 
+						@}
+					 </div>
+				</div>
+
+				<div class="weui-cell">
+					<div class="weui-form-preview__item">
+						<label class="weui-form-preview__label" style="color: black;">使用说明</label>
+						<span class="weui-form-preview__value" style="color: #999">${couponDetail.description!}</span>
+					</div>
+					<!--  <div class="weui-cell__bd">
+		             <p>使用说明</p>
+		           </div>
+		          <div class="weui-cell__ft">${couponDetail.description!}</div> -->
+				</div>
+
+			</div>
+		</div>
+	</div>
   
   <script type="text/javascript">
   /* 	var showQr = function (){
@@ -103,7 +109,7 @@
 	    qrcode.makeCode(cardNum);
 	} */
   </script>
-  </body>
+</body>
 @}
 
 	
