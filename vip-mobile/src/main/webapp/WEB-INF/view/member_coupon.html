@@ -28,7 +28,7 @@
 			<div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
 			@for(c in Coupons!){
 			 @if(c.isInvalid && c.couponIsInvalid && c.isUsed==0){
-			<a href="/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+			<a href="/member/couponDetail?couponId=${c.couponId}&id=${c.id}">
 				<div class="coupon-margin">
 					<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
 					<div align="left">

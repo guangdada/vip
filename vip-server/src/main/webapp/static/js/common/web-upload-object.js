@@ -18,9 +18,9 @@
 		this.picWidth = 800;
 		this.picHeight = 800;
         this.uploadBarId = null;
-        this.content = null;
-        this.append = false;
-        this.callBackFun = null;
+        this.content = null; // 预览图包裹容器
+        this.append = false; // 是替换预览图还是追加预览
+        this.callBackFun = null;  // 上传完成后的回调方法
 	};
 
 	$WebUpload.prototype = {

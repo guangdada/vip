@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotations.Version;
+
 import java.io.Serializable;
 
 /**
@@ -231,6 +233,12 @@ public class Coupon extends Model<Coupon> {
      */
 	@TableLogic
 	private Integer status;
+	
+	/**
+	 * 乐观锁
+	 */
+	@Version
+    private Integer version;
 
 
 	public Long getId() {
@@ -574,6 +582,15 @@ public class Coupon extends Model<Coupon> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	@Override

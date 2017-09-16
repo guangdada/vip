@@ -1,0 +1,51 @@
+@layout("/common/_container.html",{title:"我的优惠卡"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+<body style="background-color:#fafafa;">
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white"
+				onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right"></div>
+	</div>
+
+
+	<div class="app-preview">
+		<div class="promote-card">
+			<div class="clearfix promote-card-header">
+				<h2 class="pull-left font-size-16 promote-card-name">${coupon.name!}</h2>
+				<!-- <p  class="pull-right font-size-12 center promote-share transparent-color js-share">分享</p> -->
+			</div>
+			<p class="center promote-value">	
+				@if(isNotEmpty(coupon.preferentialType)){
+					@if(coupon.preferentialType == 1){
+						<span class="promote-value-sign"><i class="promote-value-sign-li">${coupon.discount!/10}折</i></span>
+					@}
+					@if(coupon.preferentialType == 0){
+						<span class="promote-value-sign"> <span>￥</span> <i class="promote-value-sign-li">${coupon.value!}</i></span>
+					@}
+				@}
+			</p>
+			<p class="center font-size-12 promote-limit">${coupon.useCondition!}</p>
+			<p class="center font-size-12 transparent-color">有效期：${coupon.startAt!,"yyyy-MM-dd  HH:mm"}-${coupon.endAt!,"yyyy-MM-dd HH:mm"}</p>
+			<div class="dot"></div>
+		</div>
+	</div>
+
+
+
+	<div class="weui-msg__opr-area">
+		<p class="weui-btn-area">
+			<a href="${ctxPath}/coupon/fetch/${coupon.alias}" class="coupondetail-weui-btn weui-btn_primary">立即领取</a>
+		</p>
+	</div>
+	
+</body>
+@}
+
+	

@@ -5,7 +5,7 @@ package com.ikoori.vip.common.constant.state;
  * @author chengxg
  *
  */
-public enum GrantType {
+public enum CardGrantType {
 	SUB_WX(0, "关注微信"),
 	/*NO_RULE(1, "无门槛"),*/
     RULE(2, "按规则");
@@ -13,7 +13,7 @@ public enum GrantType {
     int code;
     String message;
 
-    GrantType(int code, String message) {
+    CardGrantType(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -38,7 +38,7 @@ public enum GrantType {
         if (status == null) {
             return "";
         } else {
-            for (GrantType s : GrantType.values()) {
+            for (CardGrantType s : CardGrantType.values()) {
                 if (s.getCode() == status) {
                     return s.getMessage();
                 }

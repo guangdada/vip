@@ -37,15 +37,4 @@ public interface Const {
      * 接口文档的菜单名
      */
     String API_MENU_NAME = "接口文档";
-    
-    /**
-     * 保存用于openId
-     */
-    String SESSION_USER_INFO = "userInfo";
-    
-    /**
-     * 保存网页授权state
-     */
-    String SESSION_USER_STATE = "state";
-
 }

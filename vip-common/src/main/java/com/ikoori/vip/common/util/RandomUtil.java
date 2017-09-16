@@ -7,6 +7,7 @@ public class RandomUtil {
 	public static final String ALLCHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String LETTERCHAR = "abcdefghijkllmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static final String NUMBERCHAR = "0123456789";
+	public static final int coupon_code_length = 16; // 优惠券券号长度
 
 	/**
 	 * 返回一个定长的随机字符串(数字)
@@ -137,7 +138,7 @@ public class RandomUtil {
 	
 	
 	/**
-	 * 返回20位优惠券串码
+	 * 返回16位优惠券串码
 	 * 
 	 * @param length
 	 *            随机字符串长度
@@ -146,7 +147,7 @@ public class RandomUtil {
 	public static String generateCouponCode() {
 		StringBuffer sb = new StringBuffer();
 		Random random = new Random();
-		for (int i = 1; i <= 20; i++) {
+		for (int i = 1; i <= coupon_code_length; i++) {
 			sb.append(ALLCHAR.charAt(random.nextInt(ALLCHAR.length())));
 		}
 		return sb.toString().toUpperCase();

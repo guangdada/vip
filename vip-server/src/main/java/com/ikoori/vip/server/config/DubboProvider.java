@@ -4,17 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.dubbo.config.spring.ServiceBean;
+import com.ikoori.vip.api.service.CouponApi;
 import com.ikoori.vip.api.service.MemberCardApi;
 import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
-import com.ikoori.vip.api.service.StoreApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
+import com.ikoori.vip.api.service.StoreApi;
 
 @Configuration
 public class DubboProvider extends DubboBaseConfig {
 	@Bean
-	public ServiceBean<MemberCardApi> cardProvider(MemberCardApi cardApi) {
+	public ServiceBean<MemberCardApi> memberCardProvider(MemberCardApi cardApi) {
 		ServiceBean<MemberCardApi> serviceBean = new ServiceBean<MemberCardApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
@@ -25,7 +26,7 @@ public class DubboProvider extends DubboBaseConfig {
 		return serviceBean;
 	}
 	@Bean
-	public ServiceBean<MemberCouponApi> couponProvider(MemberCouponApi couponApi) {
+	public ServiceBean<MemberCouponApi> memberCouponProvider(MemberCouponApi couponApi) {
 		ServiceBean<MemberCouponApi> serviceBean = new ServiceBean<MemberCouponApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
@@ -36,7 +37,7 @@ public class DubboProvider extends DubboBaseConfig {
 		return serviceBean;
 	}
 	@Bean
-	public ServiceBean<MemberInfoApi> infoProvider(MemberInfoApi infoApi) {
+	public ServiceBean<MemberInfoApi> memberInfoProvider(MemberInfoApi infoApi) {
 		ServiceBean<MemberInfoApi> serviceBean = new ServiceBean<MemberInfoApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
@@ -48,7 +49,7 @@ public class DubboProvider extends DubboBaseConfig {
 	}
 	
 	@Bean
-	public ServiceBean<MemberPointApi> pointProvider(MemberPointApi pointApi) {
+	public ServiceBean<MemberPointApi> memberPointProvider(MemberPointApi pointApi) {
 		ServiceBean<MemberPointApi> serviceBean = new ServiceBean<MemberPointApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
@@ -59,7 +60,7 @@ public class DubboProvider extends DubboBaseConfig {
 		return serviceBean;
 	}
 	@Bean
-	public ServiceBean<MemberOrderApi> orderProvider(MemberOrderApi orderApi) {
+	public ServiceBean<MemberOrderApi> memberOrderProvider(MemberOrderApi orderApi) {
 		ServiceBean<MemberOrderApi> serviceBean = new ServiceBean<MemberOrderApi>();
 		serviceBean.setProxy("javassist");
 		serviceBean.setVersion("myversion");
@@ -76,6 +77,18 @@ public class DubboProvider extends DubboBaseConfig {
 		serviceBean.setVersion("myversion");
 		serviceBean.setInterface(StoreApi.class.getName());
 		serviceBean.setRef(storeApi);
+		serviceBean.setTimeout(5000);
+		serviceBean.setRetries(3);
+		return serviceBean;
+	}
+	
+	@Bean
+	public ServiceBean<CouponApi> couponProvider(CouponApi couponApi) {
+		ServiceBean<CouponApi> serviceBean = new ServiceBean<CouponApi>();
+		serviceBean.setProxy("javassist");
+		serviceBean.setVersion("myversion");
+		serviceBean.setInterface(CouponApi.class.getName());
+		serviceBean.setRef(couponApi);
 		serviceBean.setTimeout(5000);
 		serviceBean.setRetries(3);
 		return serviceBean;

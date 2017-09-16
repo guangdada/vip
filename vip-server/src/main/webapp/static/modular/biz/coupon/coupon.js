@@ -31,6 +31,8 @@ Coupon.initColumn = function () {
         	var qrcode = '<button type="button"';
         	if(row.is_invalid == "未生效"){
         		qrcode += ' disabled title="优惠券还未生效，不能传播" class="btn btn-default btn-xs"';
+        	}else if(row.type == 1){
+        		qrcode += ' disabled title="现金券只能兑换，不能传播" class="btn btn-default btn-xs"';
         	}else{
         		qrcode += ' class="btn btn-primary btn-xs"';
         	}
@@ -221,6 +223,28 @@ Coupon.valid = function () {
     		layer.close(index);
     	}, function(){
     	});
+    }
+};
+
+/**
+ * 券号导入
+ */
+Coupon.importCode = function () {
+    if (this.check()) {
+    	if(Coupon.seItem.type != '1'){
+    		Feng.info("现金券才能导入券号");
+    		return;
+    	}
+    	
+        var index = layer.open({
+            type: 2,
+            title: '券号导入',
+            area: ['800px', '420px'], //宽高
+            fix: false, //不固定
+            maxmin: true,
+            content: Feng.ctxPath + '/coupon/coupon_importCode/' + Coupon.seItem.id
+        });
+        this.layerIndex = index;
     }
 };
 

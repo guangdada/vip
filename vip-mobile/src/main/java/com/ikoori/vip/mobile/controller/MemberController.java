@@ -381,7 +381,7 @@ public class MemberController {
 	public String store(HttpServletRequest request, Map<String, Object> map, double lat, double lon) {
 		/*Object ret = this.getWxConfig(request);
 		map.put("ret", ret);*/
-		List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);
+		List<Map<String, Object>> store = consumer.getStoreApi().get().loadStore(lat, lon);
 		map.put("store", store);
 		return "/store.html";
 	}
@@ -399,7 +399,7 @@ public class MemberController {
 	*/
 	@RequestMapping(value = "/storeDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String storeDetail(HttpServletRequest request, Map<String, Object> map, Long storeId) {
-		JSONObject storeDetail = consumer.storeConsumer().get().getStoreDetail(storeId);
+		JSONObject storeDetail = consumer.getStoreApi().get().getStoreDetail(storeId);
 		map.put("storeDetail", storeDetail);
 		return "/storeDetail.html";
 	}

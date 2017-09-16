@@ -31,6 +31,17 @@ public class DateUtil {
 	public static String dateFormat = "yyyy-MM-dd HH:mm:ss";
 	
 	/**
+	 * 获得当前时间long值
+	 * @Title: getLongTime   
+	 * @return
+	 * @date:   2017年9月14日 下午2:25:12 
+	 * @author: chengxg
+	 */
+	public long getLongTime(){
+		return System.currentTimeMillis();
+	}
+	
+	/**
 	 * 获取YYYY格式
 	 *
 	 * @return
@@ -55,6 +66,15 @@ public class DateUtil {
 	 */
 	public static String getDay() {
 		return formatDate(new Date(), "yyyy-MM-dd");
+	}
+	
+	/**
+	 * 获取YYYY-MM-DD HH:mm:ss格式
+	 *
+	 * @return
+	 */
+	public static String getDayTime() {
+		return formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
 	}
 
 	/**
@@ -153,6 +173,19 @@ public class DateUtil {
 			return false;
 		}
 		return parseDate(s).getTime() >= parseDate(e).getTime();
+	}
+	
+	/**
+	 * 和当前时间比较long值大小
+	 * 日期比较，如果s>=e 返回true 否则返回false
+	 * @Title: compareWithCurrentLongTime   
+	 * @param t
+	 * @return
+	 * @date:   2017年9月14日 下午2:27:00 
+	 * @author: chengxg
+	 */
+	public static boolean compareWithLongTime(Date s, Date e){
+		return s.getTime() >= e.getTime();
 	}
 
 	/**

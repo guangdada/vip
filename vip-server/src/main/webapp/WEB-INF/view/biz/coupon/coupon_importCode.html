@@ -1,0 +1,15 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<p>
+			<a href="javascript:location.href='${ctxPath}/static/doc/券号导入模板.xlsx'">下载模板</a>
+		</p>
+		<input type="hidden" id="couponId" value="${couponId}"/>
+		<input type="file" name="codeFile" id="coupon_code_file" class="file-loading" />
+		<div id="errorBlock" class="help-block">
+		</div>
+	</div>
+</div>
+
+<script src="${ctxPath}/static/modular/biz/coupon/coupon_code.js"></script>
+@}

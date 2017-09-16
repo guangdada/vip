@@ -11,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.CouponUseState;
-import com.ikoori.vip.common.constant.state.GrantType;
 import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.MemSourceType;
 import com.ikoori.vip.common.constant.state.RightType;
-import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
@@ -134,6 +133,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Transactional(readOnly = false)
 	@Override
 	public int saveMemberInfo(UserInfo userInfo) throws Exception {
+		JSONObject obj = new JSONObject();
+		obj.put("code", false);
 		Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
 		if (member == null) {
 			// 保存微信用户
@@ -153,9 +154,11 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			memberMapper.insert(member);
 
 			// 查询获取类型为“关注微信”的会员卡
-			Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(), GrantType.SUB_WX.getCode());
+			Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(), CardGrantType.SUB_WX.getCode());
 			if (card == null) {
-				throw new BussinessException(500, "没有找到会员卡类型");
+				//throw new BussinessException(500, "没有找到会员卡类型");
+				obj.put("msg", "没有找到会员卡类型");
+				throw new Exception(obj.toJSONString());
 			}
 			MemberCard memberCard = new MemberCard();
 			memberCard.setMemberId(member.getId());

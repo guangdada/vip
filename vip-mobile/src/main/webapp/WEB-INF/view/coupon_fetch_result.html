@@ -1,0 +1,55 @@
+@layout("/common/_container.html",{title:"我的优惠卡"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+<body style="background-color:#fafafa;">
+	<div class="weui-header bg-black">
+		<div class="weui-header-left">
+			<a class="icon icon-109 f-white"
+				onClick="javascript :history.back(-1);">返回</a>
+		</div>
+		<h1 class="weui-header-title"></h1>
+		<div class="weui-header-right">
+		</div>
+	</div>
+
+
+	<div class="weui-msg">
+		<div class="weui-msg__icon-area">
+			@if(code){
+				<i class="weui-icon-success weui-icon_msg"></i>
+			@}else{
+				<i class="weui-icon-warn weui-icon_msg"></i>
+			@}
+		</div>
+		<div class="weui-msg__text-area">
+			@if(code){
+				<h2 class="weui-msg__title">领取成功</h2>
+			@}else{
+				<h2 class="weui-msg__title">领取失败</h2>
+			@}
+			<p class="weui-msg__desc">
+				${msg}
+			</p>
+		</div>
+		<div class="weui-msg__opr-area">
+			<p class="weui-btn-area">
+				<a href="${ctxPath}/member/coupon" class="weui-btn weui-btn_primary">查看优惠券</a> 
+				<a href="${ctxPath}/index" class="weui-btn weui-btn_default">返回首页</a>
+			</p>
+		</div>
+		<div class="weui-msg__extra-area">
+			<div class="weui-footer">
+				<p class="weui-footer__links">
+					<a href="javascript:void(0);" class="weui-footer__link">酷锐运动</a>
+				</p>
+				<p class="weui-footer__text">Copyright © 2017-2027</p>
+			</div>
+		</div>
+	</div>
+</body>
+@}
+
+	

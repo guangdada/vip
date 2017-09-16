@@ -3,7 +3,7 @@ package com.ikoori.vip.server.modular.biz.warpper;
 import java.util.List;
 import java.util.Map;
 
-import com.ikoori.vip.common.constant.state.GrantType;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Member;
@@ -26,7 +26,7 @@ public class MemberCardWarpper extends BaseControllerWarpper {
     public void warpTheMap(Map<String, Object> map) {
     	String grantType = map.get("grant_type").toString();
     	String state = map.get("state").toString();
-    	map.put("grantType", grantType == null ? "-" : GrantType.valueOf(Integer.valueOf(grantType)));
+    	map.put("grantType", grantType == null ? "-" : CardGrantType.valueOf(Integer.valueOf(grantType)));
     	map.put("state", state == null ? "-" : MemCardState.valueOf(Integer.valueOf(state)));
     }
 

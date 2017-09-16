@@ -4,12 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.dubbo.config.spring.ReferenceBean;
+import com.ikoori.vip.api.service.CouponApi;
 import com.ikoori.vip.api.service.MemberCardApi;
 import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
-import com.ikoori.vip.api.service.StoreApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
+import com.ikoori.vip.api.service.StoreApi;
 
 @Configuration
 public class DubboConsumer extends DubboBaseConfig {
@@ -64,10 +65,21 @@ public class DubboConsumer extends DubboBaseConfig {
 		return ref;
 	}
 	@Bean
-	public ReferenceBean<StoreApi> storeConsumer() {
+	public ReferenceBean<StoreApi> getStoreApi() {
 		ReferenceBean<StoreApi> ref = new ReferenceBean<StoreApi>();
 		ref.setVersion("myversion");
 		ref.setInterface(StoreApi.class);
+		ref.setTimeout(5000);
+		ref.setRetries(3);
+		ref.setCheck(false);
+		return ref;
+	}
+	
+	@Bean
+	public ReferenceBean<CouponApi> getCouponApi() {
+		ReferenceBean<CouponApi> ref = new ReferenceBean<CouponApi>();
+		ref.setVersion("myversion");
+		ref.setInterface(CouponApi.class);
 		ref.setTimeout(5000);
 		ref.setRetries(3);
 		ref.setCheck(false);

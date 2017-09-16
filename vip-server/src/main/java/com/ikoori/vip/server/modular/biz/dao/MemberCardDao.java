@@ -21,9 +21,34 @@ public interface MemberCardDao {
 			@Param("isAsc") boolean isAsc, @Param("merchantId") Long merchantId,
 			@Param("cardNumber") String cardNumber);
    
+   /**
+    * 根据会员id查询memberCard关联card和member
+    * @Title: getMemberCard   
+    * @param memberId
+    * @return
+    * @date:   2017年9月15日 下午12:29:28 
+    * @author: chengxg
+    */
    MemberCard getMemberCard(@Param("memberId") Long memberId);
    
+   /**
+    * 根据会员id获得默认会员卡
+    * @Title: selectByMemberId   
+    * @param memberId
+    * @return
+    * @date:   2017年9月15日 下午12:28:46 
+    * @author: chengxg
+    */
    List<Map<String,Object>> selectByMemberId(@Param("memberId") Long memberId);
    
+   /**
+    * 修改会员默认会员卡
+    * @Title: updateDefaultCard   
+    * @param memberId
+    * @param cardId
+    * @return
+    * @date:   2017年9月15日 下午12:29:05 
+    * @author: chengxg
+    */
    int updateDefaultCard(@Param("memberId") Long memberId,@Param("cardId") Long cardId);
 }

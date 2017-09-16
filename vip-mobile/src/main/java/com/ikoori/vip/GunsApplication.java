@@ -22,39 +22,18 @@ public class GunsApplication extends WebMvcConfigurerAdapter{
 
     protected final static Logger logger = LoggerFactory.getLogger(GunsApplication.class);
     
-    /*@Override
+    /**
+     * 微信登录拦截器
+     * @Title: addInterceptors   
+     * @param registry
+     * @date:   2017年9月16日 下午3:27:04 
+     * @author: chengxg
+     */
+    @Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new WechatLogin()).excludePathPatterns("/login").excludePathPatterns("/kaptcha")
 				.excludePathPatterns("/global/error").excludePathPatterns("/error").addPathPatterns("/**");
-	}*/
-    
-    /**
-     *  微信登录过滤器
-     *  判断session中用户信息是否存在
-     *  如果不存在则重新向用户发起授权
-     * @return
-     */
-    /*@Bean  
-    public FilterRegistrationBean  filterRegistrationBean() {  
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();  
-        WeChatLoginFilter httpBasicFilter = new WeChatLoginFilter();  
-        registrationBean.setFilter(httpBasicFilter);  
-        List<String> urlPatterns = new ArrayList<String>();  
-        urlPatterns.add("/*");  
-        registrationBean.setUrlPatterns(urlPatterns); 
-        registrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/static/*");
-        return registrationBean;  
-    }*/  
-    
-    /**
-     * 注册微信用户授权Servlet
-     * 请求该地址可以获取用户openId等基本信息
-     * @return
-     */
-    /*@Bean
-    public ServletRegistrationBean servletRegistrationBean() {
-        return new ServletRegistrationBean(new WebOauth(), "/oauth/wexin");// ServletName默认值为首字母小写，即myServlet
-    }*/
+	}
 
     /**
      * 增加swagger的支持

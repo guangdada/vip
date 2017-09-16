@@ -26,6 +26,14 @@ public interface CouponFetchDao {
 			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,
 			@Param("merchantId") Long merchantId);
 
+	/**
+	 * 根据手机号和店铺编号查询会员还在有效期内的券
+	 * @Title: selectByMemberId   
+	 * @date:   2017年9月14日 上午10:30:30 
+	 * @author: chengxg
+	 * @return: List<Map<String,Object>>      
+	 * @throws
+	 */
 	public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
 
 	public CouponFetch selectByVerifyCode(@Param("verifyCode") String verifyCode);

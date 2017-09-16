@@ -5,7 +5,7 @@ package com.ikoori.vip.common.constant.state;
  * @author chengxg
  *
  */
-public enum TermsType {
+public enum CardTermsType {
 	INFINITE(0, "无期限"),
 	DAYS(1, "天"),
 	RANGE(2, "时间段");
@@ -13,7 +13,7 @@ public enum TermsType {
     int code;
     String message;
 
-    TermsType(int code, String message) {
+    CardTermsType(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -38,7 +38,7 @@ public enum TermsType {
         if (status == null) {
             return "";
         } else {
-            for (TermsType s : TermsType.values()) {
+            for (CardTermsType s : CardTermsType.values()) {
                 if (s.getCode() == status) {
                     return s.getMessage();
                 }

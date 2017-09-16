@@ -63,7 +63,19 @@ public enum BizExceptionEnum {
 	 */
 	INVALID_MEMBER(500,"没有找到该会员信息"),
 	INVALID_cardName(500,"会员卡名称已存在"),
-	INVALID_cardLevel(500,"会员卡级别已存在");
+	INVALID_cardLevel(500,"会员卡级别已存在"),
+	INVALID_grantType(500,"发卡方式为“关注微信”的会员卡只能有一种"),
+	
+	/**
+	 * 优惠券问题
+	 */
+	coupon_expired(500, "该优惠券已经过期啦"),
+	invalid_member_card(500, "您还没有会员卡哦"),
+	limit_card_level(500, "该优惠券只能“{cardName}”才能领哦"),
+	limit_quota(500, "该优惠券每人只能领 {quota}张哦"),
+	coupon_no_stock(500, "该优惠券已经领完啦"),
+	invalid_member(500, "您还不是会员哦");
+	
 
 	BizExceptionEnum(int code, String message) {
 		this.friendlyCode = code;

@@ -42,6 +42,7 @@
         <vip.common.version>0.0.1</vip.common.version>
         <vip.core.version>0.0.1</vip.core.version>
         <vip.api.version>0.0.1</vip.api.version>
+        <poi.version>3.9</poi.version>
 	</properties>
 
 	<dependencyManagement>

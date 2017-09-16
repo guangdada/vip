@@ -37,6 +37,7 @@
 		AND `status` = 1 limit 1
     </select>
     
+    <!-- 查询所有的"按规则"类别的会员卡，按等级升序排序后，逐个判断是否满足升级到改卡 -->
     <select id="selectByMerchantId" resultType="com.ikoori.vip.common.persistence.model.Card">
     	SELECT
 			*
@@ -45,5 +46,7 @@
 		WHERE
 			merchant_id = #{merchatId}
 		AND `status` = 1
+		AND grant_type = 2
+		ORDER BY card_level ASC
     </select>
 </mapper>

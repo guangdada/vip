@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 public class GunsProperties {
 
     public static final String PREFIX = "guns";
-    // 优惠券领取action路径
-    private String couponUrl;
+    // 微信端地址
+    private String clientUrl;
     // 附近门店查询半径
     private Long raidus;
     // 默认的商户id
@@ -169,11 +169,11 @@ public class GunsProperties {
 		this.raidus = raidus;
 	}
 
-	public String getCouponUrl() {
-		return couponUrl;
+	public String getClientUrl() {
+		return clientUrl;
 	}
 
-	public void setCouponUrl(String couponUrl) {
-		this.couponUrl = couponUrl;
+	public void setClientUrl(String clientUrl) {
+		this.clientUrl = clientUrl;
 	}
 }

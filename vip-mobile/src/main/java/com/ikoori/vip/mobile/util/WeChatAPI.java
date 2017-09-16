@@ -18,8 +18,19 @@ import com.ikoori.vip.common.support.HttpKit;
  * 微信公众平台API调用工具
  */
 public class WeChatAPI {
+	 /**
+     * 保存用于openId
+     */
+	public static String SESSION_USER_INFO = "userInfo";
+    
+    /**
+     * 保存网页授权state
+     */
+	public static String SESSION_USER_STATE = "state";
+	/**
+	 * 酷锐运动服务号appid
+	 */
 	public static String APPID= "wx1679d41b832b4e28";
-
 	private WeChatAPI() {
 		throw new AssertionError("不能从这里运行");
 	}
@@ -64,7 +75,7 @@ public class WeChatAPI {
 	 * @return
 	 */
 	public static UserInfo getUserInfo(HttpSession session) {
-		Object obj = session.getAttribute(Const.SESSION_USER_INFO);
+		Object obj = session.getAttribute(SESSION_USER_INFO);
 		if (obj != null) {
 			return ((UserInfo) obj);
 		}
@@ -77,7 +88,7 @@ public class WeChatAPI {
 	 * @return
 	 */
 	public static String getOpenId(HttpSession session) {
-		Object obj = session.getAttribute(Const.SESSION_USER_INFO);
+		Object obj = session.getAttribute(SESSION_USER_INFO);
 		if (obj != null) {
 			return ((UserInfo) obj).getOpenid();
 		}

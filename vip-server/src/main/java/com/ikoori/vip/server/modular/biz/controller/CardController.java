@@ -22,7 +22,7 @@ import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.constant.state.ColorType;
-import com.ikoori.vip.common.constant.state.GrantType;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -95,7 +95,7 @@ public class CardController extends BaseController {
     	// 查询颜色值
     	model.addAttribute("colors", ColorType.values());
     	
-    	model.addAttribute("grantType", GrantType.values());
+    	model.addAttribute("grantType", CardGrantType.values());
     	
     	List<Card> cards = cardService.selectByCondition(condition);
     	// 查询会员卡
@@ -125,7 +125,7 @@ public class CardController extends BaseController {
 		// 查询颜色值
 		model.addAttribute("colors", ColorType.values());
 
-		model.addAttribute("grantType", GrantType.values());
+		model.addAttribute("grantType", CardGrantType.values());
 
 		List<Card> cards = cardService.selectByCondition(condition);
 		// 查询会员卡

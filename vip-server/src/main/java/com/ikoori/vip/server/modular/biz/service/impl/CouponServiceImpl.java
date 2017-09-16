@@ -2,10 +2,11 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -60,6 +61,7 @@ public class CouponServiceImpl implements ICouponService {
 		return couponMapper.selectList(new EntityWrapper<Coupon>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
 	}
 	
+	@Transactional(readOnly = false)
 	public void saveCoupon(Coupon coupon){
 		if (coupon.getValue() != null) {
 			coupon.setOriginValue(coupon.getValue() * 100);
@@ -79,9 +81,17 @@ public class CouponServiceImpl implements ICouponService {
 		if(coupon.getId() != null){
 			couponMapper.updateById(coupon);
 		}else{
+			// 优惠券别名，用于领取的时候替代ID
+			coupon.setAlias(UUID.randomUUID().toString());
+			coupon.setUrl(gunsProperties.getClientUrl() + "/" + coupon.getAlias());
 			couponMapper.insert(coupon);
-			coupon.setUrl(gunsProperties.getCouponUrl() + coupon.getId());
-			couponMapper.updateById(coupon);
 		}
+	}
+	
+	@Transactional(readOnly = false)
+	public void updateCouponFetch(Long couponId,String openId){
+		// 优惠券每人限制领取数量
+		// 优惠券领取人数更新
+		// 优惠券领取次数更新
 	}
 }

@@ -17,7 +17,7 @@ public class WechatLogin implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// 从session中获取登录者实体
-		Object obj = request.getSession().getAttribute(Const.SESSION_USER_INFO);
+		Object obj = request.getSession().getAttribute(WeChatAPI.SESSION_USER_INFO);
 		if (null == obj) {
 			// 如果session中不存在登录者实体，则弹出框提示重新登录
 			// 设置request和response的字符集，防止乱码

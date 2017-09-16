@@ -100,6 +100,7 @@
 		WHERE
 			c.`status` = 1
 		AND mc.`status` = 1
+		AND mc.is_default = 1
 		AND m.`status` = 1
 		AND m.id = #{memberId}
     </select>

@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ikoori.vip.common.constant.state.GrantType;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -76,12 +76,17 @@ public class CardServiceImpl implements ICardService {
 
 	@Transactional(readOnly = false)
 	public void saveCard(Card card, String rights) {
-		if (card.getGrantType().intValue() == GrantType.RULE.getCode()
-				&& !checkCardLevel(card.getId(), card.getCardLevel(),card.getMerchantId())) {
+		if (card.getGrantType().intValue() == CardGrantType.RULE.getCode()
+				&& !checkCardLevel(card.getId(), card.getCardLevel(), card.getMerchantId())) {
 			throw new BussinessException(BizExceptionEnum.INVALID_cardLevel);
 		}
-		if(!checkCardName(card.getId(), card.getName(),card.getMerchantId())){
+		if (!checkCardName(card.getId(), card.getName(), card.getMerchantId())) {
 			throw new BussinessException(BizExceptionEnum.INVALID_cardName);
+		}
+
+		if (card.getGrantType().intValue() == CardGrantType.SUB_WX.getCode()
+				&& !checkSubWxCount(card.getId(), card.getMerchantId())) {
+			throw new BussinessException(BizExceptionEnum.INVALID_grantType);
 		}
 		card.setCreateUserId(Long.valueOf(ShiroKit.getUser().getId()));
 		if(card.getCoverType().intValue() == 1){
@@ -169,7 +174,7 @@ public class CardServiceImpl implements ICardService {
 	
 	public boolean checkCardLevel(Long id, Integer cardLevel,Long merchantId) {
 		Wrapper<Card> card = new EntityWrapper<>();
-		card.eq("grant_type",GrantType.RULE.getCode());
+		card.eq("grant_type",CardGrantType.RULE.getCode());
 		card.eq("merchant_id", merchantId);
 		card.eq("status", 1);
 		if (id != null) {
@@ -177,6 +182,26 @@ public class CardServiceImpl implements ICardService {
 		}
 		if (cardLevel != null) {
 			card.eq("card_level", cardLevel);
+		}
+		return cardMapper.selectCount(card) == 0;
+	}
+	
+	/**
+	 * 判断“关注微信”类型会员卡只能有一种
+	 * @Title: checkSubWxCount   
+	 * @param id
+	 * @param merchantId
+	 * @return
+	 * @date:   2017年9月14日 下午2:03:07 
+	 * @author: chengxg
+	 */
+	public boolean checkSubWxCount(Long id,Long merchantId){
+		Wrapper<Card> card = new EntityWrapper<>();
+		card.eq("grant_type",CardGrantType.SUB_WX.getCode());
+		card.eq("merchant_id", merchantId);
+		card.eq("status", 1);
+		if (id != null) {
+			card.ne("id", id);
 		}
 		return cardMapper.selectCount(card) == 0;
 	}

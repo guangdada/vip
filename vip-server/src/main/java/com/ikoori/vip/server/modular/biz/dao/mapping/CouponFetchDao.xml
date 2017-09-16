@@ -91,8 +91,8 @@
             </otherwise>
         </choose>
     </select>
-    
-    <select id="selectByMemberId" parameterType="long" resultType="map">
+    <!-- 根据手机号和店铺编号查询会员的可用券 -->
+    <select id="selectByMemberId" resultType="map">
 		    SELECT
 				cf.verify_code as verifyCode ,
 				c.type,
@@ -100,7 +100,8 @@
 				cf.available_value availableValue,
 				c.`name`,
 				c.origin_at_least originAtLeast,
-				c.description
+				c.description,
+				c.use_condition useCondition
 			FROM
 				v_coupon_fetch cf
 			LEFT JOIN v_member m ON cf.member_id = m.id
@@ -111,6 +112,9 @@
 			AND c.`status` = 1
 			AND cf.is_used != 1
 			AND cf.is_invalid = 1
+			<![CDATA[   AND DATE_FORMAT(cf.valid_time, '%Y-%m-%d %H:%i:%s') <=  DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')   ]]>
+			<![CDATA[   AND DATE_FORMAT(cf.expire_time, '%Y-%m-%d %H:%i:%s') >=  DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')   ]]>
+			AND (c.store_id = #{storeId} or c.store_id is NULL)
 			AND m.id = #{memberId}
     </select>
     

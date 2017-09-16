@@ -52,7 +52,7 @@
         msgUploadThreshold: '上传中...',
         msgUploadBegin: 'Initializing...',
         msgUploadEnd: '完成',
-        msgUploadEmpty: 'No valid data available for upload.',
+        msgUploadEmpty: '请勿重复上传，或者文件内容不正确',
         msgValidationError: '验证错误',
         msgLoading: '加载第 {index} 文件 共 {files} &hellip;',
         msgProgress: '加载第 {index} 文件 共 {files} - {name} - {percent}% 完成.',
