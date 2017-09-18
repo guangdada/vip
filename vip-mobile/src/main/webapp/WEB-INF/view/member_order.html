@@ -52,8 +52,10 @@
 	</a>
 	<div style="background-color: #fafafa; height: 10px;"></div>
 	@}
+	@if(!(isNotEmpty(orders))){
 	<div class="weui-form-preview__bd" style="background-color: #fff;">
-		<h4 align="center">(⊙０⊙)啊哦，没有更多订单啦</h4>
+		<h4 align="center">(⊙０⊙)您还没有相关的订单</h4>
 	</div>
+	@}
 </body>
 @}
