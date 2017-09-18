@@ -30,15 +30,18 @@
         select 
         pt.member_id AS memberId,
         pt.in_out,
+        m.points As totalPoints,
         pt.point AS point,
         pt.create_time AS createTime,
-        p.rule_type AS ruleType,
         pt.trade_type AS tradeType
-        from v_point p ,v_point_trade pt 
-        where p.id=pt.point_id and pt.status = 1
+        from v_point_trade pt
+        LEFT JOIN v_member m ON m.id =#{memberId} 
+        where pt.status = 1
         <if test="memberId != null">
         	and pt.member_id=#{memberId}
         </if>
+        ORDER BY pt.id DESC
+        LIMIT 20
     </select>
     
     <select id="selectByMerchantId" resultType="com.ikoori.vip.common.persistence.model.Point">

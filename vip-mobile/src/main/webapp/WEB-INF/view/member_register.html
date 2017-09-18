@@ -4,10 +4,9 @@
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
   <body ontouchstart>
   	<!-- 返回 -->
-	<div class="weui-header bg-black">
+	<div class="weui-header bg-black" style="display:none;">
 		<div class="weui-header-left">
-			<a class="icon icon-109 f-white"
-				onClick="javascript:window.location.href='${ctxPath}/index'">返回</a>
+			<a class="icon icon-109 f-white" onClick="javascript:window.location.href='${ctxPath}/index'">返回</a>
 		</div>
 		<h1 class="weui-header-title"></h1>
 		<div class="weui-header-right">
@@ -23,7 +22,7 @@
 		<!-- <h5 align="center"  style="color:blue;"><a href="">会员卡详情></a></h5> -->
 	</header>
 
-	<div class="weui-cells__title">请输入正确的信息</div>
+	<!-- <div class="weui-cells__title">请输入正确的信息</div> -->
 	<form action="${ctxPath}/member/registerMember" id="memberForm" method="post">
 		<div class="weui-cells weui-cells_form">
 			<div style="display: none;" id="code">
@@ -38,7 +37,7 @@
 				<img class="weui-vcode-img kaptcha" src="${ctxPath}/kaptcha" id="kaptcha" onclick="kaptchaFlash()">
 				<br>
 				<br>
-				<input onkeyup="codeValue(this)" type="text" size="7" style="height: 40px; font-size: 18px;border-radius: 5px; border:1px solid #8dcd16;" placeholder="请输入验证码">
+				<input onkeyup="codeValue(this)" type="text"  style="height: 40px;width:120px;  font-size: 18px;border-radius: 5px; border:1px solid #8dcd16;" placeholder="请输入验证码">
 			</div>
 
 			<input type="hidden" id="kaptchaHide" />
