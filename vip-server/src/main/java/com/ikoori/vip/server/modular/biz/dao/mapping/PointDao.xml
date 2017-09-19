@@ -27,7 +27,7 @@
     </select>
     
     <select id="selectPointListByMemberId" resultType="map">
-        select 
+         select 
         pt.member_id AS memberId,
         pt.in_out,
         m.points As totalPoints,
@@ -35,11 +35,10 @@
         pt.create_time AS createTime,
         pt.trade_type AS tradeType
         from v_point_trade pt
-        LEFT JOIN v_member m ON m.id =#{memberId} 
+        LEFT JOIN v_member m ON m.id =pt.member_id
         where pt.status = 1
-        <if test="memberId != null">
-        	and pt.member_id=#{memberId}
-        </if>
+		AND m.`status`=1
+        AND m.open_id=#{openId}
         ORDER BY pt.id DESC
         LIMIT 20
     </select>

@@ -9,7 +9,6 @@
 		</div>
 		<h1 class="weui-header-title"></h1>
 		<div class="weui-header-right">
-	  		<!-- <a class="icon icon-83 f-white"></a> -->
 		</div> 
   	</div>
   	
@@ -17,7 +16,7 @@
       <h4 align="center" style="color:white">完善个人资料</h4>
     </header>
     
-    <div class="weui-cells__title" style="color:blue">请填写真实信息，获得生日赠礼！</div>
+	<!--  <div class="weui-cells__title" style="color:blue">请填写真实信息！</div> -->
     <form name="memberForm" action="${ctxPath}/member/updateMemberInfo" id="memberForm"  method="post">
 		<div class="weui-cells weui-cells_form">
 	  		<input type="hidden" name="id" value="${member.id!}"/>
@@ -132,6 +131,7 @@
 	    	success:function(data){
 				if(data && data.code=='200'){
 					$.toptip('修改成功！','success');
+					window.location = "${ctxPath}/index";
 				}else{
 					 $.toptip('修改失败！');
 				}

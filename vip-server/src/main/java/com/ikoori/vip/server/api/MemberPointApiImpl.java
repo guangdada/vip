@@ -28,11 +28,7 @@ public class MemberPointApiImpl implements MemberPointApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberPointByOpenId(String openId) {
-		Member member = memberDao.getMemberByOpenId(openId);
-		if(member == null){
-			return null;
-		}
-		List<Map<String, Object>> points= pointDao.selectPointListByMemberId(member.getId());
+		List<Map<String, Object>> points= pointDao.selectPointListByMemberId(openId);
 		return points;
 	}
 

@@ -4,6 +4,11 @@
 	height: 50px;
 }
 
+.weui-cell__hd i {
+	display: block;
+	margin-right: 5px;
+}
+
 .point-demos-header {
 	padding: 20px 0;
 }
