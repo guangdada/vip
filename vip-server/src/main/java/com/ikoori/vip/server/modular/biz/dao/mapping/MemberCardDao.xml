@@ -15,7 +15,7 @@
 			v_member_card mc
 		LEFT JOIN v_member m ON mc.member_id = m.id
 		LEFT JOIN v_card c ON mc.card_id = c.id
-		LEFT JOIN v_wx_user wu ON m.wx_user_id = wu.id
+		LEFT JOIN v_wx_user wu ON m.open_id = wu.openid
 		WHERE
 			mc.`status` = 1
 		AND m.`status` = 1

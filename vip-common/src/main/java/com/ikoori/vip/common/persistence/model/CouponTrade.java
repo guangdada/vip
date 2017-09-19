@@ -78,8 +78,8 @@ public class CouponTrade extends Model<CouponTrade> {
     /**
      * 微信用户id
      */
-	@TableField("wx_user_id")
-	private Long wxUserId;
+	/*@TableField("wx_user_id")
+	private Long wxUserId;*/
     /**
      * 创建时间
      */
@@ -161,13 +161,13 @@ public class CouponTrade extends Model<CouponTrade> {
 		this.verifyCode = verifyCode;
 	}
 
-	public Long getWxUserId() {
+	/*public Long getWxUserId() {
 		return wxUserId;
 	}
 
 	public void setWxUserId(Long wxUserId) {
 		this.wxUserId = wxUserId;
-	}
+	}*/
 
 	public Date getCreateTime() {
 		return createTime;
@@ -225,7 +225,6 @@ public class CouponTrade extends Model<CouponTrade> {
 			", usedTime=" + usedTime +
 			", usedOrderNo=" + usedOrderNo +
 			", verifyCode=" + verifyCode +
-			", wxUserId=" + wxUserId +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +
 			", status=" + status +

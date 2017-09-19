@@ -62,7 +62,7 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得会员积分")
 	@RequestMapping(value = "getPoints", method = RequestMethod.POST)
 	@ResponseBody
-	public String getPoints(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getPoints(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -93,13 +93,13 @@ public class WebMemberController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 
 	@ApiOperation("根据手机号获得会员卡")
 	@RequestMapping(value = "getCards", method = RequestMethod.POST)
 	@ResponseBody
-	public String getCards(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getCards(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -133,13 +133,13 @@ public class WebMemberController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 
 	private JSONObject initCard(Long memberId) {
 		// 获得会员的默认会员卡
 		List<Map<String, Object>> memberCards = memberCardService.selectByMemberId(memberId);
-		if(memberCards == null){
+		if(CollectionUtils.isEmpty(memberCards)){
 			return null;
 		}
 		Map<String, Object> defaultCard = memberCards.get(0);
@@ -198,7 +198,7 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得优惠券")
 	@RequestMapping(value = "getCoupon", method = RequestMethod.POST)
 	@ResponseBody
-	public String getCoupon(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getCoupon(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -227,7 +227,7 @@ public class WebMemberController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 
 	private JSONArray initCoupon(Long memberId) {
@@ -250,7 +250,7 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得优惠券、积分、会员卡")
 	@RequestMapping(value = "info", method = RequestMethod.POST)
 	@ResponseBody
-	public String info(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> info(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -285,7 +285,7 @@ public class WebMemberController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 
 	public static void main(String[] args) {

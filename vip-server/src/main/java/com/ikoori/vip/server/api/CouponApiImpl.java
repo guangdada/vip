@@ -242,7 +242,7 @@ public class CouponApiImpl implements CouponApi {
 		cf.setIsInvalid(true);
 		cf.setMobile(member.getMobile());
 		cf.setVersion(cf.getVersion());
-		cf.setWxUserId(member.getWxUserId());
+		//cf.setWxUserId(member.getWxUserId());
 		int count = couponFetchMapper.updateById(cf);
 		if (count == 0) {
 			obj.put("msg", "激活失败，未知错误");

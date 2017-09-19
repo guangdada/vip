@@ -125,4 +125,15 @@ public class WeChatAPI {
         }
         return null;
     }
+    
+    public static void main(String[] args) {
+    	Map<String, String> param = new HashMap<String,String>();
+    	param.put("storeNo", "1869eb3b63494579a68fbb20b10fc506");
+    	param.put("mobile", "18508443775");
+    	param.put("sign", "1");
+    	String resultJson = HttpKit.sendPost("http://localhost/web/member/getCards", param);
+    	System.out.println(resultJson);
+    	JSONObject obj = JSONObject.parseObject(resultJson);
+    	System.out.println(obj.get("msg"));
+    }
 }

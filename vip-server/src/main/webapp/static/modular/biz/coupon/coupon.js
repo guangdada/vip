@@ -36,7 +36,7 @@ Coupon.initColumn = function () {
         	}else{
         		qrcode += ' class="btn btn-primary btn-xs"';
         	}
-        	qrcode += ' onclick="Coupon.showQr('+row.id+',\''+row.url+'\')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;二维码</button>';
+        	qrcode += ' onclick="Coupon.showQr('+row.id+',\''+row.url+'\')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发券</button>';
         	return qrcode;
         	
         	/*var qrcode = '<a type="button" class="btn btn-xs btn-info"  onclick="Coupon.showQr('+row.id+',\''+row.url+'\')">推广</a>';

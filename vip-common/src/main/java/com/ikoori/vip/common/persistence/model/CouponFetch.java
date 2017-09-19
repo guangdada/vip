@@ -99,8 +99,8 @@ public class CouponFetch extends Model<CouponFetch> {
     /**
      * 微信用户id
      */
-	@TableField("wx_user_id")
-	private Long wxUserId;
+	/*@TableField("wx_user_id")
+	private Long wxUserId;*/
     /**
      * 失效时间
      */
@@ -239,13 +239,13 @@ public class CouponFetch extends Model<CouponFetch> {
 		this.mobile = mobile;
 	}
 
-	public Long getWxUserId() {
+	/*public Long getWxUserId() {
 		return wxUserId;
 	}
 
 	public void setWxUserId(Long wxUserId) {
 		this.wxUserId = wxUserId;
-	}
+	}*/
 
 	public Date getExpireTime() {
 		return expireTime;
@@ -335,7 +335,6 @@ public class CouponFetch extends Model<CouponFetch> {
 			", validTime=" + validTime +
 			", message=" + message +
 			", mobile=" + mobile +
-			", wxUserId=" + wxUserId +
 			", expireTime=" + expireTime +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +

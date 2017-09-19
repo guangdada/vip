@@ -299,7 +299,7 @@ public class OrderServiceImpl implements IOrderService {
 				couponTrade.setUsedOrderNo(order.getOrderNo());
 				couponTrade.setUsedOrderId(order.getId());
 				couponTrade.setVerifyCode(verifyCode);
-				couponTrade.setWxUserId(member.getWxUserId());
+				//couponTrade.setWxUserId(member.getWxUserId());
 				couponTradeMapper.insert(couponTrade);
 				
 				// 更新优惠券使用次数

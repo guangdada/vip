@@ -175,7 +175,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			log.info("保存会员信息");
 			member = new Member();
 			member.setOpenId(wxUser.getOpenid());
-			member.setWxUserId(wxUser.getId());
+			//member.setWxUserId(wxUser.getId());
 			member.setIsActive(false);
 			// 需要根据appid获得商户id
 			member.setMerchantId(gunsProperties.getMerchantId());
@@ -198,7 +198,9 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			memberService.upgradeMemberCard(member, card);
 		} else {
 			log.info("用户已经存在，开始更新微信账号信息");
-			WxUser wxUser = wxUserMapper.selectById(member.getWxUserId());
+			WxUser wxUser = new WxUser();
+			wxUser.setOpenid(userInfo.getOpenid());
+			wxUser = wxUserMapper.selectOne(wxUser);
 			setWxUserInfo(userInfo, wxUser);
 			wxUserMapper.updateById(wxUser);
 		}

@@ -3,13 +3,13 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
@@ -58,7 +58,7 @@ public class MemberCardServiceImpl implements IMemberCardService {
 	public List<MemberCard> findByMemberId(Long memberId){
 		Wrapper<MemberCard> wrapper = new EntityWrapper<MemberCard>();
 		wrapper.eq("member_id", memberId);
-		wrapper.eq("state", 0);
+		wrapper.eq("state", MemCardState.USED.getCode());
 		wrapper.eq("status", 1);
 		return memberCardMapper.selectList(wrapper);
 	}

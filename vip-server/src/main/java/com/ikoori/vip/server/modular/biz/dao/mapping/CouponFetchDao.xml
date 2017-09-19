@@ -49,7 +49,7 @@
 			v_coupon_fetch cf
 		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
 		LEFT JOIN v_member m ON cf.member_id = m.id
-		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
+		LEFT JOIN v_wx_user u ON m.open_id = u.openid
 		WHERE
 			cf.`status` = 1
 		AND c.`status` = 1
@@ -242,7 +242,7 @@
 			v_coupon_fetch cf
 		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
 		LEFT JOIN v_member m ON cf.member_id = m.id
-		LEFT JOIN v_wx_user u ON m.wx_user_id = u.id
+		LEFT JOIN v_wx_user u ON m.open_id = u.openid
 		WHERE
 		cf.`status` = 1
 		AND c.`status` = 1

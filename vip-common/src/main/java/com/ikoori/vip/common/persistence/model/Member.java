@@ -58,8 +58,8 @@ public class Member extends Model<Member> {
     /**
      * 微信用户id
      */
-	@TableField("wx_user_id")
-	private Long wxUserId;
+	/*@TableField("wx_user_id")
+	private Long wxUserId;*/
 	
 	/**
 	 * 微信用户openId
@@ -191,13 +191,13 @@ public class Member extends Model<Member> {
 		this.wxCode = wxCode;
 	}
 
-	public Long getWxUserId() {
+	/*public Long getWxUserId() {
 		return wxUserId;
 	}
 
 	public void setWxUserId(Long wxUserId) {
 		this.wxUserId = wxUserId;
-	}
+	}*/
 
 	public Integer getSex() {
 		return sex;
@@ -327,7 +327,6 @@ public class Member extends Model<Member> {
 			", isActive=" + isActive +
 			", name=" + name +
 			", wxCode=" + wxCode +
-			", wxUserId=" + wxUserId +
 			", sex=" + sex +
 			", birthday=" + birthday +
 			", sourceType=" + sourceType +

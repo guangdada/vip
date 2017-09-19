@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.common.dto.CouponPayDo;
 import com.ikoori.vip.common.dto.OrderItemPayDo;
 import com.ikoori.vip.common.dto.OrderPayDo;
@@ -44,7 +43,7 @@ public class WebOrderController extends BaseController {
 	@ApiOperation("会员优惠券、积分结算接口")
 	@RequestMapping(value = "pay", method = RequestMethod.POST)
 	@ResponseBody
-	public String pay(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> pay(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "订单号", required = true) @RequestParam(required = true) String orderNo,
 			@ApiParam(value = "订单总额", required = true) @RequestParam(required = true) String balanceDue,
@@ -103,6 +102,6 @@ public class WebOrderController extends BaseController {
 			result.put("msg", "请求失败");
 		}
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<会员优惠券、积分结算接口<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 }

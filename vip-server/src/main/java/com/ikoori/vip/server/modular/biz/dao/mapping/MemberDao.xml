@@ -5,7 +5,7 @@
         select m.*,wu.nickname ,
         mc.card_number AS cardNumber
         from v_member m 
-        LEFT JOIN v_wx_user wu on wu.id=m.wx_user_id
+        LEFT JOIN v_wx_user wu on wu.openid=m.open_id
         LEFT JOIN v_member_card mc on mc.member_id=m.id
         where 1 = 1 and m.status = 1 and mc.is_default=1
         <if test="memName != null and memName !=''">
@@ -100,7 +100,7 @@
 			m.*,wu.nickname AS nickname
 		FROM
 			v_member m
-		LEFT JOIN v_wx_user wu  ON wu.id=m.wx_user_id	
+		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
 		WHERE
 		<if test="memberId != null">
         	 m.id = #{memberId}
