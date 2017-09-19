@@ -92,6 +92,7 @@ public class MemberController extends BaseController {
     	
     	MemberCard memberCard=new MemberCard();
     	memberCard.setMemberId(member.getId());
+    	memberCard.setIsDefault(true);
     	memberCard=memberCardMapper.selectOne(memberCard);
     	model.addAttribute("memberCard",memberCard);
     	

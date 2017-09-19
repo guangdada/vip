@@ -329,7 +329,7 @@ public class MemberServiceImpl implements IMemberService {
 		}
 		// 修改会员的默认会员卡
 		log.info("修改会员的默认会员卡");
-		updateDefaultCard(member.getId(), card.getId());
+		updateDefaultCard(card.getId(),member.getId());
 	}
 	
 	

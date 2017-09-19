@@ -35,7 +35,6 @@ import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
 import com.ikoori.vip.common.persistence.model.CouponTrade;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Order;
 import com.ikoori.vip.common.persistence.model.OrderItem;
 import com.ikoori.vip.common.persistence.model.Point;
@@ -419,31 +418,6 @@ public class OrderServiceImpl implements IOrderService {
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<保存门店订单数据<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 	
-	/**
-	 * 将会员除了cardId类别的会员卡都置为非默认状态
-	 * @param cardId
-	 * @param memberId
-	 * @return
-	 */
-	public int updateDefaultCard(Long cardId,Long memberId){
-		return memberCardDao.updateDefaultCard(memberId, cardId);
-	}
-	
-	/**
-	 * 获得会员指定类别的会员卡
-	 * @param memberId
-	 * @param cardId
-	 * @return
-	 */
-	public MemberCard getMemberCard(Long memberId,Long cardId){
-		Wrapper<MemberCard> w = new EntityWrapper<MemberCard>();
-		w.eq("member_id", memberId).eq("card_id", cardId);
-		List<MemberCard> mcs = memberCardMapper.selectList(w);
-		if(CollectionUtils.isNotEmpty(mcs)){
-			return mcs.get(0);
-		}
-		return null;
-	}
 	
 	/**
 	 * 查询会员上一次按购买数量获得积分的记录id

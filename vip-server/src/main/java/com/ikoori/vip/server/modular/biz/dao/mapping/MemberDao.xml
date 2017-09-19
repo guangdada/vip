@@ -81,7 +81,7 @@
     
     <!-- 修改会员积分 -->
     <update id="updatePoint">
-    	UPDATE v_member SET points = points + #{point} where id = ${memberId} AND points + #{point} &gt;= 0
+    	UPDATE v_member SET points = points + #{point} where id = #{memberId} AND points + #{point} &gt;= 0
     </update>
     
     <update id="updateMemberInfoByOpenId">

@@ -154,7 +154,7 @@ public class ShiroConfig {
         hashMap.put("/kaptcha", "anon");
         hashMap.put("/files/**", "anon");
         // 外部接口目录
-        hashMap.put("/api", "anon");
+        hashMap.put("/web/**", "anon");
         hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
