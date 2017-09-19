@@ -9,7 +9,6 @@ import com.ikoori.vip.common.constant.cache.CacheKey;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Dict;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.persistence.model.Merchant;
 
 /**
  * 常量生产工厂的接口
@@ -105,11 +104,6 @@ public interface IConstantFactory {
      */
     String getStatusName(Integer status);
     
-    /**
-     * 获取商户状态
-     */
-    String getMerchantStateName(Integer state);
-
     /**
      * 获取菜单状态
      */

@@ -30,6 +30,55 @@ public class CouponController {
 
 	@Autowired
 	DubboConsumer consumer;
+	
+	/**
+	 * 跳转优惠券激活页面
+	 * @Title: toActive
+	 * @param request
+	 * @param map
+	 * @return
+	 * @date: 2017年9月14日 上午11:43:49
+	 * @author: chengxg
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/toActive", method = { RequestMethod.GET, RequestMethod.POST })
+	public String toActive(HttpServletRequest request,Model model) throws Exception {
+		try {
+			String openId = WeChatAPI.getOpenId(request.getSession());
+			if (openId == null) {
+				throw new Exception("登录信息有误");
+			}
+			return "/coupon_active.html";
+		} catch (Exception e) {
+			log.error("跳转优惠券激活页面", e);
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value = "/active", method = { RequestMethod.GET, RequestMethod.POST })
+	public String active(HttpServletRequest request, String verifyCode, Model model) throws Exception {
+		try {
+			String openId = WeChatAPI.getOpenId(request.getSession());
+			if (openId == null) {
+				throw new Exception("登录信息有误");
+			}
+			consumer.getCouponApi().get().activeCoupon(verifyCode, openId);
+			model.addAttribute("code",true);
+			model.addAttribute("msg","该券已经放入您的账户");
+		} catch (Exception e) {
+			log.error("优惠券激活失败", e);
+			model.addAttribute("code",false);
+			// 判断是否为业务异常
+			if (StringUtils.isNotBlank(e.getMessage()) && e.getMessage().matches("\\{(.*)\\}")) {
+				model.addAttribute("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
+			}else{
+				model.addAttribute("msg","发生未知错误！");
+			}
+		}
+		// 跳转激活结果页面
+		return "/coupon_active_result.html";
+	}
+	
 
 	/**
 	 * 跳转优惠券领取页面

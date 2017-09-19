@@ -53,7 +53,7 @@ public class PointTrade extends Model<PointTrade> {
 	@TableField("order_id")
 	private Long orderId;
     /**
-     * 1支出/0收入
+     * 0支出/1收入
      */
 	@TableField("in_out")
 	private Boolean inOut;

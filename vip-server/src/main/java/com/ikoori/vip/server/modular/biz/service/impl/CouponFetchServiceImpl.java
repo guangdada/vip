@@ -126,10 +126,8 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 						verifyCode = cell.getStringCellValue();
 						if (StringUtils.isBlank(verifyCode)) {
 							rowMessage.append("券号不能为空；");
-						} else if (verifyCode.length() != RandomUtil.coupon_code_length) {
-							rowMessage.append("券号长度必须是"+RandomUtil.coupon_code_length+"位；");
-						} else if (!verifyCode.matches("[a-zA-Z0-9]+")) {
-							rowMessage.append("券号必须是字母或数子；");
+						} else if (!verifyCode.matches(RandomUtil.coupon_code_matches)) {
+							rowMessage.append("券号必须是20位的大写字母或数子；");
 						} else if(checkVerifyCode(verifyCode)){
 							rowMessage.append("券号已经存在；");
 						}

@@ -18,7 +18,9 @@ Store.initColumn = function () {
         {title: '门店名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '地址', field: 'address', visible: true, align: 'center', valign: 'middle'},
         {title: '联系电话', field: 'service_phone', visible: true, align: 'center', valign: 'middle'},
-        {title: '营业时间', field: 'open_time', visible: true, align: 'center', valign: 'middle'}
+        {title: '营业时间', field: 'open_time', visible: true, align: 'center', valign: 'middle',formatter:function(index,row,value){
+        	return row.open_time + "-" + row.close_time;
+        }}
     ];
 };
 

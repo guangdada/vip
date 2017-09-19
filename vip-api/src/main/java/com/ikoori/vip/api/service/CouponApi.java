@@ -29,4 +29,16 @@ public interface CouponApi {
 	 * @author: chengxg
 	 */
 	public JSONObject getCoupon(String couponId,String openId) throws Exception;
+	
+	/**
+	 * 根据券号激活优惠券
+	 * @Title: activeCoupon   
+	 * @param verifyCode
+	 * @param openId
+	 * @return
+	 * @throws Exception
+	 * @date:   2017年9月18日 下午5:38:19 
+	 * @author: chengxg
+	 */
+	public JSONObject activeCoupon(String verifyCode, String openId) throws Exception;
 }

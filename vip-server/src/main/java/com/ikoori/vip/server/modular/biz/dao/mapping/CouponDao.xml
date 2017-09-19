@@ -61,7 +61,16 @@
 		 get_count = get_count + #{getCount}
 		WHERE
 			id = #{couponId}
-		AND stock >= #{getCount}
+		AND stock &gt;= #{getCount}
+    </update>
+    
+    <!-- 修改使用次数 -->
+    <update id="updateUseCount">
+    	UPDATE v_coupon
+		SET use_count = use_count + #{useCount}
+		WHERE
+			id = #{couponId}
+		AND stock &gt;= use_count + #{useCount}
     </update>
     
     <!-- 修改领取用户数量 -->

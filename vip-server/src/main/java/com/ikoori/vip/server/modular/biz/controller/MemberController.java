@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +22,12 @@ import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Merchant;
-import com.ikoori.vip.common.persistence.model.User;
-import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
 import com.ikoori.vip.server.modular.biz.service.ICardService;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
-import com.ikoori.vip.server.modular.biz.warpper.CouponFetchWarpper;
 import com.ikoori.vip.server.modular.biz.warpper.MemberWarpper;
 
 /**
@@ -116,11 +112,12 @@ public class MemberController extends BaseController {
     @Permission
     @ResponseBody
     public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber) {
-    	Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
-    	List<Map<String,Object>> result=memberService.getMemberList(page, memName, memSex, memNickName, memMobile,cardId,cardNumber, page.getOrderByField(), page.isAsc());
-    	page.setRecords(result);
-    	page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
-    	return super.packForBT(page);
+		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
+		List<Map<String, Object>> result = memberService.getMemberList(page, memName, memSex, memNickName, memMobile,
+				cardId, cardNumber, page.getOrderByField(), page.isAsc());
+		page.setRecords(result);
+		page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
+		return super.packForBT(page);
     }
 
     /**

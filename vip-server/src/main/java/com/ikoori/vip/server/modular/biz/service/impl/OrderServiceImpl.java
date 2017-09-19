@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,6 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.constant.state.CouponUseState;
-import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.state.PointType;
 import com.ikoori.vip.common.dto.CouponPayDo;
@@ -43,12 +44,14 @@ import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
+import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.OrderDao;
 import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
+import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IOrderService;
 
 /**
@@ -59,6 +62,7 @@ import com.ikoori.vip.server.modular.biz.service.IOrderService;
  */
 @Service
 public class OrderServiceImpl implements IOrderService {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	OrderDao orderDao;
 	@Autowired
@@ -89,6 +93,11 @@ public class OrderServiceImpl implements IOrderService {
 	PointDao pointDao;
 	@Autowired
 	CardDao cardDao;
+	@Autowired
+	CouponDao couponDao;
+	@Autowired
+	IMemberService memberService;
+	
 	@Override
 	public Integer deleteById(Long id) {
 		return orderMapper.deleteById(id);
@@ -125,15 +134,20 @@ public class OrderServiceImpl implements IOrderService {
 	 */
 	@Transactional(readOnly = false)
 	public void saveOrder(OrderPayDo orderPayDo) throws Exception{
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>保存门店订单数据>>>>>>>>>>>>>>>>>>>>>>>>");
 		Store store = storeDao.selectByStoreNo(orderPayDo.getStoreNo());
 		if(store == null){
+			log.error("没有找到店铺信息,店铺编号：" + orderPayDo.getStoreNo());
 			throw new BussinessException(500,"没有找到店铺信息");
 		}
 		// 判断积分是否足够
 		Member member = memberDao.selectByMobileAndStoreNo(orderPayDo.getMobile(), orderPayDo.getStoreNo());
 		if(member == null){
+			log.error("没有找到该会员信息,手机号：" + orderPayDo.getMobile());
 			throw new BussinessException(500,"没有找到该会员信息");
 		}
+		
+		log.info("保存订单");
 		// 保存order
 		Order order = new Order();
 		order.setPayOrderNo(orderPayDo.getOrderNo());
@@ -144,6 +158,8 @@ public class OrderServiceImpl implements IOrderService {
 		order.setDiscount(orderPayDo.getDiscount());
 		//order.setDiscountInfo(discountInfo);
 		orderMapper.insert(order);
+		
+		log.info("保存订单明细");
 		// 保存orderItem
 		List<OrderItemPayDo> itemPayDos = orderPayDo.getOrderItems();
 		if(itemPayDos!=null){
@@ -158,20 +174,25 @@ public class OrderServiceImpl implements IOrderService {
 				orderItemMapper.insert(orderItem);
 			}
 		}
+		
+		log.info("扣减使用的积分:" + orderPayDo.getPoint());
 		// 扣减使用的积分
 		if (orderPayDo.getPoint() != null && (orderPayDo.getPoint() > 0)) {
 			if(member.getPoints() < orderPayDo.getPoint()){
+				log.error("积分不足，剩余积分"+member.getPoints());
 				throw new BussinessException(500,"积分不足，剩余积分"+member.getPoints());
 			}
-			member.setPoints(member.getPoints() - orderPayDo.getPoint());
-			member.setVersion(member.getVersion());
-			int count = memberMapper.updateById(member);
+			//member.setPoints(member.getPoints() - orderPayDo.getPoint());
+			//member.setVersion(member.getVersion());
+			//int count = memberMapper.updateById(member);
 			//修改会员积分
-			//int count = memberDao.updatePoint(member.getId(), orderPayDo.getPoint() , member.getVersion());
+			int count = memberDao.updatePoint(member.getId(), -orderPayDo.getPoint());
 			if(count == 0 ){
+				log.error("扣减积分失败");
 				throw new BussinessException(500,"扣减积分失败");
 			}
 			
+			log.error("生成积分使用记录");
 			// 生成积分使用记录
 			PointTrade pointTrade = new PointTrade();
 			pointTrade.setMemberId(member.getId());
@@ -183,6 +204,8 @@ public class OrderServiceImpl implements IOrderService {
 			pointTrade.setStoreId(store.getId());
 			pointTradeMapper.insert(pointTrade);
 		}
+		
+		log.info("扣减使用现金券");
 		// 扣减使用现金券
 		if(orderPayDo.getCoupons() != null){
 			for(CouponPayDo couPayDo : orderPayDo.getCoupons()){
@@ -190,11 +213,13 @@ public class OrderServiceImpl implements IOrderService {
 				String verifyCode = couPayDo.getVerifyCode();
 				String msg = "优惠券:"+verifyCode;
 				// 根据券码获得优惠券
+				log.info("根据券码获得优惠券：" + verifyCode);
+				//CouponFetch cf = couponFetchDao.selectByVerifyCodeJoinCoupon(verifyCode);
 				CouponFetch cf = couponFetchDao.selectByVerifyCode(verifyCode);
 				if(cf == null){
 					throw new BussinessException(500,msg+",没有找到");
 				}
-				Coupon coupon  = cf.getCoupon();
+				Coupon coupon  = couponMapper.selectById(cf.getCouponId());
 				if(coupon.isIsAtLeast()){
 					if(coupon.getOriginAtLeast() < orderPayDo.getBalanceDue()){
 						throw new BussinessException(500,msg+",购物满" + coupon.getAtLeast() + "元才能使用");
@@ -264,6 +289,7 @@ public class OrderServiceImpl implements IOrderService {
 					throw new BussinessException(500,"优惠券使用失败");
 				}
 				
+				log.info("生成优惠券使用记录");
 				// 生成优惠券使用记录
 				CouponTrade couponTrade = new CouponTrade();
 				couponTrade.setCouponId(coupon.getId());
@@ -279,11 +305,14 @@ public class OrderServiceImpl implements IOrderService {
 				
 				// 更新优惠券使用次数
 				//coupon.setVersion(coupon.getVersion());
-				coupon.setUseCount(coupon.getUseCount() + 1);
-				couponMapper.updateById(coupon);
+				//coupon.setUseCount(coupon.getUseCount() + 1);
+				//couponMapper.updateById(coupon);
+				log.info("更新优惠券使用次数");
+				couponDao.updateUseCount(coupon.getId(), 1);
 			}
 		}
 		// 根据积分规则返还积分
+		log.info("根据积分规则返还积分");
 		List<Point> points = pointDao.selectByMerchantId(member.getMerchantId());
 		if(points != null){
 			for(Point point : points){
@@ -309,6 +338,8 @@ public class OrderServiceImpl implements IOrderService {
 					}
 				}
 				if(pointTrade.getPoint() > 0){
+					log.info("返还积分：" + pointTrade.getPoint());
+					pointTrade.setPointId(point.getId());
 					pointTrade.setMemberId(member.getId());
 					pointTrade.setOrderId(order.getId());
 					pointTrade.setInOut(true);
@@ -316,11 +347,13 @@ public class OrderServiceImpl implements IOrderService {
 					pointTrade.setStoreId(store.getId());
 					pointTradeMapper.insert(pointTrade);
 					
-					Member memberdb = memberMapper.selectById(member.getId());
-					memberdb.setPoints(member.getPoints() + pointTrade.getPoint());
-					memberdb.setVersion(member.getVersion());
-					int count = memberMapper.updateById(memberdb);
+					//Member memberdb = memberMapper.selectById(member.getId());
+					//memberdb.setPoints(member.getPoints() + pointTrade.getPoint());
+					//memberdb.setVersion(member.getVersion());
+					//int count = memberMapper.updateById(memberdb);
+					int count = memberDao.updatePoint(member.getId(), pointTrade.getPoint());
 					//修改会员积分
+					log.info("累加会员积分");
 					if(count == 0 ){
 						throw new BussinessException(500,"累加积分失败");
 					}
@@ -330,6 +363,7 @@ public class OrderServiceImpl implements IOrderService {
 		
 		// 判断是否满足会员卡升级条件
 		// 查询所有的"按规则"类别的会员卡，按等级升序排序后，逐个判断是否满足升级到改卡
+		log.info("判断是否满足会员卡升级条件");
 		List<Card> cards = cardDao.selectByMerchantId(member.getMerchantId());
 		if (CollectionUtils.isNotEmpty(cards)) {
 			// 获得累计订单数量
@@ -353,12 +387,15 @@ public class OrderServiceImpl implements IOrderService {
 				}
 				// 满足升级条件，升级到该会员卡
 				if (upgrade) {
-					MemberCard mc = getMemberCard(mem.getId(), card.getId());
+					log.info("升级会员：" + mem.getId() + "到会员卡" + card.getId());
+					/*MemberCard mc = getMemberCard(mem.getId(), card.getId());
 					if (mc != null) {
+						log.info("已经有该级别会员卡");
 						// 已经有该级别会员卡
 						mc.setIsDefault(true);
 						memberCardMapper.updateById(mc);
 					} else {
+						log.info("没有该级别会员卡,发送一张");
 						// 没有该级别会员卡
 						MemberCard memCard = new MemberCard();
 						memCard.setCardId(card.getId());
@@ -369,10 +406,17 @@ public class OrderServiceImpl implements IOrderService {
 						memCard.setIsDefault(true);
 						memberCardMapper.insert(memCard);
 					}
-					updateDefaultCard(mem.getId(), card.getId());
+					// 修改会员的默认会员卡
+					log.info("修改会员的默认会员卡");
+					updateDefaultCard(mem.getId(), card.getId());*/
+					memberService.upgradeMemberCard(member, card);
+					// 满足最高等级会员卡升级条件则退出
+					break;
 				}
 			}
 		}
+		
+		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<保存门店订单数据<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 	}
 	
 	/**

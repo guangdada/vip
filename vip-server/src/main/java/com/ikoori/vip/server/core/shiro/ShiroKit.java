@@ -36,11 +36,6 @@ public class ShiroKit {
 	 */
 	public static final String DEFAULTPWD = "123456";
 	
-	/**
-	 * 商户角色id
-	 */
-	public static final String merchantRoleId = "6";
-	
     private static final String NAMES_DELIMETER = ",";
 
     /**

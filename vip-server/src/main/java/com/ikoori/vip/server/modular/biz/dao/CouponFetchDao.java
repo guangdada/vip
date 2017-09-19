@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ikoori.vip.common.dto.CouponFetchDo;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
 
 /**
@@ -36,6 +35,24 @@ public interface CouponFetchDao {
 	 */
 	public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
 
+	/**
+	 * 根据券号获得优惠券,关联查询coupon
+	 * @Title: selectByVerifyCodeJoinCoupon   
+	 * @param verifyCode
+	 * @return
+	 * @date:   2017年9月18日 下午4:27:04 
+	 * @author: chengxg
+	 */
+	public CouponFetch selectByVerifyCodeJoinCoupon(@Param("verifyCode") String verifyCode);
+	
+	/**
+	 * 根据券号获得优惠券
+	 * @Title: selectByVerifyCode   
+	 * @param verifyCode
+	 * @return
+	 * @date:   2017年9月18日 下午11:08:07 
+	 * @author: chengxg
+	 */
 	public CouponFetch selectByVerifyCode(@Param("verifyCode") String verifyCode);
 
 	/*

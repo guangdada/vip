@@ -50,17 +50,50 @@ public class CouponServiceImpl implements ICouponService {
 		return couponMapper.insert(coupon);
 	}
 	
+	/**
+	 * 分页查询
+	 * @Title: getCouponList   
+	 * @param merchantId
+	 * @param isExpired
+	 * @param isInvalid
+	 * @param type
+	 * @param storeId
+	 * @param page
+	 * @param name
+	 * @param orderByField
+	 * @param isAsc
+	 * @return
+	 * @date:   2017年9月18日 下午2:38:29 
+	 * @author: chengxg
+	 */
 	@Override
-	public List<Map<String, Object>> getCouponList(Long merchantId,Boolean isExpired,Boolean isInvalid,Integer type,Long storeId,Page<Coupon> page, String name, String orderByField,
-			boolean isAsc) {
-		return couponDao.getCouponList(merchantId,isExpired,isInvalid,type,storeId,page, name, orderByField, isAsc);
+	public List<Map<String, Object>> getCouponList(Long merchantId, Boolean isExpired, Boolean isInvalid, Integer type,
+			Long storeId, Page<Coupon> page, String name, String orderByField, boolean isAsc) {
+		return couponDao.getCouponList(merchantId, isExpired, isInvalid, type, storeId, page, name, orderByField,
+				isAsc);
 	}
 
+	/**
+	 * 查询优惠券
+	 * @Title: selectByCondition   
+	 * @param condition
+	 * @return
+	 * @date:   2017年9月18日 下午2:35:17 
+	 * @author: chengxg
+	 */
 	@Override
 	public List<Coupon> selectByCondition(Map<String, Object> condition) {
-		return couponMapper.selectList(new EntityWrapper<Coupon>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
+		return couponMapper.selectList(new EntityWrapper<Coupon>().eq("status", 1).eq("is_invalid", 1).eq("merchant_id",
+				condition.get("merchantId")));
 	}
 	
+	/**
+	 * 优惠券保存
+	 * @Title: saveCoupon   
+	 * @param coupon
+	 * @date:   2017年9月18日 下午2:34:36 
+	 * @author: chengxg
+	 */
 	@Transactional(readOnly = false)
 	public void saveCoupon(Coupon coupon){
 		if (coupon.getValue() != null) {
@@ -83,15 +116,8 @@ public class CouponServiceImpl implements ICouponService {
 		}else{
 			// 优惠券别名，用于领取的时候替代ID
 			coupon.setAlias(UUID.randomUUID().toString());
-			coupon.setUrl(gunsProperties.getClientUrl() + "/" + coupon.getAlias());
+			coupon.setUrl(gunsProperties.getClientUrl() + "/coupon/tofetch/" + coupon.getAlias());
 			couponMapper.insert(coupon);
 		}
-	}
-	
-	@Transactional(readOnly = false)
-	public void updateCouponFetch(Long couponId,String openId){
-		// 优惠券每人限制领取数量
-		// 优惠券领取人数更新
-		// 优惠券领取次数更新
 	}
 }

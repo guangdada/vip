@@ -113,7 +113,7 @@
 									<label class="control-label"><em class="required">*</em>可用店铺：</label>
 									<div class="controls">
 						                <select id="storeId" name="storeId">
-					                        <option value="0" selected="">所有店铺</option>
+					                        <option value="" selected="">所有店铺</option>
 					                          @for(c in stores!){ 
 											    <option value="${c.id}"
 											    	@if(coupon.storeId == c.id){
@@ -347,7 +347,7 @@
 												disabled
 											@}
 										>
-					                        <option value="0" selected="">所有会员等级</option>
+					                        <option value="" selected="">所有会员等级</option>
 					                        @for(c in cards!){
 												<option value="${c.id}"
 													@if(coupon.cardId == c.id){
@@ -370,7 +370,7 @@
 											@}
 										>
 
-											<option value="0" selected="">不限张</option>
+											<option value="" selected="">不限张</option>
 											@for(var i = 1;i<=5;i++){
 												<option value="${i}"
 													@if(i == coupon.quota){

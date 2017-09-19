@@ -50,7 +50,7 @@
 			v_member
 		WHERE
 			STATUS = 1
-		AND open_id = #{openId};
+		AND open_id = #{openId}
     </select>
     <select id="getMemberByMobile" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
@@ -79,8 +79,9 @@
 		AND s.store_no = #{storeNo}
     </select>
     
-    <update id="updatePoint" flushCache="true">
-    	UPDATE v_member SET points = points + #{point}, version = version + 1 where id = ${memberId} AND version = #{version}
+    <!-- 修改会员积分 -->
+    <update id="updatePoint">
+    	UPDATE v_member SET points = points + #{point} where id = ${memberId} AND points + #{point} &gt;= 0
     </update>
     
     <update id="updateMemberInfoByOpenId">

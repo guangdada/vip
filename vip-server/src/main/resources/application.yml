@@ -4,7 +4,7 @@
 
 ###################  guns配置  ###################
 guns:
-  client-url: http://localhost:8088/coupon#微信端地址
+  client-url: http://localhost:8088 #微信端地址
   server-url: http://localhost #服务器地址
   image-url:  http://localhost/files #图片访问路径
   swagger-open: true #是否开启swagger (true/false)
@@ -18,6 +18,7 @@ guns:
   check-sign: false #接口调用是否验证签名 正式环境改成true
   sign-key: 123456 #签名秘钥
   merchant-id: 2 #商户id
+  merchant-role-id: 6 #商户角色id
 
 ###################  项目启动端口  ###################
 server:

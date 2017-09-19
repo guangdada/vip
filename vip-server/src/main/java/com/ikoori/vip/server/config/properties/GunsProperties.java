@@ -25,6 +25,8 @@ public class GunsProperties {
     private Long raidus;
     // 默认的商户id
     private Long merchantId = 1L;
+    // 商户角色id
+    private String merchantRoleId = "6";
     
     private boolean checkSign = false;
     
@@ -176,4 +178,14 @@ public class GunsProperties {
 	public void setClientUrl(String clientUrl) {
 		this.clientUrl = clientUrl;
 	}
+
+	public String getMerchantRoleId() {
+		return merchantRoleId;
+	}
+
+	public void setMerchantRoleId(String merchantRoleId) {
+		this.merchantRoleId = merchantRoleId;
+	}
+	
+	
 }

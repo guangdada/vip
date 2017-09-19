@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.annotion.log.BussinessLog;
-import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.Dict;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
@@ -133,7 +132,8 @@ public class MerchantController extends BaseController {
     	if (ToolUtil.isEmpty(merchant) || merchant.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	merchantMapper.updateById(merchant);
+    	merchantService.saveMerchant(merchant);
+    	//merchantMapper.updateById(merchant);
         return super.SUCCESS_TIP;
     }
 

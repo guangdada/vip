@@ -118,7 +118,7 @@
 			AND m.id = #{memberId}
     </select>
     
-    <select id="selectByVerifyCode" parameterType="string" resultMap="couponFetchMap">
+    <select id="selectByVerifyCodeJoinCoupon" parameterType="string" resultMap="couponFetchMap">
     	SELECT
 			cf.id AS id,
 			cf.is_used,
@@ -136,6 +136,20 @@
 			c.at_least,
 			c.is_at_least,
 			c.origin_at_least
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		WHERE
+			cf.`status` = 1
+		AND c.`status` = 1
+		AND cf.verify_code = #{verifyCode}
+    </select>
+    
+    
+    
+    <select id="selectByVerifyCode" parameterType="string" resultType="com.ikoori.vip.common.persistence.model.CouponFetch">
+    	SELECT
+			cf.*
 		FROM
 			v_coupon_fetch cf
 		LEFT JOIN v_coupon c ON cf.coupon_id = c.id

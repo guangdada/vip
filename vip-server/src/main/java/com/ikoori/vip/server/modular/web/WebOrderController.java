@@ -58,6 +58,7 @@ public class WebOrderController extends BaseController {
 		result.put("code", "200");
 		result.put("msg", "请求成功");
 		try {
+			log.info(">>>>>>>>>>>>>>>>>>>>>>>会员优惠券、积分结算接口>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 			boolean isSign = true;
 			if(gunsProperties.isCheckSign()){
 				Map<String, String> data = new HashMap<String,String>();
@@ -71,8 +72,10 @@ public class WebOrderController extends BaseController {
 				data.put("coupons", coupons);
 				data.put("orderItems", orderItems);
 				data.put("sign", sign);
+				log.info("请求参数:" + data.toString());
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
 				if(isSign){
+					log.info("签名失败");
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
@@ -99,6 +102,7 @@ public class WebOrderController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
+		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<会员优惠券、积分结算接口<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		return JSONObject.toJSONString(result);
 	}
 }

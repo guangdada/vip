@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.MenuStatus;
-import com.ikoori.vip.common.constant.state.MerchantState;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.DeptMapper;
 import com.ikoori.vip.common.persistence.dao.DictMapper;
@@ -283,14 +282,6 @@ public class ConstantFactory implements IConstantFactory {
     @Override
     public String getStatusName(Integer status) {
         return ManagerStatus.valueOf(status);
-    }
-    
-    /**
-     * 获取商户状态
-     */
-    @Override
-    public String getMerchantStateName(Integer state) {
-        return MerchantState.valueOf(state);
     }
 
     /**

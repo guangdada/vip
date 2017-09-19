@@ -21,8 +21,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.factory.PageFactory;
-import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.CardGrantType;
+import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -85,11 +85,16 @@ public class CardController extends BaseController {
     public String cardAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(userId);
+    	
+    	Map<String, Object> couponCon = new HashMap<String, Object>();
+		couponCon.put("merchantId", merchant.getId());
+		couponCon.put("invalid", true);
+		
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
     	
     	model.addAttribute("merchantName", merchant.getName());
-    	List<Coupon> coupons  = couponService.selectByCondition(condition);
+    	List<Coupon> coupons  = couponService.selectByCondition(couponCon);
     	// 查询优惠群
     	model.addAttribute("coupons", coupons);
     	// 查询颜色值
@@ -115,11 +120,15 @@ public class CardController extends BaseController {
 	public String cardUpdate(@PathVariable Long cardId, Model model) {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
+		Map<String, Object> couponCon = new HashMap<String, Object>();
+		couponCon.put("merchantId", merchant.getId());
+		couponCon.put("invalid", true);
+		
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("merchantId", merchant.getId());
 
 		model.addAttribute("merchantName", merchant.getName());
-		List<Coupon> coupons = couponService.selectByCondition(condition);
+		List<Coupon> coupons = couponService.selectByCondition(couponCon);
 		// 查询优惠群
 		model.addAttribute("coupons", coupons);
 		// 查询颜色值
@@ -134,9 +143,6 @@ public class CardController extends BaseController {
 		model.addAttribute("logo", merchant.getHeadImg());
 
 		Card card = cardService.selectById(cardId);
-		/*if(card.getCoverType().intValue() == 1){
-			model.addAttribute("coverPic",gunsProperties.getImageUrl() + "/" + card.getCoverPic());
-		}*/
 		if(StringUtils.isNotBlank(card.getColorCode())){
 			model.addAttribute("colorType", ColorType.valueOf(card.getColorCode()));
 		}else{

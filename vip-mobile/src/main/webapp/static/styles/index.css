@@ -621,3 +621,18 @@
 	height: 40px;
 }
 /*优惠券领取样式结束*/
+
+/*优惠券激活样式开始*/
+.active-header {
+	border: 0px;
+	padding: 14px 15px 0px;
+	color: #999;
+	font-size: 13px;
+	position: relative;
+}
+
+.verifyCode{
+	text-align:center;
+}
+/*优惠券激活样式结束*/
+

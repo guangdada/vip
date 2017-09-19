@@ -23,7 +23,7 @@
 	</div>
 </div>
 
-<input type="hidden" id="cardNum" value="${card.cardNum}" />
+<input type="hidden" id="cardNum" value="${card.cardNum!}" />
 <div id="qrcode" style="display: none;"></div>
 
 <div class="bd">
@@ -63,6 +63,16 @@
 				</div>
 				<div class="weui-cell__bd">
 					<p>我的优惠券</p>
+				</div>
+				<div class="weui-cell__ft"></div>
+			</a>
+			<a class="weui-cell weui-cell_access"
+				href="${ctxPath}/coupon/toActive">
+				<div class="weui-cell__hd">
+					<img src="${ctxPath}/static/jqweui/images/7.png" alt="" style="width: 20px; margin-right: 5px; display: block">
+				</div>
+				<div class="weui-cell__bd">
+					<p>兑换优惠券</p>
 				</div>
 				<div class="weui-cell__ft"></div>
 			</a>

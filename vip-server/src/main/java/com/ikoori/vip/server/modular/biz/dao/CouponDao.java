@@ -68,6 +68,18 @@ public interface CouponDao {
 	 */
 	int updateGetCountUser(@Param("couponId") Long couponId,@Param("memberId") Long memberId);
 	
+	
+	/**
+	 * 修改优惠券使用完的次数(现金券可以使用多次，优惠券只能使用一次)
+	 * @Title: updateUseCount   
+	 * @param couponId
+	 * @param useCount
+	 * @return
+	 * @date:   2017年9月18日 上午10:13:11 
+	 * @author: chengxg
+	 */
+	int updateUseCount(@Param("couponId") Long couponId,@Param("useCount") Integer useCount);
+	
 	/**
 	 * 根据alias获得优惠券
 	 * @Title: getCouponByAlias   

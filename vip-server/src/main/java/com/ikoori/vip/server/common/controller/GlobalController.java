@@ -41,7 +41,7 @@ public class GlobalController {
      */
     @RequestMapping(path = "/sessionError")
     public String errorPageInfo(Model model) {
-        model.addAttribute("tips", "session超时");
+        //model.addAttribute("tips", "session超时");
         return "/login.html";
     }
 }

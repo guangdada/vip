@@ -1,0 +1,75 @@
+@layout("/common/_container.html",{title:"优惠券激活"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css"
+	rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript"
+	src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript"
+	src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+<body ontouchstart>
+
+	<header class='demos-header background-img-green'>
+		<h4 align="center">
+			<font color="white">激活优惠券</font>
+		</h4>
+		<br>
+	</header>
+
+	<div class="active-header">请输入优惠券券号</div>
+	<form action="${ctxPath}/coupon/active" id="activeForm" method="post">
+		<input type="hidden" id="verifyCode" name="verifyCode"/>
+		<div class="weui-cells weui-cells_form">
+			<div class="weui-cell" style="text-align:center">
+				<input class="weui-input verifyCode" type="text" name="verifyCode1" id="verifyCode1" placeholder="xxxx" maxlength="4">-
+				<input class="weui-input verifyCode" type="text" name="verifyCode2" id="verifyCode2" placeholder="xxxx" maxlength="4">-
+				<input class="weui-input verifyCode" type="text" name="verifyCode3" id="verifyCode3" placeholder="xxxx" maxlength="4">-
+				<input class="weui-input verifyCode" type="text" name="verifyCode4" id="verifyCode4" placeholder="xxxx" maxlength="4">
+			</div>
+		</div>
+		<div class="weui-btn-area">
+			<a class="weui-btn weui-btn_primary" href="javascript:" id="activeBtn">激活</a>
+		</div>
+	</form>
+	<script>
+		$(function(){
+			$("#activeBtn").bind("click",function(){
+				var verifyCode1 = $("#verifyCode1").val();
+				var verifyCode2 = $("#verifyCode2").val();
+				var verifyCode3 = $("#verifyCode3").val();
+				var verifyCode4 = $("#verifyCode4").val();
+				if(!verifyCode1 || verifyCode1.length !=4){
+					$("#verifyCode1").focus();
+					$.toptip('请输入完整的券号!');
+					return;
+				}
+				if(!verifyCode2 || verifyCode2.length !=4){
+					$("#verifyCode2").focus();
+					$.toptip('请输入完整的券号!');
+					return;
+				}
+				if(!verifyCode3 || verifyCode3.length !=4){
+					$("#verifyCode3").focus();
+					$.toptip('请输入完整的券号!');
+					return;
+				}
+				if(!verifyCode4 || verifyCode4.length !=4){
+					$("#verifyCode4").focus();
+					$.toptip('请输入完整的券号!');
+					return;
+				}
+				var reg = /[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}/;
+				var verifyCode = verifyCode1 +"-"+ verifyCode2 +"-"+ verifyCode3 +"-"+ verifyCode4;
+				if(!reg.test(verifyCode)){
+					$.toptip('券号格式不正确!');
+					return;
+				}
+				$("#verifyCode").val(verifyCode);
+				$("#activeForm").submit();		
+			});
+		});
+	</script>
+</body>
+@}
+
+

@@ -288,18 +288,11 @@
 									<div class="controls">
 										<select name="level" id="level">
 											<option value="">请选择</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-											<option value="6">6</option>
-											<option value="7">7</option>
-											<option value="8">8</option>
-											<option value="9">9</option>
-											<option value="10">10</option>
+											@for(var i = 1;i<=10;i++){
+												<option value="${i}">${i}</option>
+											@}
 										</select>
-										<p class="help-desc">数字越大等级越高，当会员满足条件时会自动发放上一等级对应的会员卡</p>
+										<p class="help-desc">数字越大等级越高，当会员满足条件时会自动发放该等级会员卡</p>
 									</div>
 								</div>
 								

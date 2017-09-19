@@ -102,7 +102,7 @@
 									<label class="control-label"><em class="required">*</em>可用店铺：</label>
 									<div class="controls">
 						                <select id="storeId" name="storeId">
-					                        <option value="0" selected="">所有店铺</option>
+					                        <option value="" selected="">所有店铺</option>
 					                         @for(c in stores!){ 
 											  <option value="${c.id}">${c.name}</option> 
 											  @}
@@ -286,7 +286,7 @@
 									<label class="control-label"><em class="required">*</em>会员等级：</label>
 									<div class="controls">
 						                <select id="user_level" name="user_level" data-value-type="Number">
-					                        <option value="0" selected="">所有会员等级</option>
+					                        <option value="" selected="">所有会员等级</option>
 					                        @for(c in cards!){
 												<option value="${c.id}">${c.name}</option>
 											@}
@@ -300,7 +300,7 @@
 									<div class="controls">
 										<select id="quota" name="quota" data-value-type="Number">
 
-											<option value="0" selected="">不限张</option>
+											<option value="" selected="">不限张</option>
 											@for(var i = 1;i<=5;i++){
 												<option value="${i}">${i}张</option>
 											@}

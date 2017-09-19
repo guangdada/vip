@@ -3,8 +3,8 @@ package com.ikoori.vip.server.modular.biz.warpper;
 import java.util.List;
 import java.util.Map;
 
+import com.ikoori.vip.common.constant.state.MerchantState;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
-import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 
 /**
  * 用户管理的包装类
@@ -20,7 +20,7 @@ public class MerchantWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
-        map.put("stateName", ConstantFactory.me().getMerchantStateName((Integer) map.get("state")));
+        map.put("stateName", MerchantState.valueOf((Integer) map.get("state")));
     }
 
 }

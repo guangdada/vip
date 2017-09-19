@@ -25,7 +25,7 @@ public interface MemberDao {
 	
 	Member getMemberByMobile(@Param("mobile") String mobile);
 	
-	int updatePoint(Long memberId, int point , int version);
+	int updatePoint(Long memberId, int point);
 	
 	int updateMemberInfoByOpenId(@Param("openId") String openId,@Param("name")String name,@Param("mobile")String mobile,@Param("sex")int sex,@Param("address")String address,@Param("birthday")Date birthday);
     
