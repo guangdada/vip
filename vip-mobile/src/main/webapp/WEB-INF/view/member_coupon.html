@@ -32,7 +32,7 @@
 				<a href="${ctxPath}/member/couponDetail?couponId=${c.couponId}&id=${c.id}">
 					<div class="coupon-margin" style="border: 1px solid #c9c9c9;">
 						<div style="color: gray; margin-left: 8px;margin-top:6px;">${c.couponName!}</div>
-						<div align="left">
+						<div align="left" style="margin-top:3px;">
 							<div style="float: left;">
 								<h2 style="color: red; margin-left: 8px;">
 									${c.value!} <font size="2px">&nbsp;元</font>
@@ -42,9 +42,7 @@
 								<font style="color: gray; margin-right: 8px;">${c.useCondition!}</font>
 							</div>
 						</div>
-						<br>
-						<br>
-						<div style="color: gray; margin-left: 8px; float: left; font-size: 13px;">使用期限：${c.startAt!,"yyyy-MM-dd HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
+						<div style="color: gray; margin-top:5px;margin-left: 8px; float: left; font-size: 13px;">使用期限：${c.startAt!,"yyyy-MM-dd HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
 					</div>
 				</a> 
 					@}
@@ -53,10 +51,10 @@
 			<div id="tab2" class="weui-tab__bd-item">
 				@for(c in Coupons!){
 					@if((!c.isInvalid)||(!c.couponIsInvalid)||c.isUsed==1){ 
-					<a href="${ctxPath}/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
+				<a href="${ctxPath}/member/couponDetail?couponId=${c.couponId}&&id=${c.id}">
 					<div class="coupon-margin" style="border: 1px solid #c9c9c9;">
-						<div style="color: gray; margin-left: 5px;">${c.couponName!}</div>
-						<div align="left">
+						<div style="color: gray; margin-left: 5px;margin-top:6px;">${c.couponName!}</div>
+						<div align="left" style="margin-top:3px;">
 							<div style="float: left;">
 								<h2 style="color: red; margin-left: 5px;">
 									${c.value!} <font size="2px">&nbsp;元</font>
@@ -66,9 +64,7 @@
 								<font style="color: gray; margin-right: 5px;">${c.useCondition!}</font>
 							</div>
 						</div>
-						<br>
-						<br>
-						<div style="color: gray; margin-left: 5px; float: left; font-size: 13px;">使用期限：${c.startAt!,"yyyy-MM-dd HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
+						<div style="color: gray;margin-top:5px; margin-left: 5px; float: left; font-size: 13px;">使用期限：${c.startAt!,"yyyy-MM-dd HH:mm"}-${c.endAt!,"yyyy-MM-dd HH:mm"}</div>
 					</div>
 				</a> 
 					@} 
@@ -76,7 +72,6 @@
 			</div>
 		</div>
 
-	</div>
 	</div>
 	<script>
     $(function() {

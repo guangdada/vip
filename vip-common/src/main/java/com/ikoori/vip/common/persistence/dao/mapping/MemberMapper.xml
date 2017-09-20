@@ -6,6 +6,7 @@
 	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Member">
 		<id column="id" property="id" />
 		<result column="mobile" property="mobile" />
+		<result column="area" property="area" />
 		<result column="merchant_id" property="merchantId" />
 		<result column="is_active" property="isActive" />
 		<result column="name" property="name" />

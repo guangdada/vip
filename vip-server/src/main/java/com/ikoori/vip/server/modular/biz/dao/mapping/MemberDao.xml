@@ -88,6 +88,7 @@
 	    m.address=#{address},
 	    m.birthday=#{birthday},
 	    m.mobile=#{mobile},
+	    m.area=#{area},
 	    m.is_active=true
 	    where m.open_id = #{openId}
     </update>

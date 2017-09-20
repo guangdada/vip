@@ -103,6 +103,12 @@ public class Member extends Model<Member> {
      * 收货地址
      */
 	private String address;
+	
+	/**
+	 * 区域
+	 */
+	private String area;
+	
     /**
      * 购买次数
      */
@@ -317,6 +323,14 @@ public class Member extends Model<Member> {
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
+	
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
 
 	@Override
 	public String toString() {
@@ -335,10 +349,13 @@ public class Member extends Model<Member> {
 			", tradeAmount=" + tradeAmount +
 			", lastTradeTime=" + lastTradeTime +
 			", address=" + address +
+			", area=" + area +
 			", tradeCount=" + tradeCount +
 			", createTime=" + createTime +
 			", updateTime=" + updateTime +
 			", status=" + status +
 			"}";
 	}
+
+	
 }

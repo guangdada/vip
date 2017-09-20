@@ -308,7 +308,7 @@
 }
 
 .coupon-margin{
-	margin-top: 25px;
+	margin-top: 20px;
 	margin-right: 10px;
 	margin-left: 10px;
 	background-color: #ffffff;
@@ -320,6 +320,7 @@
 	border-radius: 5px;
 	height: 110px;
 	border:1px solid #c9c9c9;
+	margin-bottom:10px;
 }
 
 .coupon-card-region, .wx-card-region {

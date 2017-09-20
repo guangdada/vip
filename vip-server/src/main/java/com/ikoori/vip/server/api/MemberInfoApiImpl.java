@@ -91,6 +91,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		obj.put("birthday", member.getBirthday());
 		obj.put("mobile", member.getMobile());
 		obj.put("isActive", member.isIsActive());
+		obj.put("area", member.getArea());
 		return obj;
 	}
 
@@ -121,8 +122,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Transactional(readOnly = false)
 	@Override
 	public int updateMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
-			String address) {
-		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday);
+			String address,String area) {
+		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday,area);
 	}
 
 	/**
