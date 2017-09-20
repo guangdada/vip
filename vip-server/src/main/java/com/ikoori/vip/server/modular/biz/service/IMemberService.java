@@ -53,14 +53,14 @@ public interface IMemberService {
 
 	/**
 	 * 根据手机号和店铺编号查询会员
-	 * @Title: selectByMobileAndStoreNo   
+	 * @Title: selectByMobile
 	 * @param mobile
 	 * @param storeNo
 	 * @return
 	 * @date:   2017年9月18日 下午1:56:47 
 	 * @author: chengxg
 	 */
-	public Member selectByMobileAndStoreNo(String mobile, String storeNo);
+	public Member selectByMobile(String mobile);
 	
 	/**
 	 * 升级会员卡和权益

@@ -46,10 +46,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 		}
 		Merchant merchant = memberCard.getMerchant();
 		Card card = memberCard.getCard();
-		if(merchant == null){
-			return null;
-		}
-		if(card == null){
+		if (merchant == null || card == null) {
 			return null;
 		}
 		JSONObject obj = new JSONObject();

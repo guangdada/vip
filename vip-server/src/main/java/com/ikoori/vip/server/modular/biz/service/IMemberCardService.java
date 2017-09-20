@@ -21,6 +21,6 @@ public interface IMemberCardService {
 			Page<MemberCard> page, String nickname, String orderByField, boolean isAsc, Long merchantId,
 			String cardNumber);
 	public List<MemberCard> findByMemberId(Long memberId);
-	List<Map<String,Object>> selectByMemberId(Long memberId);
+	Map<String,Object> selectByMemberId(Long memberId);
 	
 }

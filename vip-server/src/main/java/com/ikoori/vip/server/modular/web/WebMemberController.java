@@ -83,7 +83,7 @@ public class WebMemberController extends BaseController {
 			}
 			if(isSign){
 				JSONObject obj = new JSONObject();
-				Member member = memberService.selectByMobileAndStoreNo(mobile, storeNo);
+				Member member = memberService.selectByMobile(mobile);
 				obj.put("mobile", member.getMobile());
 				obj.put("point", member.getPoints());
 				result.put("content", obj);
@@ -119,7 +119,7 @@ public class WebMemberController extends BaseController {
 				}
 			}
 			if(isSign){
-				Member member = memberService.selectByMobileAndStoreNo(mobile, storeNo);
+				Member member = memberService.selectByMobile(mobile);
 				if(member == null){
 					result.put("code", "500");
 					result.put("msg", "没有找到会员信息");
@@ -138,11 +138,10 @@ public class WebMemberController extends BaseController {
 
 	private JSONObject initCard(Long memberId) {
 		// 获得会员的默认会员卡
-		List<Map<String, Object>> memberCards = memberCardService.selectByMemberId(memberId);
-		if(CollectionUtils.isEmpty(memberCards)){
+		Map<String, Object> defaultCard = memberCardService.selectByMemberId(memberId);
+		if(defaultCard == null){
 			return null;
 		}
-		Map<String, Object> defaultCard = memberCards.get(0);
 		JSONObject obj = new JSONObject();
 		obj.put("cardNumber", defaultCard.get("cardNumber"));
 		obj.put("name", defaultCard.get("name"));
@@ -218,7 +217,7 @@ public class WebMemberController extends BaseController {
 				}
 			}
 			if(isSign){
-				Member member = memberService.selectByMobileAndStoreNo(mobile, storeNo);
+				Member member = memberService.selectByMobile(mobile);
 				JSONArray content = initCoupon(member.getId());
 				result.put("content", content);
 			}
@@ -271,7 +270,7 @@ public class WebMemberController extends BaseController {
 			}
 			if(isSign){
 				JSONObject content = new JSONObject();
-				Member member = memberService.selectByMobileAndStoreNo(mobile, storeNo);
+				Member member = memberService.selectByMobile(mobile);
 				JSONObject card = initCard(member.getId());
 				JSONArray coupons = initCoupon(member.getId());
 				content.put("mobile", member.getMobile());

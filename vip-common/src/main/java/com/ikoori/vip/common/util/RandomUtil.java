@@ -159,12 +159,12 @@ public class RandomUtil {
 	}
 	
 	/**
-	 * 返回会员卡号
+	 * 返回10位会员卡号
 	 * @param prefix 店铺前缀
 	 * @return
 	 */
 	public static String generateCardNum(String prefix){
-		return prefix + generateOnlyNumber(10) + "88";
+		return prefix + generateOnlyNumber(8) + "88";
 	}
 	
 	/**
@@ -180,9 +180,10 @@ public class RandomUtil {
 	 * @return
 	 */
 	public static String generateOrderNo(){
-		Random random = new Random();
-		int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
-		return DateUtil.getMsAllTime() +rannum;
+		//Random random = new Random();
+		//int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;// 获取5位随机数  
+		//return DateUtil.getMsAllTime() +rannum;
+		return DateUtil.getMsAllTime();
 	}
 
 	public static void main(String[] args) {

@@ -63,7 +63,7 @@ public class MemberCardServiceImpl implements IMemberCardService {
 		return memberCardMapper.selectList(wrapper);
 	}
 	
-	public List<Map<String,Object>> selectByMemberId(Long memberId){
+	public Map<String,Object> selectByMemberId(Long memberId){
 		return memberCardDao.selectByMemberId(memberId);
 	}
 }

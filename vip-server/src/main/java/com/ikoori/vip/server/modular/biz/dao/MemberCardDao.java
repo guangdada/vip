@@ -39,7 +39,7 @@ public interface MemberCardDao {
     * @date:   2017年9月15日 下午12:28:46 
     * @author: chengxg
     */
-   List<Map<String,Object>> selectByMemberId(@Param("memberId") Long memberId);
+   Map<String,Object> selectByMemberId(@Param("memberId") Long memberId);
    
    /**
     * 修改会员默认会员卡

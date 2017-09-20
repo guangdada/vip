@@ -103,6 +103,7 @@
 		AND mc.is_default = 1
 		AND m.`status` = 1
 		AND m.id = #{memberId}
+		limit 1
     </select>
     
     <update id="updateDefaultCard">

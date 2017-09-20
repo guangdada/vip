@@ -140,7 +140,7 @@ public class OrderServiceImpl implements IOrderService {
 			throw new BussinessException(500,"没有找到店铺信息");
 		}
 		// 判断积分是否足够
-		Member member = memberDao.selectByMobileAndStoreNo(orderPayDo.getMobile(), orderPayDo.getStoreNo());
+		Member member = memberDao.selectByMobile(orderPayDo.getMobile());
 		if(member == null){
 			log.error("没有找到该会员信息,手机号：" + orderPayDo.getMobile());
 			throw new BussinessException(500,"没有找到该会员信息");

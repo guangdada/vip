@@ -189,8 +189,8 @@ public class MemberServiceImpl implements IMemberService {
 		upgradeMemberCard(member, card);
 	}
 	
-	public Member selectByMobileAndStoreNo(String mobile, String storeNo){
-		return memberDao.selectByMobileAndStoreNo(mobile, storeNo);
+	public Member selectByMobile(String mobile){
+		return memberDao.selectByMobile(mobile);
 	}
 
 	/**   

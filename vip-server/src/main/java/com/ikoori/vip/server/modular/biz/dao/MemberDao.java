@@ -21,7 +21,7 @@ public interface MemberDao {
 	
 	Member getMemberByOpenId(@Param("openId") String openId);
 	
-	Member selectByMobileAndStoreNo(@Param("mobile") String mobile,@Param("storeNo") String storeNo);
+	Member selectByMobile(@Param("mobile") String mobile);
 	
 	Member getMemberByMobile(@Param("mobile") String mobile);
 	
