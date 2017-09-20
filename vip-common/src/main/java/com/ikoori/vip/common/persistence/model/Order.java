@@ -55,7 +55,7 @@ public class Order extends Model<Order> {
 	@TableField("return_status")
 	private Integer returnStatus;
     /**
-     * 订单状态
+     * 订单状态(1:支付成功)
      */
 	@TableField("pay_status")
 	private Integer payStatus;
