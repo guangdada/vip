@@ -27,7 +27,7 @@ public interface MemberDao {
 	
 	int updatePoint(@Param("memberId") Long memberId, @Param("point") int point);
 	
-	int updateMemberInfoByOpenId(@Param("openId") String openId,@Param("name")String name,@Param("mobile")String mobile,@Param("sex")int sex,@Param("address")String address,@Param("birthday")Date birthday);
+	int updateMemberInfoByOpenId(@Param("openId") String openId,@Param("name")String name,@Param("mobile")String mobile,@Param("sex")int sex,@Param("address")String address,@Param("birthday")Date birthday,@Param("area")String area);
     
 	Member selectByMemberId(@Param("memberId") Long memberId);
 }

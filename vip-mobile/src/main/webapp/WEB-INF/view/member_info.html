@@ -66,18 +66,21 @@
 			<div class="weui-cell">
         		<div class="weui-cell__hd"><label for="name" class="weui-label">地址</label></div>
 		        <div class="weui-cell__bd">
-		        	<input class="weui-input"  id="start" name="address" type="text" value="${member.address!}">
+		        	<input class="weui-input"  id="start" name="area" type="text" value="${member.area!}">
 		        </div>
       		</div>
-      		
+
+			<div class="weui-cell">
+				<div class="weui-cell__hd">
+					<label class="weui-label">详细地址</label>
+				</div>
+				<div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="address" name="address" placeholder="请输入详细地址" value="${member.address!}">
+				</div>
+			</div>
 		</div>
     
-	   <!--  <div class="weui-cell">
-			<div class="weui-cell__hd"><label class="weui-label">收货地址</label></div>
-			<div class="weui-cell__bd">
-				<input class="weui-input" type="text" id="name" name="name" placeholder="请输入详细地址" value="${member.name!}">
-			</div>
-	    </div> -->
+	   
 	    <div class="weui-btn-area">
 	    	<a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
 	    </div>
@@ -91,16 +94,6 @@
              console.log(values, displayValues);
              }
           });
-    	  $("#end").cityPicker({
-    	      title: "选择目的地"
-    	  });
-    	  $("#home-city").cityPicker({
-    	      title: "选择目的地",
-    	      showDistrict: false,
-    	      onChange: function (picker, values, displayValues) {
-    	      console.log(values, displayValues);
-    	      }
-    	   });
     	  //会员信息提交
           $("#showTooltips").click(function() {
         	  var name=$.trim($("#name").val());

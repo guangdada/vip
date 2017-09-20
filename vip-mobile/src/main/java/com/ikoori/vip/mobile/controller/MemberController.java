@@ -98,7 +98,7 @@ public class MemberController {
 			
 			//修改会员信息
 			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), mem.getName(),
-					mem.getSex(), mem.getBirthday(), mem.getAddress());
+					mem.getSex(), mem.getBirthday(), mem.getAddress(),mem.getArea());
 			
 			//获取修改后的会员信息
 			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
@@ -167,7 +167,7 @@ public class MemberController {
 			}
 			
 			//更新会员信息
-			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), null, 1, null, null);
+			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), null, 1, null, null,null);
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
 			e.printStackTrace();

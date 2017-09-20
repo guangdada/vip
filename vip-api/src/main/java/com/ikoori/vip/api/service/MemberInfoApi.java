@@ -12,5 +12,5 @@ public interface MemberInfoApi {
 	public JSONObject getMemberInfoByOpenId(String openId);
 	public Object getMemberByMobile(String mobile);
 	public int saveMemberInfo(UserInfo userInfo) throws Exception;
-	public int updateMemberInofByOpenId(String openId,String mobile,String name,int sex,Date birthday,String address);
+	public int updateMemberInofByOpenId(String openId,String mobile,String name,int sex,Date birthday,String address,String area);
 }
