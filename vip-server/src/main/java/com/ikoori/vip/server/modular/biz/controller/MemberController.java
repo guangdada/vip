@@ -116,7 +116,6 @@ public class MemberController extends BaseController {
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
 		List<Map<String, Object>> result = memberService.getMemberList(page, memName, memSex, memNickName, memMobile,
 				cardId, cardNumber, page.getOrderByField(), page.isAsc());
-		page.setRecords(result);
 		page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
 		return super.packForBT(page);
     }

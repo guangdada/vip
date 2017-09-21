@@ -27,7 +27,7 @@
     </select>
     
     <select id="selectPointListByMemberId" resultType="map">
-         select 
+        select 
         pt.member_id AS memberId,
         pt.in_out,
         m.points As totalPoints,

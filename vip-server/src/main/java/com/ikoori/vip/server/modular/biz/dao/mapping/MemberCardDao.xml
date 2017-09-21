@@ -92,6 +92,11 @@
 			c.id as cardId,
 			c.`name`,
 			c.description,
+			c.service_phone AS servicePhone,
+			c.term_type AS termType,
+			c.term_days AS termDays,
+			c.term_start_at AS termStartAt,
+			c.term_end_at AS termEndAt,
 			mc.card_number AS cardNumber
 		FROM
 			v_member_card mc

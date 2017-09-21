@@ -1,0 +1,58 @@
+@layout("/common/_container.html",{title:"会员卡详情"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<link rel="stylesheet" href="${ctxPath}/static/font-awesome-4.7.0/css/font-awesome.min.css">
+
+<div class="weui-cells__titl weui-cell weui-cell_link" style="background-color:#54bd46;">
+	<font color="white">会员卡详情</font>
+</div>
+
+<div class="weui-form-preview">
+	<div class="weui-form-preview__hd">
+		<label class="weui-form-preview__label" style="margin-right:30px;">使用期限</label>
+		<em class="weui-form-preview__value" style="font-size:1.0em;text-align: -webkit-auto;">
+			@if((card.termType!)==0){
+				无限期
+			@}else if((card.termType!)==1){
+				@if(isNotEmpty(card.termDays)){
+					${card.termDays!}天
+				}else{
+					0天
+				@}
+			@}else if((card.termType!)==2){
+				@if(isNotEmpty(card.termStartAt) || isNotEmpty(card.termEndAt)){
+					${card.termStartAt!,"yyyy-MM-dd"}-${card.termEndAt!,"yyyy-MM-dd"}
+				@}else{
+					无
+				@}
+			@}else if(!(isNotEmpty(card.termType))){
+				无
+			@}	
+		</em>
+		<label class="weui-form-preview__label" style="margin-right:30px;">服务电话</label>
+		<em class="weui-form-preview__value" style="font-size:1.0em;color:#54bd46;text-align: -webkit-auto;">
+			@if(isNotEmpty(card.servicePhone)){
+				${card.servicePhone!}
+			@}else{
+				无
+			@}
+		</em>
+		<label class="weui-form-preview__label" style="margin-right:30px;">使用须知</label>
+		<em class="weui-form-preview__value" style="font-size:1.0em;text-align: -webkit-auto;">
+			@if(isNotEmpty(card.description)){
+				${card.description!}
+			@}else{
+				无
+			@}
+		</em>
+	</div>
+</div>
+
+<script type="text/javascript">
+</script>
+
+@}
+
+

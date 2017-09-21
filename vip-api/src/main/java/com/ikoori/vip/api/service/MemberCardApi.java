@@ -4,4 +4,5 @@ import com.alibaba.fastjson.JSONObject;
 
 public interface MemberCardApi {
 	public JSONObject getMemberCardByOpenId(String openId);
+	public JSONObject selectByMemberId(String openId);
 }

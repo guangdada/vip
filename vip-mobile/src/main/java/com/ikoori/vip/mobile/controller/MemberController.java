@@ -381,9 +381,12 @@ public class MemberController {
 	 * @throws   
 	 */  
 	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
-	public String store(HttpServletRequest request, Map<String, Object> map) {
+	public String store(HttpServletRequest request, Map<String, Object> map)throws Exception  {
 		/*List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);*/
 		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
 		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(openId);
 		map.put("store", store);
 		return "/store.html";
@@ -442,5 +445,23 @@ public class MemberController {
 		}
 		System.out.println("出去getWxConfig!!" + ret.toString());
 		return ret;
+	}
+
+	/**   
+	 * @Title: cardDetail   
+	 * @date:   2017年9月20日 上午11:33:16 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
+	@RequestMapping(value = "/cardDetail", method = { RequestMethod.GET, RequestMethod.POST })
+	public String cardDetail(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if(openId == null){
+			throw new Exception("登录信息有误");
+		}
+		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(openId);
+		map.put("card", obj);
+		return "/member_cardDetail.html";
 	}
 }
