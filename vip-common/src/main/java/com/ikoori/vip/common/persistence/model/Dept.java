@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author stylefeng
  * @since 2017-07-11
  */
-@TableName("v_dept")
+@TableName("s_dept")
 public class Dept extends Model<Dept> {
 
     private static final long serialVersionUID = 1L;

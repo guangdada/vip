@@ -53,4 +53,9 @@
 		AND `status` = 1;
     </select>
     
+    <!-- 获取关注 微信 类型的会员卡 -->
+    <select id="getSubscribeWx" resultType="com.ikoori.vip.common.persistence.model.Point">
+    	SELECT * from v_point WHERE rule_type = 0 AND `status` = 1 AND merchant_id = #{merchantId};
+    </select>
+    
 </mapper>

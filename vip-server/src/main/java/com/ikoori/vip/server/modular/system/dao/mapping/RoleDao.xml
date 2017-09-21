@@ -9,20 +9,20 @@
 	<select id="selectRoles" resultType="map">
 		select
 		<include refid="Base_Column_List" />
-		from v_role
+		from s_role
 		<if test="condition != null">
 			where name like CONCAT('%',#{condition},'%')
 		</if>
 	</select>
 
 	<delete id="deleteRolesById">
-		delete from v_relation where roleid = #{roleId}
+		delete from s_relation where roleid = #{roleId}
 	</delete>
 
 	<select id="roleTreeList" resultType="com.ikoori.vip.server.common.node.ZTreeNode">
 		select id "id",pId
 		"pId",name as "name",(case when (pId=0 or pId is null) then 'true'
-		else 'false' end) "open" from v_role
+		else 'false' end) "open" from s_role
 	</select>
 
 	<select id="roleTreeListByRoleId" resultType="com.ikoori.vip.server.common.node.ZTreeNode">
@@ -47,12 +47,12 @@
 		END
 		) "checked"
 		FROM
-		v_role r
+		s_role r
 		LEFT JOIN (
 		SELECT
 		ID
 		FROM
-		v_role
+		s_role
 		WHERE
 		ID IN 
 		

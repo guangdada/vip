@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author stylefeng
  * @since 2017-07-11
  */
-@TableName("v_menu")
+@TableName("s_menu")
 public class Menu extends Model<Menu> {
 
     private static final long serialVersionUID = 1L;

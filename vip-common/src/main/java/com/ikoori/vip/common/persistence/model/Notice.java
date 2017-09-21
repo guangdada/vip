@@ -16,7 +16,7 @@ import java.util.Date;
  * @author stylefeng
  * @since 2017-07-11
  */
-@TableName("v_notice")
+@TableName("s_notice")
 public class Notice extends Model<Notice> {
 
     private static final long serialVersionUID = 1L;

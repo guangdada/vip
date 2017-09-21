@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author stylefeng
  * @since 2017-07-11
  */
-@TableName("v_relation")
+@TableName("s_relation")
 public class Relation extends Model<Relation> {
 
     private static final long serialVersionUID = 1L;

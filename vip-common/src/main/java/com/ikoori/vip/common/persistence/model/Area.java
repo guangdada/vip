@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @author chengxg
  * @since 2017-08-08
  */
-@TableName("v_area")
+@TableName("s_area")
 public class Area extends Model<Area> {
 
     private static final long serialVersionUID = 1L;

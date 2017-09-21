@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.enums.IdType;
  * @author stylefeng
  * @since 2017-07-11
  */
-@TableName("v_dict")
+@TableName("s_dict")
 public class Dict extends Model<Dict> {
 
     private static final long serialVersionUID = 1L;

@@ -13,6 +13,7 @@ import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.MemSourceType;
+import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
@@ -21,12 +22,15 @@ import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
 import com.ikoori.vip.common.persistence.dao.WxUserMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Member;
+import com.ikoori.vip.common.persistence.model.Point;
+import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.common.persistence.model.WxUser;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.dao.CardRightDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
+import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 
 /**
@@ -63,6 +67,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	PointTradeMapper pointTradeMapper;
 	@Autowired
 	IMemberService memberService;
+	@Autowired
+	PointDao pointDao;
 
 	/**
 	 * <p>
@@ -176,7 +182,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			log.info("保存会员信息");
 			member = new Member();
 			member.setOpenId(wxUser.getOpenid());
-			//member.setWxUserId(wxUser.getId());
 			member.setIsActive(false);
 			// 需要根据appid获得商户id
 			member.setMerchantId(gunsProperties.getMerchantId());
@@ -197,6 +202,20 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			log.info("保存会员卡领取记录");
 			//updateMemCard(member, card);
 			memberService.upgradeMemberCard(member, card);
+			
+			// 关注微信返回积分
+			Point point = pointDao.getSubscribeWx(member.getMerchantId());
+			if (point != null) {
+				PointTrade pointTrade = new PointTrade();
+				pointTrade.setInOut(true);
+				pointTrade.setTradeType(PointTradeType.SUBSCRIBE_WX.getCode());
+				pointTrade.setPoint(point.getPoints());
+				pointTrade.setMemberId(member.getId());
+				pointTrade.setMerchantId(member.getMerchantId());
+				pointTrade.setTag("谢谢关注");
+				pointTradeMapper.insert(pointTrade);
+				memberDao.updatePoint(member.getId(),point.getPoints());
+			}
 		} else {
 			log.info("用户已经存在，开始更新微信账号信息");
 			WxUser wxUser = new WxUser();

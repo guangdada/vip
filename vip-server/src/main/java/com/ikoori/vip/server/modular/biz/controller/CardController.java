@@ -74,6 +74,7 @@ public class CardController extends BaseController {
     @Permission
     @RequestMapping("")
     public String index() {
+    	log.info("测试日志");
         return PREFIX + "card.html";
     }
 

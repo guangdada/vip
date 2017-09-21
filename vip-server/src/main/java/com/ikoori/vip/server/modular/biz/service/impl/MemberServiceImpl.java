@@ -315,17 +315,21 @@ public class MemberServiceImpl implements IMemberService {
 						log.info("赠送积分:" + cardRight.getPoints());
 						PointTrade pointTrade = new PointTrade();
 						pointTrade.setInOut(true);
-						pointTrade.setTradeType(PointTradeType.SUBSCRIBE_WX.getCode());
+						pointTrade.setTradeType(PointTradeType.CARD.getCode());
 						pointTrade.setPoint(cardRight.getPoints());
 						pointTrade.setMemberId(member.getId());
 						pointTrade.setMerchantId(member.getMerchantId());
 						pointTrade.setTag("谢谢关注");
 						pointTradeMapper.insert(pointTrade);
-						member.setPoints(cardRight.getPoints());
-						memberMapper.updateById(member);
+						//member.setPoints(cardRight.getPoints());
+						memberDao.updatePoint(member.getId(),cardRight.getPoints());
+						//memberMapper.updateById(member);
 					}
 				}
 			}
+			
+			// 获得关注微信的积分规则
+			
 		}
 		// 修改会员的默认会员卡
 		log.info("修改会员的默认会员卡");

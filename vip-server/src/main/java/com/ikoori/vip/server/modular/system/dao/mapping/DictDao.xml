@@ -9,12 +9,12 @@
 	<select id="selectByCode" resultType="dict">
 		select
 		<include refid="Base_Column_List" />
-		from v_dict
+		from s_dict
 		where code = #{code}
 	</select>
 
 	<select id="list" resultType="map">
-		select * from v_dict
+		select * from s_dict
 		where pid = 0
 		<if test="condition != null and condition != ''">
 			AND name like CONCAT('%',#{condition},'%')

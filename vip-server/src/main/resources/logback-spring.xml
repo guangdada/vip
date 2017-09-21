@@ -31,7 +31,7 @@
     <!--<logger name="com.alibaba" level="error"/>-->
     <!--<logger name="org.apache.kafka.clients.producer.ProducerConfig" level="warn"/>-->
 
-	<logger name="com.ikoori.vip" level="debug" />
+	<!-- <logger name="com.ikoori.vip" level="debug" /> -->
     <root level="INFO">
         <!--<appender-ref ref="Console"/>-->
         <appender-ref ref="FILE"/>

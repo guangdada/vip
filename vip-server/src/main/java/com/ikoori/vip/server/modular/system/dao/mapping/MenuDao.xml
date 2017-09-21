@@ -11,7 +11,7 @@
 	<select id="selectMenus" resultType="map">
 		select
 		<include refid="Base_Column_List" />
-		from v_menu
+		from s_menu
 		where status = 1
 		<if test="condition != null and condition != ''">
 			and (name like CONCAT('%',#{condition},'%') or code like CONCAT('%',#{condition},'%'))
@@ -23,7 +23,7 @@
 
 	<select id="getMenuIdsByRoleId" resultType="int">
 		select menuid from
-		v_relation where roleid = #{roleId}
+		s_relation where roleid = #{roleId}
 	</select>
 
 	<select id="menuTreeList" resultType="com.ikoori.vip.server.common.node.ZTreeNode">
@@ -48,8 +48,8 @@
 		END
 		) as isOpen
 		FROM
-		v_menu m1
-		LEFT JOIN v_menu m2 ON m1.pcode = m2. CODE
+		s_menu m1
+		LEFT JOIN s_menu m2 ON m1.pcode = m2. CODE
 		ORDER BY
 		m1.id ASC
 	</select>
@@ -85,15 +85,15 @@
 		END
 		) "checked"
 		FROM
-		v_menu m1
+		s_menu m1
 		LEFT JOIN
-		v_menu m2
+		s_menu m2
 		ON m1.pcode = m2. CODE
 		left join (
 		SELECT
 		ID
 		FROM
-		v_menu
+		s_menu
 		WHERE
 		ID IN
 		<foreach collection="list" index="index" item="i" open="("
@@ -106,13 +106,13 @@
 	</select>
 
 	<delete id="deleteRelationByMenu">
-		delete from v_relation where menuid = #{menuId}
+		delete from s_relation where menuid = #{menuId}
 	</delete>
 
 	<select id="getResUrlsByRoleId" resultType="string">
 		select url from
-		v_relation rel
-		inner join v_menu m on rel.menuid = m.id
+		s_relation rel
+		inner join s_menu m on rel.menuid = m.id
 		where rel.roleid = #{roleId}
 	</select>
 
@@ -134,19 +134,19 @@
 		m1.ismenu as ismenu,
 		m1.num as num
 		FROM
-		v_menu m1
-		LEFT JOIN v_menu m2 ON m1.pcode = m2. CODE
+		s_menu m1
+		LEFT JOIN s_menu m2 ON m1.pcode = m2. CODE
 		INNER JOIN (
 		SELECT
 		ID
 		FROM
-		v_menu
+		s_menu
 		WHERE
 		ID IN (
 		SELECT
 		menuid
 		FROM
-		v_relation rela
+		s_relation rela
 		WHERE
 		rela.roleid IN
 		<foreach collection="list" index="index" item="i" open="(" separator="," close=")">
