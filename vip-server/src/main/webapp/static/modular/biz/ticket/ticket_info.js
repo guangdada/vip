@@ -53,7 +53,8 @@ TicketInfoDlg.get = function(key) {
  * 关闭此对话框
  */
 TicketInfoDlg.close = function() {
-    parent.layer.close(window.parent.Ticket.layerIndex);
+   // parent.layer.close(window.parent.Ticket.layerIndex);
+	history.back(-1);
 }
 
 /**
@@ -61,19 +62,24 @@ TicketInfoDlg.close = function() {
  */
 TicketInfoDlg.collectData = function() {
 	var specType = $("input[name='specType']:checked").val();
-    this.set('id').set('specType',specType).set('title').set('remark');
+	var storeId = $("select[name='stores'] option:selected").val();
+    this.set('id').set('name').set('specType',specType).set('title').set('remark').set('storeId',storeId);
 }
 
 /**
  * 提交添加
  */
 TicketInfoDlg.addSubmit = function() {
+	var valid = $("#ticketForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/ticket/add", function(data){
         Feng.success("添加成功!");
-        window.parent.Ticket.table.refresh();
+       // window.parent.Ticket.table.refresh();
         TicketInfoDlg.close();
     },function(data){
         Feng.error("添加失败!" + data.responseJSON.message + "!");
@@ -86,40 +92,10 @@ TicketInfoDlg.addSubmit = function() {
  * 提交修改
  */
 TicketInfoDlg.editSubmit = function() {
-	var title = $("#title").val();
-	var remark = $("#remark").val();
-	var title_len = $("#title").val().length;
-	var remark_len = $("#remark").val().length;
-	if(!title && !remark){
-		$("#error1").css('display','block'); 
-		$("#error2").css('display','block');
-		return;
-	}
-	if(!title){
-		$("#error1").css('display','block');
-	    return;
-	}
-	if(!remark){
-		$("#error2").css('display','block');
-		return;
-	}
-	 if(title_len>10){
-	    	$("#error1 p").text("头部标题长度必须在1到10之间！");
-	    	$("#error1").css('display','block'); 
-	    	return;
-	    }
-	  if(remark_len>20){
-	    	$("#error2 p").text("底部备注长度必须在1到20之间");
-	    	$("#error2").css('display','block'); 
-	    	return;
-	    }
-	  if(remark_len>20 && title_len>10){
-		    $("#error1 p").text("头部标题长度必须在1到10之间！");
-	    	$("#error1").css('display','block'); 
-	    	$("#error2 p").text("底部备注长度必须在1到20之间");
-	    	$("#error2").css('display','block'); 
-	    	return;
-	    }
+	var valid = $("#ticketForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
    /* if (!this.validate()) {
@@ -128,7 +104,7 @@ TicketInfoDlg.editSubmit = function() {
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/ticket/update", function(data){
         Feng.success("修改成功!");
-        window.parent.Ticket.table.refresh();
+        //window.parent.Ticket.table.refresh();
         TicketInfoDlg.close();
     },function(data){
         Feng.error("修改失败!" + data.responseJSON.message + "!");
@@ -138,5 +114,65 @@ TicketInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-	Feng.initValidator("ticketForm", TicketInfoDlg.validateFields);
+	$("#title").keyup(function() {
+		var title = $("#title").val();
+		$("#ptitle").text($("#title").val());
+	});
+	$("#remark").keyup(function() {
+		var remark = $("#remark").val();
+		$("#premark").text($("#remark").val());
+	});
+	$('input:radio[name="specType"]').change(function() {
+		var specType = $("input[name='specType']:checked").val();
+		if (specType == 2) {
+			$("#ticketWidth").removeClass("small");
+		}
+		if (specType == 1) {
+			$("#ticketWidth").addClass("small");
+		}
+	});
+	
+	$("#ticketForm").validate({
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());
+		},
+		rules: {
+	    	title: {
+	    		required :true,
+	    		rangelength:[1,10]
+	    	},
+	    	remark: {
+	    		required :true,
+	    		rangelength:[1,20]
+	    	},
+	    	stores:{
+	    		required:true,
+	    		remote: {
+	    		    url: Feng.ctxPath + "/ticket/checkStore",     //后台处理程序
+	    		    type: "post",               //数据发送方式
+	    		    dataType: "json",           //接受数据格式   
+	    		    data: {                     //要传递的数据
+	    		        storeId: function() {
+	    		            return $("#stores").val();
+	    		        }
+	    		    }
+	    		}
+	    	}
+	    },
+	    messages: {
+	    	title: {
+	    		required:"小票抬头不能为空",
+	    		rangelength:"小票抬头必须在 1-10 个字内"
+	    	},
+	    	remark: {
+	    		required:"小票底部备注不能为空",
+	    		rangelength:"小票底部备注必须在 1-20 个字内"
+	    	},
+	    	stores: {
+	    		required:"请选择店铺",
+	    		remote:"所选店铺已经添加了小票信息 "
+	    	}
+	    }
+	});
+	
 });

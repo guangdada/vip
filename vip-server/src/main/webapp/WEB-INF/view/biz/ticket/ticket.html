@@ -1,175 +1,53 @@
 @layout("/common/_container.html"){
-<link
-	href="${ctxPath}/static/css/ticket/ticket.css" rel="stylesheet"/>
-	
-<div class="row" id="ticketForm">
-	<div class="col-sm-12">
-		<div class="ibox float-e-margins">
-		<input type="hidden" id="id" value="${ticket.id}">
-			<!-- <div class="app"> -->
-<!-- 				<div class="app-inner f-cb"> -->
-					<div class="mode-block f-cb">
-						<div id="ticketWidth" class="mode-print f-fl
-						@if(ticket.specType==1){
-									 small
-									@}
-						" style="float:left">
-							<div class="mode-print-title text-16">预览效果</div>
-							<div class="mode-preview print-preview">
-								<p class="tit" id="ptitle">${ticket.title}</p>
-								<p>
-									<!-- /react-text -->
-									<!-- react-text: 34 -->
-									单号：XSD10329392390293
-									<!-- /react-text -->
-								</p>
-								<p>交易时间：2016-09-01 12:00:00</p>
-								<p>
-									<!-- react-text: 37 -->
-									收
-									<!-- /react-text -->
-									<i class="ws3-m">银</i><i class="ws3-m">员</i>
-									<!-- react-text: 40 -->
-									：大琼
-									<!-- /react-text -->
-								</p>
-								<p class="pt-18"></p>
-								<p>杯子杯子杯子杯子杯子杯子杯子杯子杯子杯子 中号；红色</p>
-								<p class="f-cb">
-									<span class="box l box-l">90.00(活动标签)</span><span
-										class="box m box-l">x1</span><span class="box r f-tr">90.00</span>
-								</p>
-								<p class="f-cb">
-									<span class="box l box-l">190.00</span><span
-										class="box m box-l">x1</span><span class="box r f-tr">190.00</span>
-								</p>
-								<p class="pt-18"></p>
-								<p>苹果 红富士</p>
-								<p class="f-cb">
-									<span class="box l box-l">19.89/Kg</span><span
-										class="box m box-l">x3.7</span><span class="box r f-tr">73.59</span>
-								</p>
-								<p class="pt-18"></p>
-								<p>无码商品</p>
-								<p class="f-cb">
-									<span class="box l box-l">1212112.00/kg(折扣</span><span
-										class="box m box-l">x1</span><span class="box r f-tr">1212112.00</span>
-								</p>
-								<p>商品)</p>
-								<p class="f-cb">
-									<span class="box l box-l">2212112.00</span><span
-										class="box m box-l">x1</span><span class="box r f-tr">2212112.00</span>
-								</p>
-								<p class="pt-18"></p>
-								<div>
-									<p>
-										<!-- react-text: 71 -->
-										合
-										<!-- /react-text -->
-										<i class="ws2-m">计</i>
-										<!-- react-text: 73 -->
-										：120.00
-										<!-- /react-text -->
-									</p>
-									<p>优惠方式：整单9折</p>
-									<p>
-										<!-- react-text: 76 -->
-										优
-										<!-- /react-text -->
-										<i class="ws2-m">惠</i>
-										<!-- react-text: 78 -->
-										：-5.00
-										<!-- /react-text -->
-									</p>
-									<p>
-										<!-- react-text: 80 -->
-										抹
-										<!-- /react-text -->
-										<i class="ws2-m">零</i>
-										<!-- react-text: 82 -->
-										：0.02
-										<!-- /react-text -->
-									</p>
-									<p class="pt-18"></p>
-									<p class="text-b">微信付款：90.00</p>
-								</div>
-								<p class="pt-18"></p>
-								<p>
-									<!-- react-text: 87 -->
-									手
-									<!-- /react-text -->
-									<i class="ws3-m">机</i><i class="ws3-m">号</i>
-									<!-- react-text: 90 -->
-									：133****8888
-									<!-- /react-text -->
-								</p>
-								<p>
-									<!-- react-text: 92 -->
-									卡
-									<!-- /react-text -->
-									<i class="ws2-m">号</i>
-									<!-- react-text: 94 -->
-									：1219 5011 3400 7800 89
-									<!-- /react-text -->
-								</p>
-								<p>
-									<!-- react-text: 96 -->
-									积
-									<!-- /react-text -->
-									<i class="ws2-m">分</i>
-									<!-- react-text: 98 -->
-									：
-									<!-- /react-text -->
-									<!-- react-text: 99 -->
-									获得900积分，累计125800积分
-									<!-- /react-text -->
-								</p>
-								<p class="pt-18"></p>
-								<p class="text-footer" id="premark">${ticket.remark}</p>
-							</div>
-						</div>
-						<div class="mode-print ml50 f-fl" style="float:left">
-							<div class="mode-print-title text-16"></div>
-							<div class="mode-preview">
-								<h5 class="mode-set-title">小票规格</h5>
-								<div class="mode-set-check" id="specType">
-								@for(st in specType){
-									<label><input name="specType" value="${st.code}" type="radio"
-									@if(st.code==ticket.specType){
-									 checked
-									@}
-									><span>${st.message}</span></label>
-								@}
-									<!-- <label><input name="receiptSpec" value="2" type="radio"><span>80mm</span></label> -->
-								</div>
-								<div class="mode-set-edit mt10">
-									<div class="mode-edit-title" >编辑头部标题</div>
-									<textarea  class="receipt-edit-field"
-										placeholder="头部标题" id="title" name="title">${ticket.title}</textarea>
-								    <div id="error1">
-								     <p class="error_info">错误提示,头部标题不能为空！</p>
-								     </div>
-								</div>
-								<div class="mode-set-edit mt10">
-									<div class="mode-edit-title">编辑底部备注</div>
-									<textarea  class="receipt-edit-field"
-										placeholder="谢谢惠顾，欢迎下次光临！" id="remark" name="remark">${ticket.remark}</textarea>
-								    <div  id="error2">
-								     <p class="error_info">错误提示,底部备注不能为空！</p>
-								   </div>
-								</div>
-								<div class="mode-option-btnbox mt20 clearfix">
-									<button type="button" class="zent-btn">打印测试</button>
-									<button type="button" class="zent-btn-primary zent-btn" id="ensure" onclick="TicketInfoDlg.editSubmit()">应用</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				<!-- </div> -->
-			<!-- </div> -->
-		</div>
-	</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>小票管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="ticketName" name="小票名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+									    <div class="input-group-btn">
+									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+									        	店铺名称
+									        </button>
+									    </div>
+									    <select class="form-control" id="storeName">
+									    	<option value="" selected="">请选择</option>
+									    	@for(c in stores!){ 
+											  <option value="${c.id}">${c.name!}</option> 
+											@}
+									    </select>
+									</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Ticket.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="TicketTableToolbar" role="group">
+                            @if(shiro.hasPermission("/ticket/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="Ticket.openAddTicket()"/>
+                            @}
+                            @if(shiro.hasPermission("/ticket/update")){
+                                <#button name="修改" icon="fa-plus" clickFun="Ticket.openTicketDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/ticket/delete")){
+                                <#button name="删除" icon="fa-plus" clickFun="Ticket.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="TicketTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="${ctxPath}/static/modular/biz/ticket/ticket_info.js"></script>
 <script src="${ctxPath}/static/modular/biz/ticket/ticket.js"></script>
 @}

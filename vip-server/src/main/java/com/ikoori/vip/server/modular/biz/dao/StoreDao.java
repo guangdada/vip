@@ -25,4 +25,6 @@ public interface StoreDao {
    Store getStoreDetail(@Param("storeId") Long storeId);
    
    List<Map<String,Object>> getStoreByOpenId(@Param("openId")String openId);
+   
+   public List<Store> selectStore(@Param("merchantId") Long merchantId);
 }

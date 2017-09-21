@@ -16,10 +16,19 @@ import com.ikoori.vip.common.persistence.model.Store;
  */
 public interface IStoreService {
 	public Integer deleteById(Long id);
+	
 	public Integer updateById(Store store);
+	
 	public Store selectById(Long id);
+	
 	public Integer insert(Store store);
+	
 	public List<Store> selectByCondition(Map<String, Object> condition);
+	
 	List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
+	
 	public void saveStore(Store store , String pics);
+	
+	public List<Store> selectStore(Long merchantId);
+	
 }

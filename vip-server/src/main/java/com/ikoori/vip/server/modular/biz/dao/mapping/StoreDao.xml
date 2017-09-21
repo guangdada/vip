@@ -26,6 +26,14 @@
         </choose>
     </select>
     
+    <select id="selectStore" resultType="map">
+		SELECT * from v_store s where s.id 
+		NOT IN(SELECT t.store_id  from v_ticket t)
+        <if test="merchantId != null">
+        	and s.merchant_id = #{merchantId}
+        </if>
+    </select>
+    
     <select id="selectByStoreNo" parameterType="string" resultType="com.ikoori.vip.common.persistence.model.Store">
     	SELECT * from v_store where STATUS =1 AND store_no = #{storeNo};
     </select>
