@@ -17,6 +17,15 @@ public interface ITicketService {
 	public Integer updateById(Ticket ticket);
 	public Ticket selectById(Long id);
 	public Integer insert(Ticket ticket);
-	List<Map<String, Object>> getTicketList(Page<Ticket> page, String name,String orderByField,boolean isAsc);
+	List<Map<String, Object>> getTicketList(Page<Ticket> page, String ticketName,Long storeId,Long merchantId,String orderByField,boolean isAsc);
 	public Ticket selectByStoreNum(String storeNum);
+	/**
+	 * 验证店铺是否已经添加了小票
+	 * @Title: checkTicket   
+	 * @date:   2017年9月21日 下午8:07:05 
+	 * @author: huanglin
+	 * @return: boolean      
+	 * @throws
+	 */
+	public boolean checkTicket(Long id, Long storeId,Long merchantId);
 }

@@ -4,18 +4,6 @@
 var MemberInfoDlg = {
     memberInfoData : {},
     validateFields : {
-		name : {
-			validators : {
-				notEmpty : {
-					message : '员工姓名不能为空'
-				},
-				stringLength : {
-					min : 2,
-					max : 20,
-					message : '用户名长度必须在2到20之间'
-				},
-			}
-		},
 		mobile : {
 			validators : {
 				notEmpty : {

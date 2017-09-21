@@ -23,7 +23,7 @@
 				@}
 			@}else if((card.termType!)==2){
 				@if(isNotEmpty(card.termStartAt) || isNotEmpty(card.termEndAt)){
-					${card.termStartAt!,"yyyy-MM-dd"}-${card.termEndAt!,"yyyy-MM-dd"}
+					${card.termStartAt!,"yyyy-MM-dd"} 至  ${card.termEndAt!,"yyyy-MM-dd"}
 				@}else{
 					无
 				@}

@@ -41,7 +41,7 @@ spring:
     port: 6379
     password:
   profiles:
-    active: produce
+    active: dev
   mvc:
     static-path-pattern: /static/**
     view:
@@ -96,16 +96,16 @@ dubbo:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/krvip?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-      username: root
-      password: root
+      url: jdbc:mysql://192.168.168.153:3306/krvip?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: kkjj
+      password: KKjj111111!@#
       filters: log4j,wall,mergeStat
 #多数据源
 biz:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/biz?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: root
+    url: jdbc:mysql://192.168.168.153:3306/biz?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    username: kkjj
+    password: KKjj111111!@#
 
 logging:
   level.root: warn
@@ -121,9 +121,9 @@ logging:
 spring:
   profiles: produce
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/vipdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-      username: root
-      password: root
+      url: jdbc:mysql://192.168.168.153:3306/krvip?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: kkjj
+      password: KKjj111111!@#
       filters: log4j,wall,mergeStat
 
 logging:

@@ -91,4 +91,17 @@ public class StoreServiceImpl implements IStoreService {
 	public List<Store> selectByCondition(Map<String, Object> condition) {
 		return storeMapper.selectList(new EntityWrapper<Store>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
 	}
+
+	/**   
+	 * @Title: selectStore 
+	 * @Description: 店铺  
+	 * @date:   2017年9月21日 下午5:48:50 
+	 * @author: huanglin    
+	 * @throws   
+	 */  
+	@Override
+	public List<Store> selectStore(Long merchantId) {
+		return storeDao.selectStore(merchantId);
+		
+	}
 }
