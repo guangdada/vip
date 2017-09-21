@@ -28,6 +28,7 @@ import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IOrderItemService;
 import com.ikoori.vip.server.modular.biz.service.IOrderService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
+import com.ikoori.vip.server.modular.biz.warpper.OrderWarpper;
 
 /**
  * 订单控制器
@@ -101,7 +102,7 @@ public class OrderController extends BaseController {
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
 		List<Map<String, Object>> result = orderService.getOrderList(page, memName, page.getOrderByField(),
 				page.isAsc(), merchant.getId(), storeId, mobile, orderSource, orderNo);
-		page.setRecords(result);
+		page.setRecords((List<Map<String, Object>>) new OrderWarpper(result).warp());
 		return super.packForBT(page);
 	}
 

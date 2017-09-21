@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.PointTradeDao">
+	<select id="getPointTradeList" resultType="map">
+		SELECT
+			pt.id,
+			pt.create_time AS createTime,
+			pt.in_out AS in_out,
+			pt.point,
+			wx.nickname,
+			m.mobile,
+			p.`name` AS pointName
+		FROM
+			v_point_trade pt
+		LEFT JOIN v_point p ON pt.point_id = p.id
+		LEFT JOIN v_member m ON m.id = pt.member_id
+		LEFT JOIN v_wx_user wx ON wx.openid = m.open_id
+		WHERE
+			1 = 1
+		AND pt.`status` = 1
+		AND m.`status` = 1
+		AND m.merchant_id = #{merchantId}
+        <if test="nickname != null and nickname !=''">
+            and wx.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="mobile != null and mobile !=''">
+            and m.mobile like CONCAT('%',#{mobile},'%')
+        </if>
+        <if test="inOut != null">
+            and pt.in_out = #{inOut}
+        </if>
+        <if test="pointId != null">
+            and p.id = #{pointId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by pt.create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

@@ -1,0 +1,66 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>积分明细管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="nickname" name="微信昵称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="会员手机号" />
+                            </div>
+                            <div class="col-sm-3">
+								<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      交易方式
+								        </button>
+								    </div>
+								    <select class="form-control" id="inOut">
+								        <option value="" selected="">请选择</option>
+								        <option value="0">支出</option>
+								        <option value="1">收入</option>
+								    </select>
+								</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="PointTrade.search()"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                               	<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      积分规则
+								        </button>
+								    </div>
+								    <select class="form-control" id="pointId">
+								        <option value="" selected="">请选择</option>
+				                         @for(c in points!){ 
+										  <option value="${c.id}">${c.name}</option> 
+										 @}
+								    </select>
+								</div>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="PointTradeTableToolbar" role="group">
+                            @if(shiro.hasPermission("/pointTrade/delete")){
+                                <#button name="删除" icon="fa-minus-square" clickFun="PointTrade.delete()" btnCss="danger"/>
+                            @}
+                        </div>
+                        <#table id="PointTradeTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/pointTrade/pointTrade.js"></script>
+@}

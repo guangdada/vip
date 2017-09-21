@@ -19,6 +19,8 @@ public class OrderWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
+    	Integer pay_status = (Integer) map.get("pay_status");
+    	map.put("pay_status", pay_status == 1 ? "支付成功" : "支付失败");
     }
 
 }
