@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberCardApi;
+import com.ikoori.vip.common.constant.state.ColorType;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
@@ -52,15 +53,12 @@ public class MemberCardApiImpl implements MemberCardApi {
 		}
 		Merchant merchant = memberCard.getMerchant();
 		Card card = memberCard.getCard();
-		if(merchant == null){
-			return null;
-		}
-		if(card == null){
+		if(merchant == null || card == null){
 			return null;
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("coverPic", card.getCoverPic());
-		obj.put("colorCode", card.getColorCode());
+		obj.put("colorCode", ColorType.valOf(card.getColorCode()));
 		obj.put("merchantName", merchant.getName());
 		obj.put("merchantLogo", merchant.getHeadImg());
 		obj.put("cardName", card.getName());

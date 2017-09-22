@@ -4,8 +4,13 @@
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <link rel="stylesheet" href="${ctxPath}/static/font-awesome-4.7.0/css/font-awesome.min.css">
-<div class="card-region"
-	style="background-image: url(${card.coverPic!});" onclick="showQr()">
+<div class="card-region" onclick="showQr()"
+	@if(card.coverType == 1){
+		style="background-image: url(${card.coverPic!});"
+	@}else{
+		style="background-color: ${card.colorCode!};"
+	@}
+	 >
 	<div class="card-header">
 		<h4 class="shop-name">
 			<span class="shop-logo"

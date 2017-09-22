@@ -8,8 +8,8 @@ package com.ikoori.vip.common.constant.state;
 public enum PointTradeType {
 
 	SUBSCRIBE_WX(0, "关注微信"),
-	ORDER_COUNT(1, "交易获得"),
-    ORDER_MONEY(2, "交易获得"),
+	ORDER_COUNT(1, "交易笔数"),
+    ORDER_MONEY(2, "交易金额"),
     GIVE(3, "商家赠送"),
     MARK(4, "签到获得"),
     PAY_ORDER(5, "订单消费"),

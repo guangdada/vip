@@ -17,7 +17,6 @@ import com.ikoori.vip.common.constant.state.CouponUseState;
 import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.state.RightType;
-import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
@@ -31,7 +30,6 @@ import com.ikoori.vip.common.persistence.model.CouponFetch;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Merchant;
-import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
@@ -41,6 +39,7 @@ import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
+import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
 
 /**
  * 会员Dao
@@ -75,6 +74,8 @@ public class MemberServiceImpl implements IMemberService {
 	CouponFetchMapper couponFetchMapper;
     @Autowired
 	MemberCardDao memberCardDao;
+    @Autowired
+	IPointTradeService pointTradeService;
     
 	@Override
 	public Integer deleteById(Long id) {
@@ -147,18 +148,10 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	@Transactional(readOnly=false)
 	public void updateMember(Member member,Long cardId,int point) {
-		/*int points=member.getPoints();
-		if(points+point>0){
-			Member db = memberMapper.selectById(member.getId());
-			// 乐观锁
-			member.setVersion(db.getVersion());
-			member.setPoints(points+point);
-		}
-		this.updateById(member);*/
 		//更新交易积分
 		if(point!=0){
 			Member dbMember= selectById(member.getId());
-			int count = memberDao.updatePoint(dbMember.getId(), point);
+			/*int count = memberDao.updatePoint(dbMember.getId(), point);
 			if(count == 0){
 				throw new BussinessException(500,"积分修改失败");
 			}
@@ -166,25 +159,16 @@ public class MemberServiceImpl implements IMemberService {
 			PointTrade pointTrade=new PointTrade();
 			pointTrade.setMemberId(dbMember.getId());
 			pointTrade.setMerchantId(dbMember.getMerchantId());
-			/*pointTrade.setTradeType(3);
-			boolean inOut=false;
-			if(point>0){
-				inOut=false;
-			}else{
-				inOut=true;
-			}*/
 			pointTrade.setTradeType(PointTradeType.GIVE.getCode());
 			pointTrade.setInOut(point> 0 ? true: false);
 			pointTrade.setPoint(point);
-			pointTradeMapper.insert(pointTrade);
+			pointTradeMapper.insert(pointTrade);*/
+			Boolean inOut = point> 0 ? true: false;
+			pointTradeService.savePointTrade(inOut, PointTradeType.GIVE.getCode(), point, dbMember.getId(), null,
+					dbMember.getMerchantId(), null, "");
 		}
 		
 		//更新会员卡
-		/*MemberCard mc=new MemberCard();
-	    mc.setMemberId(member.getId());
-	    mc=memberCardMapper.selectOne(mc);
-	    mc.setCardId(cardId);
-		memberCardMapper.updateById(mc);*/
 		Card card = cardMapper.selectById(cardId);
 		upgradeMemberCard(member, card);
 	}
@@ -313,7 +297,7 @@ public class MemberServiceImpl implements IMemberService {
 						}
 					} else if (RightType.POINTS.getCode().equals(cardRight.getRightType())) {
 						log.info("赠送积分:" + cardRight.getPoints());
-						PointTrade pointTrade = new PointTrade();
+						/*PointTrade pointTrade = new PointTrade();
 						pointTrade.setInOut(true);
 						pointTrade.setTradeType(PointTradeType.CARD.getCode());
 						pointTrade.setPoint(cardRight.getPoints());
@@ -321,9 +305,9 @@ public class MemberServiceImpl implements IMemberService {
 						pointTrade.setMerchantId(member.getMerchantId());
 						pointTrade.setTag("谢谢关注");
 						pointTradeMapper.insert(pointTrade);
-						//member.setPoints(cardRight.getPoints());
-						memberDao.updatePoint(member.getId(),cardRight.getPoints());
-						//memberMapper.updateById(member);
+						memberDao.updatePoint(member.getId(),cardRight.getPoints());*/
+						pointTradeService.savePointTrade(true, PointTradeType.CARD.getCode(), cardRight.getPoints(),
+								member.getId(), null, member.getMerchantId(), null, "");
 					}
 				}
 			}

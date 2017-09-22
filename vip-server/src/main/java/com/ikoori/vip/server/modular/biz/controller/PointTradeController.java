@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.Merchant;
@@ -52,6 +53,8 @@ public class PointTradeController extends BaseController {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		model.addAttribute("points", pointService.getAllPoint(merchant.getId()));
+		
+		model.addAttribute("tradeTypes", PointTradeType.values());
 		return PREFIX + "pointTrade.html";
 	}
 
@@ -78,12 +81,12 @@ public class PointTradeController extends BaseController {
 	 */
 	@RequestMapping(value = "/list")
 	@ResponseBody
-	public Object list(String nickname, String mobile, Integer inOut, Long pointId) {
+	public Object list(String nickname, String mobile, Integer inOut, Long pointId, Integer tradeType) {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
-		List<Map<String, Object>> result = pointTradeService.getPointTradeList(page, nickname, mobile, inOut, pointId, merchant.getId(),
-				page.getOrderByField(), page.isAsc());
+		List<Map<String, Object>> result = pointTradeService.getPointTradeList(page, nickname, mobile, inOut, pointId,
+				merchant.getId(), tradeType, page.getOrderByField(), page.isAsc());
 		page.setRecords((List<Map<String, Object>>) new PointTradeWarpper(result).warp());
 		return super.packForBT(page);
 	}

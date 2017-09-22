@@ -127,17 +127,16 @@ public class PointController extends BaseController {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
     	initParam(point, pointsLimitTemp);
-    	pointMapper.updateById(point);
+    	//pointMapper.updateById(point);
+    	pointService.savePoint(point);
         return super.SUCCESS_TIP;
     }
 
 	private void initParam(Point point, String pointsLimitTemp) {
-		if(point.getId() == null){
-			Long userId = Long.valueOf(ShiroKit.getUser().getId());
-	    	Merchant merchant = merchantService.getMerchantUserId(userId);
-			point.setCreateUserId(userId);
-			point.setMerchantId(merchant.getId());
-		}
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+    	Merchant merchant = merchantService.getMerchantUserId(userId);
+		point.setCreateUserId(userId);
+		point.setMerchantId(merchant.getId());
 		if(point.getRuleType().intValue() == PointType.PAY_ORDER.getCode()){
     		point.setPointsLimit(Integer.valueOf(pointsLimitTemp));
     		point.setName(PointType.PAY_ORDER.getMessage() + pointsLimitTemp + "笔，奖励分值：" +point.getPoints());

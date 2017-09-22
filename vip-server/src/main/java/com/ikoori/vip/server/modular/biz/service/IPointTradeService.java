@@ -30,13 +30,32 @@ public interface IPointTradeService {
 	 * @param inOut
 	 * @param pointId
 	 * @param merchantId
+	 * @param tradeType
 	 * @param orderByField
 	 * @param isAsc
 	 * @return
-	 * @date:   2017年9月20日 下午8:50:58 
+	 * @date:   2017年9月22日 上午11:45:38 
 	 * @author: chengxg
 	 */
 	List<Map<String, Object>> getPointTradeList(Page<Map<String, Object>> page, String nickname, String mobile,
-			Integer inOut, Long pointId,Long merchantId, String orderByField, boolean isAsc);
+			Integer inOut, Long pointId,Long merchantId,Integer tradeType, String orderByField, boolean isAsc);
+	
+	/**
+	 * 保存积分交易记录
+	 * @Title: savePointTrade   
+	 * @param inout
+	 * @param tradeType
+	 * @param points
+	 * @param memberId
+	 * @param pointId
+	 * @param merchantId
+	 * @param storeId
+	 * @param tag
+	 * @return
+	 * @date:   2017年9月22日 下午2:22:41 
+	 * @author: chengxg
+	 */
+	public boolean savePointTrade(Boolean inout, Integer tradeType, Integer points, Long memberId, Long pointId,
+			Long merchantId,Long storeId, String tag);
 
 }

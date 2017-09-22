@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.biz.warpper;
 import java.util.List;
 import java.util.Map;
 
+import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
 
 /**
@@ -21,6 +22,7 @@ public class PointTradeWarpper extends BaseControllerWarpper {
     public void warpTheMap(Map<String, Object> map) {
     	Boolean inOut =Boolean.valueOf(map.get("in_out").toString());
     	map.put("inOut", inOut ? "收入" : "支出");
+    	map.put("tradeType", PointTradeType.valueOf(Integer.valueOf(map.get("trade_type").toString())));
     }
 
 }

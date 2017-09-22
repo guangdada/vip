@@ -96,19 +96,19 @@ dubbo:
 spring:
   profiles: dev
   datasource:
-      url: jdbc:mysql://192.168.168.153:3306/vipdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://192.168.168.153:3306/vipdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
       username: kkjj
       password: KKjj111111!@#
       filters: log4j,wall,mergeStat
 #多数据源
 biz:
   datasource:
-    url: jdbc:mysql://192.168.168.153:3306/biz?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    url: jdbc:mysql://192.168.168.153:3306/biz?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: kkjj
     password: KKjj111111!@#
 
 logging:
-  level.root: warn
+  level.root: info
   level.com.ikoori: debug
   path: logs/
   file: krvip.log
@@ -121,14 +121,14 @@ logging:
 spring:
   profiles: produce
   datasource:
-      url: jdbc:mysql://192.168.168.153:3306/vipdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      url: jdbc:mysql://192.168.168.153:3306/vipdb?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
       username: kkjj
       password: KKjj111111!@#
       filters: log4j,wall,mergeStat
 
 logging:
-  level.root: warn
-  level.com.ikoori: debug
+  level.root: info
+  level.com.ikoori: info
   path: logs/
   file: krvip.log
 

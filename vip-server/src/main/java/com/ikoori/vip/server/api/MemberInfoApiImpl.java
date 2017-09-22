@@ -23,7 +23,6 @@ import com.ikoori.vip.common.persistence.dao.WxUserMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.Point;
-import com.ikoori.vip.common.persistence.model.PointTrade;
 import com.ikoori.vip.common.persistence.model.WxUser;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
@@ -32,6 +31,7 @@ import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
+import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
 
 /**
  * @ClassName: MemberInfoApiImpl
@@ -69,6 +69,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	IMemberService memberService;
 	@Autowired
 	PointDao pointDao;
+	@Autowired
+	IPointTradeService pointTradeService;
 
 	/**
 	 * <p>
@@ -206,15 +208,18 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			// 关注微信返回积分
 			Point point = pointDao.getSubscribeWx(member.getMerchantId());
 			if (point != null) {
-				PointTrade pointTrade = new PointTrade();
+				pointTradeService.savePointTrade(true, PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
+						member.getId(), point.getId(), member.getMerchantId(),null, "");
+				/*PointTrade pointTrade = new PointTrade();
 				pointTrade.setInOut(true);
 				pointTrade.setTradeType(PointTradeType.SUBSCRIBE_WX.getCode());
 				pointTrade.setPoint(point.getPoints());
 				pointTrade.setMemberId(member.getId());
+				pointTrade.setPointId(point.getId());
 				pointTrade.setMerchantId(member.getMerchantId());
 				pointTrade.setTag("谢谢关注");
 				pointTradeMapper.insert(pointTrade);
-				memberDao.updatePoint(member.getId(),point.getPoints());
+				memberDao.updatePoint(member.getId(),point.getPoints());*/
 			}
 		} else {
 			log.info("用户已经存在，开始更新微信账号信息");

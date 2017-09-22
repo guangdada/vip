@@ -7,6 +7,7 @@
 			pt.create_time AS createTime,
 			pt.in_out AS in_out,
 			pt.point,
+			pt.trade_type,
 			wx.nickname,
 			m.mobile,
 			p.`name` AS pointName
@@ -30,7 +31,10 @@
             and pt.in_out = #{inOut}
         </if>
         <if test="pointId != null">
-            and p.id = #{pointId}
+            and pt.point_id = #{pointId}
+        </if>
+        <if test="tradeType != null">
+            and pt.trade_type = #{tradeType}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

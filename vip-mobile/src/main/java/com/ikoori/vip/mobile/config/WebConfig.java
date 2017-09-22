@@ -59,6 +59,7 @@ public class WebConfig {
         properties.put("kaptcha.image.width", "400");
         properties.put("kaptcha.image.height", "170");
         properties.put("kaptcha.textproducer.font.size", "150");
+        properties.put("kaptcha.textproducer.char.string", "0123456789");
         properties.put("kaptcha.session.key", "code");
         properties.put("kaptcha.textproducer.char.length", "4");
         properties.put("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");
