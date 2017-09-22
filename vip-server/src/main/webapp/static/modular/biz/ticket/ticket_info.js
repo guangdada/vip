@@ -145,6 +145,10 @@ $(function() {
 	    		required :true,
 	    		rangelength:[1,20]
 	    	},
+	    	name: {
+	    		required :true,
+	    		rangelength:[1,10]
+	    	},
 	    	stores:{
 	    		required:true,
 	    		remote: {
@@ -161,6 +165,10 @@ $(function() {
 	    },
 	    messages: {
 	    	title: {
+	    		required:"小票名称不能为空",
+	    		rangelength:"小票名称必须在 1-10 个字内"
+	    	},
+	    	name: {
 	    		required:"小票抬头不能为空",
 	    		rangelength:"小票抬头必须在 1-10 个字内"
 	    	},

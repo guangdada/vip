@@ -112,10 +112,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/list")
     @Permission
     @ResponseBody
-    public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber) {
+    public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber,Integer isActive) {
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
 		List<Map<String, Object>> result = memberService.getMemberList(page, memName, memSex, memNickName, memMobile,
-				cardId, cardNumber, page.getOrderByField(), page.isAsc());
+				cardId, cardNumber,isActive,page.getOrderByField(), page.isAsc());
 		page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
 		return super.packForBT(page);
     }

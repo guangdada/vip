@@ -25,9 +25,12 @@ Member.initColumn = function () {
         	return	row.birthday==null?"":row.birthday.substring(0,10);
         	}
         },
+       
         {title: '积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
-        {title: '余额', field: 'balance', visible: true, align: 'center', valign: 'middle'}
-    ];
+        {title: '余额', field: 'balance', visible: true, align: 'center', valign: 'middle'},
+        {title: '是否激活', field: 'isActive', visible: true, align: 'center', valign: 'middle'}
+        
+        ];
 };
 
 /**
@@ -110,6 +113,7 @@ Member.search = function () {
     queryData['cardId']=$("#cardId").find("option:selected").val();
     queryData['cardNumber']=$("#cardNumber").val();
     queryData['memNickName']=$('#memNickName').val();
+    queryData['isActive']=$("#isActive").find("option:selected").val();
     Member.table.refresh({query: queryData});
 };
 

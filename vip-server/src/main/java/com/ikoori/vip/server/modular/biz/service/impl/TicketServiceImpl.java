@@ -56,16 +56,23 @@ public class TicketServiceImpl implements ITicketService {
 		return ticketDao.selectByStoreNum(storeNum);
 	}
 	
+	/**   
+	 * @Title: checkTicket 
+	 * @Description: 检查 店铺是否已有小票
+	 * @date:   2017年9月22日 上午10:49:27 
+	 * @author: huanglin    
+	 * @throws   
+	 */  
 	public boolean checkTicket(Long id, Long storeId,Long merchantId) {
-		Wrapper<Ticket> card = new EntityWrapper<>();
-		card.eq("merchant_id", merchantId);
-		card.eq("status", 1);
+		Wrapper<Ticket> ticket = new EntityWrapper<>();
+		ticket.eq("merchant_id", merchantId);
+		ticket.eq("status", 1);
 		if (id != null) {
-			card.ne("id", id);
+			ticket.ne("id", id);
 		}
 		if (storeId != null) {
-			card.eq("store_id", storeId);
+			ticket.eq("store_id", storeId);
 		}
-		return ticketMapper.selectCount(card) == 0;
+		return ticketMapper.selectCount(ticket) == 0;
 	}
 }

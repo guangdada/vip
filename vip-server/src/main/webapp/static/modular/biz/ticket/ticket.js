@@ -16,7 +16,7 @@ Ticket.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '小票名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
-        {title: '规则类型', field: 'specType', visible: true, align: 'center', valign: 'middle'},
+        {title: '规格类型', field: 'specType', visible: true, align: 'center', valign: 'middle'},
         {title: '小票抬头', field: 'title', visible: true, align: 'center', valign: 'middle'},
         {title: '底部备注', field: 'remark', visible: true, align: 'center', valign: 'middle'},
         {title: '小票类型', field: 'type', visible: true, align: 'center', valign: 'middle'},
@@ -50,7 +50,7 @@ Ticket.openAddTicket = function () {
         maxmin: true,
         content: Feng.ctxPath + '/ticket/ticket_add'
     });*/
-	location.href= Feng.ctxPath + '/ticket/ticket_add/';
+	location.href= Feng.ctxPath + '/ticket/ticket_add';
     //this.layerIndex = index;
 };
 
