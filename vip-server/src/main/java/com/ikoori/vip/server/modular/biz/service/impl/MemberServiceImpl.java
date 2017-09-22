@@ -208,8 +208,8 @@ public class MemberServiceImpl implements IMemberService {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
-			String memNickName, String memMobile,Long cardId,String cardNumber,String orderByField, boolean isAsc) {
-		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, cardId,cardNumber,orderByField, isAsc);
+			String memNickName, String memMobile,Long cardId,String cardNumber,Integer isActive,String orderByField, boolean isAsc) {
+		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, cardId,cardNumber,isActive,orderByField, isAsc);
 	}
 
 	@Override

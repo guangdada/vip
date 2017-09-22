@@ -20,6 +20,7 @@ public class MemberWarpper extends BaseControllerWarpper {
     @Override
     public void warpTheMap(Map<String, Object> map) {
     	/*map.put("sexName", ConstantFactory.me().getSexName((Integer) map.get("sex")));*/
+    	map.put("isActive",Boolean.valueOf(map.get("is_active").toString()) ? "已激活" :"未激活");
     	map.put("sex", map.get("sex") == null ? "" : SexType.valueOf(Integer.valueOf(map.get("sex").toString())));
     }
 

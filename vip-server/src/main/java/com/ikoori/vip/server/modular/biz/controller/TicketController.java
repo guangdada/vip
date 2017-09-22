@@ -76,7 +76,7 @@ public class TicketController extends BaseController {
     /**
      * 跳转到添加小票
      */
-   /* @Permission*/
+    @Permission
     @RequestMapping("/ticket_add")
     public String ticketAdd(Model model) {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
@@ -94,7 +94,7 @@ public class TicketController extends BaseController {
 
     /**
      * 验证店铺是否已经添加小票
-     * @return
+     * @return Object
      */
 	@RequestMapping("/checkStore")
 	@Permission(Const.MERCHANT_NAME)

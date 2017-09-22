@@ -6,7 +6,7 @@
 		<div class="ibox float-e-margins">
 			<input type="hidden" id="id" value="${ticket.id}">
 			<!-- <div class="app"> -->
-			<!-- 				<div class="app-inner f-cb"> -->
+			<!-- <div class="app-inner f-cb"> -->
 			<div class="mode-block f-cb">
 				<div id="ticketWidth" class="mode-print f-fl
 						@if(ticket.specType==1){
@@ -18,38 +18,33 @@
 					<div class="mode-preview print-preview">
 						<p class="tit" id="ptitle">${ticket.title}</p>
 						<p>
-							<!-- /react-text -->
-							<!-- react-text: 34 -->
 							单号：XSD10329392390293
-							<!-- /react-text -->
 						</p>
 						<p>交易时间：2016-09-01 12:00:00</p>
 						<p>
-							<!-- react-text: 37 -->
-							收
-							<!-- /react-text -->
-							<i class="ws3-m">银</i><i class="ws3-m">员</i>
-							<!-- react-text: 40 -->
+							收银员
+							<!-- <i class="ws3-m">银</i><i class="ws3-m">员</i> -->
 							：大琼
-							<!-- /react-text -->
 						</p>
 						<p class="pt-18"></p>
-						<p>杯子杯子杯子杯子杯子杯子杯子杯子杯子杯子 中号；红色</p>
-						<p class="f-cb">
+						<p>裤子 休闲裤</p>
+						<!-- <p class="f-cb">
 							<span class="box l box-l">90.00(活动标签)</span><span
 								class="box m box-l">x1</span><span class="box r f-tr">90.00</span>
-						</p>
+						</p> -->
 						<p class="f-cb">
 							<span class="box l box-l">190.00</span><span class="box m box-l">x1</span><span
 								class="box r f-tr">190.00</span>
 						</p>
-						<p class="pt-18"></p>
-						<p>苹果 红富士</p>
+						
+						<!-- <p class="pt-18"></p>
+						<p>衣服  T恤</p>
 						<p class="f-cb">
 							<span class="box l box-l">19.89/Kg</span><span
 								class="box m box-l">x3.7</span><span class="box r f-tr">73.59</span>
-						</p>
-						<p class="pt-18"></p>
+						</p> -->
+						
+						<!-- <p class="pt-18"></p>
 						<p>无码商品</p>
 						<p class="f-cb">
 							<span class="box l box-l">1212112.00/kg(折扣</span><span
@@ -59,14 +54,15 @@
 						<p class="f-cb">
 							<span class="box l box-l">2212112.00</span><span
 								class="box m box-l">x1</span><span class="box r f-tr">2212112.00</span>
-						</p>
+						</p> -->
+						
 						<p class="pt-18"></p>
 						<div>
 							<p>
 								<!-- react-text: 71 -->
-								合
+								合计
 								<!-- /react-text -->
-								<i class="ws2-m">计</i>
+								<!-- <i class="ws2-m">计</i> -->
 								<!-- react-text: 73 -->
 								：120.00
 								<!-- /react-text -->
@@ -74,18 +70,18 @@
 							<p>优惠方式：整单9折</p>
 							<p>
 								<!-- react-text: 76 -->
-								优
+								优惠
 								<!-- /react-text -->
-								<i class="ws2-m">惠</i>
+								<!-- <i class="ws2-m">惠</i> -->
 								<!-- react-text: 78 -->
 								：-5.00
 								<!-- /react-text -->
 							</p>
 							<p>
 								<!-- react-text: 80 -->
-								抹
+								抹零
 								<!-- /react-text -->
-								<i class="ws2-m">零</i>
+								<!-- <i class="ws2-m">零</i> -->
 								<!-- react-text: 82 -->
 								：0.02
 								<!-- /react-text -->
@@ -96,27 +92,27 @@
 						<p class="pt-18"></p>
 						<p>
 							<!-- react-text: 87 -->
-							手
+							手机号
 							<!-- /react-text -->
-							<i class="ws3-m">机</i><i class="ws3-m">号</i>
+							<!-- <i class="ws3-m">机</i><i class="ws3-m">号</i> -->
 							<!-- react-text: 90 -->
 							：133****8888
 							<!-- /react-text -->
 						</p>
 						<p>
 							<!-- react-text: 92 -->
-							卡
+							卡号
 							<!-- /react-text -->
-							<i class="ws2-m">号</i>
+							<!-- <i class="ws2-m">号</i> -->
 							<!-- react-text: 94 -->
 							：1219 5011 3400 7800 89
 							<!-- /react-text -->
 						</p>
 						<p>
 							<!-- react-text: 96 -->
-							积
+							积分
 							<!-- /react-text -->
-							<i class="ws2-m">分</i>
+							<!-- <i class="ws2-m">分</i> -->
 							<!-- react-text: 98 -->
 							：
 							<!-- /react-text -->
@@ -145,20 +141,19 @@
 
 						<div class="mode-set-edit mt10">
 							<div class="mode-edit-title">小票名称</div>
-							<textarea class="receipt-edit-field" placeholder="小票名称"
-								id="name" name="name">${ticket.name}</textarea>
+							<textarea class="receipt-edit-field" placeholder="小票名称" id="name" name="name">${ticket.name}</textarea>
 						</div>
 								
 						<div class="mode-set-edit mt10">
-							<div class="mode-edit-title">请选择店铺</div>
-							<select class="form-control" name="stores" id="stores">
+							<div class="mode-edit-title">店铺</div>
+							<select class="form-control" name="stores" id="stores" disabled>
 								<!--  <option value="0">请选择</option> --> 
 								@for(c in stores!){
-								<option value="ticket.storeId">
 									@if(c.id==ticket.storeId){
-									    ${c.name!} 
+										<option value="${c.id}">
+											    ${c.name!} 
+										</option>
 									@}
-								</option>
 								@}
 							</select>
 						</div>	
@@ -174,9 +169,8 @@
 								id="remark" name="remark">${ticket.remark}</textarea>
 						</div>
 						<div class="mode-option-btnbox mt20 clearfix">
-							<button type="button" class="zent-btn">打印测试</button>
-							<button type="button" class="zent-btn-primary zent-btn"
-								id="ensure" onclick="TicketInfoDlg.editSubmit()">应用</button>
+							<!-- <button type="button" class="zent-btn">打印测试</button> -->
+							<button type="button" class="zent-btn-primary zent-btn" id="ensure" onclick="TicketInfoDlg.editSubmit()">应用</button>
 						</div>
 					</div>
 				</div>

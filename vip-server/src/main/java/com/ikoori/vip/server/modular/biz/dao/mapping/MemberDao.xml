@@ -17,14 +17,17 @@
         <if test="memNickName != null and memNickName !=''">
             and wu.nickname like CONCAT('%',#{memNickName},'%')
         </if>
-        <if test="memSex != null and memSex !=''">
+        <if test="memSex != null">
             and m.sex = #{memSex}
         </if>
-        <if test="cardId != null and cardId !=''">
+        <if test="cardId != null">
             and mc.card_id =#{cardId}
         </if>
         <if test="cardNumber != null and cardNumber !=''">
             and mc.card_number =#{cardNumber}
+        </if>
+        <if test="isActive != null">
+            and m.is_active =#{isActive}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
