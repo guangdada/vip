@@ -17,7 +17,8 @@ PointTrade.initColumn = function () {
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
-        {title: '交易方式', field: 'inOut', visible: true, align: 'center', valign: 'middle'},
+        {title: '收入方式', field: 'inOut', visible: true, align: 'center', valign: 'middle'},
+        {title: '交易方式', field: 'tradeType', visible: true, align: 'center', valign: 'middle'},
         {title: '积分规则', field: 'pointName', visible: true, align: 'center', valign: 'middle'},
         {title: '交易积分', field: 'point', visible: true, align: 'center', valign: 'middle'},
         {title: '交易时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'}
@@ -102,6 +103,7 @@ PointTrade.search = function () {
     queryData['mobile'] = $("#mobile").val();
     queryData['inOut'] = $("#inOut").val();
     queryData['pointId'] = $("#pointId").val();
+    queryData['tradeType'] = $("#tradeType").val();
     PointTrade.table.refresh({query: queryData});
 };
 

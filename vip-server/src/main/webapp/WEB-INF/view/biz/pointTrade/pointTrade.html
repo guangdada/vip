@@ -19,7 +19,7 @@
 								<div class="input-group">
 								    <div class="input-group-btn">
 								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-								                                      交易方式
+								                                      收入方式
 								        </button>
 								    </div>
 								    <select class="form-control" id="inOut">
@@ -30,7 +30,7 @@
 								</div>
                             </div>
                             <div class="col-sm-3">
-                                <#button name="搜索" icon="fa-search" clickFun="PointTrade.search()"/>
+                                <#button name="搜索" icon="fa-search" clickFun="PointTrade.search()" btnCss="white"/>
                             </div>
                         </div>
                         <div class="row">
@@ -45,6 +45,21 @@
 								        <option value="" selected="">请选择</option>
 				                         @for(c in points!){ 
 										  <option value="${c.id}">${c.name}</option> 
+										 @}
+								    </select>
+								</div>
+                            </div>
+                            <div class="col-sm-3">
+								<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								                                      交易方式
+								        </button>
+								    </div>
+								    <select class="form-control" id="tradeType">
+								        <option value="" selected="">请选择</option>
+				                         @for(t in tradeTypes!){ 
+										  <option value="${t.code}">${t.message}</option> 
 										 @}
 								    </select>
 								</div>

@@ -52,6 +52,7 @@ import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.dao.StoreDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IOrderService;
+import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
 
 /**
  * 订单Dao
@@ -96,6 +97,8 @@ public class OrderServiceImpl implements IOrderService {
 	CouponDao couponDao;
 	@Autowired
 	IMemberService memberService;
+	@Autowired
+	IPointTradeService pointTradeService;
 	
 	@Override
 	public Integer deleteById(Long id) {
@@ -192,8 +195,10 @@ public class OrderServiceImpl implements IOrderService {
 			}
 			
 			log.error("生成积分使用记录");
+			pointTradeService.savePointTrade(false, PointTradeType.PAY_ORDER.getCode(), -orderPayDo.getPoint(),
+					member.getId(), null, member.getMerchantId(), store.getId(), "");
 			// 生成积分使用记录
-			PointTrade pointTrade = new PointTrade();
+			/*PointTrade pointTrade = new PointTrade();
 			pointTrade.setMemberId(member.getId());
 			pointTrade.setOrderId(order.getId());
 			pointTrade.setPoint(orderPayDo.getPoint());
@@ -201,7 +206,7 @@ public class OrderServiceImpl implements IOrderService {
 			pointTrade.setTradeType(PointTradeType.PAY_ORDER.getCode());
 			pointTrade.setMerchantId(member.getMerchantId());
 			pointTrade.setStoreId(store.getId());
-			pointTradeMapper.insert(pointTrade);
+			pointTradeMapper.insert(pointTrade);*/
 		}
 		
 		log.info("扣减使用现金券");
