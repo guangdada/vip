@@ -1,19 +1,17 @@
 package com.ikoori.vip.common.persistence.model;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.annotations.Version;
-
-import java.io.Serializable;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -44,10 +42,10 @@ public class Coupon extends Model<Coupon> {
 	@TableField("merchant_id")
 	private Long merchantId;
     /**
-     * 店铺Id
+     * 是否限定了店铺使用范围
      */
-	@TableField("store_id")
-	private Long storeId;
+	@TableField("limit_store")
+	private Boolean limitStore;
     /**
      * 优惠券名称
      */
@@ -265,12 +263,12 @@ public class Coupon extends Model<Coupon> {
 		this.merchantId = merchantId;
 	}
 
-	public Long getStoreId() {
-		return storeId;
+	public Boolean getLimitStore() {
+		return limitStore;
 	}
 
-	public void setStoreId(Long storeId) {
-		this.storeId = storeId;
+	public void setLimitStore(Boolean limitStore) {
+		this.limitStore = limitStore;
 	}
 
 	public String getName() {
@@ -599,7 +597,6 @@ public class Coupon extends Model<Coupon> {
 			"id=" + id +
 			", createUserId=" + createUserId +
 			", merchantId=" + merchantId +
-			", storeId=" + storeId +
 			", name=" + name +
 			", type=" + type +
 			", preferentialType=" + preferentialType +

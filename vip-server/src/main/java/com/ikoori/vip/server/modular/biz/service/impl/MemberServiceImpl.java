@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.ikoori.vip.common.constant.state.CouponUseState;
 import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.state.RightType;
@@ -26,7 +25,6 @@ import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.CardRight;
 import com.ikoori.vip.common.persistence.model.Coupon;
-import com.ikoori.vip.common.persistence.model.CouponFetch;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Merchant;
@@ -37,6 +35,7 @@ import com.ikoori.vip.server.modular.biz.dao.CardRightDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
+import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
@@ -76,6 +75,8 @@ public class MemberServiceImpl implements IMemberService {
 	MemberCardDao memberCardDao;
     @Autowired
 	IPointTradeService pointTradeService;
+    @Autowired
+    ICouponFetchService couponFetchService;
     
 	@Override
 	public Integer deleteById(Long id) {
@@ -278,7 +279,10 @@ public class MemberServiceImpl implements IMemberService {
 							}
 							log.info("保存优惠券领取记录");
 							for (int i = 0; i < number.intValue(); i++) {
-								CouponFetch couponFetch = new CouponFetch();
+								// 保存领取记录
+								couponFetchService.saveCouponFetch(member, coupon);
+								
+								/*CouponFetch couponFetch = new CouponFetch();
 								couponFetch.setMemberId(member.getId());
 								couponFetch.setCouponId(cardRight.getCouponId());
 								couponFetch.setAvailableValue(coupon.getOriginValue());
@@ -290,9 +294,8 @@ public class MemberServiceImpl implements IMemberService {
 								couponFetch.setMessage("谢谢关注！");
 								couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
 								couponFetch.setValue(coupon.getOriginValue());
-								couponFetch.setStoreId(coupon.getStoreId());
 								couponFetch.setUsedValue(0);
-								couponFetchMapper.insert(couponFetch);
+								couponFetchMapper.insert(couponFetch);*/
 							}
 						}
 					} else if (RightType.POINTS.getCode().equals(cardRight.getRightType())) {

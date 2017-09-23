@@ -218,7 +218,7 @@ public class WebMemberController extends BaseController {
 			}
 			if(isSign){
 				Member member = memberService.selectByMobile(mobile);
-				JSONArray content = initCoupon(member.getId());
+				JSONArray content = initCoupon(member.getId(),storeNo);
 				result.put("content", content);
 			}
 		} catch (Exception e) {
@@ -229,9 +229,9 @@ public class WebMemberController extends BaseController {
 		return result;
 	}
 
-	private JSONArray initCoupon(Long memberId) {
+	private JSONArray initCoupon(Long memberId,String storeNo) {
 		JSONArray content = new JSONArray();
-		List<Map<String, Object>> couponFetchs = couponFetchService.selectByMemberId(memberId);
+		List<Map<String, Object>> couponFetchs = couponFetchService.selectByMemberId(memberId,storeNo);
 		for (Map<String, Object> mc : couponFetchs) {
 			JSONObject obj = new JSONObject();
 			obj.put("verifyCode", mc.get("verifyCode"));
@@ -272,7 +272,7 @@ public class WebMemberController extends BaseController {
 				JSONObject content = new JSONObject();
 				Member member = memberService.selectByMobile(mobile);
 				JSONObject card = initCard(member.getId());
-				JSONArray coupons = initCoupon(member.getId());
+				JSONArray coupons = initCoupon(member.getId(),storeNo);
 				content.put("mobile", member.getMobile());
 				content.put("point", member.getPoints());
 				content.put("card", card);

@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
+import com.ikoori.vip.common.persistence.model.Member;
 
 /**
  * 领取记录Service
@@ -49,11 +50,12 @@ public interface ICouponFetchService {
 	 * 根据会员id查询领取的券
 	 * @Title: selectByMemberId   
 	 * @param memberId
+	 * @param storeNo
 	 * @return
 	 * @date:   2017年9月15日 下午5:26:43 
 	 * @author: chengxg
 	 */
-	public List<Map<String, Object>> selectByMemberId(Long memberId);
+	public List<Map<String, Object>> selectByMemberId(Long memberId,String storeNo);
 	
 	/**
 	 * 现金券批量导入券号
@@ -66,4 +68,15 @@ public interface ICouponFetchService {
 	 * @author: chengxg
 	 */
 	public String batchImportCode(Workbook wb, Coupon coupon, File tempFile);
+	
+	/**
+	 * 保存优惠券领取记录
+	 * @Title: saveCouponFetch   
+	 * @param member
+	 * @param coupon
+	 * @return
+	 * @date:   2017年9月23日 下午5:27:54 
+	 * @author: chengxg
+	 */
+	public boolean saveCouponFetch(Member member , Coupon coupon);
 }

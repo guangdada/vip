@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
+import com.ikoori.vip.server.modular.biz.service.IStoreCouponService;
 
 /**
  * 优惠券Dao
@@ -30,6 +32,8 @@ public class CouponServiceImpl implements ICouponService {
 	CouponMapper couponMapper;
 	@Autowired
 	GunsProperties gunsProperties;
+	@Autowired
+	IStoreCouponService storeCouponService;
 	@Override
 	public Integer deleteById(Long id) {
 		return couponMapper.deleteById(id);
@@ -95,7 +99,7 @@ public class CouponServiceImpl implements ICouponService {
 	 * @author: chengxg
 	 */
 	@Transactional(readOnly = false)
-	public void saveCoupon(Coupon coupon){
+	public void saveCoupon(Coupon coupon,String storeIds){
 		if (coupon.getValue() != null) {
 			coupon.setOriginValue(coupon.getValue() * 100);
 		}
@@ -111,6 +115,7 @@ public class CouponServiceImpl implements ICouponService {
 		
 		coupon.setStartTime(coupon.getStartAt().getTime());
 		coupon.setEndTime(coupon.getEndAt().getTime());
+		coupon.setLimitStore(StringUtils.isBlank(storeIds) ? false : true);
 		if(coupon.getId() != null){
 			couponMapper.updateById(coupon);
 		}else{
@@ -119,5 +124,8 @@ public class CouponServiceImpl implements ICouponService {
 			coupon.setUrl(gunsProperties.getClientUrl() + "/coupon/tofetch/" + coupon.getAlias());
 			couponMapper.insert(coupon);
 		}
+		
+		// 保存优惠券可用店铺
+		storeCouponService.saveStoreCoupon(coupon.getId(), storeIds);
 	}
 }

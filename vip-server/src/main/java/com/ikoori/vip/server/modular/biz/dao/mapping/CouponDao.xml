@@ -3,24 +3,39 @@
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.CouponDao">
 	<!-- 分页查询方法 -->
 	<select id="getCouponList" resultType="map">
-        select * from v_coupon where 1 = 1 and status = 1
+        SELECT DISTINCT
+			c.*
+		FROM
+			v_coupon c
+		LEFT JOIN v_store_coupon sc ON c.id = sc.coupon_id
+		WHERE
+			1 = 1
+		AND c. STATUS = 1
         <if test="name != null and name !=''">
-            and name like CONCAT('%',#{name},'%')
+            and c.name like CONCAT('%',#{name},'%')
         </if>
-        <if test="isExpired != null">
-            and is_expired = #{isExpired}
+        <if test="isExpired != null and isExpired == 1">
+            <![CDATA[  c.and end_at  >=  NOW()]]>
+        </if>
+        <if test="isExpired != null and isExpired == 0">
+            <![CDATA[  c.and end_at  <=  NOW() ]]>
         </if>
         <if test="isInvalid != null">
-            and is_invalid = #{isInvalid}
+            and c.is_invalid = #{isInvalid}
         </if>
+        <!-- 查询不限制店铺和当前要查询的店铺 -->
         <if test="storeId != null">
-            and store_id = #{storeId}
+           	c.limit_store = 0
+			OR (
+				sc.store_id = #{storeId}
+				AND sc.STATUS = 1
+			)
         </if>
         <if test="type != null">
-            and type = #{type}
+            and c.type = #{type}
         </if>
         <if test="merchantId != null">
-            and merchant_id = #{merchantId}
+            and c.merchant_id = #{merchantId}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">
@@ -34,7 +49,7 @@
                 </choose>
             </when>
             <otherwise>
-                order by create_time DESC
+                order by c.create_time DESC
             </otherwise>
         </choose>
     </select>

@@ -42,8 +42,8 @@ public class CouponFetch extends Model<CouponFetch> {
     /**
      * 店铺Id
      */
-	@TableField("store_id")
-	private Long storeId;
+	//@TableField("store_id")
+	//private Long storeId;
     /**
      * 优惠券id
      */
@@ -143,13 +143,13 @@ public class CouponFetch extends Model<CouponFetch> {
 		this.id = id;
 	}
 
-	public Long getStoreId() {
+	/*public Long getStoreId() {
 		return storeId;
 	}
 
 	public void setStoreId(Long storeId) {
 		this.storeId = storeId;
-	}
+	}*/
 
 	public Long getCouponId() {
 		return couponId;
@@ -323,7 +323,7 @@ public class CouponFetch extends Model<CouponFetch> {
 	public String toString() {
 		return "CouponFetch{" +
 			"id=" + id +
-			", storeId=" + storeId +
+			//", storeId=" + storeId +
 			", couponId=" + couponId +
 			", isUsed=" + isUsed +
 			", usedValue=" + usedValue +

@@ -28,12 +28,13 @@ public interface CouponFetchDao {
 	/**
 	 * 根据手机号和店铺编号查询会员还在有效期内的券
 	 * @Title: selectByMemberId   
-	 * @date:   2017年9月14日 上午10:30:30 
+	 * @param memberId
+	 * @param storeNo
+	 * @return
+	 * @date:   2017年9月23日 下午3:56:56 
 	 * @author: chengxg
-	 * @return: List<Map<String,Object>>      
-	 * @throws
 	 */
-	public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId);
+	public List<Map<String, Object>> selectByMemberId(@Param("memberId") Long memberId,@Param("storeNo") String storeNo);
 
 	/**
 	 * 根据券号获得优惠券,关联查询coupon

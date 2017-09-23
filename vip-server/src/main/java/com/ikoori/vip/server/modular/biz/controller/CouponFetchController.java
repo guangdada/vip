@@ -16,7 +16,6 @@ import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.constant.state.CouponUseState;
-import com.ikoori.vip.common.dto.CouponFetchDo;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.CouponFetch;

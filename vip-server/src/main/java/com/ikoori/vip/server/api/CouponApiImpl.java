@@ -8,7 +8,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.api.service.CouponApi;
-import com.ikoori.vip.common.constant.state.CouponUseState;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
@@ -18,11 +17,11 @@ import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
-import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
+import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 
 /**
  * 优惠券领取接口
@@ -49,6 +48,8 @@ public class CouponApiImpl implements CouponApi {
 	CardMapper cardMapper;
 	@Autowired
 	MemberCardMapper memberCardMapper;
+	@Autowired
+	ICouponFetchService couponFetchService;
 	
 	/**
 	 * 根据优惠券别名查询优惠券
@@ -95,8 +96,10 @@ public class CouponApiImpl implements CouponApi {
 		// 判断是否满足领取条件
 		checkCouponFetch(obj, coupon, member);
 
+		// 保存领取记录
+		couponFetchService.saveCouponFetch(member, coupon);
 		// 生成领取记录
-		CouponFetch couponFetch = new CouponFetch();
+		/*CouponFetch couponFetch = new CouponFetch();
 		couponFetch.setMemberId(member.getId());
 		couponFetch.setCouponId(coupon.getId());
 		couponFetch.setAvailableValue(coupon.getOriginValue());
@@ -108,9 +111,8 @@ public class CouponApiImpl implements CouponApi {
 		couponFetch.setMessage("谢谢关注！");
 		couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
 		couponFetch.setValue(coupon.getOriginValue());
-		couponFetch.setStoreId(coupon.getStoreId());
 		couponFetch.setUsedValue(0);
-		couponFetchMapper.insert(couponFetch);
+		couponFetchMapper.insert(couponFetch);*/
 		return obj;
 	}
 
@@ -242,7 +244,6 @@ public class CouponApiImpl implements CouponApi {
 		cf.setIsInvalid(true);
 		cf.setMobile(member.getMobile());
 		cf.setVersion(cf.getVersion());
-		//cf.setWxUserId(member.getWxUserId());
 		int count = couponFetchMapper.updateById(cf);
 		if (count == 0) {
 			obj.put("msg", "激活失败，未知错误");

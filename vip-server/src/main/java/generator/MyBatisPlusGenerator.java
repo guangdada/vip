@@ -48,9 +48,9 @@ public class MyBatisPlusGenerator {
             }
         });
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/krvip?characterEncoding=utf8");
+        dsc.setUsername("kkjj");
+        dsc.setPassword("KKjj111111!@#");
+        dsc.setUrl("jdbc:mysql://192.168.168.153:3306/vipdb?characterEncoding=utf8");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -58,7 +58,7 @@ public class MyBatisPlusGenerator {
         strategy.setTablePrefix(new String[]{"v_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         
-        strategy.setInclude(new String[] {"v_picture_type"}); // 需要生成的表
+        strategy.setInclude(new String[] {"v_store_coupon"}); // 需要生成的表
         mpg.setStrategy(strategy);
 
         // 包配置

@@ -23,6 +23,7 @@ import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.CouponFetch;
+import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
@@ -72,8 +73,8 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 				merchantId);
 	}
 	
-	public List<Map<String, Object>> selectByMemberId(Long memberId){
-		return couponFetchDao.selectByMemberId(memberId);
+	public List<Map<String, Object>> selectByMemberId(Long memberId,String storeNo){
+		return couponFetchDao.selectByMemberId(memberId,storeNo);
 	}
 	
 	@Transactional(readOnly = false)
@@ -169,7 +170,7 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 				cf.setMerchantId(coupon.getMerchantId());
 				cf.setMessage("谢谢关注！");
 				cf.setValue(coupon.getOriginValue());
-				cf.setStoreId(coupon.getStoreId());
+				//cf.setStoreId(coupon.getStoreId());
 				cf.setUsedValue(0);
 				couponFetchMapper.insert(cf);
 			}
@@ -192,5 +193,23 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 		Wrapper<CouponFetch> w = new EntityWrapper<CouponFetch>();
 		w.eq("verify_code", code);
 		return couponFetchMapper.selectCount(w) == 0 ? false : true;
+	}
+	
+	public boolean saveCouponFetch(Member member, Coupon coupon) {
+		CouponFetch couponFetch = new CouponFetch();
+		couponFetch.setMemberId(member.getId());
+		couponFetch.setCouponId(coupon.getId());
+		couponFetch.setAvailableValue(coupon.getOriginValue());
+		couponFetch.setExpireTime(coupon.getEndAt());
+		couponFetch.setValidTime(coupon.getStartAt());
+		couponFetch.setIsInvalid(true);
+		couponFetch.setIsUsed(CouponUseState.NO_USED.getCode());
+		couponFetch.setMerchantId(coupon.getMerchantId());
+		couponFetch.setMessage("谢谢关注！");
+		couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
+		couponFetch.setValue(coupon.getOriginValue());
+		couponFetch.setUsedValue(0);
+		int count = couponFetchMapper.insert(couponFetch);
+		return count == 0 ? false : true;
 	}
 }

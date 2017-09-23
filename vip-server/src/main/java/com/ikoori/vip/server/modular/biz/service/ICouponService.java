@@ -20,5 +20,5 @@ public interface ICouponService {
 	List<Map<String, Object>> getCouponList(Long merchantId, Boolean isExpired, Boolean isInvalid, Integer type,
 			Long storeId, Page<Coupon> page, String name, String orderByField, boolean isAsc);
 	List<Coupon> selectByCondition(Map<String,Object> condition);
-	public void saveCoupon(Coupon coupon);
+	public void saveCoupon(Coupon coupon,String storeIds);
 }

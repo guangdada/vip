@@ -59,9 +59,16 @@ CouponInfoDlg.collectData = function() {
 	var endAt = $("#endAt").val();
 	var quota = $("#quota option:selected").val();
 	var cardId = $("#user_level option:selected").val();
+	var stores = $("input[name=storeIds]:checked");
+	var storeIds = [];
+	if(stores &&　stores.length > 0){
+		for(var i =0;i<stores.length;i++){
+			storeIds.push(stores[i].value);
+		}
+	}
 	this.set('id').set('name').set('total').set('value').set('type',type)
 	.set('isAtLeast',isAtLeast).set('isShare',isShare).set('atLeast').set('quota',quota).set('cardId',cardId)
-	.set('description').set('servicePhone').set('startAt',startAt).set('endAt',endAt).set('storeId');
+	.set('description').set('servicePhone').set('startAt',startAt).set('endAt',endAt).set('storeId').set('storeIds',storeIds.join(","));
 }
 
 /**
@@ -74,9 +81,6 @@ CouponInfoDlg.addSubmit = function() {
     if(!valid){
     	return;
     }
-    /*if (!this.validateOther()) {
-        return;
-    }*/
     this.collectData();
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/coupon/add", function(data){
@@ -100,9 +104,6 @@ CouponInfoDlg.editSubmit = function() {
     if(!valid){
     	return;
     }
-    /*if (!this.validateOther()) {
-        return;
-    }*/
     this.collectData();
 
     //提交信息
@@ -128,71 +129,6 @@ CouponInfoDlg.endDate = function (endAt) {
 	var datestr = "有效期：" + (startAt ? startAt : ' 20xx : 00 : 00') + ' - ' + (endAt ? endAt : ' 20xx : 00 : 00');
 	$(".promote-date").text(datestr);
 }
-
-/**
- * 验证其他需要条件判断的项目
- */
-CouponInfoDlg.validateOther = function (){
-	var result = true;
-	var name = $("#name").val();
-	var name_help = $("#name").next("p").text("").hide();
-	
-	var total = $("#total").val();
-	var total_help = $("#total").siblings("p").text("").hide();
-	
-	var value = $("#value").val();
-	var value_help = $("#value").next("p").text("").hide();
-	
-	var is_at_least = $("input[name='is_at_least']:checked");
-	var atLeast = $("#atLeast").val();
-	var atLeast_help = $("#atLeast").parent().next("p").text("").hide();
-	
-	var startAt = $("#startAt").val();
-	var startAt_help = $("#startAt").next("p").text("").hide();
-	
-	var endAt = $("#endAt").val();
-	var endAt_help = $("#endAt").next("p").text("").hide();
-	
-	var description = $("#description").val();
-	var description_help = $("#description").next("p").text("").hide();
-	
-	if(!name){
-		name_help.text("优惠券名称必须在 1-10 个字内").show();
-		result = false;
-	}
-	
-	if(!total){
-		total_help.text("发放总量必须是一个整数").show();
-		result = false;
-	}
-	
-	if(!value){
-		value_help.text("优惠券面值必须大于等于 1 元").show();
-		result = false;
-	}
-	
-	if(is_at_least && is_at_least.val() == 1 && !atLeast){
-		atLeast_help.text("订单限制金额必须大于等于优惠券的面值").show();
-		result = false;
-	}
-	
-	if(!startAt){
-		startAt_help.text("必须选择一个生效时间").show();
-		result = false;
-	}
-	
-	if(!endAt){
-		endAt_help.text("必须选择一个过期时间").show();
-		result = false;
-	}
-	
-	if(!description){
-		description_help.text("使用说明不能为空").show();
-		result = false;
-	}
-	return result;
-}
-
 
 $(function() {
 	 $("#couponForm").validate({
@@ -287,6 +223,12 @@ $(function() {
 		var description = $(this).val();
 		$(".js-desc-detail").text(description ? description : "暂无使用说明....");
 	});
+	
+	$("#checkAllStoreIds").bind("change",function(){
+		var checked = $(this).prop("checked");
+		$("input[name='storeIds']").prop("checked",checked);
+	});
+	
 	
 	$("input[name='name']").attr("maxlength",10);
 	$("#description").attr("maxlength",250);

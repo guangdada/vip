@@ -106,16 +106,18 @@
 				v_coupon_fetch cf
 			LEFT JOIN v_member m ON cf.member_id = m.id
 			LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+			LEFT JOIN v_store_coupon sc ON sc.coupon_id = c.id
+			LEFT JOIN v_store s ON sc.store_id = s.id
 			WHERE
 				cf.`status` = 1
 			AND m.`status` = 1
 			AND c.`status` = 1
 			AND cf.is_used != 1
 			AND cf.is_invalid = 1
-			<![CDATA[   AND DATE_FORMAT(cf.valid_time, '%Y-%m-%d %H:%i:%s') <=  DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')   ]]>
-			<![CDATA[   AND DATE_FORMAT(cf.expire_time, '%Y-%m-%d %H:%i:%s') >=  DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')   ]]>
-			AND (c.store_id = #{storeId} or c.store_id is NULL)
+			<![CDATA[   AND cf.valid_time <=  NOW() ]]>
+			<![CDATA[   AND cf.expire_time >=  NOW() ]]>
 			AND m.id = #{memberId}
+			AND (c.limit_store = 0  or s.store_no = #{storeNo})
     </select>
     
     <select id="selectByVerifyCodeJoinCoupon" parameterType="string" resultMap="couponFetchMap">

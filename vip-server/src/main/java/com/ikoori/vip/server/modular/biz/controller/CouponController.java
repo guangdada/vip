@@ -38,6 +38,7 @@ import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Store;
+import com.ikoori.vip.common.persistence.model.StoreCoupon;
 import com.ikoori.vip.common.util.ExcelImportUtils;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
@@ -47,6 +48,7 @@ import com.ikoori.vip.server.modular.biz.service.ICardService;
 import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
+import com.ikoori.vip.server.modular.biz.service.IStoreCouponService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.warpper.CouponWarpper;
 
@@ -76,6 +78,9 @@ public class CouponController extends BaseController {
 	
 	@Autowired
 	ICouponFetchService couponFetchService;
+
+	@Autowired
+	IStoreCouponService storeCouponService;
 	
 	@Autowired
 	GunsProperties gunsProperties;
@@ -129,13 +134,16 @@ public class CouponController extends BaseController {
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("merchantId", merchant.getId());
-
-		List<Store> stores = storeService.selectByCondition(condition);
+		// 查询可用店铺
+		List<StoreCoupon> storeCoupons = storeCouponService.getByCouponId(couponId);
+		model.addAttribute("storeCoupons", storeCoupons);
+		
 		// 查询店铺
+		List<Store> stores = storeService.selectByCondition(condition);
 		model.addAttribute("stores", stores);
 
-		List<Card> cards = cardService.selectByCondition(condition);
 		// 查询会员卡
+		List<Card> cards = cardService.selectByCondition(condition);
 		model.addAttribute("cards", cards);
 		Coupon coupon = couponService.selectById(couponId);
 		model.addAttribute(coupon);
@@ -164,13 +172,13 @@ public class CouponController extends BaseController {
 	@RequestMapping(value = "/add")
 	@Permission
 	@ResponseBody
-	public Object add(Coupon coupon) {
+	public Object add(Coupon coupon,String storeIds) {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		coupon.setMerchantId(merchant.getId());
 		coupon.setCreateUserId(userId);
 		coupon.setStock(coupon.getTotal());
-		couponService.saveCoupon(coupon);
+		couponService.saveCoupon(coupon,storeIds);
 		return super.SUCCESS_TIP;
 	}
 
@@ -266,12 +274,11 @@ public class CouponController extends BaseController {
 	@RequestMapping(value = "/update")
 	@Permission
 	@ResponseBody
-	public Object update(@Valid Coupon coupon) {
+	public Object update(@Valid Coupon coupon,String storeIds) {
 		if (ToolUtil.isEmpty(coupon) || coupon.getId() == null) {
 			throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
 		}
-		couponService.saveCoupon(coupon);
-		// couponService.updateById(coupon);
+		couponService.saveCoupon(coupon,storeIds);
 		return super.SUCCESS_TIP;
 	}
 

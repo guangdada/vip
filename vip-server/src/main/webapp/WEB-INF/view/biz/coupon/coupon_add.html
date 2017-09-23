@@ -98,17 +98,23 @@
 						<div>
 							<form class="form-horizontal" id="couponForm">
 								<h1 class="config-title">优惠券基础信息</h1>
+								
 								<div class="control-group">
 									<label class="control-label"><em class="required">*</em>可用店铺：</label>
 									<div class="controls">
-						                <select id="storeId" name="storeId">
-					                        <option value="" selected="">所有店铺</option>
-					                         @for(c in stores!){ 
-											  <option value="${c.id}">${c.name}</option> 
-											  @}
-						                </select>
+										<label class="checkbox inline">
+											<input type="checkbox" id="checkAllStoreIds"/>全部
+										</label>
+										<br>
+										@for(c in stores!){ 
+			                                <label class="checkbox inline">
+			                                    <input type="checkbox" value="${c.id}"  name="storeIds">
+			                                	${c.name}
+			                                </label>
+		                                @}
 									</div>
 								</div>
+								
 								<div class="control-group">
 									<label class="control-label"><em class="required">*</em>券类型：</label>
 									<div class="controls">

@@ -35,7 +35,7 @@ public class CouponTrade extends Model<CouponTrade> {
 	private Long merchantId;
 	
     /**
-     * 店铺Id
+     * 使用店铺Id
      */
 	@TableField("store_id")
 	private Long storeId;
