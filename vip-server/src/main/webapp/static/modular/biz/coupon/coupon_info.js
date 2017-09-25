@@ -228,6 +228,13 @@ $(function() {
 		var checked = $(this).prop("checked");
 		$("input[name='storeIds']").prop("checked",checked);
 	});
+
+	$("input[name='storeIds']").bind("change",function(){
+		var now = $("input[name='storeIds']:checked");
+		var all = $("input[name='storeIds']");
+		var checked = now.length == all.length ? true : false;
+		$("#checkAllStoreIds").prop("checked",checked)
+	});
 	
 	
 	$("input[name='name']").attr("maxlength",10);
