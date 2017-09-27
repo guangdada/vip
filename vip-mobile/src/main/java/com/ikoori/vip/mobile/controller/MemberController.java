@@ -1,15 +1,19 @@
 package com.ikoori.vip.mobile.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
 import com.ikoori.vip.common.constant.state.PointTradeType;
@@ -26,6 +31,9 @@ import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.sms.Client;
+import com.ikoori.vip.common.support.HttpKit;
+import com.ikoori.vip.common.util.MD5;
+import com.ikoori.vip.common.util.MD5Util;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.constant.Constant;
 import com.ikoori.vip.mobile.util.WeChatAPI;
@@ -322,8 +330,8 @@ public class MemberController {
 	* @return String     
 	* @throws 
 	*/
-	@RequestMapping(value = "/order", method = { RequestMethod.GET, RequestMethod.POST })
-	public String order(HttpServletRequest request, Map<String, Object> map) throws Exception {
+	@RequestMapping(value = "/storeOrder", method = { RequestMethod.GET, RequestMethod.POST })
+	public String storeOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
 			throw new Exception("登录信息有误");
@@ -335,6 +343,76 @@ public class MemberController {
 		return "/member_order.html";
 	}
 	
+	/**   
+	 * @Title: onlineOrder   
+	 * @date:   2017年9月27日 下午7:10:05 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
+	@RequestMapping(value = "/onlineOrder", method = { RequestMethod.GET, RequestMethod.POST })
+	public String onlineOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if (openId == null) {
+			throw new Exception("登录信息有误");
+		}
+		//List<Map<String, Object>> orders =null;
+		JSONArray orders=null;
+		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+		if(member.getString("mobile")==null){
+			map.put("orders", orders);
+		}else{
+			orders=this.getTbOrderByMobile("13975171495");
+			//orders=this.getTbOrderByMobile(member.getString("mobile"));
+		}
+		//获取会员订单信息
+		//orders = consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
+		map.put("orders", orders);
+		return "/member_onlineOrder.html";
+	}
+	
+	
+	/*public static void main(String[] args) {
+		MemberController c  = new MemberController();
+		c.getTbOrderByMobile("13975171495");
+	}*/
+	
+	public JSONArray getTbOrderByMobile(String mobile) {
+		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
+		Map<String, String> asObject = new TreeMap<String, String>();
+		asObject.put("agent_id", "1");
+		asObject.put("api", "getTbOrderByMobile");
+		asObject.put("mobile", mobile);
+
+		String secretkey = "lucy";
+
+		String sign = MD5.signTopRequestNew(asObject, secretkey, false).toUpperCase();
+		asObject.put("secretkey", secretkey);
+
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+
+		NameValuePair p1 = new BasicNameValuePair("secretkey", secretkey);
+		parameters.add(p1);
+
+		NameValuePair p2 = new BasicNameValuePair("agent_id", asObject.get("agent_id"));
+		parameters.add(p2);
+
+		NameValuePair p3 = new BasicNameValuePair("api", asObject.get("api"));
+		parameters.add(p3);
+
+		NameValuePair p4 = new BasicNameValuePair("mobile", asObject.get("mobile"));
+		parameters.add(p4);
+
+		NameValuePair p5 = new BasicNameValuePair("sign", sign);
+		parameters.add(p5);
+
+		String result = HttpKit.sendAndReciveData(url, parameters);
+		JSONObject jsonResult = JSONObject.parseObject(result);
+		JSONArray orders = jsonResult.getJSONArray("data");
+        //System.out.println(result);
+		return orders;
+	}
+
 	
 	/** 
 	* @Title: orderDetail 

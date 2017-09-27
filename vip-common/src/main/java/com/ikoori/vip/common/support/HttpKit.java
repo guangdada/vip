@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
@@ -29,6 +30,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -188,5 +200,36 @@ public class HttpKit {
         }
         return result;
     }
+    
+	public static String sendAndReciveData(String url, List<NameValuePair> parameters) {
+		try {
+			HttpPost httpPost = new HttpPost(url);
+			if (null != parameters)
+				httpPost.setEntity(new UrlEncodedFormEntity(parameters, HTTP.UTF_8));
+			httpPost.setHeaders(new Header[] { new BasicHeader("x-forwarded-for", "222.247.54.108"),
+					new BasicHeader("Proxy-Client-IP", "222.247.54.108"),
+					// new BasicHeader("Host",parameter.getHost()),
+					// new BasicHeader("Content-Type",
+					// "application/x-www-form-urlencoded;charset=UTF-8"),
+					// new BasicHeader("Proxy-Connection", "keep-alive"),
+					// new BasicHeader("Referer",parameter.getReferer()),
+					// new BasicHeader("Cookie",parameter.getCookiestr()),
+					// new BasicHeader("X-Requested-With", "XMLHttpRequest"),
+					// new BasicHeader("User-Agent",
+					// "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:13.0)
+					// Gecko/20100101 Firefox/13.0")
+			});
+			HttpResponse response = new DefaultHttpClient().execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			return EntityUtils.toString(entity, "gb2312");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

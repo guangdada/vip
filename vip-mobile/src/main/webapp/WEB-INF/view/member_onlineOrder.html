@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{title:"门店订单"}){
+@layout("/common/_container.html",{title:"线上订单"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <body ontouchstart style="background-color:#fbfafa;">
@@ -21,17 +21,17 @@
 			<div class="weui-form-preview__bd">
 				<div class="weui-form-preview__item">
 					<label class="weui-form-preview__label">订单号</label>
-					<span class="weui-form-preview__value" style="color: black;">${c.order_no!}</span>
+					<span class="weui-form-preview__value" style="color: black;">${c.oid!}</span>
 					<!-- <div class="order-weui-cell__ft"></div> -->
 				</div>
 				<div class="weui-form-preview__item">
 					<label class="weui-form-preview__label">支付金额</label> 
-					<span class="weui-form-preview__value" style="color: black;">￥${c.payment!  /  100}</span>
+					<span class="weui-form-preview__value" style="color: black;">￥${c.payment!}</span>
 					<!-- <div class="order-weui-cell__ft"></div> -->
 				</div>
 				<div class="weui-form-preview__item">
 					<label class="weui-form-preview__label">消费店铺</label>
-					<span class="weui-form-preview__value" style="color: black;">${c.storeName!}</span>
+					<span class="weui-form-preview__value" style="color: black;">${c.seller_nick!}</span>
 				</div>
 				<div class="weui-form-preview__item">
 					<label class="weui-form-preview__label">消费时间</label>
