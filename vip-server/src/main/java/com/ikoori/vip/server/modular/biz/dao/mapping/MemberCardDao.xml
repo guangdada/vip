@@ -93,10 +93,12 @@
 			c.`name`,
 			c.description,
 			c.service_phone AS servicePhone,
+			c.grant_type AS grantType,
 			c.term_type AS termType,
 			c.term_days AS termDays,
 			c.term_start_at AS termStartAt,
 			c.term_end_at AS termEndAt,
+			c.create_time AS createTime,
 			mc.card_number AS cardNumber
 		FROM
 			v_member_card mc

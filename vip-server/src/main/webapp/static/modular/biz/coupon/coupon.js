@@ -19,6 +19,7 @@ Coupon.initColumn = function () {
         {title: '优惠券名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '价值(元)', field: 'value', visible: true, align: 'center', valign: 'middle'},
         {title: '领取限制(张)', field: 'quota', visible: true, align: 'center', valign: 'middle'},
+        {title: '总量(张)', field: 'total', visible: true, align: 'center', valign: 'middle'},
         {title: '剩余(张)', field: 'stock', visible: true, align: 'center', valign: 'middle'},
         {title: '生效/失效时间', field: 'start_at', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	return row.start_at + "<br/>" + row.end_at;

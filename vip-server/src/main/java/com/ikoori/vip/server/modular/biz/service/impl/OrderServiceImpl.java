@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -149,6 +150,13 @@ public class OrderServiceImpl implements IOrderService {
 			throw new BussinessException(500,"没有找到该会员信息");
 		}
 		
+		// 修改会员交易笔数和交易金额
+		member.setLastTradeTime(new Date());
+		member.setTradeAmount(
+				member.getTradeAmount().add(new BigDecimal(orderPayDo.getPayment()).divide(new BigDecimal(100))));
+		member.setTradeCount(member.getTradeCount() + 1);
+		memberMapper.updateById(member);
+		
 		log.info("保存订单");
 		// 保存order
 		Order order = new Order();
@@ -158,6 +166,9 @@ public class OrderServiceImpl implements IOrderService {
 		order.setBalanceDue(orderPayDo.getBalanceDue());
 		order.setPayment(orderPayDo.getPayment());
 		order.setDiscount(orderPayDo.getDiscount());
+		order.setPayStatus(1);
+		order.setMemberId(member.getId());
+		order.setProductNum(orderPayDo.getOrderItems().size());
 		//order.setDiscountInfo(discountInfo);
 		orderMapper.insert(order);
 		
@@ -167,6 +178,8 @@ public class OrderServiceImpl implements IOrderService {
 		if(itemPayDos!=null){
 			for(OrderItemPayDo itemPayDo : itemPayDos){
 				OrderItem orderItem = new OrderItem();
+				orderItem.setOrderId(order.getId());
+				orderItem.setOrderNo(order.getOrderNo());
 				orderItem.setGoodsName(itemPayDo.getGoodsName());
 				orderItem.setQuantity(itemPayDo.getQuantity());
 				orderItem.setGoodsNo(itemPayDo.getGoodsNo());
@@ -184,29 +197,14 @@ public class OrderServiceImpl implements IOrderService {
 				log.error("积分不足，剩余积分"+member.getPoints());
 				throw new BussinessException(500,"积分不足，剩余积分"+member.getPoints());
 			}
-			//member.setPoints(member.getPoints() - orderPayDo.getPoint());
-			//member.setVersion(member.getVersion());
-			//int count = memberMapper.updateById(member);
-			//修改会员积分
-			int count = memberDao.updatePoint(member.getId(), -orderPayDo.getPoint());
-			if(count == 0 ){
+			
+			log.error("生成积分使用记录");
+			boolean result = pointTradeService.savePointTrade(false, PointTradeType.PAY_ORDER.getCode(), -orderPayDo.getPoint(),
+					member.getId(), null, member.getMerchantId(), store.getId(), "");
+			if(!result){
 				log.error("扣减积分失败");
 				throw new BussinessException(500,"扣减积分失败");
 			}
-			
-			log.error("生成积分使用记录");
-			pointTradeService.savePointTrade(false, PointTradeType.PAY_ORDER.getCode(), -orderPayDo.getPoint(),
-					member.getId(), null, member.getMerchantId(), store.getId(), "");
-			// 生成积分使用记录
-			/*PointTrade pointTrade = new PointTrade();
-			pointTrade.setMemberId(member.getId());
-			pointTrade.setOrderId(order.getId());
-			pointTrade.setPoint(orderPayDo.getPoint());
-			pointTrade.setInOut(false);
-			pointTrade.setTradeType(PointTradeType.PAY_ORDER.getCode());
-			pointTrade.setMerchantId(member.getMerchantId());
-			pointTrade.setStoreId(store.getId());
-			pointTradeMapper.insert(pointTrade);*/
 		}
 		
 		log.info("扣减使用现金券");
@@ -304,13 +302,10 @@ public class OrderServiceImpl implements IOrderService {
 				couponTrade.setUsedOrderNo(order.getOrderNo());
 				couponTrade.setUsedOrderId(order.getId());
 				couponTrade.setVerifyCode(verifyCode);
-				//couponTrade.setWxUserId(member.getWxUserId());
+				couponTrade.setUsedTime(new Date());
 				couponTradeMapper.insert(couponTrade);
 				
 				// 更新优惠券使用次数
-				//coupon.setVersion(coupon.getVersion());
-				//coupon.setUseCount(coupon.getUseCount() + 1);
-				//couponMapper.updateById(coupon);
 				log.info("更新优惠券使用次数");
 				couponDao.updateUseCount(coupon.getId(), 1);
 			}
@@ -325,7 +320,7 @@ public class OrderServiceImpl implements IOrderService {
 				int p = point.getPoints();
 				if(point.getRuleType().intValue() == PointType.PAY_MONEY.getCode()){
 					// 求当前订单金额和限制金额的除数
-					int due = orderPayDo.getBalanceDue() / point.getPointsLimit();
+					int due = orderPayDo.getPayment() / point.getPointsLimit();
 					// 比如每购买10元送1积分，当前订单金额为100的话，得到的除数为10*奖励分值，即为要返还的积分数
 					pointTrade.setPoint(p * due);
 					pointTrade.setTradeType(PointTradeType.ORDER_MONEY.getCode());
@@ -341,7 +336,7 @@ public class OrderServiceImpl implements IOrderService {
 						pointTrade.setTradeType(PointTradeType.ORDER_COUNT.getCode());
 					}
 				}
-				if(pointTrade.getPoint() > 0){
+				if(pointTrade.getPoint() != null && pointTrade.getPoint() > 0){
 					log.info("返还积分：" + pointTrade.getPoint());
 					pointTrade.setPointId(point.getId());
 					pointTrade.setMemberId(member.getId());
@@ -351,10 +346,6 @@ public class OrderServiceImpl implements IOrderService {
 					pointTrade.setStoreId(store.getId());
 					pointTradeMapper.insert(pointTrade);
 					
-					//Member memberdb = memberMapper.selectById(member.getId());
-					//memberdb.setPoints(member.getPoints() + pointTrade.getPoint());
-					//memberdb.setVersion(member.getVersion());
-					//int count = memberMapper.updateById(memberdb);
 					int count = memberDao.updatePoint(member.getId(), pointTrade.getPoint());
 					//修改会员积分
 					log.info("累加会员积分");
@@ -392,27 +383,6 @@ public class OrderServiceImpl implements IOrderService {
 				// 满足升级条件，升级到该会员卡
 				if (upgrade) {
 					log.info("升级会员：" + mem.getId() + "到会员卡" + card.getId());
-					/*MemberCard mc = getMemberCard(mem.getId(), card.getId());
-					if (mc != null) {
-						log.info("已经有该级别会员卡");
-						// 已经有该级别会员卡
-						mc.setIsDefault(true);
-						memberCardMapper.updateById(mc);
-					} else {
-						log.info("没有该级别会员卡,发送一张");
-						// 没有该级别会员卡
-						MemberCard memCard = new MemberCard();
-						memCard.setCardId(card.getId());
-						memCard.setCardNumber(RandomUtil.generateCardNum(card.getCardNumberPrefix()));
-						memCard.setMemberId(mem.getId());
-						memCard.setMerchantId(mem.getMerchantId());
-						memCard.setState(MemCardState.USED.getCode());
-						memCard.setIsDefault(true);
-						memberCardMapper.insert(memCard);
-					}
-					// 修改会员的默认会员卡
-					log.info("修改会员的默认会员卡");
-					updateDefaultCard(mem.getId(), card.getId());*/
 					memberService.upgradeMemberCard(member, card);
 					// 满足最高等级会员卡升级条件则退出
 					break;
@@ -461,6 +431,10 @@ public class OrderServiceImpl implements IOrderService {
 	public Integer getMemPaymemt(Long memberId,Long lastOrderId){
 		Wrapper<Order> w = new EntityWrapper<Order>();
 		w.setSqlSelect("sum(payment)").eq("member_id", memberId).gt("id", lastOrderId);
-		return orderMapper.selectCount(w);
+		List<Object> objs = orderMapper.selectObjs(w);
+		if(objs != null){
+			return Integer.valueOf(objs.get(0).toString());
+		}
+		return 0;
 	}
 }

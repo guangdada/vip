@@ -152,18 +152,6 @@ public class MemberServiceImpl implements IMemberService {
 		//更新交易积分
 		if(point!=0){
 			Member dbMember= selectById(member.getId());
-			/*int count = memberDao.updatePoint(dbMember.getId(), point);
-			if(count == 0){
-				throw new BussinessException(500,"积分修改失败");
-			}
-			
-			PointTrade pointTrade=new PointTrade();
-			pointTrade.setMemberId(dbMember.getId());
-			pointTrade.setMerchantId(dbMember.getMerchantId());
-			pointTrade.setTradeType(PointTradeType.GIVE.getCode());
-			pointTrade.setInOut(point> 0 ? true: false);
-			pointTrade.setPoint(point);
-			pointTradeMapper.insert(pointTrade);*/
 			Boolean inOut = point> 0 ? true: false;
 			pointTradeService.savePointTrade(inOut, PointTradeType.GIVE.getCode(), point, dbMember.getId(), null,
 					dbMember.getMerchantId(), null, "");
@@ -272,51 +260,25 @@ public class MemberServiceImpl implements IMemberService {
 								log.info("修改库存失败");
 								continue;
 							}
+							log.info("保存优惠券领取记录");
+							for (int i = 0; i < number.intValue(); i++) {
+								// 保存领取记录
+								couponFetchService.saveCouponFetch(member, coupon);
+							}
 							int uu = couponDao.updateGetCountUser(coupon.getId(), member.getId()); // 跟新领取人数
 							if (uu == 0) {
 								log.info("修改领取人数失败");
 								continue;
 							}
-							log.info("保存优惠券领取记录");
-							for (int i = 0; i < number.intValue(); i++) {
-								// 保存领取记录
-								couponFetchService.saveCouponFetch(member, coupon);
-								
-								/*CouponFetch couponFetch = new CouponFetch();
-								couponFetch.setMemberId(member.getId());
-								couponFetch.setCouponId(cardRight.getCouponId());
-								couponFetch.setAvailableValue(coupon.getOriginValue());
-								couponFetch.setExpireTime(coupon.getEndAt());
-								couponFetch.setValidTime(coupon.getStartAt());
-								couponFetch.setIsInvalid(true);
-								couponFetch.setIsUsed(CouponUseState.NO_USED.getCode());
-								couponFetch.setMerchantId(coupon.getMerchantId());
-								couponFetch.setMessage("谢谢关注！");
-								couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
-								couponFetch.setValue(coupon.getOriginValue());
-								couponFetch.setUsedValue(0);
-								couponFetchMapper.insert(couponFetch);*/
-							}
 						}
 					} else if (RightType.POINTS.getCode().equals(cardRight.getRightType())) {
 						log.info("赠送积分:" + cardRight.getPoints());
-						/*PointTrade pointTrade = new PointTrade();
-						pointTrade.setInOut(true);
-						pointTrade.setTradeType(PointTradeType.CARD.getCode());
-						pointTrade.setPoint(cardRight.getPoints());
-						pointTrade.setMemberId(member.getId());
-						pointTrade.setMerchantId(member.getMerchantId());
-						pointTrade.setTag("谢谢关注");
-						pointTradeMapper.insert(pointTrade);
-						memberDao.updatePoint(member.getId(),cardRight.getPoints());*/
 						pointTradeService.savePointTrade(true, PointTradeType.CARD.getCode(), cardRight.getPoints(),
 								member.getId(), null, member.getMerchantId(), null, "");
 					}
 				}
 			}
-			
 			// 获得关注微信的积分规则
-			
 		}
 		// 修改会员的默认会员卡
 		log.info("修改会员的默认会员卡");

@@ -19,9 +19,15 @@ Order.initColumn = function () {
         {title: '会员名称', field: 'member_name', visible: true, align: 'center', valign: 'middle'},
         {title: '支付单号', field: 'pay_order_no', visible: true, align: 'center', valign: 'middle'},
         {title: '订单状态', field: 'pay_status', visible: true, align: 'center', valign: 'middle'},
-        {title: '支付金额', field: 'payment', visible: true, align: 'center', valign: 'middle'},
-        {title: '优惠金额', field: 'discount', visible: true, align: 'center', valign: 'middle'},
-        {title: '总金额', field: 'balance_due', visible: true, align: 'center', valign: 'middle'},
+        {title: '支付金额', field: 'payment', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	return row.payment ? row.payment/100 : "";
+        }},
+        {title: '优惠金额', field: 'discount', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	return row.discount ? row.discount/100 : "";
+        }},
+        {title: '总金额', field: 'balance_due', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	return row.balance_due ? row.balance_due/100 : "";
+        }},
         {title: '商品数量', field: 'product_num', visible: true, align: 'center', valign: 'middle'},
         {title: '订单时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'}
     ];

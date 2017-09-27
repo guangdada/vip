@@ -72,7 +72,7 @@ public class StoreController extends BaseController {
 		Store store = storeService.selectById(storeId);
 		String latitude = StringUtils.isNotBlank(store.getLatitude()) ? store.getLatitude() : "";
 		String longitude = StringUtils.isNotBlank(store.getLongitude()) ? store.getLongitude() : "";
-		String coordinate = latitude + "," + longitude;
+		String coordinate =  longitude+ "," + latitude;
 		model.addAttribute("coordinate", coordinate);
 		model.addAttribute(store);
 		model.addAttribute("storePhotos",storePhotoService.selectStorePhoto(storeId));

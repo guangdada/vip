@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.server.config.properties.GunsProperties;
@@ -117,10 +118,29 @@ public class CouponServiceImpl implements ICouponService {
 		coupon.setEndTime(coupon.getEndAt().getTime());
 		coupon.setLimitStore(StringUtils.isBlank(storeIds) ? false : true);
 		if(coupon.getId() != null){
-			couponMapper.updateById(coupon);
+			Coupon couponDb = couponMapper.selectById(coupon.getId());
+			if (coupon.getTotal() < couponDb.getGetCount()) {
+				throw new BussinessException(500, "发放总量不能小于领取数量" + couponDb.getGetCount());
+			}
+			int stock = coupon.getTotal() - couponDb.getTotal();
+			couponDb.setStock(couponDb.getStock() + stock);
+			couponDb.setName(coupon.getName());
+			couponDb.setTotal(coupon.getTotal());
+			couponDb.setValue(coupon.getValue());
+			couponDb.setType(coupon.getType());
+			couponDb.setIsAtLeast(coupon.isIsAtLeast());
+			couponDb.setIsShare(coupon.isIsShare());
+			couponDb.setAtLeast(coupon.getAtLeast());
+			couponDb.setCardId(coupon.getCardId());
+			couponDb.setQuota(coupon.getQuota());
+			couponDb.setDescription(coupon.getDescription());
+			couponDb.setServicePhone(coupon.getServicePhone());
+			couponDb.setStartAt(coupon.getStartAt());
+			couponDb.setEndAt(coupon.getEndAt());
+			couponMapper.updateAllColumnById(couponDb);
 		}else{
 			// 优惠券别名，用于领取的时候替代ID
-			coupon.setAlias(UUID.randomUUID().toString());
+			coupon.setAlias(UUID.randomUUID().toString().replaceAll("-", ""));
 			coupon.setUrl(gunsProperties.getClientUrl() + "/coupon/tofetch/" + coupon.getAlias());
 			couponMapper.insert(coupon);
 		}

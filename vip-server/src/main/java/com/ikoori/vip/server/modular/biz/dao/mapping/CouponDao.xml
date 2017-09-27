@@ -25,10 +25,11 @@
         </if>
         <!-- 查询不限制店铺和当前要查询的店铺 -->
         <if test="storeId != null">
-           	c.limit_store = 0
-			OR (
-				sc.store_id = #{storeId}
-				AND sc.STATUS = 1
+           	and (c.limit_store = 0 
+				OR (
+					sc.store_id = #{storeId}
+					AND sc.STATUS = 1
+				)
 			)
         </if>
         <if test="type != null">

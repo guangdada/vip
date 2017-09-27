@@ -44,7 +44,8 @@ public class PointServiceImpl implements IPointService {
 	 * @author: chengxg
 	 */
 	public void savePoint(Point point) {
-		if (!checkPoint(point.getMerchantId(), point.getId())) {
+		if (point.getRuleType().equals(PointType.SUBSCRIBE_WX.getCode())
+				&& !checkPoint(point.getMerchantId(), point.getId())) {
 			throw new BussinessException(500, "“" + PointType.SUBSCRIBE_WX.getMessage() + "”积分规则已经存在");
 		}
 		if (point.getId() != null) {

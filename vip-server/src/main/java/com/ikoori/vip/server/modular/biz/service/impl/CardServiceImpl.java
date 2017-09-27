@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,9 +85,10 @@ public class CardServiceImpl implements ICardService {
 			throw new BussinessException(BizExceptionEnum.INVALID_cardName);
 		}
 
-		if (card.getGrantType().intValue() == CardGrantType.SUB_WX.getCode()
-				&& !checkSubWxCount(card.getId(), card.getMerchantId())) {
-			throw new BussinessException(BizExceptionEnum.INVALID_grantType);
+		if (card.getGrantType().intValue() == CardGrantType.SUB_WX.getCode()) {
+			if(!checkSubWxCount(card.getId(), card.getMerchantId())){
+				throw new BussinessException(BizExceptionEnum.INVALID_grantType);
+			}
 		}
 		card.setCreateUserId(Long.valueOf(ShiroKit.getUser().getId()));
 		if(card.getCoverType().intValue() == 1){
@@ -96,7 +98,13 @@ public class CardServiceImpl implements ICardService {
 		}
 		card.setCardNumberPrefix("KR");
 		if(card.getId() != null){
-			Integer c = cardMapper.updateById(card);
+			Card cardDb = cardMapper.selectById(card.getId());
+			String[] ignoreProperties = { "id", "createUserId", "merchantId", "colorId", "isNeedActivate",
+					"isSyncWeixin", "isAvailable", "syncWeixinState", "weixinCardId", "cardNumberPrefix",
+					"isAllowShare", "termToCardId", "activationCondition", "grantCondition", "displayOrder",
+					"createTime", "updateTime", "status" };
+			BeanUtils.copyProperties(card, cardDb, ignoreProperties);
+			Integer c = cardMapper.updateAllColumnById(cardDb);
 			if(c > 0){
 				// 先删除修改前的权益值，再添加新的权益值
 				cardRightMapper.delete(new EntityWrapper<CardRight>().eq("card_id",card.getId()));
@@ -203,6 +211,7 @@ public class CardServiceImpl implements ICardService {
 		if (id != null) {
 			card.ne("id", id);
 		}
-		return cardMapper.selectCount(card) == 0;
+		int count = cardMapper.selectCount(card);
+		return count == 0 ? true : false;
 	}
 }

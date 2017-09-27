@@ -25,7 +25,9 @@ CouponTrade.initColumn = function () {
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '会员名称', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
-        {title: '使用金额', field: 'usedValue', visible: true, align: 'center', valign: 'middle'},
+        {title: '使用金额', field: 'usedValue', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	return row.usedValue ? row.usedValue / 100 : "";
+        }},
         {title: '订单号', field: 'usedOrderNo', visible: true, align: 'center', valign: 'middle'},
         {title: '使用时间', field: 'usedTime', visible: true, align: 'center', valign: 'middle'}
     ];

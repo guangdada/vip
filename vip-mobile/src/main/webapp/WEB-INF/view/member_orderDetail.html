@@ -26,7 +26,7 @@
 					<em class="weui-form-preview__value">
 					@for(c in orderDetail!){
 						@if(cLP.first){ 
-							${c.payment!}
+							${c.payment! / 100}
 						@} 
 					@}
 					</em>
@@ -69,7 +69,7 @@
 					<div class="weui-cell__bd value" align="center">
 						<p>x1</p>
 					</div>
-					<div class="weui-cell__ft value">￥${c.case_price!}</div>
+					<div class="weui-cell__ft value">￥${c.case_price! / 100}</div>
 				</div>
 				@}
 			</div>

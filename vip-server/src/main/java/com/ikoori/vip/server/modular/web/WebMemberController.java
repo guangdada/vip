@@ -168,9 +168,9 @@ public class WebMemberController extends BaseController {
 					}
 				}else if(CardTermsType.RANGE.getCode() == tt){
 					// 2、有效期开始和结束时间，判断当前日期是否在生效和失效时间内
-					if(DateUtil.compareDate(termStartAt.toString(), nowDay)){ // 未到 生效 时间
+					if(!DateUtil.compareDate(nowDay,termStartAt.toString())){ // 未到 生效 时间
 						obj.put("state", MemCardState.UN_USED.getCode());
-					}else if(DateUtil.compareDate(nowDay, termEndAt.toString())){ // 超过失效时间
+					}else if(!DateUtil.compareDate(termEndAt.toString(),nowDay)){ // 超过失效时间
 						obj.put("state", MemCardState.EXPIRED.getCode()); 
 					}
 				}

@@ -44,9 +44,9 @@
 		FROM
 			v_card
 		WHERE
-			merchant_id = #{merchatId}
+			merchant_id = #{merchantId}
 		AND `status` = 1
 		AND grant_type = 2
-		ORDER BY card_level ASC
+		ORDER BY card_level desc
     </select>
 </mapper>

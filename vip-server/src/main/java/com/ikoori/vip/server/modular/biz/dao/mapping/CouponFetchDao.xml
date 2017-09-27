@@ -93,31 +93,40 @@
     </select>
     <!-- 根据手机号和店铺编号查询会员的可用券 -->
     <select id="selectByMemberId" resultType="map">
-		    SELECT
-				cf.verify_code as verifyCode ,
-				c.type,
-				c.`value`,
-				cf.available_value availableValue,
-				c.`name`,
-				c.origin_at_least originAtLeast,
-				c.description,
-				c.use_condition useCondition
-			FROM
-				v_coupon_fetch cf
-			LEFT JOIN v_member m ON cf.member_id = m.id
-			LEFT JOIN v_coupon c ON cf.coupon_id = c.id
-			LEFT JOIN v_store_coupon sc ON sc.coupon_id = c.id
-			LEFT JOIN v_store s ON sc.store_id = s.id
-			WHERE
-				cf.`status` = 1
-			AND m.`status` = 1
-			AND c.`status` = 1
-			AND cf.is_used != 1
-			AND cf.is_invalid = 1
-			<![CDATA[   AND cf.valid_time <=  NOW() ]]>
-			<![CDATA[   AND cf.expire_time >=  NOW() ]]>
-			AND m.id = #{memberId}
-			AND (c.limit_store = 0  or s.store_no = #{storeNo})
+	    SELECT
+			cf.verify_code AS verifyCode,
+			c.type,
+			c.`value`,
+			cf.available_value availableValue,
+			c.`name`,
+			c.origin_at_least originAtLeast,
+			c.description,
+			c.use_condition useCondition
+		FROM
+			v_coupon_fetch cf
+		LEFT JOIN v_member m ON cf.member_id = m.id
+		LEFT JOIN v_coupon c ON cf.coupon_id = c.id
+		WHERE
+			cf.`status` = 1
+		AND m.`status` = 1
+		AND c.`status` = 1
+		AND cf.is_used != 1
+		AND cf.is_invalid = 1
+		<![CDATA[ AND cf.valid_time <= NOW()  ]]>
+		<![CDATA[ AND cf.expire_time >= NOW() ]]>
+		AND m.id = #{memberId}
+		AND (
+			c.limit_store = 0
+			OR c.id IN (
+				SELECT
+					sc.coupon_id
+				FROM
+					v_store_coupon sc
+				JOIN v_store s ON sc.store_id = s.id
+				AND sc. STATUS = 1
+				AND s.store_no = #{storeNo}
+			)
+		)
     </select>
     
     <select id="selectByVerifyCodeJoinCoupon" parameterType="string" resultMap="couponFetchMap">
@@ -197,7 +206,6 @@
             cf.is_used  As isUsed,
             c.is_invalid As couponIsInvalid,
 			m.sex AS sex,
-			c.`value` AS VALUE,
 			c.type AS couponType,
 			m.`name` AS memberName,
 			m.mobile AS mobile,

@@ -94,25 +94,10 @@ public class CouponApiImpl implements CouponApi {
 			throw new Exception(obj.toJSONString());
 		}
 		// 判断是否满足领取条件
-		checkCouponFetch(obj, coupon, member);
+		checkCouponFetch(obj, coupon, member,1);
 
 		// 保存领取记录
 		couponFetchService.saveCouponFetch(member, coupon);
-		// 生成领取记录
-		/*CouponFetch couponFetch = new CouponFetch();
-		couponFetch.setMemberId(member.getId());
-		couponFetch.setCouponId(coupon.getId());
-		couponFetch.setAvailableValue(coupon.getOriginValue());
-		couponFetch.setExpireTime(coupon.getEndAt());
-		couponFetch.setValidTime(coupon.getStartAt());
-		couponFetch.setIsInvalid(true);
-		couponFetch.setIsUsed(CouponUseState.NO_USED.getCode());
-		couponFetch.setMerchantId(coupon.getMerchantId());
-		couponFetch.setMessage("谢谢关注！");
-		couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
-		couponFetch.setValue(coupon.getOriginValue());
-		couponFetch.setUsedValue(0);
-		couponFetchMapper.insert(couponFetch);*/
 		return obj;
 	}
 
@@ -122,22 +107,17 @@ public class CouponApiImpl implements CouponApi {
 	 * @param obj
 	 * @param coupon
 	 * @param member
+	 * @param count
 	 * @throws Exception
 	 * @date:   2017年9月18日 下午5:15:39 
 	 * @author: chengxg
 	 */
-	private void checkCouponFetch(JSONObject obj, Coupon coupon, Member member) throws Exception {
+	private void checkCouponFetch(JSONObject obj, Coupon coupon, Member member,Integer count) throws Exception {
 		// 优惠券领取会员等级限制
 		Long limitCardId = coupon.getCardId();
 		if (limitCardId != null) {
-			/*List<Map<String, Object>> memberCard = memberCardDao.selectByMemberId(member.getId());
-			if (memberCard == null || memberCard.size() == 0) {
-				obj.put("msg", "您还没有会员卡哦");
-				throw new Exception(obj.toJSONString());
-			}
-			String cardId = memberCard.get(0).get("cardId").toString();*/
-			int count = getMemCardCountByCardId(member.getId(), limitCardId);
-			if (count == 0) {
+			int c = getMemCardCountByCardId(member.getId(), limitCardId);
+			if (c == 0) {
 				Card card = cardMapper.selectById(limitCardId);
 				obj.put("msg", "该优惠券只能“" + card.getName() + "”才能领哦");
 				throw new Exception(obj.toJSONString());
@@ -154,7 +134,7 @@ public class CouponApiImpl implements CouponApi {
 			}
 		}
 		// 更新优惠券库存和领取次数
-		if (couponDao.updateStock(coupon.getId(),1) == 0) {
+		if (count != 0 && couponDao.updateStock(coupon.getId(), 1) == 0) {
 			obj.put("msg", "该优惠券已经领完啦");
 			throw new Exception(obj.toJSONString());
 		}
@@ -236,7 +216,7 @@ public class CouponApiImpl implements CouponApi {
 		}
 		
 		// 判断是否符合领取条件
-		checkCouponFetch(obj, coupon, member);
+		checkCouponFetch(obj, coupon, member,0);
 
 		//修改优惠券领取状态
 		cf.setMemberId(member.getId());

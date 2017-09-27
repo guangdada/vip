@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 会员卡号
+ * 会员卡领取记录
  * </p>
  *
  * @author chengxg

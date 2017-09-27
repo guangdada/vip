@@ -1,5 +1,6 @@
 package com.ikoori.vip.common.util;
 
+import java.math.BigDecimal;
 import java.util.Random;
 import java.util.UUID;
 
@@ -192,5 +193,7 @@ public class RandomUtil {
 		System.out.println(generateCouponCode());
 		String verifyCode = generateCouponCode();
 		System.out.println(verifyCode.matches("[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}"));
+		
+		System.out.println(new BigDecimal(11111).divide(new BigDecimal(100)));
 	}
 }
