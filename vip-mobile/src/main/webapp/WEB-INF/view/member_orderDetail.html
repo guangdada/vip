@@ -49,7 +49,7 @@
 					<span class="weui-form-preview__value">
 					@for(c in orderDetail!){
 						@if(cLP.first){
-							${c.create_time!,dateFormat='YYYY-MM-dd'}
+							${c.create_time!,dateFormat='YYYY-MM-dd HH:mm:ss'}
 						@}
 					@}
 					</span>
@@ -57,19 +57,19 @@
 
 			<div class="orderdetail-weui-cells">
 				<div class="weui-cell orderItem">
-					<div class="weui-cell__hd title">商品名称</div>
-					<div class="weui-cell__bd title" align="center">
+					<div class="weui-cell__hd title" style="width:33%;text-align: left;">商品名称</div>
+					<div class="weui-cell__bd title"  style="width:33%;text-align: center;">
 						<p>商品数量</p>
 					</div>
-					<div class="weui-cell__ft title">消费金额</div>
+					<div class="weui-cell__ft title" style="width:33%;">消费金额</div>
 				</div>
 				@for(c in orderDetail!){
 				<div class="orderdetail-weui-cell orderItem">
-					<div class="weui-cell__hd value">${c.goods_name!}</div>
-					<div class="weui-cell__bd value" align="center">
+					<div class="weui-cell__hd value" style="width:33%; word-wrap:break-word;" align="left">${c.goods_name!}</div>
+					<div class="weui-cell__bd value" style="width:33%;text-align: center;word-wrap:break-word;">
 						<p>x${c.quantity!}</p>
 					</div>
-					<div class="weui-cell__ft value">￥${c.case_price! / 100}</div>
+					<div class="weui-cell__ft value" style="width:33%;text-align: right;">￥${c.case_price! / 100}</div>
 				</div>
 				@}
 			</div>

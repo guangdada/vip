@@ -3,9 +3,11 @@ package com.ikoori.vip.mobile.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -322,8 +324,8 @@ public class MemberController {
 	
 	
 	/** 
-	* @Title: order 
-	* @Description: 会员订单页面
+	* @Title: storeOrder 
+	* @Description: 会员门店订单页面
 	* @param  request
 	* @param  map
 	* @param @throws Exception    
@@ -343,6 +345,26 @@ public class MemberController {
 		return "/member_order.html";
 	}
 	
+	
+	/** 
+	* @Title: storeOrderDetail 
+	* @Description: 会员门店订单详情页面
+	* @param  request
+	* @param  map
+	* @param  orderId 订单id
+	* @return String     
+	* @throws 
+	*/
+	@RequestMapping(value = "/storeOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
+	public String storeOrderDetail(HttpServletRequest request, Map<String, Object> map, Long orderId) {
+		List<Map<String, Object>> orderDetail = consumer.getMemberOrderApi().get()
+				.getMemberOrderDetailByOrderId(orderId);
+		map.put("orderDetail", orderDetail);
+		return "/member_orderDetail.html";
+	}
+	
+	
+	
 	/**   
 	 * @Title: onlineOrder   
 	 * @date:   2017年9月27日 下午7:10:05 
@@ -359,26 +381,48 @@ public class MemberController {
 		//List<Map<String, Object>> orders =null;
 		JSONArray orders=null;
 		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-		if(member.getString("mobile")==null){
+		if(member.getString("mobile").isEmpty()){
 			map.put("orders", orders);
 		}else{
 			orders=this.getTbOrderByMobile("13975171495");
 			//orders=this.getTbOrderByMobile(member.getString("mobile"));
 		}
-		//获取会员订单信息
-		//orders = consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
 		map.put("orders", orders);
 		return "/member_onlineOrder.html";
 	}
 	
+	/**   
+	 * @Title: onlineOrderDetail   
+	 * @date:   2017年9月28日 下午2:40:02 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
+	@RequestMapping(value = "/onlineOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
+	public String onlineOrderDetail(HttpServletRequest request, Map<String, Object> map,String tid,String totalPayment) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if (openId == null) {
+			throw new Exception("登录信息有误");
+		}
+		
+		JSONArray orderDetail=null;
+		orderDetail = this.getTbOrderByTid(tid);
+		map.put("totalPayment", totalPayment);
+		map.put("orderDetail", orderDetail);
+		return "/member_onlineOrderDetail.html";
+	}
 	
-	/*public static void main(String[] args) {
-		MemberController c  = new MemberController();
-		c.getTbOrderByMobile("13975171495");
-	}*/
 	
+	/**   
+	 * @Title: getTbOrderByMobile   
+	 * @date:   2017年9月28日 下午2:40:19 
+	 * @author: huanglin
+	 * @return: JSONArray      
+	 * @throws   
+	 */  
 	public JSONArray getTbOrderByMobile(String mobile) {
 		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
+	/*	String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
 		Map<String, String> asObject = new TreeMap<String, String>();
 		asObject.put("agent_id", "1");
 		asObject.put("api", "getTbOrderByMobile");
@@ -409,28 +453,46 @@ public class MemberController {
 		String result = HttpKit.sendAndReciveData(url, parameters);
 		JSONObject jsonResult = JSONObject.parseObject(result);
 		JSONArray orders = jsonResult.getJSONArray("data");
-        //System.out.println(result);
+		
 		return orders;
 	}
 
-	
-	/** 
-	* @Title: orderDetail 
-	* @Description: 会员订单详情页面
-	* @param  request
-	* @param  map
-	* @param  orderId 订单id
-	* @return String     
-	* @throws 
-	*/
-	@RequestMapping(value = "/orderDetail", method = { RequestMethod.GET, RequestMethod.POST })
-	public String orderDetail(HttpServletRequest request, Map<String, Object> map, Long orderId) {
-		List<Map<String, Object>> orderDetail = consumer.getMemberOrderApi().get()
-				.getMemberOrderDetailByOrderId(orderId);
-		map.put("orderDetail", orderDetail);
-		return "/member_orderDetail.html";
+	public JSONArray getTbOrderByTid(String tid) {
+		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
+		/*String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
+		Map<String, String> asObject = new TreeMap<String, String>();
+		asObject.put("agent_id", "1");
+		asObject.put("api", "getTbOrderByTid");
+		asObject.put("tid", tid);
+
+		String secretkey = "lucy";
+
+		String sign = MD5.signTopRequestNew(asObject, secretkey, false).toUpperCase();
+		asObject.put("secretkey", secretkey);
+
+		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+
+		NameValuePair p1 = new BasicNameValuePair("secretkey", secretkey);
+		parameters.add(p1);
+
+		NameValuePair p2 = new BasicNameValuePair("agent_id", asObject.get("agent_id"));
+		parameters.add(p2);
+
+		NameValuePair p3 = new BasicNameValuePair("api", asObject.get("api"));
+		parameters.add(p3);
+
+		NameValuePair p4 = new BasicNameValuePair("tid", asObject.get("tid"));
+		parameters.add(p4);
+
+		NameValuePair p5 = new BasicNameValuePair("sign", sign);
+		parameters.add(p5);
+
+		String result = HttpKit.sendAndReciveData(url, parameters);
+		JSONObject jsonResult = JSONObject.parseObject(result);
+		JSONArray orders = jsonResult.getJSONArray("data");
+		
+		return orders;
 	}
-	
 	
 	/** 按照经纬度查找附近门店
 	* @Title: store 

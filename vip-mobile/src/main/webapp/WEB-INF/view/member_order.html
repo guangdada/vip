@@ -16,7 +16,7 @@
 
 	<div class="weui-cells__titl weui-cell weui-cell_link" style="background-color:#54bd46;"><font color="white">订单列表</font></div>
 	@for(c in orders!){
-	<a href="${ctxPath}/member/orderDetail?orderId=${c.id}" class="order-weui-cell_access">
+	<a href="${ctxPath}/member/storeOrderDetail?orderId=${c.id}" class="order-weui-cell_access">
 		<div class="weui-form-preview">
 			<div class="weui-form-preview__bd">
 				<div class="weui-form-preview__item">
@@ -35,7 +35,7 @@
 				</div>
 				<div class="weui-form-preview__item">
 					<label class="weui-form-preview__label">消费时间</label>
-					<span class="weui-form-preview__value" style="color: black;">${c.create_time!,dateFormat='YYYY-MM-dd'}</span>
+					<span class="weui-form-preview__value" style="color: black;">${c.create_time!,dateFormat='YYYY-MM-dd HH:mm:ss'}</span>
 				</div>
 			</div>
 		</div>

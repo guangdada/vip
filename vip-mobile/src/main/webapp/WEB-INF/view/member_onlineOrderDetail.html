@@ -1,6 +1,7 @@
-@layout("/common/_container.html",{title:"门店订单"}){
+@layout("/common/_container.html",{title:"线上订单"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+
 	<!--   <header class='demos-header1' style="background-color:gray;">
 	      <h1 class="demos-title"></h1>
 	    </header>  -->
@@ -24,11 +25,7 @@
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">消费总金额</label> 
 					<em class="weui-form-preview__value">
-					@for(c in orderDetail!){
-						@if(cLP.first){ 
-							${c.payment!}
-						@} 
-					@}
+							${totalPayment!}
 					</em>
 			</div>
 		</div>
@@ -36,44 +33,56 @@
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">订单号</label>
 					<span class="weui-form-preview__value">
-					@for(c in orderDetail!){
-						@if(cLP.first){
-							${c.order_no!}
+						@for(c in orderDetail!){
+							@if(cLP.first){
+								${c.tid!}
+							@}
 						@}
-					@}
 				    </span>
 			</div>
-
+			
 			<div class="weui-form-preview__item">
 				<label class="weui-form-preview__label">时间</label>
 					<span class="weui-form-preview__value">
-					@for(c in orderDetail!){
-						@if(cLP.first){
-							${c.create_time!,dateFormat='YYYY-MM-dd'}
+						@for(c in orderDetail!){
+							@if(cLP.first){
+								${c.pay_time!}
+							@}
 						@}
-					@}
 					</span>
 			</div>
-
+           
 			<div class="orderdetail-weui-cells">
 				<div class="weui-cell orderItem">
-					<div class="weui-cell__hd title">商品名称</div>
-					<div class="weui-cell__bd title" align="center">
+					<div class="weui-cell__hd title" style="width:33%;text-align: left;">商品图片</div>
+					<div class="weui-cell__bd title"  style="width:33%;text-align: center;">
 						<p>商品数量</p>
 					</div>
-					<div class="weui-cell__ft title">消费额金</div>
+					<div class="weui-cell__ft title" style="width:33%;">消费金额</div>
 				</div>
 				@for(c in orderDetail!){
 				<div class="orderdetail-weui-cell orderItem">
-					<div class="weui-cell__hd value">${c.goods_name!}</div>
-					<div class="weui-cell__bd value" align="center">
-						<p>${c.quantity!}</p>
+					<a href="https://item.taobao.com/item.htm?id=${c.num_iid}"><div class="weui-cell__hd value word_overflow" style="width:33%; word-wrap:break-word;" align="left"><img src="${c.imgpath!}" width="50px" height="50px"/></div></a>
+					<div class="weui-cell__bd value" style="width:33%;text-align: center;word-wrap:break-word;word-break:break-all;">
+						<p>x${c.num!}</p>
 					</div>
-					<div class="weui-cell__ft value">￥${c.case_price!}</div>
+					<div class="weui-cell__ft value" style="width:33%;text-align: right;">￥${c.payment!}</div>
 				</div>
 				@}
 			</div>
 		</div>
 	</div>
 </body>
+<!-- <script>
+$(document).ready(function(){
+	//限制字符个数
+	$(".word_overflow").each(function(){
+	var maxwidth=10;
+	if($(this).text().length>maxwidth){
+	$(this).text($(this).text().substring(0,maxwidth));
+	$(this).html($(this).html()+'…');
+	}
+	});
+	});
+</script> -->
 @}
