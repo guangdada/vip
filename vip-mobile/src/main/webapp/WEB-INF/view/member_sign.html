@@ -1,0 +1,203 @@
+@layout("/common/_container.html",{title:"我的会员卡"}){
+<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+<link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
+<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<link rel="stylesheet" href="${ctxPath}/static/font-awesome-4.7.0/css/font-awesome.min.css">
+<style>
+*{margin: 0; padding: 0;}
+.btn{
+margin-top:10px;
+}
+.sign table{border-collapse: collapse;border-spacing: 0;width:100%;}
+.sign th,.sign td {width: 30px;height: 55px;text-align: center;line-height: 40px;border:1px solid #e3e3e3;}
+.sign th {font-size: 16px;}
+.sign td {color: #404040;vertical-align: middle;}      
+.sign .on {background-color:#1aad19;}
+.calendar_month_span{display: inline;line-height: 45px;font-size: 16px;color: #656565;letter-spacing: 2px;font-weight: bold;float:left;margin-left:8px;}
+.calendar_month_point{display:inline;line-height: 45px;font-size: 16px;color: #656565;letter-spacing: 2px;font-weight: bold;float:right;margin-right:8px;}
+.sign_succ_calendar_title {text-align:center;width:100%;border-left:1px solid #e3e3e3;border-right:1px solid #e3e3e3;background:#fff;}
+.calendar_month_sign{line-height: 40px;font-size: 16px;color: #656565;letter-spacing: 2px;font-weight: bold;margin-right:8px;}
+.sign_main {width: 100%;/**background-color: #FBFEFE;**/border-top:1px solid #e3e3e3;font-family: "Microsoft YaHei",SimHei;display: block;border-bottom:1px solid #e3e3e3;}
+*
+{
+margin:0;
+padding:0;
+}
+html,body,.rich_media,
+{
+width:100%;
+height:100%;
+}
+.container-fluid {
+ height:auto !important;
+ width:auot !important;
+ }
+
+</style>
+
+ 
+
+<body style="background-color: #fff;" ontouchstart>  
+    <div class="rich_media">  
+            <div id="page-content">
+              
+                <div style="text-align: center;background-color: #2FAA00;height: 50px;margin-bottom: 20px;width:100%;">  
+                    <span style="cursor: pointer;font-weight: 600;font-size: 20px;color: #fff;height: 50px;line-height: 50px;">每日签到</span>  
+                    <input type="hidden" id="userId" value="" />  
+                </div>
+
+			<div class="container-fluid">  
+                    <div class="row-fluid" id="calendar">  
+                          
+                    </div> 
+                     
+                    <!-- <div id="btnDiv" style="display: block;">  
+                        <div class="row-fluid text-center">  
+                            <span id="sing_for_number" class="btn btn-default">签到</span>  
+                        </div>  
+                    </div>  -->
+                    
+                     <div id="btnDiv" style="display: block;" class='demos-content-padded'>
+                     	 <a href="javascript:;" class="weui-btn weui-btn_primary" id="sing_for_number">签到</a>  
+                    </div> 
+                    
+                </div>  
+            </div>  
+    </div>  
+
+</body>
+<script type="text/javascript">
+//判断当天是否签到
+$(function(){
+	/* $("#sing_for_number").css("background-color","#CCCCCC");
+	$("#sing_for_number").attr("disabled","disabled");
+	$("#sing_for_number").text("已签到"); */
+	$.ajax({
+		//提交数据的类型 POST GET
+		type : "POST",
+		//提交的网址
+		url : "${ctxPath}/member/doSign",
+		//提交的数据
+		data : {
+		},
+		//成功返回之后调用的函数             
+		success : function(data) {
+			if (data && data.code == '500') {
+				$("#sing_for_number").css("background-color","#CCCCCC");
+				$("#sing_for_number").attr("disabled","disabled");
+				$("#sing_for_number").text("已签到");
+				$.toptip('今天您已经签到，无须再次签到！');
+			} else {
+				//$.toptip('已签到！', 'success');
+			}
+		},
+		//调用出错执行的函数
+		error : function() {
+			//请求出错处理
+		}
+	});
+});
+var calUtil = {  
+	    getDaysInmonth : function(iMonth, iYear){  
+	      var dPrevDate = new Date(iYear, iMonth, 0);  
+	      return dPrevDate.getDate();  
+	    },  
+	    bulidCal : function(iYear, iMonth) {  
+	      var aMonth = new Array();  
+	      aMonth[0] = new Array(7);  
+	      aMonth[1] = new Array(7);  
+	      aMonth[2] = new Array(7);  
+	      aMonth[3] = new Array(7);  
+	      aMonth[4] = new Array(7);  
+	      aMonth[5] = new Array(7);  
+	      aMonth[6] = new Array(7);  
+	      var dCalDate = new Date(iYear, iMonth - 1, 1);  
+	      var iDayOfFirst = dCalDate.getDay();  
+	      var iDaysInMonth = calUtil.getDaysInmonth(iMonth, iYear);  
+	      var iVarDate = 1;  
+	      var d, w;  
+	      aMonth[0][0] = "日";  
+	      aMonth[0][1] = "一";  
+	      aMonth[0][2] = "二";  
+	      aMonth[0][3] = "三";  
+	      aMonth[0][4] = "四";  
+	      aMonth[0][5] = "五";  
+	      aMonth[0][6] = "六";  
+	      for (d = iDayOfFirst; d < 7; d++) {  
+	        aMonth[1][d] = iVarDate;  
+	        iVarDate++;  
+	      }  
+	      for (w = 2; w < 7; w++) {  
+	        for (d = 0; d < 7; d++) {  
+	          if (iVarDate <= iDaysInMonth) {  
+	            aMonth[w][d] = iVarDate;  
+	            iVarDate++;  
+	          }  
+	        }  
+	      }  
+	      return aMonth;  
+	    },  
+	    ifHasSigned : function(signList,day){  
+	      var signed = false;  
+	      $.each(signList,function(index,item){  
+	          var date = new Date(item.signDate);  
+	          if(date.getDate() == day) {  
+	              signed = true;  
+	              return false;  
+	          }  
+	      });  
+	      return signed ;  
+	    },  
+	    drawCal : function(iYear, iMonth ,signList) {  
+	      var currentYearMonth = iYear+"年"+iMonth+"月";  
+	      var myMonth = calUtil.bulidCal(iYear, iMonth);  
+	      var htmls = new Array();  
+	      htmls.push("<div class='sign_main' id='sign_layer'>");  
+	      htmls.push("<div class='sign_succ_calendar_title'>");  
+	      htmls.push("<div class='calendar_month_span'>"+currentYearMonth+"</div>");  
+	      htmls.push("<div class='calendar_month_point'>我的积分：n</div>");  
+	      htmls.push("</div>");
+	      htmls.push("<div class='sign' id='sign_cal'>");  
+	      htmls.push("<table class='table'>");  
+	      htmls.push("<tr>");  
+	      htmls.push("<th>" + myMonth[0][0] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][1] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][2] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][3] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][4] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][5] + "</th>");  
+	      htmls.push("<th>" + myMonth[0][6] + "</th>");  
+	      htmls.push("</tr>");  
+	      var d, w;  
+	      for (w = 1; w < 7; w++) {  
+	        htmls.push("<tr>");  
+	        for (d = 0; d < 7; d++) {  
+	          var ifHasSigned = calUtil.ifHasSigned(signList,myMonth[w][d]);  
+	          if(ifHasSigned){  
+	            htmls.push("<td class='on'>" + (!isNaN(myMonth[w][d]) ? myMonth[w][d] : " ") + "</td>");  
+	          } else {  
+	            htmls.push("<td>" + (!isNaN(myMonth[w][d]) ? myMonth[w][d] : " ") + "</td>");  
+	          }  
+	        }  
+	        htmls.push("</tr>");  
+	      }  
+	      htmls.push("</table>"); 
+	      htmls.push("</div>");
+	      htmls.push("<div class='sign_succ_calendar_title'>");  
+	      htmls.push("<div class='calendar_month_sign'>已连续签到n天，累计签到n天</div>");  
+	      htmls.push("</div>");
+	      
+	      htmls.push("</div>");
+	      htmls.push("</div>");  
+	      return htmls.join('');  
+	    }  
+	};  
+
+var current = new Date();
+var str = calUtil.drawCal(current.getFullYear(),current.getMonth() + 1,[{"signDate":"2015-10-01"},{"signDate":"2017-10-02"},{"signDate":"2017-10-03"}]);  
+$("#calendar").html(str);  
+</script>
+@}
+
+

@@ -3,11 +3,9 @@ package com.ikoori.vip.mobile.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -35,7 +33,6 @@ import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.sms.Client;
 import com.ikoori.vip.common.support.HttpKit;
 import com.ikoori.vip.common.util.MD5;
-import com.ikoori.vip.common.util.MD5Util;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.constant.Constant;
 import com.ikoori.vip.mobile.util.WeChatAPI;
@@ -603,5 +600,34 @@ public class MemberController {
 		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(openId);
 		map.put("card", obj);
 		return "/member_cardDetail.html";
+	}
+	
+	@RequestMapping(value = "/sign", method = { RequestMethod.GET, RequestMethod.POST })
+	public String sign(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
+		return "/member_sign.html";
+	}
+	
+	/**   
+	 * @Title: doSign   
+	 * @date:   2017年10月6日 下午1:51:14 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
+	@RequestMapping(value = "/doSign", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Object doSign(HttpServletRequest request, Map<String, Object> map, Long storeId) throws Exception {
+		/*try {
+			// 先查询是否已经签到
+			boolean ifHasSigned = signService.ifHasSigned();
+			if (ifHasSigned) {
+				return new SuccessTip();
+			} else {
+				return new ErrorTip(BizExceptionEnum.error_sign);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
+		return new SuccessTip();
 	}
 }

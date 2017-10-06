@@ -62,7 +62,7 @@
 				</div>
 				@for(c in orderDetail!){
 				<div class="orderdetail-weui-cell orderItem">
-					<a href="https://item.taobao.com/item.htm?id=${c.num_iid}"><div class="weui-cell__hd value word_overflow" style="width:33%; word-wrap:break-word;" align="left"><img src="${c.imgpath!}" width="50px" height="50px"/></div></a>
+					<div class="weui-cell__hd value word_overflow" style="width:33%; word-wrap:break-word;" align="left"><a href="https://item.taobao.com/item.htm?id=${c.num_iid}"><img src="${c.imgpath!}" width="50px" height="50px"/></a></div>
 					<div class="weui-cell__bd value" style="width:33%;text-align: center;word-wrap:break-word;word-break:break-all;">
 						<p>x${c.num!}</p>
 					</div>

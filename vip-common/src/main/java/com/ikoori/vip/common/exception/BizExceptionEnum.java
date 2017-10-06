@@ -67,6 +67,12 @@ public enum BizExceptionEnum {
 	INVALID_grantType(500,"发卡方式为“关注微信”的会员卡只能有一种"),
 	
 	/**
+	 * 签到
+	 */
+    error_sign(500, "签到失败"),
+    
+    
+	/**
 	 * 优惠券问题
 	 */
 	coupon_expired(500, "该优惠券已经过期啦"),
@@ -76,7 +82,6 @@ public enum BizExceptionEnum {
 	coupon_no_stock(500, "该优惠券已经领完啦"),
 	invalid_member(500, "您还不是会员哦");
 	
-
 	BizExceptionEnum(int code, String message) {
 		this.friendlyCode = code;
 		this.friendlyMsg = message;
