@@ -314,6 +314,22 @@ public class DateUtil {
 
 		return dateStr;
 	}
+	
+	/**
+	 * 得到n天之后的日期
+	 *
+	 * @param days
+	 * @return Date
+	 */
+	public static Date getAfterDayDate(int days) {
+		Calendar canlendar = Calendar.getInstance(); // java.util包
+		canlendar.add(Calendar.DATE, days); // 日期减 如果不够减会将月变动
+		Date date = canlendar.getTime();
+
+		SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = sdfd.format(date);
+		return parse(dateStr,"yyyy-MM-dd");
+	}
 
 	/**
 	 * 得到n天之后是周几

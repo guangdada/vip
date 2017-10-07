@@ -13,7 +13,8 @@ public enum PointTradeType {
     GIVE(3, "商家赠送"),
     MARK(4, "签到获得"),
     PAY_ORDER(5, "订单消费"),
-    CARD(6, "开卡赠送");
+    CARD(6, "开卡赠送"),
+    SHARE(7, "分享好友");
 
     int code;
     String message;
