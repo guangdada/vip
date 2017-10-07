@@ -601,4 +601,16 @@ public class MemberController {
 		map.put("card", obj);
 		return "/member_cardDetail.html";
 	}
+	
+	/**   
+	 * @Title: invitation   
+	 * @date:   2017年10月7日 上午11:24:18 
+	 * @author: huanglin
+	 * @return: String      
+	 * @throws   
+	 */  
+	@RequestMapping(value = "/invitation", method = { RequestMethod.GET, RequestMethod.POST })
+	public String invitation(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
+		return "/member_invitation.html";
+	}
 }
