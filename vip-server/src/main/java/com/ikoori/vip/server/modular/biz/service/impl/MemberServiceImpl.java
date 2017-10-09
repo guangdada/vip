@@ -16,6 +16,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.constant.state.MemCardState;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.state.RightType;
+import com.ikoori.vip.common.exception.BizExceptionEnum;
+import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
@@ -148,20 +150,29 @@ public class MemberServiceImpl implements IMemberService {
 	 */  
 	@Override
 	@Transactional(readOnly=false)
-	public void updateMember(Member member,Long cardId,int point) {
-		//更新交易积分
-		if(point!=0){
-			Member dbMember= selectById(member.getId());
-			Boolean inOut = point> 0 ? true: false;
+	public void updateMember(Member member, Long cardId, int point) {
+		Member dbMember = selectById(member.getId());
+		// 会员没激活，填手机号码，判断手机号码是否唯一
+		if (!dbMember.isIsActive()) {
+			// 修改会员， 判断账号是否重复
+			Member memberRe = selecByMobile(member.getMobile());
+			if (memberRe != null) {
+				throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
+			}
+		}
+
+		// 更新交易积分
+		if (point != 0) {
+			Boolean inOut = point > 0 ? true : false;
 			pointTradeService.savePointTrade(inOut, PointTradeType.GIVE.getCode(), point, dbMember.getId(), null,
 					dbMember.getMerchantId(), null, "");
 		}
-		
-		//更新会员信息
+
+		// 更新会员信息
 		member.setIsActive(true);
 		memberMapper.updateById(member);
-		
-		//更新会员卡
+
+		// 更新会员卡
 		Card card = cardMapper.selectById(cardId);
 		upgradeMemberCard(member, card);
 	}

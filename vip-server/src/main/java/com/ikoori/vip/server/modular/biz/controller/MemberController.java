@@ -157,15 +157,6 @@ public class MemberController extends BaseController {
     	if (ToolUtil.isEmpty(member) || member.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	Member mem = memberService.selectById(member.getId());
-    	//会员没激活，填手机号码，判断手机号码是否唯一
-    	if(!mem.isIsActive()){
-    		//修改会员， 判断账号是否重复
-        	Member memberRe=memberService.selecByMobile(member.getMobile());
-        	if(memberRe!=null){
-        		 throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
-        	}
-    	}
     	memberService.updateMember(member, cardId,point);
         return super.SUCCESS_TIP;
     }
