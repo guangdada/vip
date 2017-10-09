@@ -102,7 +102,7 @@ public class MemberController extends BaseController {
     	List<Card> cards=cardService.selectByCondition(condition);
     	//会员卡
     	model.addAttribute("cards",cards);
-    	model.addAttribute(member);
+    	model.addAttribute("member",member);
         return PREFIX + "member_edit.html";
     }
 
@@ -112,10 +112,10 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/list")
     @Permission
     @ResponseBody
-    public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber,Integer isActive) {
+    public Object list(String memName,String memMobile,Integer memSex,String memNickName,Long cardId,String cardNumber,Integer isActive,String openId) {
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
 		List<Map<String, Object>> result = memberService.getMemberList(page, memName, memSex, memNickName, memMobile,
-				cardId, cardNumber,isActive,page.getOrderByField(), page.isAsc());
+				cardId, cardNumber,isActive,openId,page.getOrderByField(), page.isAsc());
 		page.setRecords((List<Map<String, Object>>) new MemberWarpper(result).warp());
 		return super.packForBT(page);
     }
@@ -157,6 +157,15 @@ public class MemberController extends BaseController {
     	if (ToolUtil.isEmpty(member) || member.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
+    	Member mem = memberService.selectById(member.getId());
+    	//会员没激活，填手机号码，判断手机号码是否唯一
+    	if(!mem.isIsActive()){
+    		//修改会员， 判断账号是否重复
+        	Member memberRe=memberService.selecByMobile(member.getMobile());
+        	if(memberRe!=null){
+        		 throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
+        	}
+    	}
     	memberService.updateMember(member, cardId,point);
         return super.SUCCESS_TIP;
     }

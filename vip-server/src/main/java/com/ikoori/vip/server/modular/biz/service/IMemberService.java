@@ -49,7 +49,7 @@ public interface IMemberService {
 	 * @author: chengxg
 	 */
 	List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
-			String memNickName, String memMobile, Long cardId, String cardNumber, Integer isActive,String orderByField, boolean isAsc);
+			String memNickName, String memMobile, Long cardId, String cardNumber, Integer isActive,String openId,String orderByField, boolean isAsc);
 
 	/**
 	 * 根据手机号和店铺编号查询会员

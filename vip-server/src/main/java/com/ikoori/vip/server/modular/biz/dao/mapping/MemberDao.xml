@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.MemberDao">
 	<select id="getMemberList" resultType="map">
-        select m.*,wu.nickname ,
+        select m.*,wu.nickname ,wu.headimgurl,
         mc.card_number AS cardNumber
         from v_member m 
         LEFT JOIN v_wx_user wu on wu.openid=m.open_id
@@ -17,6 +17,9 @@
         <if test="memNickName != null and memNickName !=''">
             and wu.nickname like CONCAT('%',#{memNickName},'%')
         </if>
+        <if test="openId != null and openId !=''">
+            and wu.openid like CONCAT('%',#{openId},'%')
+        </if>
         <if test="memSex != null">
             and m.sex = #{memSex}
         </if>
@@ -24,7 +27,7 @@
             and mc.card_id =#{cardId}
         </if>
         <if test="cardNumber != null and cardNumber !=''">
-            and mc.card_number =#{cardNumber}
+        	and mc.card_number like CONCAT('%',#{cardNumber},'%')
         </if>
         <if test="isActive != null">
             and m.is_active =#{isActive}

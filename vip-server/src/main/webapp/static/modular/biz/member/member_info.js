@@ -74,6 +74,7 @@ MemberInfoDlg.close = function() {
  * 收集数据
  */
 MemberInfoDlg.collectData = function() {
+	$("select[id='cards'] option:selected").removeAttr("disabled");
 	var cardId = $("select[id='cards'] option:selected").val();
 	var sex = $("select[id='sex'] option:selected").val();
     this.set('id').set('name').set('mobile').set('cardId',cardId).set('wxCode').set('sex',sex).set("tips").set('birthday').set('points').set('point');

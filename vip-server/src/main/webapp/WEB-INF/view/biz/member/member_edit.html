@@ -5,7 +5,11 @@
             <input type="hidden" id="id" value="${member.id}">
               <div class="row">
 				<div class="col-sm-6 b-r">
-					<#input id="mobile" name="手机号码" underline="true" value="${member.mobile}" readonly="readonly"/>
+				    @if(member.isIsActive){
+				    <#input id="mobile" name="手机号码" underline="true" value="${member.mobile}" readonly="readonly"/>
+				    @}else{
+				    <#input id="mobile" name="手机号码" underline="true" value="" />
+				    @}
 					<#input id="name" name="姓名" underline="true" value="${member.name}"/>
 					<#select id="sex" name="性别" underline="true">
 						<option value="1"
@@ -13,8 +17,8 @@
 							selected 
 						@}
 						>男</option>
-						<option value="2"
-						@if(member.sex==2){
+						<option value="0"
+						@if(member.sex==0){
 							selected 
 						@}
 						>女</option>
@@ -23,17 +27,15 @@
 							clickFun="laydate({istime: false, format: 'YYYY-MM-DD'})" />
 				</div>
 				<div class="col-sm-6">
-				
 					<#select id="cards" name="会员卡" underline="true">
 					@for(c in cards!){
 						<option value="${c.id}"
 						@if(memberCard.cardId==c.id){
 						        selected
-						 @}
-						>${c.name!}</option>
 						@}
+						>${c.name!}</option>
+					@}
 					</#select>
-					
 					<#input id="points" name="积分" underline="true" value="${member.points!}" readonly="readonly"/>
 					<#input id="point" name="给积分" underline="true" value="0"  placeholder="请输入积分数(可以是负数)"/>
 					<#textArea id="tips" name="备注" underline="true" value="${member.tips}">

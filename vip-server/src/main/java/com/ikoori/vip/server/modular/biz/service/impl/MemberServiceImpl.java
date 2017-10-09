@@ -157,6 +157,10 @@ public class MemberServiceImpl implements IMemberService {
 					dbMember.getMerchantId(), null, "");
 		}
 		
+		//更新会员信息
+		member.setIsActive(true);
+		memberMapper.updateById(member);
+		
 		//更新会员卡
 		Card card = cardMapper.selectById(cardId);
 		upgradeMemberCard(member, card);
@@ -181,8 +185,8 @@ public class MemberServiceImpl implements IMemberService {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
-			String memNickName, String memMobile,Long cardId,String cardNumber,Integer isActive,String orderByField, boolean isAsc) {
-		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, cardId,cardNumber,isActive,orderByField, isAsc);
+			String memNickName, String memMobile,Long cardId,String cardNumber,Integer isActive,String openId,String orderByField, boolean isAsc) {
+		return memberDao.getMemberList(page, memName, memSex, memNickName, memMobile, cardId,cardNumber,isActive,openId,orderByField, isAsc);
 	}
 
 	@Override
@@ -242,7 +246,7 @@ public class MemberServiceImpl implements IMemberService {
 			memCard.setState(MemCardState.USED.getCode());
 			memCard.setIsDefault(true);
 			memberCardMapper.insert(memCard);
-
+			
 			// 获取会员卡权益
 			log.info("获取会员卡权益");
 			List<CardRight> cardRights = cardRightDao.selectByCardId(card.getId());
