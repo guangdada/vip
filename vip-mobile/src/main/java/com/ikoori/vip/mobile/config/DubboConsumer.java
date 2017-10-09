@@ -10,6 +10,7 @@ import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
+import com.ikoori.vip.api.service.ShareApi;
 import com.ikoori.vip.api.service.SignApi;
 import com.ikoori.vip.api.service.StoreApi;
 
@@ -92,6 +93,17 @@ public class DubboConsumer extends DubboBaseConfig {
 		ReferenceBean<SignApi> ref = new ReferenceBean<SignApi>();
 		ref.setVersion("myversion");
 		ref.setInterface(SignApi.class);
+		ref.setTimeout(5000);
+		ref.setRetries(3);
+		ref.setCheck(false);
+		return ref;
+	}
+	
+	@Bean
+	public ReferenceBean<ShareApi> getShareApi() {
+		ReferenceBean<ShareApi> ref = new ReferenceBean<ShareApi>();
+		ref.setVersion("myversion");
+		ref.setInterface(ShareApi.class);
 		ref.setTimeout(5000);
 		ref.setRetries(3);
 		ref.setCheck(false);

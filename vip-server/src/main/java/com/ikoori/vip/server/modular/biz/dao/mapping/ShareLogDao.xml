@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.ShareLogDao">
+	<select id="getShareLogList" resultType="map">
+        SELECT
+        	sl.id id,
+			sl.`status`,
+			sl.create_time,
+			sl.update_time,
+			m.mobile,
+			wx.nickname shareName,
+			wx.headimgurl shareHead,
+			wx1.nickname AS receiveName,
+			wx1.headimgurl AS receiveHead
+		FROM
+			v_share_log sl
+		LEFT JOIN v_member m ON sl.share_openid = m.open_id
+		LEFT JOIN v_wx_user wx ON sl.share_openid = wx.openid
+		LEFT JOIN v_wx_user wx1 ON sl.receive_openid = wx1.openid
+		WHERE
+			1 = 1
+		AND sl. STATUS = 1
+		<if test="merchantId != null">
+            and m.merchant_id = #{merchantId}
+        </if>
+		<if test="receiveStatus != null">
+            and sl.receive_status = #{receiveStatus}
+        </if>
+		<if test="mobile != null and mobile !=''">
+            and m.mobile like CONCAT('%',#{mobile},'%')
+        </if>
+        <if test="shareName != null and shareName !=''">
+            and wx.nickname like CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="receiveName != null and receiveName !=''">
+            and wx1.nickname like CONCAT('%',#{receiveName},'%')
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by sl.create_time DESC
+            </otherwise>
+        </choose>
+    </select>
+    
+    <select id="getShareCount" resultType="int">
+		SELECT
+			count(1)
+		FROM
+			v_share_log
+		WHERE
+			date_format(
+				#{shareDate},
+				'%Y-%m'
+			) = date_format(create_time, '%Y-%m')
+		AND share_openid = #{shareOpenid}
+		AND receive_status = 1
+		AND `status` = 1
+	</select>
+</mapper>

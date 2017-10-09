@@ -102,14 +102,24 @@ public class MemberController {
 			if (openId == null) {
 				throw new Exception("登录信息有误");
 			}
-			
-			//修改会员信息
-			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), mem.getName(),
-					mem.getSex(), mem.getBirthday(), mem.getAddress(),mem.getArea());
-			
-			//获取修改后的会员信息
+
 			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-			map.put("member", member);
+			if (member == null || !member.getBooleanValue("isActive")) {
+				throw new Exception("用户没有激活");
+			}
+
+			if (!member.getString("mobile").equals(mem.getMobile())) {
+				throw new Exception("激活后手机号不能修改");
+			}
+
+			// 修改会员信息
+			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), mem.getName(),
+					mem.getSex(), mem.getBirthday(), mem.getAddress(), mem.getArea());
+
+			// 获取修改后的会员信息
+			// JSONObject member =
+			// consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+			// map.put("member", member);
 		} catch (Exception e) {
 			log.error("会员信息修改失败", e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
@@ -156,6 +166,10 @@ public class MemberController {
 	@ResponseBody
 	public Object registerMember(HttpServletRequest request, Map<String, Object> map, @Valid Member mem,
 			String mobileCode) {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if (openId == null) {
+			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
+		}
 		//验证手机短信验证码是否正确
 		String mobileCode1 = (Integer) request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
 		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
@@ -168,13 +182,8 @@ public class MemberController {
 			return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
 		}
 		try {
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
-				return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
-			}
-			
 			//更新会员信息
-			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), null, 1, null, null,null);
+			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile());
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
 			e.printStackTrace();

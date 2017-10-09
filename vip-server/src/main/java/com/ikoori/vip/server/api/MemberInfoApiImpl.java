@@ -32,6 +32,8 @@ import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
+import com.ikoori.vip.server.modular.biz.service.IShareService;
+import com.ikoori.vip.server.modular.biz.service.impl.ShareServiceImpl;
 
 /**
  * @ClassName: MemberInfoApiImpl
@@ -71,6 +73,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	PointDao pointDao;
 	@Autowired
 	IPointTradeService pointTradeService;
+	@Autowired
+	IShareService shareService;
 
 	/**
 	 * <p>
@@ -243,5 +247,25 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		wxUser.setSex(userInfo.getSex());
 		wxUser.setUnionid(userInfo.getUnionid());
 		wxUser.setSubscribeTime(new Date());
+	}
+
+	/**
+	 * 激活会员
+	 * @Title: activeMemberByOpenId   
+	 * @param openId
+	 * @param mobile
+	 * @return
+	 * @date:   2017年10月9日 上午10:54:16 
+	 * @author: chengxg
+	 */
+	@Override
+	public int activeMemberByOpenId(String openId, String mobile) {
+		synchronized (mobile.intern()) {
+			int count = memberDao.updateMemberInfoByOpenId(openId, null, mobile, 1, null, null, null);
+			if (count > 0) {
+				shareService.activeShare(openId);
+			}
+			return count;
+		}
 	}
 }

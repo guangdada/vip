@@ -15,4 +15,6 @@ public interface MemberInfoApi {
 
 	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address, String area);
+	
+	public int activeMemberByOpenId(String openId, String mobile);
 }
