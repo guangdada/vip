@@ -3,68 +3,31 @@
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <style>
-* {
-	margin: 0;
-	padding: 0;
-}
-.invitationDiv .photoImg {
-	/*left: 30px;*/
-    /*margin:auto auto; */
-	left: 18%; 
-	position: absolute;
-	z-index: 1;
-	top: 63px;
+#photoDiv .inline {
+	display: inline;
 }
 </style>
-<body ontouchstart style="background-color:#3a3c42;">
-	<!-- 返回 -->
-	<div class="weui-header bg-black" style="display:none;">
-		<div class="weui-header-left">
-			<a class="icon icon-109 f-white"
-				onClick="javascript :history.back(-1);">返回</a>
-		</div>
-		<h1 class="weui-header-title"></h1>
-		<div class="weui-header-right">
-			<!-- <a class="icon icon-83 f-white"></a> -->
-		</div>
+</head>
+<body style="background-color: #3a3c42;">
+	<div align="center" style="margin-top: 20px;padding-top:20px;">
+		<font color="#ffd200" size="3"><strong>杰克船长</strong></font>&nbsp; 
+		<font color="#c2c9cc" size="3">邀你一起“酷锐运动”</font>
 	</div>
-	<div>
-		<div align="center" style="margin-top:20px;">
-		<font color="#ffd200" size="3"><strong>杰克船长</strong></font>&nbsp;<font color="#c2c9cc" size="3">邀你一起“酷锐运动”</font>
+	<div style="background-color: #272a33; position: relative; top: 70px; margin-left: 10px; margin-right: 10px; padding-top: 18px;">
+		<div style="width: 100%; margin-bottom: 40px;" align="center">
+			<font color="#cad2e0">长按识别二维码，即可领取</font>
 		</div>
-
-		<div style="background-color:#272a33;position: relative;top:70px;margin-left:10px;margin-right:15px;padding-top:18px;">
-			<div style="width:100%;margin-bottom:40px;" align="center"><font color="#cad2e0">长按识别二维码，即可领取</font></div>
-			<div style="width:100%;display:inline-block;">
-				<!-- <div align="center" style="width:38%;"><img src="${ctxPath}/static/styles/images/photo2.jpg" style="width:16%;height:20%;border:2px solid white;border-radius:50% 50%;position:absolute;top:80px;z-index:1;"></div> -->
-				<!-- <img class="test" src="${ctxPath}/static/styles/images/photo2.jpg" style="width:16%;height:20%;border:2px solid white;border-radius:50% 50%;z-index:100;top:27%;">
-				<div class="" style="width:46%;float:left;margin-left:10px;margin-top:12px;margin-right:3px;" align="left">
-					<img src="${ctxPath}/static/styles/images/invitation.png" width="100%" height="100%"/>
-				</div>
-				<div style="width:46%;float:right;margin-right:10px;" align="right" id="qrDiv"><img src="${ctxPath}/static/styles/images/invitation_code.jpg" width="100%" height="100%" /></div> -->
-				<div class="invitationDiv" style="width:46%;height:46%;float:left;margin-right:2%;margin-left:2%;margin-top:10px;positon:relative;">
-					<div  class="photoImg" style="positon:relative;">
-						<img src="${ctxPath}/static/styles/images/photo2.jpg" style="width:16%;border:2px solid white;border-radius:50% 50%;z-index:100;">
-					</div>
-					<img src="${ctxPath}/static/styles/images/invitation.png" width="100%" height="100%"/>
-				</div>
-				<div style="width:46%;height:46%;float:left;margin-right:2%;margin-left:2%;">
-					<img src="${ctxPath}/static/styles/images/invitation_code.jpg" width="100%" height="100%" />
-				</div> 
+		<div align="center" id="photoDiv" style="padding-bottom: 10px;">
+			<div class="photoImg" align="center" style="margin-right: 215px;">
+				<img src="${ctxPath}/static/styles/images/photo1.jpg" style="width: 55px; border: 2px solid white; border-radius: 50% 50%; z-index: 100; position: absolute; top: 65px;">
+			</div>
+			<div class="inline" style="margin-right:5px;">
+				<img src="${ctxPath}/static/styles/images/invitation.png" width="150px">
+			</div>
+			<div class="inline">
+				<img src="${ctxPath}/static/styles/images/invitation_code.jpg" width="157px">
 			</div>
 		</div>
-
 	</div>
 </body>
-<script>
-$(function(){
-/* 	var invitationDivHight=$(".invitationDiv").offset().top;
-	var imgHight=$(".photoImg").height();
-	var invitationOuterHight=$(".invitationDiv").outerHeight();
-	alert(invitationDivHight);
-	alert(imgHight);
-	alert(invitationOuterHight);
-    $(".photoImg").css("top",invitationDivHight-invitationOuterHight); */
-}); 
-</script>
 @}
