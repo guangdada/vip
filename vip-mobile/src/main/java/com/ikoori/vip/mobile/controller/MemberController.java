@@ -116,41 +116,12 @@ public class MemberController {
 			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), mem.getName(),
 					mem.getSex(), mem.getBirthday(), mem.getAddress(), mem.getArea());
 
-			// 获取修改后的会员信息
-			// JSONObject member =
-			// consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-			// map.put("member", member);
 		} catch (Exception e) {
 			log.error("会员信息修改失败", e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		return new SuccessTip();
 	}
-	
-	
-	/** 
-	* @Title: updateInfoGet 
-	* @Description: 修改会员信息
-	* @param  request
-	* @param  map
-	* @param  mem
-	* @param @throws Exception    
-	* @return String     
-	* @throws 
-	*/
-	@RequestMapping(value="/updateMemberInfo",method={RequestMethod.GET})
-	public String updateInfoGet(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) throws Exception {
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			throw new Exception("登录信息有误");
-		}
-		
-		//获取会员信息
-		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-		map.put("member", member);
-		return "/member_info.html";
-	}
-	
 	
 	/** 
 	* @Title: registerMember 
