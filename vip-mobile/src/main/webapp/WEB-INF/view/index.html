@@ -127,7 +127,7 @@
 				</div>
 				<div class="weui-cell__ft"></div>
 			</a>
-			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/invitation">
+			<a class="weui-cell weui-cell_access" href="${ctxPath}/share/invitation">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
 					<i class="fa fa-envelope-o  fa-lg" style="font-size: 1.4em;" aria-hidden="true"></i>
@@ -189,6 +189,22 @@
 					});
 
 					wx.ready(function() {
+						wx.getLocation({
+							type : 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+							success : function(res) {
+								var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+								var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+								var speed = res.speed; // 速度，以米/每秒计
+								var accuracy = res.accuracy; // 位置精度
+								window.location.href = "${ctxPath}/member/store?lat="
+										+ latitude + "&lon=" + longitude;
+							},
+							fail : function(error) {
+								AlertUtil.error("获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！");
+								/* $.toptip('获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！'); */
+							}
+						});
+						
 					});
 
 					wx.error(function(res) {
@@ -196,27 +212,13 @@
 
 				}
 			},
-			//调用出错执行的函数
+			//调用ajax出错执行的函数
 			error : function() {
 				//请求出错处理
 			}
 		});
 
-		wx.getLocation({
-			type : 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-			success : function(res) {
-				var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-				var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-				var speed = res.speed; // 速度，以米/每秒计
-				var accuracy = res.accuracy; // 位置精度
-				window.location.href = "${ctxPath}/member/store?lat="
-						+ latitude + "&lon=" + longitude;
-			},
-			fail : function(error) {
-				AlertUtil.error("获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！");
-				/* $.toptip('获取地理位置失败，请确保开启GPS且允许微信获取您的地理位置！'); */
-			}
-		});
+		
 
 	}
 </script>

@@ -58,6 +58,7 @@
 			STATUS = 1
 		AND open_id = #{openId}
     </select>
+    
     <select id="getMemberByMobile" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
 			m.*
@@ -87,6 +88,7 @@
     	UPDATE v_member SET points = points + #{point} where id = #{memberId} AND points + #{point} &gt;= 0
     </update>
     
+     <!-- 修改会员信息 -->
     <update id="updateMemberInfoByOpenId">
 	    update v_member m set
 	    m.name= #{name},
@@ -99,7 +101,7 @@
 	    where m.open_id = #{openId}
     </update>
     
-     <select id="selectByMemberId" resultType="com.ikoori.vip.common.persistence.model.Member">
+    <select id="selectByMemberId" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
 			m.*,wu.nickname AS nickname
 		FROM
@@ -111,4 +113,28 @@
         </if>
     </select>
     
+    <select id="selectByMemberId" resultType="com.ikoori.vip.common.persistence.model.Member">
+    	SELECT
+			m.*,wu.nickname AS nickname
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
+		WHERE
+		<if test="memberId != null">
+        	 m.id = #{memberId}
+        </if>
+    </select>
+    
+    <select id="getWxUserByOpenId" resultType="map">
+    	SELECT
+			m.*,wu.nickname,wu.headimgurl
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
+		WHERE
+		<if test="openId != null">
+        	m.open_id = #{openId}
+        </if>
+    </select>
+   
 </mapper>

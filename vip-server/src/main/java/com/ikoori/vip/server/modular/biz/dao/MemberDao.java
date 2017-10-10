@@ -21,6 +21,8 @@ public interface MemberDao {
 	
 	Member getMemberByOpenId(@Param("openId") String openId);
 	
+	Object getWxUserByOpenId(@Param("openId") String openId);
+	
 	Member selectByMobile(@Param("mobile") String mobile);
 	
 	Member getMemberByMobile(@Param("mobile") String mobile);
