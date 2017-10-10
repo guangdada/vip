@@ -7,7 +7,7 @@ package com.ikoori.vip.common.constant.state;
  *
  */
 public enum SexType {
-	boy(1, "男"), girl(2, "女");
+	boy(1, "男"), girl(0, "女");
 	int code;
 	String message;
 

@@ -8,7 +8,9 @@ import com.ikoori.vip.api.vo.UserInfo;
 public interface MemberInfoApi {
 
 	public JSONObject getMemberInfoByOpenId(String openId);
-
+	
+	public Object getWxUserByOpenId(String openId);
+	
 	public Object getMemberByMobile(String mobile);
 
 	public void saveMemberInfo(UserInfo userInfo) throws Exception;

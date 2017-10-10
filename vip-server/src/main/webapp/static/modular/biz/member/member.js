@@ -15,7 +15,12 @@ Member.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '微信头像', field: 'headimgurl', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        	var img = '<img src="'+row.headimgurl+'" width="50px" height="50px"/>';
+        	return img;
+        }},
         {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信id', field: 'open_id', visible: true, align: 'center', valign: 'middle'},
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号码', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '会员卡号', field: 'cardNumber', visible: true, align: 'center', valign: 'middle'},
@@ -108,12 +113,13 @@ Member.delete = function () {
  */
 Member.search = function () {
     var queryData = {};
-    queryData['memName'] = $("#memName").val();
-    queryData['memMobile']=$("#memMobile").val();
+    queryData['memName'] = $.trim($("#memName").val());
+    queryData['openId'] =  $.trim($("#openId").val());
+    queryData['memMobile']= $.trim($("#memMobile").val());
     queryData['memSex']=$("#memSex").find("option:selected").val();
     queryData['cardId']=$("#cardId").find("option:selected").val();
-    queryData['cardNumber']=$("#cardNumber").val();
-    queryData['memNickName']=$('#memNickName').val();
+    queryData['cardNumber']= $.trim($("#cardNumber").val());
+    queryData['memNickName']= $.trim($('#memNickName').val());
     queryData['isActive']=$("#isActive").find("option:selected").val();
     Member.table.refresh({query: queryData});
 };

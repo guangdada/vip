@@ -3,7 +3,32 @@
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
+<style>
+#cover {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 18888;
+	background-color: #000000;
+	opacity: 0.7;
+}
+
+#guide {
+	display: none;
+	position: absolute;
+	right: 18px;
+	top: 5px;
+	z-index: 19999;
+}
+
+#guide img {
+	width: 260px;
+	height: 180px;
+}
+</style>
 <body style="background-color:#fafafa;">
 	<!-- 返回 -->
 	<div class="weui-header bg-black" style="display:none;">
@@ -34,7 +59,7 @@
 		</div>
 	</div>
 
-	<div class="weui-msg__opr-area">
+	<div class="weui-msg__opr-area" id="share"  onclick="_system._guide(true)">
 	    <p class="weui-btn-area">
 	      <a href="javascript:;" class="coupondetail-weui-btn weui-btn_primary">立即分享</a>
 	    </p>
@@ -49,7 +74,6 @@
 	<div class="bd">
 		<div class="page__bd">
         	<div class="weui-cells">
-        		
 		        <!--  <a class="weui-cell weui-cell_access" href="/member/info">
 		           <div class="weui-cell__hd"><img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
 		           <div class="weui-cell__bd">
@@ -92,23 +116,129 @@
 			</div>
 		</div>
 	</div>
-  
-  <script type="text/javascript">
-  /* 	var showQr = function (){
-  		var src = $("#qrcode").find("img").prop("src");
-		var img = '<img src="'+src+'"/>';
-  		layer.open({
-  	  	  content: img,
-  	  	  btn: '关闭',
-  	  	  shadeClose: false
-  	  	});
-  	} */
-	//var qrcode = new QRCode("qrcode");
-	/* function makeCode () { 
-		var cardNum = $("#cardNum").val();
-	    qrcode.makeCode(cardNum);
-	} */
-  </script>
+	<div id="cover"></div>
+	<div id="guide">
+		<img src="${ctxPath}/static/styles/images/guide1.png">
+	</div>
+	<script type="text/javascript">
+		$.ajax({
+			//提交数据的类型 POST GET
+			type : "POST",
+			//提交的网址
+			url : "${ctxPath}/member/getWxConfig",
+			//成功返回之后调用的函数             
+			success : function(data) {
+				if (data) {
+					wx.config({
+						debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId : data.appId, // 必填，公众号的唯一标识
+						timestamp : data.timestamp, // 必填，生成签名的时间戳
+						nonceStr : data.nonceStr, // 必填，生成签名的随机串
+						signature : data.signature,// 必填，签名，见附录1
+						jsApiList : [ 'onMenuShareTimeline',
+								'onMenuShareAppMessage' ]
+					// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+
+					wx.ready(function() {
+						// 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+						wx.onMenuShareTimeline({
+							title : "${couponDetail.nickname} 送你一张优惠券", // 分享标题
+							link : "${couponDetail.url!}",
+							imgUrl : "${ctxPath}/static/styles/images/ikoori.jpg" // 分享图标
+						});
+
+						// 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+						wx.onMenuShareAppMessage({
+							title : '${couponDetail.nickname} 送你一张优惠券', // 分享标题
+							desc : "${couponDetail.description!}", // 分享描述
+							link : "${couponDetail.url!}",
+							imgUrl : "${ctxPath}/static/styles/images/ikoori.jpg", // 分享图标
+							type : 'link', // 分享类型,music、video或link，不填默认为link
+						});
+					});
+
+					wx.error(function(res) {
+					});
+
+				}
+			},
+			//调用出错执行的函数
+			error : function() {
+				//请求出错处理
+			}
+		});
+
+		var _system = {
+			$ : function(id) {
+				return document.getElementById(id);
+			},
+			_client : function() {
+				return {
+					w : document.documentElement.scrollWidth,
+					h : document.documentElement.scrollHeight,
+					bw : document.documentElement.clientWidth,
+					bh : document.documentElement.clientHeight
+				};
+			},
+			_scroll : function() {
+				return {
+					x : document.documentElement.scrollLeft ? document.documentElement.scrollLeft
+							: document.body.scrollLeft,
+					y : document.documentElement.scrollTop ? document.documentElement.scrollTop
+							: document.body.scrollTop
+				};
+			},
+			_cover : function(show) {
+				if (show) {
+					this.$("cover").style.display = "block";
+					this.$("cover").style.width = (this._client().bw > this
+							._client().w ? this._client().bw : this._client().w)
+							+ "px";
+					this.$("cover").style.height = (this._client().bh > this
+							._client().h ? this._client().bh : this._client().h)
+							+ "px";
+				} else {
+					this.$("cover").style.display = "none";
+				}
+			},
+			_guide : function(click) {
+				this._cover(true);
+				this.$("guide").style.display = "block";
+				this.$("guide").style.top = (_system._scroll().y + 5) + "px";
+				window.onresize = function() {
+					_system._cover(true);
+					_system.$("guide").style.top = (_system._scroll().y + 5)
+							+ "px";
+				};
+				if (click) {
+					_system.$("cover").onclick = function() {
+						_system._cover();
+						_system.$("guide").style.display = "none";
+						_system.$("cover").onclick = null;
+						window.onresize = null;
+					};
+				}
+			},
+			_zero : function(n) {
+				return n < 0 ? 0 : n;
+			}
+		}
+		/* 	var showQr = function (){
+				var src = $("#qrcode").find("img").prop("src");
+			var img = '<img src="'+src+'"/>';
+				layer.open({
+			  	  content: img,
+			  	  btn: '关闭',
+			  	  shadeClose: false
+			  	});
+			} */
+		//var qrcode = new QRCode("qrcode");
+		/* function makeCode () { 
+			var cardNum = $("#cardNum").val();
+		    qrcode.makeCode(cardNum);
+		} */
+	</script>
 </body>
 @}
 

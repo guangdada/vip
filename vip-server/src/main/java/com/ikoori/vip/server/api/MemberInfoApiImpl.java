@@ -268,4 +268,17 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			return count;
 		}
 	}
+
+	/**   
+	 * @Title: getWxUserByOpenId 
+	 * @Description: 获取微信号的信息  
+	 * @date:   2017年10月10日 下午3:42:02 
+	 * @author: huanglin    
+	 * @throws   
+	 */  
+	@Override
+	public Object getWxUserByOpenId(String openId) {
+		return memberDao.getWxUserByOpenId(openId);
+	}
+
 }

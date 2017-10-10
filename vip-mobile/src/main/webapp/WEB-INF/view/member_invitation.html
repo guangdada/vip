@@ -1,33 +1,170 @@
 @layout("/common/_container.html",{title:"我的邀请函"}){
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <style>
 #photoDiv .inline {
 	display: inline;
 }
+#cover {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 18888;
+	background-color: #000000;
+	opacity: 0.7;
+}
+
+#guide {
+	display: none;
+	position: absolute;
+	right: 18px;
+	top: 5px;
+	z-index: 19999;
+}
+
+#guide img {
+	width: 260px;
+	height: 180px;
+}
 </style>
 </head>
 <body style="background-color: #3a3c42;">
 	<div align="center" style="margin-top: 20px;padding-top:20px;">
-		<font color="#ffd200" size="3"><strong>杰克船长</strong></font>&nbsp; 
+		<font color="#ffd200" size="3"><strong>${user.nickname!}</strong></font>&nbsp; 
 		<font color="#c2c9cc" size="3">邀你一起“酷锐运动”</font>
 	</div>
 	<div style="background-color: #272a33; position: relative; top: 70px; margin-left: 10px; margin-right: 10px; padding-top: 18px;">
 		<div style="width: 100%; margin-bottom: 40px;" align="center">
-			<font color="#cad2e0">长按识别二维码，即可领取</font>
+			<font color="#cad2e0">长按识别二维码</font>
 		</div>
 		<div align="center" id="photoDiv" style="padding-bottom: 10px;">
-			<div class="photoImg" align="center" style="margin-right: 215px;">
-				<img src="${ctxPath}/static/styles/images/photo1.jpg" style="width: 55px; border: 2px solid white; border-radius: 50% 50%; z-index: 100; position: absolute; top: 65px;">
+			<div class="photoImg" align="center" style="margin-right: 220px;">
+				<img src="${user.headimgurl!}" style="width: 55px; border: 2px solid white; border-radius: 50% 50%; z-index: 100; position: absolute; top: 65px;">
 			</div>
 			<div class="inline" style="margin-right:5px;">
-				<img src="${ctxPath}/static/styles/images/invitation.png" width="150px">
+				<img src="${ctxPath}/static/styles/images/invitation.png" width="152px">
 			</div>
 			<div class="inline">
 				<img src="${ctxPath}/static/styles/images/invitation_code.jpg" width="157px">
 			</div>
 		</div>
 	</div>
+	<div class="weui-btn-area" style="top:150px;position:relative;" onclick="_system._guide(true)">
+		<a class="weui-btn " href="javascript:" id="showTooltips" style="background-color:#ffe43f;"><font color="black">邀请我的朋友</font></a>
+	</div>
+	<div id="cover"></div>
+	<div id="guide">
+		<img src="${ctxPath}/static/styles/images/guide1.png">
+	</div>
+	
+	<script type="text/javascript">
+		$.ajax({
+			//提交数据的类型 POST GET
+			type : "POST",
+			//提交的网址
+			url : "${ctxPath}/member/getWxConfig",
+			//成功返回之后调用的函数             
+			success : function(data) {
+				if (data) {
+					wx.config({
+						debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId : data.appId, // 必填，公众号的唯一标识
+						timestamp : data.timestamp, // 必填，生成签名的时间戳
+						nonceStr : data.nonceStr, // 必填，生成签名的随机串
+						signature : data.signature,// 必填，签名，见附录1
+						jsApiList : [ 'onMenuShareTimeline',
+								'onMenuShareAppMessage' ]
+					// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+					});
+
+					wx.ready(function() {
+						// 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+						wx.onMenuShareTimeline({
+							title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
+							link : "${shareUrl!}",
+							imgUrl : "${user.headimgurl!}" // 分享图标
+						});
+
+						// 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+						wx.onMenuShareAppMessage({
+							title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
+							desc : "新用户可领取20元代金券。", // 分享描述
+							link : "${shareUrl!}",
+							imgUrl : "${user.headimgurl!}", // 分享图标
+							type : 'link', // 分享类型,music、video或link，不填默认为link
+						});
+					});
+
+					wx.error(function(res) {
+					});
+
+				}
+			},
+			//调用出错执行的函数
+			error : function() {
+				//请求出错处理
+			}
+		});
+
+		var _system = {
+			$ : function(id) {
+				return document.getElementById(id);
+			},
+			_client : function() {
+				return {
+					w : document.documentElement.scrollWidth,
+					h : document.documentElement.scrollHeight,
+					bw : document.documentElement.clientWidth,
+					bh : document.documentElement.clientHeight
+				};
+			},
+			_scroll : function() {
+				return {
+					x : document.documentElement.scrollLeft ? document.documentElement.scrollLeft
+							: document.body.scrollLeft,
+					y : document.documentElement.scrollTop ? document.documentElement.scrollTop
+							: document.body.scrollTop
+				};
+			},
+			_cover : function(show) {
+				if (show) {
+					this.$("cover").style.display = "block";
+					this.$("cover").style.width = (this._client().bw > this
+							._client().w ? this._client().bw : this._client().w)
+							+ "px";
+					this.$("cover").style.height = (this._client().bh > this
+							._client().h ? this._client().bh : this._client().h)
+							+ "px";
+				} else {
+					this.$("cover").style.display = "none";
+				}
+			},
+			_guide : function(click) {
+				this._cover(true);
+				this.$("guide").style.display = "block";
+				this.$("guide").style.top = (_system._scroll().y + 5) + "px";
+				window.onresize = function() {
+					_system._cover(true);
+					_system.$("guide").style.top = (_system._scroll().y + 5)
+							+ "px";
+				};
+				if (click) {
+					_system.$("cover").onclick = function() {
+						_system._cover();
+						_system.$("guide").style.display = "none";
+						_system.$("cover").onclick = null;
+						window.onresize = null;
+					};
+				}
+			},
+			_zero : function(n) {
+				return n < 0 ? 0 : n;
+			}
+		}
+	</script>
 </body>
+
 @}

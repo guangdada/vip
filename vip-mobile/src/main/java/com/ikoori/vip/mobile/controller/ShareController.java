@@ -37,6 +37,17 @@ public class ShareController {
 	 */
 	@RequestMapping(value = "/invitation", method = { RequestMethod.GET, RequestMethod.POST })
 	public String invitation(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		String openId = WeChatAPI.getOpenId(request.getSession());
+		if (openId == null) {
+			throw new Exception("登录信息有误");
+		}
+
+		// 获取微信头像和昵称
+		Object user = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
+		map.put("user", user);
+		String shareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ "/share/invited/" + openId;
+		map.put("shareUrl", shareUrl);
 		return "/member_invitation.html";
 	}
 
@@ -58,6 +69,6 @@ public class ShareController {
 			throw new Exception("登录信息有误");
 		}
 		consumer.getShareApi().get().saveShareLog(shareOpenid, openId, IpUtil.getIpAddr(request));
-		return "";
+		return "redirect:index";
 	}
 }
