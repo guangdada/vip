@@ -15,14 +15,25 @@
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
+	margin:0 auto;
 }
 
 .sign th, .sign td {
 	width: 30px;
-	height: 55px;
+	height: 45px;
 	text-align: center;
 	line-height: 40px;
 	border: 1px solid #e3e3e3;
+}
+
+.sign tr th:first-child,.sign tr th:last-child{
+	border-right:none;
+	border-left:none;
+}
+
+.sign tr td:first-child,.sign tr td:last-child{
+	border-right:none;
+	border-left:none;
 }
 
 .sign th {
@@ -40,7 +51,7 @@
 
 .calendar_month_span {
 	display: inline;
-	line-height: 45px;
+	line-height: 40px;
 	font-size: 16px;
 	color: #656565;
 	letter-spacing: 2px;
@@ -51,7 +62,7 @@
 
 .calendar_month_point {
 	display: inline;
-	line-height: 45px;
+	line-height: 40px;
 	font-size: 16px;
 	color: #656565;
 	letter-spacing: 2px;
@@ -63,8 +74,6 @@
 .sign_succ_calendar_title {
 	text-align: center;
 	width: 100%;
-	border-left: 1px solid #e3e3e3;
-	border-right: 1px solid #e3e3e3;
 	background: #fff;
 }
 
@@ -78,11 +87,11 @@
 }
 
 .sign_main {
-	width: 100%; /**background-color: #FBFEFE;**/
-	border-top: 1px solid #e3e3e3;
+	width: 90%; /**background-color: #FBFEFE;**/
 	font-family: "Microsoft YaHei", SimHei;
 	display: block;
-	border-bottom: 1px solid #e3e3e3;
+	border:1px solid #e3e3e3;
+	margin: 0 auto;
 }
 
 html,body,.rich_media{
