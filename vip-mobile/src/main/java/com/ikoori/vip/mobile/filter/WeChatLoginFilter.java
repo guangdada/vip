@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
 public class WeChatLoginFilter extends OncePerRequestFilter {

@@ -94,8 +94,10 @@ public class HttpKit {
         BufferedReader in = null;
         try {
             String para = "";
-            for (String key : param.keySet()) {
-                para += (key + "=" + param.get(key) + "&");
+            if(param != null){
+            	for (String key : param.keySet()) {
+                    para += (key + "=" + param.get(key) + "&");
+                }
             }
             if (para.lastIndexOf("&") > 0) {
                 para = para.substring(0, para.length() - 1);

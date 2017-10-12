@@ -4,6 +4,7 @@
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/styles/js/weixin_share.js"></script>
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <style>
 #cover {
@@ -121,7 +122,10 @@
 		<img src="${ctxPath}/static/styles/images/guide1.png">
 	</div>
 	<script type="text/javascript">
-		$.ajax({
+		window.onload = function () {
+			getShareConfig("${ctxPath}","${userInfo.nickname!} 送你一张优惠券","${couponDetail.url!}","${couponDetail.description!}","${basePath}/static/styles/images/ikoori.jpg","","");
+		}
+		/* $.ajax({
 			//提交数据的类型 POST GET
 			type : "POST",
 			//提交的网址
@@ -167,7 +171,7 @@
 			error : function() {
 				//请求出错处理
 			}
-		});
+		}); */
 
 		var _system = {
 			$ : function(id) {
@@ -224,20 +228,6 @@
 				return n < 0 ? 0 : n;
 			}
 		}
-		/* 	var showQr = function (){
-				var src = $("#qrcode").find("img").prop("src");
-			var img = '<img src="'+src+'"/>';
-				layer.open({
-			  	  content: img,
-			  	  btn: '关闭',
-			  	  shadeClose: false
-			  	});
-			} */
-		//var qrcode = new QRCode("qrcode");
-		/* function makeCode () { 
-			var cardNum = $("#cardNum").val();
-		    qrcode.makeCode(cardNum);
-		} */
 	</script>
 </body>
 @}

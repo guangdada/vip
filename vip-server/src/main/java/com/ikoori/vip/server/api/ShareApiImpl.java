@@ -1,5 +1,7 @@
 package com.ikoori.vip.server.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import com.ikoori.vip.server.modular.biz.dao.MemberDao;
  */
 @Service
 public class ShareApiImpl implements ShareApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	ShareLogMapper shareLogMapper;
 	@Autowired
@@ -42,14 +45,17 @@ public class ShareApiImpl implements ShareApi {
 	 */
 	@Override
 	public void saveShareLog(String shareOpenid, String receiveOpenid, String receiveIp) throws Exception {
+		log.info("进入saveShareLog");
 		// 邀请人不存在， 不处理
 		Member shareMem = memberDao.getMemberByOpenId(shareOpenid);
 		if (shareMem == null) {
+			log.info("shareMem == null");
 			return;
 		}
 		// 受邀人已经是会员不再处理
 		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
 		if (receiveMem != null) {
+			log.info("receiveMem != null");
 			return;
 		}
 
@@ -59,6 +65,7 @@ public class ShareApiImpl implements ShareApi {
 		shareLog.setReceiveIp(receiveIp);
 		shareLog.setReceiveStatus(false);
 		shareLogMapper.insert(shareLog);
+		log.info("结束saveShareLog");
 	}
 
 }

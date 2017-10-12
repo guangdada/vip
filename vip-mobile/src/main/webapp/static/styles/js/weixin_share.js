@@ -5,17 +5,17 @@
  * @param link 链接
  * @param desc 描述
  * @param imgUrl 图片路径
- * @param id 新闻id
  * @param username 用户名
  * @param headerImage 头像
  */
-function getShareConfig(path, title, link, desc, imgUrl, id, username, headerImage) {
-	var url = link || location.href.split('#')[0];
+function getShareConfig(path, title, link, desc, imgUrl, username, headerImage) {
+	var jsurl = location.href.split('#')[0];
+	var timestamp=new Date().getTime();
 	$.ajax({
-		url:path+"/web/share/getWxConfig.jhtml",
+		url:path+"/member/getWxConfig?t="+timestamp,
 		dataType : "json",
 	    async : false,
-	    data:{url:url},
+	    data:{jsurl:jsurl},
 	    success : function(data) {
 	        wx.config({
 	            appId: data.appId,
@@ -27,11 +27,10 @@ function getShareConfig(path, title, link, desc, imgUrl, id, username, headerIma
 	        
 	        //修改这里
 			var shareData = {
-				title : "来玩BALL-" + title,
-				link : url,
+				title : title,
+				link : link,
 				img_url : imgUrl,
 				desc : desc,
-				id : id,
 				username : username,
 				headerImage : headerImage
 			};
@@ -49,7 +48,7 @@ function getShareConfig(path, title, link, desc, imgUrl, id, username, headerIma
 					},
 					success : function(res) {
 						//alert('已分享');
-						saveIntefral(path, shareData.id,shareData.username,shareData.headerImage,"friend");
+						//saveIntefral(path, shareData.id,shareData.username,shareData.headerImage,"friend");
 					},
 					cancel : function(res) {
 						//alert('已取消');
@@ -70,7 +69,7 @@ function getShareConfig(path, title, link, desc, imgUrl, id, username, headerIma
 					},
 					success : function(res) {
 						//alert('已分享');
-						saveIntefral(path, shareData.id,shareData.username,shareData.headerImage,"friendCircle");
+						//saveIntefral(path, shareData.id,shareData.username,shareData.headerImage,"friendCircle");
 					},
 					cancel : function(res) {
 						//alert('已取消');

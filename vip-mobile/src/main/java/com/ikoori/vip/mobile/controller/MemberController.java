@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
+import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
@@ -296,6 +297,10 @@ public class MemberController {
 		Object couponDetail = consumer.getMemberCouponApi().get()
 				.getMemberCouponDetailByCouponId(Long.valueOf(couponId), Long.valueOf(id));
 		map.put("couponDetail", couponDetail);
+		UserInfo userInfo = WeChatAPI.getUserInfo(request.getSession());
+		map.put("userInfo", userInfo);
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+		map.put("basePath", basePath);
 		return "/member_couponDetail.html";
 	}
 	
@@ -536,23 +541,23 @@ public class MemberController {
 	*/
 	@RequestMapping(value = "/getWxConfig", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public Object getWxConfig(HttpServletRequest request) {
-		System.out.println("进入getWxConfig!!");
+	public Object getWxConfig(HttpServletRequest request,String jsurl) {
+		log.info("进入getWxConfig!!");
 		Map<String, Object> ret = new HashMap<String, Object>();
 		try {
-			String appId = WeChatAPI.APPID; // 必填，公众号的唯一标识
 			String jsapi_ticket = WeChatAPI.getJsApiTicket(request.getSession());
-			System.out.println("jsapi_ticket:" + jsapi_ticket);
+			log.info("jsapi_ticket:" + jsapi_ticket);
 			String timestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
 			String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
 			// 注意这里参数名必须全部小写，且必须有序
 			String[] paramArr = new String[] { "jsapi_ticket=" + jsapi_ticket, "noncestr=" + nonceStr,
-					"timestamp=" + timestamp };
+					"timestamp=" + timestamp,"url=" + jsurl};
 			Arrays.sort(paramArr);
 			// 将排序后的结果拼接成一个字符串
-			String sign = paramArr[0].concat("&" + paramArr[1]).concat("&" + paramArr[2]);
+			String sign = paramArr[0].concat("&" + paramArr[1]).concat("&" + paramArr[2]).concat("&"+paramArr[3]);
+			log.info("signStr:"+sign);
 			String signature = WeChatAPI.SHA1(sign);
-			ret.put("appId", appId);
+			ret.put("appId", WeChatAPI.APPID);
 			ret.put("timestamp", timestamp);
 			ret.put("nonceStr", nonceStr);
 			ret.put("signature", signature);
@@ -560,7 +565,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("出去getWxConfig!!" + ret.toString());
+		log.info("出去getWxConfig!!" + ret.toString());
 		return ret;
 	}
 

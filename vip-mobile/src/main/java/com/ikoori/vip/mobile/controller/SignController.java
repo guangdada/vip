@@ -27,12 +27,14 @@ public class SignController {
 
 	@RequestMapping(value = "/toSign", method = { RequestMethod.GET, RequestMethod.POST })
 	public String sign(HttpServletRequest request, Map<String, Object> map, Long storeId) throws Exception {
+		log.info("进入sign");
 		return "/member_sign.html";
 	}
 
 	@RequestMapping("/signIn")
 	@ResponseBody
 	public Object signIn(HttpSession session) {
+		log.info("进入signIn");
 		String openId = WeChatAPI.getOpenId(session);
 		JSONObject obj = new JSONObject();
 		try {
@@ -47,14 +49,17 @@ public class SignController {
 				obj.put("msg", "发生未知错误!");
 			}
 		}
+		log.info("结束signIn");
 		return obj;
 	}
 
 	@RequestMapping("/signInfo")
 	@ResponseBody
 	public Object signInfo(HttpSession session) throws Exception {
+		log.info("进入signInfo");
 		String openId = WeChatAPI.getOpenId(session);
 		JSONObject obj = consumer.getSignApi().get().getSignInfo(openId);
+		log.info("结束signInfo");
 		return obj;
 	}
 }

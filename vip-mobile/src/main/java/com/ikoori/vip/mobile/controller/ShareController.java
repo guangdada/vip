@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.util.WeChatAPI;
@@ -37,17 +38,20 @@ public class ShareController {
 	 */
 	@RequestMapping(value = "/invitation", method = { RequestMethod.GET, RequestMethod.POST })
 	public String invitation(HttpServletRequest request, Map<String, Object> map) throws Exception {
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
+		log.info("进入invitation");
+		UserInfo userInfo = WeChatAPI.getUserInfo(request.getSession());
+		if (userInfo == null) {
 			throw new Exception("登录信息有误");
 		}
 
 		// 获取微信头像和昵称
-		Object user = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
-		map.put("user", user);
+		//Object user = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
+		//map.put("user", user);
+		map.put("userInfo", userInfo);
 		String shareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-				+ "/share/invited/" + openId;
+				+ "/share/invited/" + userInfo.getOpenid();
 		map.put("shareUrl", shareUrl);
+		log.info("结束invitation");
 		return "/member_invitation.html";
 	}
 
@@ -64,11 +68,13 @@ public class ShareController {
 	@RequestMapping("/invited/{shareOpenid}")
 	public String invited(@PathVariable String shareOpenid, HttpSession session, HttpServletRequest request)
 			throws Exception {
+		log.info("进入invited");
 		String openId = WeChatAPI.getOpenId(session);
 		if (openId == null) {
 			throw new Exception("登录信息有误");
 		}
 		consumer.getShareApi().get().saveShareLog(shareOpenid, openId, IpUtil.getIpAddr(request));
-		return "redirect:index";
+		log.info("结束invited");
+		return "redirect:/index";
 	}
 }

@@ -26,12 +26,14 @@ public class IndexController {
 
 	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
 	public String index(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		log.info("进入index");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if(openId == null){
 			throw new Exception("登录信息有误");
 		}
 		JSONObject obj = consumer.getMemberCardApi().get().getMemberCardByOpenId(openId);
 		map.put("card", obj);
+		log.info("结束index");
 		return "/index.html";
 	}
 }

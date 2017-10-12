@@ -1,6 +1,7 @@
 @layout("/common/_container.html",{title:"我的邀请函"}){
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/styles/js/weixin_share.js"></script>
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
 <link href="${ctxPath}/static/jqweui/css/icon.css" rel="stylesheet">
 <style>
@@ -33,7 +34,7 @@
 </head>
 <body style="background-color: #3a3c42;">
 	<div align="center" style="margin-top: 20px;padding-top:20px;">
-		<font color="#ffd200" size="3"><strong>${user.nickname!}</strong></font>&nbsp; 
+		<font color="#ffd200" size="3"><strong>${userInfo.nickname!}</strong></font>&nbsp; 
 		<font color="#c2c9cc" size="3">邀你一起“酷锐运动”</font>
 	</div>
 	<div style="background-color: #272a33; position: relative; top: 70px; margin-left: 10px; margin-right: 10px; padding-top: 18px;">
@@ -42,7 +43,7 @@
 		</div>
 		<div align="center" id="photoDiv" style="padding-bottom: 10px;">
 			<div class="photoImg" align="center" style="margin-right: 220px;">
-				<img src="${user.headimgurl!}" style="width: 55px; border: 2px solid white; border-radius: 50% 50%; z-index: 100; position: absolute; top: 65px;">
+				<img src="${userInfo.headimgurl!}" style="width: 55px; border: 2px solid white; border-radius: 50% 50%; z-index: 100; position: absolute; top: 65px;">
 			</div>
 			<div class="inline" style="margin-right:5px;">
 				<img src="${ctxPath}/static/styles/images/invitation.png" width="152px">
@@ -61,53 +62,65 @@
 	</div>
 	
 	<script type="text/javascript">
-		$.ajax({
-			//提交数据的类型 POST GET
-			type : "POST",
-			//提交的网址
-			url : "${ctxPath}/member/getWxConfig",
-			//成功返回之后调用的函数             
-			success : function(data) {
-				if (data) {
-					wx.config({
-						debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-						appId : data.appId, // 必填，公众号的唯一标识
-						timestamp : data.timestamp, // 必填，生成签名的时间戳
-						nonceStr : data.nonceStr, // 必填，生成签名的随机串
-						signature : data.signature,// 必填，签名，见附录1
-						jsApiList : [ 'onMenuShareTimeline',
-								'onMenuShareAppMessage' ]
-					// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-					});
-
-					wx.ready(function() {
-						// 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
-						wx.onMenuShareTimeline({
-							title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
-							link : "${shareUrl!}",
-							imgUrl : "${user.headimgurl!}" // 分享图标
+		var timestamp=new Date().getTime();
+		window.onload = function () {
+			getShareConfig("${ctxPath}",'${userInfo.nickname} 邀请你一起“酷锐运动”',"${shareUrl!}","新用户可领取20元代金券。","${userInfo.headimgurl!}","","");
+		}
+		/* var jsurl = location.href.split('#')[0];
+		var timestamp=new Date().getTime();
+		window.onload = function () {
+			$.ajax({
+				//提交数据的类型 POST GET
+				type : "POST",
+				data :{'jsurl':jsurl},
+				dataType:"json",
+				async:false,
+				cache:false,
+				//提交的网址
+				url : "${ctxPath}/member/getWxConfig?t="+timestamp,
+				//成功返回之后调用的函数             
+				success : function(data) {
+					if (data) {
+						wx.config({
+							debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+							appId : data.appId, // 必填，公众号的唯一标识
+							timestamp : data.timestamp, // 必填，生成签名的时间戳
+							nonceStr : data.nonceStr, // 必填，生成签名的随机串
+							signature : data.signature,// 必填，签名，见附录1
+							jsApiList : [ 'onMenuShareTimeline',
+									'onMenuShareAppMessage','hideOptionMenu']
+						// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 						});
 
-						// 获取“分享给朋友”按钮点击状态及自定义分享内容接口
-						wx.onMenuShareAppMessage({
-							title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
-							desc : "新用户可领取20元代金券。", // 分享描述
-							link : "${shareUrl!}",
-							imgUrl : "${user.headimgurl!}", // 分享图标
-							type : 'link', // 分享类型,music、video或link，不填默认为link
+						wx.ready(function() {
+							// 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+							wx.onMenuShareTimeline({
+								title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
+								link : "${shareUrl!}",
+								imgUrl : "${user.headimgurl!}" // 分享图标
+							});
+
+							// 获取“分享给朋友”按钮点击状态及自定义分享内容接口
+							wx.onMenuShareAppMessage({
+								title : '${user.nickname!} 邀请你一起“酷锐运动"', // 分享标题
+								desc : "新用户可领取20元代金券。", // 分享描述
+								link : "${shareUrl!}",
+								imgUrl : "${user.headimgurl!}", // 分享图标
+								type : 'link', // 分享类型,music、video或link，不填默认为link
+							});
 						});
-					});
 
-					wx.error(function(res) {
-					});
+						wx.error(function(res) {
+						});
 
+					}
+				},
+				//调用出错执行的函数
+				error : function() {
+					//请求出错处理
 				}
-			},
-			//调用出错执行的函数
-			error : function() {
-				//请求出错处理
-			}
-		});
+			});
+		} */
 
 		var _system = {
 			$ : function(id) {
