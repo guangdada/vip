@@ -153,21 +153,23 @@ public class MemberController {
 			log.info("openId == null");
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
-		//验证手机短信验证码是否正确
+		
+		// 验证手机短信验证码是否正确
 		String mobileCode1 = (Integer) request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
-		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
 		if (!(mobileCode1.equals(mobileCode))) {
 			log.info(BizExceptionEnum.ERROR_MOBILE_CODE.getMessage());
 			return new ErrorTip(BizExceptionEnum.ERROR_MOBILE_CODE);
 		}
 		
 		// 验证手机号是否唯一
+		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
 		if (member != null) {
 			log.info("member != null");
 			return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
 		}
+		
 		try {
-			//更新会员信息
+			// 更新会员信息
 			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile());
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
