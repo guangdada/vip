@@ -202,6 +202,8 @@ public class MemberController {
 			return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
 		} else if (code1.equals(code)) {
 			sendMessage(request, mobile);
+			
+			request.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
 			log.info("结束validateCode");
 			return new SuccessTip();
 		} else {
