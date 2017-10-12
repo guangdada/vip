@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
@@ -64,8 +65,10 @@ public class MemberController {
 	@RequestMapping(value="/info",method={RequestMethod.GET,RequestMethod.POST})
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		try {
+			log.info("进入info");
 			String openId = WeChatAPI.getOpenId(request.getSession());
 			if (openId == null) {
+				log.info("openId==null");
 				throw new Exception("登录信息有误");
 			}
 			
@@ -73,13 +76,16 @@ public class MemberController {
 			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
 			if (!(member.getBoolean("isActive"))) {
 				map.put("member", member);
+				log.info("结束info");
 				return "/member_register.html";
 			} else {
 				map.put("member", member);
+				log.info("结束info");
 				return "/member_info.html";
 			}
 		} catch (Exception e) {
 			log.error("会员激活页面跳转失败", e);
+			log.info("结束info");
 			return "redirect:../index";
 		}
 	}
@@ -98,8 +104,10 @@ public class MemberController {
 	@ResponseBody
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
 		try {
+			log.info("进入updateInfo");
 			String openId = WeChatAPI.getOpenId(request.getSession());
 			if (openId == null) {
+				log.info("openId == null");
 				throw new Exception("登录信息有误");
 			}
 
@@ -120,6 +128,7 @@ public class MemberController {
 			log.error("会员信息修改失败", e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
+		log.info("结束updateInfo");
 		return new SuccessTip();
 	}
 	
@@ -137,19 +146,23 @@ public class MemberController {
 	@ResponseBody
 	public Object registerMember(HttpServletRequest request, Map<String, Object> map, @Valid Member mem,
 			String mobileCode) {
+		log.info("进入registerMember");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		//验证手机短信验证码是否正确
 		String mobileCode1 = (Integer) request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
 		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
 		if (!(mobileCode1.equals(mobileCode))) {
+			log.info(BizExceptionEnum.ERROR_MOBILE_CODE.getMessage());
 			return new ErrorTip(BizExceptionEnum.ERROR_MOBILE_CODE);
 		}
 		
 		// 验证手机号是否唯一
 		if (member != null) {
+			log.info("member != null");
 			return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
 		}
 		try {
@@ -160,6 +173,7 @@ public class MemberController {
 			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
+		log.info("结束registerMember");
 		return new SuccessTip();
 	}
 	
@@ -179,14 +193,18 @@ public class MemberController {
 	@ResponseBody
 	public Object validateCode(HttpServletRequest request,Map<String, Object> map,
 			String code, String mobile) {
+		log.info("进入validateCode");
 		// 验证验证码是否正确，正确则发送手机短信验证码
 		String code1 = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 		if (mobile.equals("")) {
+			log.info(BizExceptionEnum.EMPTY_MOBILE.getMessage());
 			return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
 		} else if (code1.equals(code)) {
 			sendMessage(request, mobile);
+			log.info("结束validateCode");
 			return new SuccessTip();
 		} else {
+			log.info("结束validateCode");
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 	}
@@ -201,6 +219,7 @@ public class MemberController {
 	* @throws 
 	*/
 	public void sendMessage(HttpServletRequest request, String mobile) {
+		log.info("进入sendMessage");
 		int max = 999999;
 		int min = 100000;
 		Random random = new Random();
@@ -208,6 +227,7 @@ public class MemberController {
 		request.getSession().setAttribute(Constant.MOBILE_CODE, s);
 		String content = "【酷锐运动】您的激活验证码是：" + s;
 		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
+		log.info("结束sendMessage");
 		return;
 	}
 	
@@ -224,11 +244,14 @@ public class MemberController {
 	@RequestMapping(value="/validateMobile",method={RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	public Object validateMoblie(HttpServletRequest request, Map<String, Object> map, String mobile) {
+		log.info("进入validateMoblie");
 		// 手机号是否唯一
 		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mobile);
 		if (member == null) {
+			log.info("member == null 结束validateMoblie");
 			return new SuccessTip();
 		} else {
+			log.info("结束validateMoblie");
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 	}
@@ -245,8 +268,10 @@ public class MemberController {
 	*/
 	@RequestMapping("/point")
 	public String point(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		log.info("进入point");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		
@@ -254,6 +279,7 @@ public class MemberController {
 		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByOpenId(openId);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
+		log.info("结束point");
 		return "/member_point.html";
 	}
 	
@@ -269,14 +295,17 @@ public class MemberController {
 	*/
 	@RequestMapping(value="/coupon",method={RequestMethod.GET,RequestMethod.POST})
 	public String coupon(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		log.info("进入coupon");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		
 		//获取会员优惠券
 		List<Map<String, Object>> Coupons = consumer.getMemberCouponApi().get().getMemberCouponByOpenId(openId);
 		map.put("Coupons", Coupons);
+		log.info("结束coupon");
 		return "/member_coupon.html";
 	}
 	
@@ -293,9 +322,11 @@ public class MemberController {
 	*/
 	@RequestMapping(value="/couponDetail",method={RequestMethod.GET,RequestMethod.POST})
 	public String couponDetail(HttpServletRequest request, Map<String, Object> map, String couponId, String id) {
+		log.info("进入couponDetail");
 		Object couponDetail = consumer.getMemberCouponApi().get()
 				.getMemberCouponDetailByCouponId(Long.valueOf(couponId), Long.valueOf(id));
 		map.put("couponDetail", couponDetail);
+		log.info("结束couponDetail");
 		return "/member_couponDetail.html";
 	}
 	
@@ -311,14 +342,17 @@ public class MemberController {
 	*/
 	@RequestMapping(value = "/storeOrder", method = { RequestMethod.GET, RequestMethod.POST })
 	public String storeOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		log.info("进入storeOrder");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		
 		//获取会员订单信息
 		List<Map<String, Object>> orders = consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
 		map.put("orders", orders);
+		log.info("结束storeOrder");
 		return "/member_order.html";
 	}
 	
@@ -334,9 +368,11 @@ public class MemberController {
 	*/
 	@RequestMapping(value = "/storeOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String storeOrderDetail(HttpServletRequest request, Map<String, Object> map, Long orderId) {
+		log.info("进入storeOrderDetail");
 		List<Map<String, Object>> orderDetail = consumer.getMemberOrderApi().get()
 				.getMemberOrderDetailByOrderId(orderId);
 		map.put("orderDetail", orderDetail);
+		log.info("结束storeOrderDetail");
 		return "/member_orderDetail.html";
 	}
 	
@@ -351,20 +387,20 @@ public class MemberController {
 	 */  
 	@RequestMapping(value = "/onlineOrder", method = { RequestMethod.GET, RequestMethod.POST })
 	public String onlineOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
+		log.info("进入onlineOrder");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
-		//List<Map<String, Object>> orders =null;
 		JSONArray orders=null;
 		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
-		if(member.getString("mobile").isEmpty()){
-			map.put("orders", orders);
-		}else{
-			orders=this.getTbOrderByMobile("13975171495");
-			//orders=this.getTbOrderByMobile(member.getString("mobile"));
+		if(StringUtils.isNotBlank(member.getString("mobile"))){
+			//orders=this.getTbOrderByMobile("13975171495");
+			orders = this.getTbOrderByMobile(member.getString("mobile"));
 		}
 		map.put("orders", orders);
+		log.info("结束onlineOrder");
 		return "/member_onlineOrder.html";
 	}
 	
@@ -377,8 +413,10 @@ public class MemberController {
 	 */  
 	@RequestMapping(value = "/onlineOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String onlineOrderDetail(HttpServletRequest request, Map<String, Object> map,String tid,String totalPayment) throws Exception {
+		log.info("进入onlineOrderDetail");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if (openId == null) {
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		
@@ -386,6 +424,7 @@ public class MemberController {
 		orderDetail = this.getTbOrderByTid(tid);
 		map.put("totalPayment", totalPayment);
 		map.put("orderDetail", orderDetail);
+		log.info("结束onlineOrderDetail");
 		return "/member_onlineOrderDetail.html";
 	}
 	
@@ -398,6 +437,7 @@ public class MemberController {
 	 * @throws   
 	 */  
 	public JSONArray getTbOrderByMobile(String mobile) {
+		log.info("进入getTbOrderByMobile");
 		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
 	/*	String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
 		Map<String, String> asObject = new TreeMap<String, String>();
@@ -431,10 +471,12 @@ public class MemberController {
 		JSONObject jsonResult = JSONObject.parseObject(result);
 		JSONArray orders = jsonResult.getJSONArray("data");
 		
+		log.info("结束getTbOrderByMobile");
 		return orders;
 	}
 
 	public JSONArray getTbOrderByTid(String tid) {
+		log.info("进入getTbOrderByTid");
 		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
 		/*String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
 		Map<String, String> asObject = new TreeMap<String, String>();
@@ -468,6 +510,7 @@ public class MemberController {
 		JSONObject jsonResult = JSONObject.parseObject(result);
 		JSONArray orders = jsonResult.getJSONArray("data");
 		
+		log.info("结束getTbOrderByTid");
 		return orders;
 	}
 	
@@ -499,13 +542,15 @@ public class MemberController {
 	 */  
 	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
 	public String store(HttpServletRequest request, Map<String, Object> map)throws Exception  {
-		/*List<Map<String, Object>> store = consumer.storeConsumer().get().loadStore(lat, lon);*/
+		log.info("进入store");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if(openId == null){
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(openId);
 		map.put("store", store);
+		log.info("结束store");
 		return "/store.html";
 	}
 	
@@ -521,8 +566,10 @@ public class MemberController {
 	*/
 	@RequestMapping(value = "/storeDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String storeDetail(HttpServletRequest request, Map<String, Object> map, Long storeId) {
+		log.info("进入storeDetail");
 		JSONObject storeDetail = consumer.getStoreApi().get().getStoreDetail(storeId);
 		map.put("storeDetail", storeDetail);
+		log.info("结束storeDetail");
 		return "/storeDetail.html";
 	}
 	
@@ -573,12 +620,15 @@ public class MemberController {
 	 */  
 	@RequestMapping(value = "/cardDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String cardDetail(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
+		log.info("进入cardDetail");
 		String openId = WeChatAPI.getOpenId(request.getSession());
 		if(openId == null){
+			log.info("openId == null");
 			throw new Exception("登录信息有误");
 		}
 		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(openId);
 		map.put("card", obj);
+		log.info("结束cardDetail");
 		return "/member_cardDetail.html";
 	}
 	

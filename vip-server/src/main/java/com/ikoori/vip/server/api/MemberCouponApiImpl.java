@@ -3,6 +3,8 @@ package com.ikoori.vip.server.api;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import com.ikoori.vip.server.modular.biz.dao.CouponFetchDao;
 
 @Service
 public class MemberCouponApiImpl implements MemberCouponApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	WxUserMapper wxUserMapper;
 	@Autowired
@@ -27,10 +30,13 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberCouponByOpenId(String openId) {
+		log.info("进入getMemberCouponByOpenId");
 		List<Map<String, Object>> result=couponFetchDao.selectCoupon(openId);
 	    if(result==null){
+	    	log.info("优惠券信息为空");
 	    	return null;
 	    }
+	    log.info("结束getMemberCouponByOpenId");
 	    return result;
 	}
 	
@@ -45,10 +51,13 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	 */  
 	@Override
 	public Object getMemberCouponDetailByCouponId(Long couponId,Long id) {
+		log.info("进入getMemberCouponDetailByCouponId");
 		Object result=couponFetchDao.selectCouponDetail(couponId, id);
 		if(result==null){
+			log.info("优惠券详细信息为空");
 			return null;
 		}
+		log.info("结束getMemberCouponDetailByCouponId");
 		return result;
 	}
 	

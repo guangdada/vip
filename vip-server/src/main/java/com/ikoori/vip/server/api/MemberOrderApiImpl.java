@@ -3,6 +3,8 @@ package com.ikoori.vip.server.api;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,11 @@ import com.ikoori.vip.server.modular.biz.dao.OrderDao;
 
 @Service
 public class MemberOrderApiImpl implements MemberOrderApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	MemberDao memberDao;
-    @Autowired	
-    OrderDao orderDao;
+	@Autowired
+	OrderDao orderDao;
     
 	/**   
 	 * <p>Title: getMemberOrderByOpenId</p>   
@@ -28,17 +31,20 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
+		log.info("进入getMemberOrderByOpenId");
 		Member member = memberDao.getMemberByOpenId(openId);
-		if(member == null){
+		if (member == null) {
+			log.info("member == null");
 			return null;
 		}
-		List<Map<String,Object>> orders=orderDao.selectOrderListByMemberId(member.getId());
-		if(orders==null){
+		List<Map<String, Object>> orders = orderDao.selectOrderListByMemberId(member.getId());
+		if (orders == null) {
+			log.info("orders==null");
 			return null;
 		}
+		log.info("结束getMemberOrderByOpenId");
 		return orders;
 	}
-	
 	
 	/**   
 	 * <p>Title: getMemberOrderDetailByOrderId</p>   
@@ -49,10 +55,13 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderDetailByOrderId(Long orderId) {
-		List<Map<String,Object>> orderDetail=orderDao.selectOrderDetailListByOrderId(orderId);
+		log.info("进入getMemberOrderDetailByOrderId");
+		List<Map<String, Object>> orderDetail = orderDao.selectOrderDetailListByOrderId(orderId);
 		if (orderDetail == null) {
+			log.info("orderDetail == null");
 			return null;
 		}
+		log.info("结束getMemberOrderDetailByOrderId");
 		return orderDetail;
 	}
 
