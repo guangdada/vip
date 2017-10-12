@@ -3,6 +3,8 @@ package com.ikoori.vip.server.api;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import com.ikoori.vip.server.modular.biz.dao.StorePhotoDao;
 */  
 @Service
 public class StoreApiImpl implements StoreApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	StoreDao storeDao;
 	@Autowired
@@ -44,13 +47,16 @@ public class StoreApiImpl implements StoreApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> loadStore(double lat, double lon) {
+		log.info("进入loadStore");
 		long raidus = gunsProperties.getRaidus() == null ? 10000 : gunsProperties.getRaidus(); // 半径10km
 		Map<String, Object> param = MapUtil.loadGeoSquare(lat, lon, raidus);
 		List<Map<String, Object>> store = storeDao.getStore(lat, lon, (Double) param.get("minLat"),
 				(Double) param.get("minLng"), (Double) param.get("maxLat"), (Double) param.get("maxLng"));
 		if (store == null) {
+			log.info("store == null");
 			return null;
 		}
+		log.info("结束loadStore");
 		return store;
 	}
 	
@@ -64,6 +70,7 @@ public class StoreApiImpl implements StoreApi {
 	 */  
 	@Override
 	public JSONObject getStoreDetail(Long storeId) {
+		log.info("进入getStoreDetail");
 		Store store = storeDao.getStoreDetail(storeId);
 		JSONObject obj = new JSONObject();
 		List<Picture> pictures = storePhotoDao.selectStorePhoto(storeId);
@@ -76,6 +83,7 @@ public class StoreApiImpl implements StoreApi {
 		obj.put("openTime", store.getOpenTime());
 		obj.put("closeTime", store.getCloseTime());
 		obj.put("pictures", pictures);
+		log.info("结束getStoreDetail");
 		return obj;
 	}
 
@@ -89,10 +97,13 @@ public class StoreApiImpl implements StoreApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getStore(String openId) {
+		log.info("进入getStore");
 		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId);
 		if (store == null) {
+			log.info("store == null");
 			return null;
 		}
+		log.info("结束getStore");
 		return store;
 	}
 }

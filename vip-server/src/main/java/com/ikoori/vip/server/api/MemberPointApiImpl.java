@@ -3,6 +3,8 @@ package com.ikoori.vip.server.api;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,11 @@ import com.ikoori.vip.server.modular.biz.dao.PointDao;
 
 @Service
 public class MemberPointApiImpl implements MemberPointApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	MemberDao memberDao;
 	@Autowired
-    PointDao pointDao;
+	PointDao pointDao;
 	
 	/**   
 	 * <p>Title: getMemberPointByOpenId</p>   
@@ -28,7 +31,8 @@ public class MemberPointApiImpl implements MemberPointApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberPointByOpenId(String openId) {
-		List<Map<String, Object>> points= pointDao.selectPointListByMemberId(openId);
+		log.info("进入getMemberPointByOpenId");
+		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(openId);
 		return points;
 	}
 

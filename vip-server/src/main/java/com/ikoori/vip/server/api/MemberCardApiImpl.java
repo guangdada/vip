@@ -2,6 +2,8 @@ package com.ikoori.vip.server.api;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,10 @@ import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberCardService;
-import com.ikoori.vip.server.modular.biz.service.IMemberService;
 
 @Service
 public class MemberCardApiImpl implements MemberCardApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	MemberCardMapper memberCardMapper;
 	@Autowired
@@ -43,17 +45,21 @@ public class MemberCardApiImpl implements MemberCardApi {
 	
 	@Override
 	public JSONObject getMemberCardByOpenId(String openId) {
+		log.info("进入getMemberCardByOpenId");
 		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
+			log.info("member == null");
 			return null;
 		}
 		MemberCard memberCard = memberCardDao.getMemberCard(member.getId());
 		if(memberCard == null){
+			log.info("memberCard == null");
 			return null;
 		}
 		Merchant merchant = memberCard.getMerchant();
 		Card card = memberCard.getCard();
 		if(merchant == null || card == null){
+			log.info("merchant == null || card == null");
 			return null;
 		}
 		JSONObject obj = new JSONObject();
@@ -63,6 +69,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 		obj.put("merchantLogo", merchant.getHeadImg());
 		obj.put("cardName", card.getName());
 		obj.put("cardNum", memberCard.getCardNumber());
+		log.info("结束getMemberCardByOpenId");
 		return obj;
 	}
 
@@ -75,13 +82,16 @@ public class MemberCardApiImpl implements MemberCardApi {
 	 */  
 	@Override
 	public JSONObject selectByMemberId(String openId) {
+		log.info("进入selectByMemberId");
 		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
+			log.info("member == null");
 			return null;
 		}
 		
 		Map<String,Object> cardDetail=memberCardService.selectByMemberId(member.getId());
 		if(cardDetail==null){
+			log.info("cardDetail == null");
 			return null;
 		}
 		JSONObject obj = new JSONObject();
@@ -91,6 +101,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 		obj.put("termDays", cardDetail.get("termDays"));
 		obj.put("termStartAt", cardDetail.get("termStartAt"));
 		obj.put("termEndAt", cardDetail.get("termEndAt"));
+		log.info("结束selectByMemberId");
 		return obj;
 	}
 

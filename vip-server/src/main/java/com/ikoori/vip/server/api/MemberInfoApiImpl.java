@@ -90,6 +90,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Override
 	public JSONObject getMemberInfoByOpenId(String openId) {
+		log.info("进入getMemberInfoByOpenId");
 		Member member = memberDao.getMemberByOpenId(openId);
 		if (member == null) {
 			return null;
@@ -104,6 +105,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		obj.put("mobile", member.getMobile());
 		obj.put("isActive", member.isIsActive());
 		obj.put("area", member.getArea());
+		log.info("结束getMemberInfoByOpenId");
 		return obj;
 	}
 
@@ -134,8 +136,9 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Transactional(readOnly = false)
 	@Override
 	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
-			String address,String area) {
-		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday,area);
+			String address, String area) {
+		log.info("进入updateMemberInfoByOpenId");
+		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday, area);
 	}
 
 	/**
@@ -153,11 +156,13 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Override
 	public Object getMemberByMobile(String mobile) {
-		// TODO Auto-generated method stub
+		log.info("进入getMemberByMobile");
 		Member member = memberDao.getMemberByMobile(mobile);
 		if (member == null) {
+			log.info("member == null");
 			return null;
 		}
+		log.info("结束getMemberByMobile");
 		return member;
 	}
 
@@ -173,6 +178,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Transactional(readOnly = false)
 	@Override
 	public void saveMemberInfo(UserInfo userInfo) throws Exception {
+		log.info("进入saveMemberInfo");
 		log.info("关注微信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		JSONObject obj = new JSONObject();
 		obj.put("code", false);
@@ -222,6 +228,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			setWxUserInfo(userInfo, wxUser);
 			wxUserMapper.updateById(wxUser);
 		}
+		log.info("结束saveMemberInfo");
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<关注微信");
 	}
 
@@ -235,6 +242,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @author: chengxg
 	 */
 	private void setWxUserInfo(UserInfo userInfo, WxUser wxUser) {
+		log.info("进入setWxUserInfo");
 		wxUser.setCity(userInfo.getCity());
 		wxUser.setCountry(userInfo.getCity());
 		wxUser.setHeadimgurl(userInfo.getHeadimgurl());
@@ -247,6 +255,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		wxUser.setSex(userInfo.getSex());
 		wxUser.setUnionid(userInfo.getUnionid());
 		wxUser.setSubscribeTime(new Date());
+		log.info("结束setWxUserInfo");
 	}
 
 	/**
@@ -261,10 +270,12 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Override
 	public int activeMemberByOpenId(String openId, String mobile) {
 		synchronized (mobile.intern()) {
+			log.info("进入activeMemberByOpenId");
 			int count = memberDao.updateMemberInfoByOpenId(openId, null, mobile, 1, null, null, null);
 			if (count > 0) {
 				shareService.activeShare(openId);
 			}
+			log.info("结束activeMemberByOpenId");
 			return count;
 		}
 	}
@@ -278,6 +289,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */  
 	@Override
 	public Object getWxUserByOpenId(String openId) {
+		log.info("进入getWxUserByOpenId");
 		return memberDao.getWxUserByOpenId(openId);
 	}
 
