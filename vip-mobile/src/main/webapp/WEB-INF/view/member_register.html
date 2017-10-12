@@ -95,31 +95,7 @@
 					console.log(values, displayValues);
 				}
 			});
-			//验证手机号是否唯一
-			$("#tel").keyup(function() {
-				var mobile = $("#tel").val();
-				$.ajax({
-					//提交数据的类型 POST GET
-					type : "POST",
-					//提交的网址
-					url : "${ctxPath}/member/validateMobile",
-					//提交的数据
-					data : {
-						mobile : mobile
-					},
-					//成功返回之后调用的函数             
-					success : function(data) {
-						if (data && data.code == '500') {
-							$.toptip('手机号已注册，请重新输入！');
-						} else {
-						}
-					},
-					//调用出错执行的函数
-					error : function() {
-						//请求出错处理
-					}
-				});
-			});
+			
 			//提交会员表单信息
 			$("#showTooltips").click(function() {
 				var tel = $.trim($('#tel').val());
@@ -173,43 +149,69 @@
 				$.toptip('请输入11位手机号!');
 				return;
 			}
-			var kaptcha = $("#code").html();
-			layer.open({
-				title : [ '验证', 'background-color:#8DCE16; color:#fff;' ],
-				anim : 'up',
-				content : kaptcha,
-				btn : [ '确认', '取消' ]
-			});
-			//验证验证码	
-			$(".layui-m-layerbtn span[type='1']").on('click', function() {
-				var code = $("#kaptchaHide").val();
-				var mobile = $.trim($("#tel").val());
-				$.ajax({
-					//提交数据的类型 POST GET
-					type : "POST",
-					//提交的网址
-					url : "${ctxPath}/member/validateCode",
-					//提交的数据
-					data : {
-						code : code,
-						mobile : mobile
-					},
-					//成功返回之后调用的函数             
-					success : function(data) {
-						if (data && data.code == '410') {
-							$.toptip('手机号码不能为空！');
-						} else if (data && data.code == '500') {
-							$.toptip('验证码错误，请重新获取验证码');
-						} else {
-							$.toptip('手机短信验证码已发送！', 'success');
-						}
-					},
-					//调用出错执行的函数
-					error : function() {
-						//请求出错处理
+			//验证手机号是否唯一
+			$.ajax({
+				//提交数据的类型 POST GET
+				type : "POST",
+				//提交的网址
+				url : "${ctxPath}/member/validateMobile",
+				//提交的数据
+				data : {
+					mobile : tel
+				},
+				//成功返回之后调用的函数             
+				success : function(data) {
+					if (data && data.code == '500') {
+						$.toptip('手机号已注册，请重新输入！');
+						return;
+					} else {
+						var kaptcha = $("#code").html();
+						layer.open({
+							title : [ '验证', 'background-color:#8DCE16; color:#fff;' ],
+							anim : 'up',
+							content : kaptcha,
+							btn : [ '确认', '取消' ]
+						});
+						//验证验证码	
+						$(".layui-m-layerbtn span[type='1']").on('click', function() {
+							var code = $("#kaptchaHide").val();
+							var mobile = $.trim($("#tel").val());
+							$.ajax({
+								//提交数据的类型 POST GET
+								type : "POST",
+								//提交的网址
+								url : "${ctxPath}/member/validateCode",
+								//提交的数据
+								data : {
+									code : code,
+									mobile : mobile
+								},
+								//成功返回之后调用的函数             
+								success : function(data) {
+									if (data && data.code == '410') {
+										$.toptip('手机号码不能为空！');
+									} else if (data && data.code == '500') {
+										$.toptip('验证码错误，请重新获取验证码');
+									} else {
+										$.toptip('手机短信验证码已发送！', 'success');
+									}
+								},
+								//调用出错执行的函数
+								error : function() {
+									//请求出错处理
+								}
+							});
+						});
 					}
-				});
+					
+				},
+				//调用出错执行的函数
+				error : function() {
+					//请求出错处理
+				}
 			});
+			
+			
 		}
 	</script>
 </body>
