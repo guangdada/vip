@@ -268,6 +268,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @author: chengxg
 	 */
 	@Override
+	@Transactional(readOnly = false)
 	public int activeMemberByOpenId(String openId, String mobile) {
 		synchronized (mobile.intern()) {
 			log.info("进入activeMemberByOpenId");

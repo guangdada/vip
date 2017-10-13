@@ -15,7 +15,9 @@ Store.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '门店名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '店铺类型', field: 'storeType', visible: true, align: 'center', valign: 'middle'},
+        {title: '店铺编号', field: 'store_no', visible: true, align: 'center', valign: 'middle'},
+        {title: '店铺名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '地址', field: 'address', visible: true, align: 'center', valign: 'middle'},
         {title: '联系电话', field: 'service_phone', visible: true, align: 'center', valign: 'middle'},
         {title: '营业时间', field: 'open_time', visible: true, align: 'center', valign: 'middle',formatter:function(index,row,value){

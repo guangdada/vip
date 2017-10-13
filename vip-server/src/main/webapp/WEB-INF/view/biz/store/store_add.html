@@ -6,7 +6,22 @@
         <div class="form-horizontal" id="storeInfoForm">
             <input type="hidden" id="id" value="">
             <input type="hidden" id="areaId" name="areaId"/>
+            
             <#storeLogo id="logo" name="店铺logo:" avatarImg="" col="2"/>
+            
+            <div class="form-group">
+				<label  class="col-sm-2 control-label">店铺类型:</label>
+				<div class="col-sm-2 no-right">
+					<select class="form-control" id="storeType" name="storeType">
+						<option value="">请选择</option>
+						@for(s in storeTypes){
+					    	<option value="${s.code}">
+				    	    	${s.message}
+				    		</option>
+					    @}
+					</select>
+				</div>
+			</div>
 			
 			<div class="form-group">
 				<label class="col-sm-2 control-label">店铺名称:</label>
@@ -52,14 +67,14 @@
 				<div class="col-sm-6 right-little">
 					<input type="text" class="form-control" id="address" name="address" placeholder="">
 				</div>
-				<div class="col-sm-2 left-little">
-					<a type="button" value="" href="http://lbs.amap.com/console/show/picker" target="_blank" class="btn btn-success" id="btnAddress" name="btnAddress">获取坐标</a>
-				</div>
 			</div>
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">坐标:</label>
 				<div class="col-sm-4 right-little">
 					<input type="text" class="form-control" id="coordinate" name="coordinate" placeholder="请输入获取到的位置坐标">
+				</div>
+				<div class="col-sm-2 left-little">
+					<a type="button" value="" href="http://lbs.amap.com/console/show/picker" target="_blank" class="btn btn-success" id="btnAddress" name="btnAddress">获取坐标</a>
 				</div>
 			</div>
 			<div class="form-group">

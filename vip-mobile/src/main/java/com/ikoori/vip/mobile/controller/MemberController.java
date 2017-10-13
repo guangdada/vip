@@ -87,7 +87,7 @@ public class MemberController {
 		} catch (Exception e) {
 			log.error("会员激活页面跳转失败", e);
 			log.info("结束info");
-			return "redirect:../index";
+			return "redirect:/index";
 		}
 	}
 	
@@ -173,7 +173,6 @@ public class MemberController {
 			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile());
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
-			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		log.info("结束registerMember");
@@ -616,7 +615,7 @@ public class MemberController {
 			ret.put("signature", signature);
 			ret.put("jsapi_ticket", jsapi_ticket);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 		}
 		log.info("出去getWxConfig!!" + ret.toString());
 		return ret;

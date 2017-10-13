@@ -1,5 +1,5 @@
 /**
- * 初始化分享规则详情对话框
+ * 初始化邀请规则详情对话框
  */
 var ShareInfoDlg = {
     shareInfoData : {}

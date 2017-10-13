@@ -1,5 +1,5 @@
 /**
- * 分享规则管理初始化
+ * 邀请规则管理初始化
  */
 var Share = {
     id: "ShareTable",	//表格id
@@ -37,12 +37,12 @@ Share.check = function () {
 };
 
 /**
- * 点击添加分享规则
+ * 点击添加邀请规则
  */
 Share.openAddShare = function () {
     var index = layer.open({
         type: 2,
-        title: '添加分享规则',
+        title: '添加邀请规则',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -52,13 +52,13 @@ Share.openAddShare = function () {
 };
 
 /**
- * 打开查看分享规则详情
+ * 打开查看邀请规则详情
  */
 Share.openShareDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '分享规则详情',
+            title: '邀请规则详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
@@ -69,7 +69,7 @@ Share.openShareDetail = function () {
 };
 
 /**
- * 删除分享规则
+ * 删除邀请规则
  */
 Share.delete = function () {
     if (this.check()) {
@@ -85,7 +85,7 @@ Share.delete = function () {
 };
 
 /**
- * 查询分享规则列表
+ * 查询邀请规则列表
  */
 Share.search = function () {
     var queryData = {};
