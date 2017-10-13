@@ -13,7 +13,7 @@
 	</select>
 	<select id="getSignLogList" resultType="map">
         SELECT
-			sl.*, wx.nickname,
+			sl.*, wx.nickname,wx.openid,
 			m.mobile,
 			m.`name`
 		FROM

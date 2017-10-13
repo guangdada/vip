@@ -87,7 +87,7 @@ public class MemberController {
 		} catch (Exception e) {
 			log.error("会员激活页面跳转失败", e);
 			log.info("结束info");
-			return "redirect:../index";
+			return "redirect:/index";
 		}
 	}
 	
@@ -155,13 +155,13 @@ public class MemberController {
 		}
 		//验证手机短信验证码是否正确
 		String mobileCode1 = (Integer) request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
-		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
 		if (!(mobileCode1.equals(mobileCode))) {
 			log.info(BizExceptionEnum.ERROR_MOBILE_CODE.getMessage());
 			return new ErrorTip(BizExceptionEnum.ERROR_MOBILE_CODE);
 		}
 		
 		// 验证手机号是否唯一
+		Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mem.getMobile());
 		if (member != null) {
 			log.info("member != null");
 			return new ErrorTip(BizExceptionEnum.EXISTED_MOBILE);
@@ -171,7 +171,6 @@ public class MemberController {
 			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile());
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
-			e.printStackTrace();
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		log.info("结束registerMember");
@@ -612,7 +611,7 @@ public class MemberController {
 			ret.put("signature", signature);
 			ret.put("jsapi_ticket", jsapi_ticket);
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("",e);
 		}
 		log.info("出去getWxConfig!!" + ret.toString());
 		return ret;

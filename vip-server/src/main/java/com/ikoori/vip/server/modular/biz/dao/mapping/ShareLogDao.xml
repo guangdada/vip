@@ -4,12 +4,14 @@
 	<select id="getShareLogList" resultType="map">
         SELECT
         	sl.id id,
-			sl.`status`,
+			sl.`receive_status` receiveStatus,
 			sl.create_time,
 			sl.update_time,
 			m.mobile,
+			wx.openid shareOpenid,
 			wx.nickname shareName,
 			wx.headimgurl shareHead,
+			wx1.openid receiveOpenid,
 			wx1.nickname AS receiveName,
 			wx1.headimgurl AS receiveHead
 		FROM
@@ -30,7 +32,7 @@
             and m.mobile like CONCAT('%',#{mobile},'%')
         </if>
         <if test="shareName != null and shareName !=''">
-            and wx.nickname like CONCAT('%',#{nickname},'%')
+            and wx.nickname like CONCAT('%',#{shareName},'%')
         </if>
         <if test="receiveName != null and receiveName !=''">
             and wx1.nickname like CONCAT('%',#{receiveName},'%')

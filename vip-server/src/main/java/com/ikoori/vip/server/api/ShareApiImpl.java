@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.api.service.ShareApi;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.ShareLogMapper;
@@ -49,16 +51,24 @@ public class ShareApiImpl implements ShareApi {
 		// 邀请人不存在， 不处理
 		Member shareMem = memberDao.getMemberByOpenId(shareOpenid);
 		if (shareMem == null) {
-			log.info("shareMem == null");
+			log.info("邀请人不存在");
 			return;
 		}
-		// 受邀人已经是会员不再处理
+		// 受邀人不是会员 或者已激活不处理
 		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
-		if (receiveMem != null) {
-			log.info("receiveMem != null");
+		if (receiveMem == null || receiveMem.isIsActive()) {
+			log.info("受邀人不存在");
 			return;
 		}
-
+		
+		Wrapper<ShareLog> w = new EntityWrapper<ShareLog>();
+		w.eq("share_openid", shareOpenid);
+		w.eq("receive_openid", receiveOpenid);
+		int count = shareLogMapper.selectCount(w);
+		if(count > 0){
+			log.info("已有邀请记录");
+			return;
+		}
 		ShareLog shareLog = new ShareLog();
 		shareLog.setShareOpenid(shareOpenid);
 		shareLog.setReceiveOpenid(receiveOpenid);

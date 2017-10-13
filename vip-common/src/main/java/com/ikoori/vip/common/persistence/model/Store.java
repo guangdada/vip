@@ -50,6 +50,12 @@ public class Store extends Model<Store> {
 	 */
 	@TableField("store_no")
 	private String storeNo;
+	
+	/**
+	 * 店铺类型 0:线上 1:线下
+	 */
+	@TableField("store_type")
+	private Integer storeType;
     /**
      * 店铺logo
      */
@@ -135,7 +141,14 @@ public class Store extends Model<Store> {
 	
 	@Version
 	private Integer version;
+	
+	public Integer getStoreType() {
+		return storeType;
+	}
 
+	public void setStoreType(Integer storeType) {
+		this.storeType = storeType;
+	}
 
 	public Long getId() {
 		return id;

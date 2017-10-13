@@ -22,6 +22,7 @@
 		<result column="goods_type" property="goodsType" />
 		<result column="service_phone" property="servicePhone" />
 		<result column="website" property="website" />
+		<result column="store_type" property="storeType" />
 		<result column="state" property="state" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />

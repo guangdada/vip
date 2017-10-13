@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.StoreType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.Merchant;
@@ -59,7 +60,8 @@ public class StoreController extends BaseController {
      */
     @Permission
     @RequestMapping("/store_add")
-    public String storeAdd() {
+    public String storeAdd(Model model) {
+    	model.addAttribute("storeTypes", StoreType.values());
         return PREFIX + "store_add.html";
     }
 
@@ -76,6 +78,7 @@ public class StoreController extends BaseController {
 		model.addAttribute("coordinate", coordinate);
 		model.addAttribute(store);
 		model.addAttribute("storePhotos",storePhotoService.selectStorePhoto(storeId));
+		model.addAttribute("storeTypes", StoreType.values());
 		return PREFIX + "store_edit.html";
 	}
 

@@ -49,6 +49,7 @@ public class LoginController {
 			String state = matcher.find() ? matcher.group(0) : null;
 			log.info("state:" +state);
 			Object session_state = session.getAttribute(WeChatAPI.SESSION_USER_STATE);
+			log.info("session_state:" +state);
 			if (StringUtils.isBlank(state) || session_state == null || !state.contains(session_state.toString())) {
 				log.error("state 信息不正确");
 				throw new Exception("state 信息不正确");

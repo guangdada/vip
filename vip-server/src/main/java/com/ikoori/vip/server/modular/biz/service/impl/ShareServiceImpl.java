@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,8 +132,10 @@ public class ShareServiceImpl implements IShareService {
 		w.eq("receive_openid", receiveOpenId);
 		w.eq("receive_status", 0);
 		w.eq("status", 1);
+		w.orderBy("id", false);
+		w.last(" limit 1");
 		List<ShareLog> shareLogs = shareLogMapper.selectList(w);
-		return shareLogs == null ? null : shareLogs.get(0);
+		return CollectionUtils.isEmpty(shareLogs) ? null : shareLogs.get(0);
 	}
 
 	/**
@@ -149,7 +152,7 @@ public class ShareServiceImpl implements IShareService {
 		w.eq("merchant_id", merchantId);
 		w.eq("status", 1);
 		List<Share> shares = shareMapper.selectList(w);
-		return shares == null ? null : shares.get(0);
+		return CollectionUtils.isEmpty(shares) ? null : shares.get(0);
 	}
 
 	/**
@@ -198,9 +201,10 @@ public class ShareServiceImpl implements IShareService {
 	 */
 	@Transactional(readOnly = false)
 	public void activeShare(String receiveOpenid) {
+		log.info("进入activeShare" + receiveOpenid);
 		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
 		// 获得分享规则
-		Share share = getShare(receiveMem.getId());
+		Share share = getShare(receiveMem.getMerchantId());
 		if (share == null) {
 			log.info("没有设置分享规则");
 			return;
@@ -253,5 +257,6 @@ public class ShareServiceImpl implements IShareService {
 		// 修改邀请记录状态为“邀请成功”
 		shareLog.setReceiveStatus(true);
 		shareLogMapper.updateById(shareLog);
+		log.info("结束activeShare");
 	}
 }

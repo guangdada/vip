@@ -84,7 +84,14 @@ var StoreInfoDlg = {
                	 message: '长度必须小于200个字符'
                }
             }
-        }
+        },
+        storeType: {
+            validators: {
+                notEmpty: {
+                    message: '店铺类型不能为空'
+                }
+            }
+        },
     }
 };
 
@@ -148,7 +155,7 @@ StoreInfoDlg.collectData = function() {
 		var pic = {'id':storePic[i].id}
 		pics.push(pic);
 	}
-    this.set('id').set('name').set('name').set('servicePhone')
+    this.set('id').set('name').set('name').set('servicePhone').set('storeType')
     .set('provinceId',provinceId).set('cityId',cityId).set('areaId',areaId)
     .set('address').set('openTime').set('closeTime').set('description').set('logo').set('website').set('pics',JSON.stringify(pics));
     if(coordinate){

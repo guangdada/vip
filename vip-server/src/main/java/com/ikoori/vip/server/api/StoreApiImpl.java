@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.StoreApi;
+import com.ikoori.vip.common.constant.state.StoreType;
 import com.ikoori.vip.common.persistence.model.Picture;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.util.MapUtil;
@@ -98,7 +99,7 @@ public class StoreApiImpl implements StoreApi {
 	@Override
 	public List<Map<String, Object>> getStore(String openId) {
 		log.info("进入getStore");
-		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId);
+		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId,StoreType.offline.getCode());
 		if (store == null) {
 			log.info("store == null");
 			return null;
