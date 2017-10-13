@@ -113,8 +113,8 @@ public class StoreEmployeeController extends BaseController {
     	//当前登录账号
     	Long createUserId = Long.valueOf(ShiroKit.getUser().getId());
     	Merchant merchant = merchantService.getMerchantUserId(createUserId);
-    	//roleService.selectById(storeEmployee.getStoreId());
-        Role role=roleService.selectById(storeEmployee.getStoreId());
+  
+        Role role=roleService.selectById(storeEmployee.getRoleId());
         User user=userMapper.selectById(storeEmployee.getUserId());
         Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
@@ -122,7 +122,6 @@ public class StoreEmployeeController extends BaseController {
         //查询店铺
     	model.addAttribute("stores", stores);
     	model.addAttribute("roles", RoleType.values());
-    	storeEmployee.getStoreId();
     	model.addAttribute(user);
     	model.addAttribute(role);
     	model.addAttribute(storeEmployee);

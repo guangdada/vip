@@ -100,7 +100,7 @@ CardInfoDlg.collectData = function() {
 	var servicePhone = $("#servicePhone").val();
 	var coverType = $("input[name='coverType']:checked").val();
 	var coverPic = $("#coverPic").val();
-	this.set('id').set('name').set('description').set('servicePhone',servicePhone).set('colorCode').set('termType',termDaysRadio).set('coverType',coverType).set('coverPic',coverPic)
+	this.set('id').set('name').set('tradeAmountLimit').set('description').set('servicePhone',servicePhone).set('colorCode').set('termType',termDaysRadio).set('coverType',coverType).set('coverPic',coverPic)
 	.set('grantType',grantType).set('termToCardId',termToCardId).set('cardLevel',level).set('pointsLimit',pointsLimit).set('amountLimit',amountLimit).set('tradeLimit',tradeLimit)
     .set('rights',JSON.stringify(CardInfoDlg.rights));
 	
@@ -357,6 +357,9 @@ $(function() {
 	    	amountLimit:{
 	    		digits:true
 	    	},
+	    	tradeAmountLimit:{
+	    		digits:true
+	    	},
 	    	pointsLimit:{
 	    		digits:true
 	    	}
@@ -381,6 +384,7 @@ $(function() {
 	    	pointsLimit:"请输入整数",
 	    	tradeLimit:"请输入整数",
 	    	amountLimit:"请输入整数",
+	    	tradeAmountLimit:"请输入整数",
 	    	level:{
 	    		remote:"该会员卡等级已经存在",
 	    		required:"请选择等级"
@@ -388,7 +392,7 @@ $(function() {
 	    }
 	});
 	
-	$("input[name=number],input[name=pointsNum],input[name=termDays],input[name=tradeLimit],input[name=amountLimit],input[name=pointsLimit]").bind("blur",function () {
+	$("input[name=number],input[name=pointsNum],input[name=termDays],input[name=tradeLimit],input[name=amountLimit],input[name=tradeAmountLimit],input[name=pointsLimit]").bind("blur",function () {
 		var number = $(this).val() ? $(this).val() : "";
 		if(!CardInfoDlg.num.test(number)){
 			$(this).val("");

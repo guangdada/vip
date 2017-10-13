@@ -96,12 +96,16 @@ public class MemberController extends BaseController {
     	memberCard=memberCardMapper.selectOne(memberCard);
     	model.addAttribute("memberCard",memberCard);
     	
+    	Card card=cardService.selectById(memberCard.getCardId());
+    	
+    	//会员卡
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
+    	condition.put("grantType",card.getGrantType());
     	List<Card> cards=cardService.selectByCondition(condition);
-    	//会员卡
     	model.addAttribute("cards",cards);
+    	
     	model.addAttribute("member",member);
         return PREFIX + "member_edit.html";
     }

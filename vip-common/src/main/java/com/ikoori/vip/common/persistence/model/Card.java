@@ -120,7 +120,14 @@ public class Card extends Model<Card> {
      */
 	@TableField("card_number_prefix")
 	private String cardNumberPrefix;
-    /**
+    
+	 /**
+     * 每个月按内购价格可以购买的额度（单位：分）
+     */
+	@TableField("trade_amount_limit")
+	private Integer tradeAmountLimit;
+	
+	/**
      * 描述
      */
 	private String description;
@@ -475,6 +482,14 @@ public class Card extends Model<Card> {
 	public void setCoverType(Integer coverType) {
 		this.coverType = coverType;
 	}
+	
+	public Integer getTradeAmountLimit() {
+		return tradeAmountLimit;
+	}
+
+	public void setTradeAmountLimit(Integer tradeAmountLimit) {
+		this.tradeAmountLimit = tradeAmountLimit;
+	}
 
 	@Override
 	public String toString() {
@@ -494,6 +509,7 @@ public class Card extends Model<Card> {
 			", syncWeixinState=" + syncWeixinState +
 			", weixinCardId=" + weixinCardId +
 			", cardNumberPrefix=" + cardNumberPrefix +
+			", tradeAmountLimit=" + tradeAmountLimit +
 			", description=" + description +
 			", isAllowShare=" + isAllowShare +
 			", termDays=" + termDays +
@@ -508,4 +524,5 @@ public class Card extends Model<Card> {
 			", status=" + status +
 			"}";
 	}
+
 }

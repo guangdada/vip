@@ -225,7 +225,7 @@ public class CardController extends BaseController {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		card.setMerchantId(merchant.getId());
-    	cardService.saveCard(card,rights);
+		cardService.saveCard(card,rights);
         return super.SUCCESS_TIP;
     }
     

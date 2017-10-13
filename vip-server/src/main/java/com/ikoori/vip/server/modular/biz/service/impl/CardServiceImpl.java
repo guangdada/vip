@@ -67,7 +67,7 @@ public class CardServiceImpl implements ICardService {
 	}
 	
 	public List<Card> selectByCondition(Map<String, Object> condition) {
-		return cardMapper.selectList(new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
+		return cardMapper.selectList(new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId")).eq("grant_type", condition.get("grantType")));
 	}
 
 	@Override
@@ -96,6 +96,10 @@ public class CardServiceImpl implements ICardService {
 		}else{
 			card.setCoverPic("");
 		}
+		if(card.getTradeAmountLimit()!=null){
+			card.setTradeAmountLimit(card.getTradeAmountLimit()*100);
+		}
+		
 		card.setCardNumberPrefix("KR");
 		if(card.getId() != null){
 			Card cardDb = cardMapper.selectById(card.getId());

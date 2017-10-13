@@ -7,7 +7,7 @@ package com.ikoori.vip.common.constant.state;
  */
 public enum CardGrantType {
 	SUB_WX(0, "关注微信"),
-	/*NO_RULE(1, "无门槛"),*/
+	NO_RULE(1, "无门槛"),
     RULE(2, "按规则");
 
     int code;

@@ -19,6 +19,7 @@
 		<result column="sync_weixin_state" property="syncWeixinState" />
 		<result column="weixin_card_id" property="weixinCardId" />
 		<result column="card_number_prefix" property="cardNumberPrefix" />
+		<result column="trade_amount_limit" property="tradeAmountLimit" />
 		<result column="description" property="description" />
 		<result column="is_allow_share" property="isAllowShare" />
 		<result column="term_days" property="termDays" />
