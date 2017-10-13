@@ -169,6 +169,7 @@ public class MemberServiceImpl implements IMemberService {
 		}
 
 		// 更新会员信息
+		member.setPoints(member.getPoints()+point);
 		member.setIsActive(true);
 		memberMapper.updateById(member);
 
