@@ -15,10 +15,10 @@
 	</div>
 
 	<header class='demos-header background-img-green'>
-		<h4 align="center">
+		<h4 align="center" style="padding:11px;">
 			<font color="white">激活立享会员特权</font>
 		</h4>
-		<br>
+		<!-- <br> -->
 		<!-- <h5 align="center"  style="color:blue;"><a href="">会员卡详情></a></h5> -->
 	</header>
 
@@ -83,26 +83,26 @@
 						//window.location.href="${ctxPath}/index";
 						setTimeout(function() {
 							window.location = "${ctxPath}/index";
-						}, 2000);
+						}, 1000);
 					} else {
 						$.toptip('激活失败！');
 					}
 				}
 			};
-			$("#start").cityPicker({
+			/* $("#start").cityPicker({
 				title : "选择出发地",
 				onChange : function(picker, values, displayValues) {
 					console.log(values, displayValues);
 				}
-			});
+			}); */
 			
 			//提交会员表单信息
 			$("#showTooltips").click(function() {
 				var tel = $.trim($('#tel').val());
-				var code = $('#code').val();
+				//var code = $('#code').val();
 				var mobileCode = $.trim($("#mobileCode").val());
 				if (!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) {
-					$.toptip('请输入手机号!');
+					$.toptip('请输入正确格式的手机号!');
 					return;
 				}
 				if (mobileCode.length == 0) {
@@ -134,11 +134,9 @@
 						//调用出错执行的函数
 						error : function() {
 							//请求出错处理
+							$.toptip('请求出错');
 						}
 					});
-					//$('#memberForm').attr("onsubmit",)
-					//$('#memberForm').submit();
-					/* $.toptip('提交成功', 'success'); */
 				}
 			});
 		});
@@ -149,6 +147,11 @@
 				$.toptip('请输入11位手机号!');
 				return;
 			}
+			if (!tel || !/1[3|4|5|7|8]\d{9}/.test(tel)) {
+				$.toptip('请输入正确格式的手机号!');
+				return;
+			}
+			
 			//验证手机号是否唯一
 			$.ajax({
 				//提交数据的类型 POST GET
@@ -199,15 +202,16 @@
 								//调用出错执行的函数
 								error : function() {
 									//请求出错处理
+									$.toptip('请求出错');
 								}
 							});
 						});
 					}
-					
 				},
 				//调用出错执行的函数
 				error : function() {
 					//请求出错处理
+					$.toptip('请求出错');
 				}
 			});
 			
