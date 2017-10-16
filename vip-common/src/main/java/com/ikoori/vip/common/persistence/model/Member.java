@@ -135,6 +135,21 @@ public class Member extends Model<Member> {
 	private String tips;
 	
 	/**
+	 * 连续签到天数
+	 */
+	private Integer signDays;
+	
+	/**
+	 * 签到总天数
+	 */
+	private Integer signTotalDays;
+	
+	/**
+	 * 最后签到日期
+	 */
+	private Date signDate;
+	
+	/**
 	 * 乐观锁
 	 */
 	@Version
@@ -197,13 +212,21 @@ public class Member extends Model<Member> {
 		this.wxCode = wxCode;
 	}
 
-	/*public Long getWxUserId() {
-		return wxUserId;
+	public Integer getSignDays() {
+		return signDays;
 	}
 
-	public void setWxUserId(Long wxUserId) {
-		this.wxUserId = wxUserId;
-	}*/
+	public void setSignDays(Integer signDays) {
+		this.signDays = signDays;
+	}
+
+	public Integer getSignTotalDays() {
+		return signTotalDays;
+	}
+
+	public void setSignTotalDays(Integer signTotalDays) {
+		this.signTotalDays = signTotalDays;
+	}
 
 	public Integer getSex() {
 		return sex;
@@ -330,6 +353,14 @@ public class Member extends Model<Member> {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public Date getSignDate() {
+		return signDate;
+	}
+
+	public void setSignDate(Date signDate) {
+		this.signDate = signDate;
 	}
 
 	@Override

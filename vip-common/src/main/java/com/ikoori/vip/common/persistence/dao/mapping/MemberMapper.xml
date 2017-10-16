@@ -21,6 +21,9 @@
 		<result column="trade_amount" property="tradeAmount" />
 		<result column="last_trade_time" property="lastTradeTime" />
 		<result column="address" property="address" />
+		<result column="sign_days" property="signDays" />
+		<result column="sign_total_days" property="signTotalDays" />
+		<result column="sign_date" property="signDate" />
 		<result column="trade_count" property="tradeCount" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />

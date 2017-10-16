@@ -1,8 +1,5 @@
-@layout("/common/_container.html",{title:"我的会员卡"}){
-<link href="${ctxPath}/static/layer_mobile/need/layer.css" rel="stylesheet">
+@layout("/common/_container.html",{title:"每日签到"}){
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
-<script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
-<script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <link rel="stylesheet" href="${ctxPath}/static/font-awesome-4.7.0/css/font-awesome.min.css">
 <style>
 *{margin: 0; padding: 0;}
@@ -58,7 +55,7 @@ height:100%;
                         </div>  
                     </div>  -->
                     
-                     <div id="btnDiv" style="display: block;" class='demos-content-padded'>
+                    <div id="btnDiv" style="display: block;" class='demos-content-padded'>
                      	 <a href="javascript:;" class="weui-btn weui-btn_primary" id="sing_for_number">签到</a>  
                     </div> 
                     
@@ -70,26 +67,61 @@ height:100%;
 <script type="text/javascript">
 //判断当天是否签到
 $(function(){
-	/* $("#sing_for_number").css("background-color","#CCCCCC");
-	$("#sing_for_number").attr("disabled","disabled");
-	$("#sing_for_number").text("已签到"); */
+	getSignInfo();
+});
+
+function getSignInfo(){
 	$.ajax({
 		//提交数据的类型 POST GET
 		type : "POST",
 		//提交的网址
-		url : "${ctxPath}/member/doSign",
+		url : "${ctxPath}/sign/signInfo",
+		//提交的数据
+		data : {
+		},
+		//成功返回之后调用的函数             
+		success : function(data) {
+			if(data){
+				var points = data.points ? data.points : 0;
+				var signDays = data.signDays ? data.signDays : 0;
+				var signTotalDays = data.signTotalDays ? data.signTotalDays : 0;
+				var signDates = data.signDates ? data.signDates : [];
+				var current = new Date();
+				if(calUtil.ifHasSigned(signDates,current.getDate())){
+					var html = '<a href="javascript:;" class="weui-btn weui-btn_default">今天已签到</a>';
+					$("#btnDiv").html(html);
+				}else{
+					var html = '<a href="javascript:;" class="weui-btn weui-btn_primary" onclick="signIn()">签到</a>';
+					$("#btnDiv").html(html);
+				}
+				var str = calUtil.drawCal(current.getFullYear(),current.getMonth() + 1,signDates,points,signDays,signTotalDays);  
+				$("#calendar").html(str);  
+			}
+			
+		},
+		//调用出错执行的函数
+		error : function() {
+			//请求出错处理
+		}
+	});
+}
+
+function signIn(){
+	$.ajax({
+		//提交数据的类型 POST GET
+		type : "POST",
+		//提交的网址
+		url : "${ctxPath}/sign/signIn",
 		//提交的数据
 		data : {
 		},
 		//成功返回之后调用的函数             
 		success : function(data) {
 			if (data && data.code == '500') {
-				$("#sing_for_number").css("background-color","#CCCCCC");
-				$("#sing_for_number").attr("disabled","disabled");
-				$("#sing_for_number").text("已签到");
-				$.toptip('今天您已经签到，无须再次签到！');
+				$.toptip(data.msg);
 			} else {
-				//$.toptip('已签到！', 'success');
+				$.toptip('签到成功！', 'success');
+				getSignInfo();
 			}
 		},
 		//调用出错执行的函数
@@ -97,7 +129,8 @@ $(function(){
 			//请求出错处理
 		}
 	});
-});
+}
+
 var calUtil = {  
 	    getDaysInmonth : function(iMonth, iYear){  
 	      var dPrevDate = new Date(iYear, iMonth, 0);  
@@ -141,7 +174,7 @@ var calUtil = {
 	    ifHasSigned : function(signList,day){  
 	      var signed = false;  
 	      $.each(signList,function(index,item){  
-	          var date = new Date(item.signDate);  
+	          var date = new Date(item);  
 	          if(date.getDate() == day) {  
 	              signed = true;  
 	              return false;  
@@ -149,14 +182,14 @@ var calUtil = {
 	      });  
 	      return signed ;  
 	    },  
-	    drawCal : function(iYear, iMonth ,signList) {  
+	    drawCal : function(iYear, iMonth ,signList,pointNow,signDays,signTotalDays) {  
 	      var currentYearMonth = iYear+"年"+iMonth+"月";  
 	      var myMonth = calUtil.bulidCal(iYear, iMonth);  
 	      var htmls = new Array();  
 	      htmls.push("<div class='sign_main' id='sign_layer'>");  
 	      htmls.push("<div class='sign_succ_calendar_title'>");  
 	      htmls.push("<div class='calendar_month_span'>"+currentYearMonth+"</div>");  
-	      htmls.push("<div class='calendar_month_point'>我的积分：n</div>");  
+	      htmls.push("<div class='calendar_month_point'>我的积分："+pointNow+"</div>");  
 	      htmls.push("</div>");
 	      htmls.push("<div class='sign' id='sign_cal'>");  
 	      htmls.push("<table class='table'>");  
@@ -185,7 +218,7 @@ var calUtil = {
 	      htmls.push("</table>"); 
 	      htmls.push("</div>");
 	      htmls.push("<div class='sign_succ_calendar_title'>");  
-	      htmls.push("<div class='calendar_month_sign'>已连续签到n天，累计签到n天</div>");  
+	      htmls.push("<div class='calendar_month_sign'>已连续签到"+signDays+"天，累计签到"+signTotalDays+"天</div>");  
 	      htmls.push("</div>");
 	      
 	      htmls.push("</div>");
@@ -193,10 +226,6 @@ var calUtil = {
 	      return htmls.join('');  
 	    }  
 	};  
-
-var current = new Date();
-var str = calUtil.drawCal(current.getFullYear(),current.getMonth() + 1,[{"signDate":"2015-10-01"},{"signDate":"2017-10-02"},{"signDate":"2017-10-03"}]);  
-$("#calendar").html(str);  
 </script>
 @}
 

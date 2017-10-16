@@ -104,7 +104,7 @@ public class MemberController {
 			}
 			
 			//修改会员信息
-			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), mem.getName(),
+			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), mem.getName(),
 					mem.getSex(), mem.getBirthday(), mem.getAddress(),mem.getArea());
 			
 			//获取修改后的会员信息
@@ -174,7 +174,7 @@ public class MemberController {
 			}
 			
 			//更新会员信息
-			consumer.getMemberInfoApi().get().updateMemberInofByOpenId(openId, mem.getMobile(), null, 1, null, null,null);
+			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), null, 1, null, null,null);
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
 			e.printStackTrace();
@@ -600,34 +600,5 @@ public class MemberController {
 		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(openId);
 		map.put("card", obj);
 		return "/member_cardDetail.html";
-	}
-	
-	@RequestMapping(value = "/sign", method = { RequestMethod.GET, RequestMethod.POST })
-	public String sign(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
-		return "/member_sign.html";
-	}
-	
-	/**   
-	 * @Title: doSign   
-	 * @date:   2017年10月6日 下午1:51:14 
-	 * @author: huanglin
-	 * @return: String      
-	 * @throws   
-	 */  
-	@RequestMapping(value = "/doSign", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
-	public Object doSign(HttpServletRequest request, Map<String, Object> map, Long storeId) throws Exception {
-		/*try {
-			// 先查询是否已经签到
-			boolean ifHasSigned = signService.ifHasSigned();
-			if (ifHasSigned) {
-				return new SuccessTip();
-			} else {
-				return new ErrorTip(BizExceptionEnum.error_sign);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		return new SuccessTip();
 	}
 }

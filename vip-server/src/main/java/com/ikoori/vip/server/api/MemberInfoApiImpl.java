@@ -129,7 +129,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public int updateMemberInofByOpenId(String openId, String mobile, String name, int sex, Date birthday,
+	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address,String area) {
 		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday,area);
 	}
@@ -168,7 +168,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Transactional(readOnly = false)
 	@Override
-	public int saveMemberInfo(UserInfo userInfo) throws Exception {
+	public void saveMemberInfo(UserInfo userInfo) throws Exception {
 		log.info("关注微信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		JSONObject obj = new JSONObject();
 		obj.put("code", false);
@@ -202,7 +202,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			}
 
 			log.info("保存会员卡领取记录");
-			//updateMemCard(member, card);
 			memberService.upgradeMemberCard(member, card);
 			
 			// 关注微信返回积分
@@ -210,16 +209,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			if (point != null) {
 				pointTradeService.savePointTrade(true, PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
 						member.getId(), point.getId(), member.getMerchantId(),null, "");
-				/*PointTrade pointTrade = new PointTrade();
-				pointTrade.setInOut(true);
-				pointTrade.setTradeType(PointTradeType.SUBSCRIBE_WX.getCode());
-				pointTrade.setPoint(point.getPoints());
-				pointTrade.setMemberId(member.getId());
-				pointTrade.setPointId(point.getId());
-				pointTrade.setMerchantId(member.getMerchantId());
-				pointTrade.setTag("谢谢关注");
-				pointTradeMapper.insert(pointTrade);
-				memberDao.updatePoint(member.getId(),point.getPoints());*/
 			}
 		} else {
 			log.info("用户已经存在，开始更新微信账号信息");
@@ -230,7 +219,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			wxUserMapper.updateById(wxUser);
 		}
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<关注微信");
-		return 1;
 	}
 
 	/**

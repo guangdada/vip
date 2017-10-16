@@ -1,0 +1,48 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+    	<form id="signForm">
+	        <div class="form-horizontal">
+	
+	            <input type="hidden" id="id" value="${sign.id}">
+	
+				<div class="form-group">
+					<label for="times" class="col-sm-3 control-label">每天连续签到天数</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="times" name="times" value="${sign.times}" placeholder="" maxlength="5">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="score" class="col-sm-3 control-label">奖励积分</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="score" name="score" value="${sign.score}" placeholder="" maxlength="5">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-5">
+						<div class="checkbox">
+							<label> <input id="once" type="checkbox" name="once" 
+								@if(sign.once){
+									checked
+								@}
+							>一人仅领一次 </label>
+						</div>
+					</div>
+				</div>
+				
+	            
+	
+	            <div class="row btn-group-m-t">
+	                <div class="col-sm-12 text-right">
+	                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SignInfoDlg.editSubmit()"/>
+	                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SignInfoDlg.close()"/>
+	                </div>
+	            </div>
+	        </div>
+		</form>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/sign/sign_info.js"></script>
+@}

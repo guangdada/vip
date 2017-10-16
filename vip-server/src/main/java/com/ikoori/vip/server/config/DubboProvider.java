@@ -10,6 +10,7 @@ import com.ikoori.vip.api.service.MemberCouponApi;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.service.MemberOrderApi;
 import com.ikoori.vip.api.service.MemberPointApi;
+import com.ikoori.vip.api.service.SignApi;
 import com.ikoori.vip.api.service.StoreApi;
 
 @Configuration
@@ -89,6 +90,18 @@ public class DubboProvider extends DubboBaseConfig {
 		serviceBean.setVersion("myversion");
 		serviceBean.setInterface(CouponApi.class.getName());
 		serviceBean.setRef(couponApi);
+		serviceBean.setTimeout(5000);
+		serviceBean.setRetries(3);
+		return serviceBean;
+	}
+	
+	@Bean
+	public ServiceBean<SignApi> signProvider(SignApi signApi) {
+		ServiceBean<SignApi> serviceBean = new ServiceBean<SignApi>();
+		serviceBean.setProxy("javassist");
+		serviceBean.setVersion("myversion");
+		serviceBean.setInterface(SignApi.class.getName());
+		serviceBean.setRef(signApi);
 		serviceBean.setTimeout(5000);
 		serviceBean.setRetries(3);
 		return serviceBean;
