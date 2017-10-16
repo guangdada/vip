@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>
-  * 会员卡权益 Mapper 接口
+  * 邀请记录Mapper 接口
  * </p>
  *
  * @author chengxg

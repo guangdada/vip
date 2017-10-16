@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.CouponCodeDao">
+	<select id="getCouponCodeList" resultType="map">
+        SELECT
+			cc.id,
+			cc.batch_no batchNo,
+			cc.verify_no verifyNo,
+			cc.verify_code verifyCode,
+			cc.use_status useStatus,
+			cc.create_time createTime,
+			cc.update_time updateTime,
+			cp.`name` couponName
+		FROM
+			v_coupon_code cc
+		LEFT JOIN v_coupon cp ON cc.coupon_id = cp.id
+		WHERE
+			cc.`status` = 1 and cc.merchant_id = #{merchantId}
+		<if test="batchNo != null and batchNo !=''">
+            and cc.batch_no like CONCAT('%',#{batchNo},'%')
+        </if>
+        <if test="verifyNo != null and verifyNo !=''">
+            and cc.verify_no like CONCAT('%',#{verifyNo},'%')
+        </if>
+        <if test="verifyCode != null and verifyCode !=''">
+            and cc.verify_code like CONCAT('%',#{verifyCode},'%')
+        </if>
+        <if test="useStatus != null">
+            and cc.use_status = #{useStatus}
+        </if>
+        <if test="couponId != null">
+            and cp.id = #{couponId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by cc.id DESC
+            </otherwise>
+        </choose>
+    </select>
+    
+    <update id="updateByBatchNo">
+    	update v_coupon_code set use_status = #{useStatus} where merchant_id = #{merchantId} and batch_no = #{batchNo}
+    </update>
+    
+    <update id="updateUseStatus">
+    	update v_coupon_code set use_status = #{useStatus} where 
+    	use_status = 0 and 
+    	id in 
+    	<foreach item="item" collection="ids" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    	and merchant_id = #{merchantId}
+    </update>
+</mapper>

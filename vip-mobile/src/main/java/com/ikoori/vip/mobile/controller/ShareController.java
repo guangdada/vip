@@ -73,7 +73,10 @@ public class ShareController {
 		if (openId == null) {
 			throw new Exception("登录信息有误");
 		}
-		consumer.getShareApi().get().saveShareLog(shareOpenid, openId, IpUtil.getIpAddr(request));
+		if (!shareOpenid.equals(openId)) {
+			log.info("进入invited");
+			consumer.getShareApi().get().saveShareLog(shareOpenid, openId, IpUtil.getIpAddr(request));
+		}
 		log.info("结束invited");
 		return "redirect:/index";
 	}

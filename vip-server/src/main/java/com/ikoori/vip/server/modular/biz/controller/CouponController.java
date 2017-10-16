@@ -123,6 +123,17 @@ public class CouponController extends BaseController {
 		model.addAttribute("merchantName", merchant.getName());
 		return PREFIX + "coupon_add.html";
 	}
+	
+	/**
+	 * 跳转到发行优惠券
+	 */
+	@Permission
+	@RequestMapping("/coupon_publish/{couponId}")
+	public String couponPublish(@PathVariable Long couponId, Model model) {
+		Coupon coupon = couponService.selectById(couponId);
+		model.addAttribute(coupon);
+		return PREFIX + "coupon_publish.html";
+	}
 
 	/**
 	 * 跳转到修改优惠券
@@ -179,6 +190,17 @@ public class CouponController extends BaseController {
 		coupon.setCreateUserId(userId);
 		coupon.setStock(coupon.getTotal());
 		couponService.saveCoupon(coupon,storeIds);
+		return super.SUCCESS_TIP;
+	}
+	
+	/**
+	 * 发行现金券
+	 */
+	@RequestMapping(value = "/publish")
+	@Permission
+	@ResponseBody
+	public Object publish(Long couponId,Integer num) {
+		couponService.publishCoupon(couponId, num);
 		return super.SUCCESS_TIP;
 	}
 

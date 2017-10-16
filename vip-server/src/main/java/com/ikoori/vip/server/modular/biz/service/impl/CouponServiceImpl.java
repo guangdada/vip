@@ -4,16 +4,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.common.constant.state.CouponCodeStatus;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.CouponCodeMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.model.Coupon;
+import com.ikoori.vip.common.persistence.model.CouponCode;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.service.ICouponService;
@@ -35,6 +40,8 @@ public class CouponServiceImpl implements ICouponService {
 	GunsProperties gunsProperties;
 	@Autowired
 	IStoreCouponService storeCouponService;
+	@Autowired
+	CouponCodeMapper couponCodeMapper;
 	@Override
 	public Integer deleteById(Long id) {
 		return couponMapper.deleteById(id);
@@ -91,6 +98,79 @@ public class CouponServiceImpl implements ICouponService {
 		return couponMapper.selectList(new EntityWrapper<Coupon>().eq("status", 1).eq("is_invalid", 1).eq("merchant_id",
 				condition.get("merchantId")));
 	}
+	
+	/**
+	 * 查询“已制卡”的券码
+	 * @Title: getCouponCode   
+	 * @param merchantId
+	 * @param num
+	 * @return
+	 * @date:   2017年10月16日 下午4:07:38 
+	 * @author: chengxg
+	 */
+	public List<CouponCode> getCouponCode(Long merchantId,Integer num){
+		Wrapper<CouponCode> w = new EntityWrapper<>();
+		w.eq("merchant_id", merchantId);
+		w.eq("status", 1);
+		w.eq("use_status", CouponCodeStatus.madecard.getCode());
+		w.last(" limit " + num);
+		return couponCodeMapper.selectList(w);
+	}
+	
+	/**
+	 * 查询优惠券已发行的数量
+	 * @Title: getPublishCount   
+	 * @param couponId
+	 * @param merchantId
+	 * @return
+	 * @date:   2017年10月16日 下午4:20:11 
+	 * @author: chengxg
+	 */
+	public Integer getPublishCount(Long couponId,Long merchantId){
+		Wrapper<CouponCode> w = new EntityWrapper<>();
+		w.eq("coupon_id", couponId);
+		w.eq("merchant_id", merchantId);
+		w.eq("status", 1);
+		w.gt("use_status", CouponCodeStatus.madecard.getCode());
+		return couponCodeMapper.selectCount(w);
+	}
+	
+	
+	/**
+	 * 批量发行现金券
+	 * @Title: publish   
+	 * @param couponId
+	 * @param num
+s	 * @date:   2017年10月16日 下午2:02:56 
+	 * @author: chengxg
+	 */
+	public void publishCoupon(Long couponId,Integer num){
+		Coupon coupon = couponMapper.selectById(couponId);
+		if(coupon == null){
+			throw new BussinessException(500, "现金券不存在");
+		}
+		List<CouponCode> codes = getCouponCode(coupon.getMerchantId(), num);
+		if(CollectionUtils.isEmpty(codes)){
+			throw new BussinessException(500, "券码库券码数为0，请先制卡");
+		}
+		if(codes.size() < num){
+			throw new BussinessException(500, "券码库剩余券码数：" + codes.size() + ",请先制卡");
+		}
+		
+		// 已发行数量
+		Integer count = getPublishCount(couponId,coupon.getMerchantId());
+		Integer left = coupon.getTotal() - count;
+		if(left < num){
+			throw new BussinessException(500, "已发行:" + count + ",剩余可发行数量：" + left);
+		}
+		
+		for(CouponCode code : codes){
+			code.setUseStatus(CouponCodeStatus.publish.getCode());
+			code.setCouponId(couponId);
+			code.updateById();
+		}
+	}
+	
 	
 	/**
 	 * 优惠券保存

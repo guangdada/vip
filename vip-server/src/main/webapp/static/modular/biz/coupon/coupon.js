@@ -31,18 +31,15 @@ Coupon.initColumn = function () {
         {title: '操作', field: 'operate', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	var qrcode = '<button type="button"';
         	if(row.is_invalid == "未生效"){
-        		qrcode += ' disabled title="优惠券还未生效，不能传播" class="btn btn-default btn-xs"';
+        		qrcode += ' disabled title="优惠券还未生效" class="btn btn-default btn-xs"';
         	}else if(row.type == 1){
-        		qrcode += ' disabled title="现金券只能兑换，不能传播" class="btn btn-default btn-xs"';
-        	}else{
+        		qrcode += ' class="btn btn-info btn-xs"';
+        		qrcode += ' onclick="Coupon.openPublishCoupon('+row.id+')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发行</button>';
+        	}else if(row.type == 0){
         		qrcode += ' class="btn btn-primary btn-xs"';
+        		qrcode += ' onclick="Coupon.showQr('+row.id+',\''+row.url+'\')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发券</button>';
         	}
-        	qrcode += ' onclick="Coupon.showQr('+row.id+',\''+row.url+'\')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发券</button>';
         	return qrcode;
-        	
-        	/*var qrcode = '<a type="button" class="btn btn-xs btn-info"  onclick="Coupon.showQr('+row.id+',\''+row.url+'\')">推广</a>';
-        	var valid = '<a type="button" class="btn btn-xs btn-warning" onclick="Coupon.setValid('+row.id+',\''+row.url+'\')">生效</a>';
-        	return qrcode +"&nbsp;" + valid;*/
         }}
     ];
 };
@@ -155,6 +152,21 @@ Coupon.openAddCoupon = function () {
 };
 
 /**
+ * 点击发行优惠券管理
+ */
+Coupon.openPublishCoupon = function (couponId) {
+    var index = layer.open({
+        type: 2,
+        title: '发行现金券',
+        area: ['500px', '300px'], //宽高
+        fix: false, //不固定
+        maxmin: true,
+        content: Feng.ctxPath + '/coupon/coupon_publish/' + couponId
+    });
+    this.layerIndex = index;
+};
+
+/**
  * 打开查看优惠券管理详情
  */
 Coupon.openCouponDetail = function () {
@@ -172,6 +184,7 @@ Coupon.openCouponDetail = function () {
     	location.href= Feng.ctxPath + '/coupon/coupon_update/' + Coupon.seItem.id;
     }
 };
+
 
 /**
  * 删除优惠券管理

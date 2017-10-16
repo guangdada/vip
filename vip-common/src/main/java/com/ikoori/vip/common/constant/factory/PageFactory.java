@@ -35,4 +35,11 @@ public class PageFactory<T> {
             return page;
         }
     }
+    
+    
+    public Page<T> bigPage() {
+    	Page<T> page = new Page<>(1,Integer.MAX_VALUE);
+    	page.setAsc(true);
+    	return page;
+    }
 }

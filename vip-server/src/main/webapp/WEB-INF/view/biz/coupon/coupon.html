@@ -93,9 +93,7 @@
                             @if(shiro.hasPermission("/coupon/valid")){
                                 <#button name="生效" icon="fa fa-exclamation-triangle" clickFun="Coupon.valid()" space="true" btnCss="warning"/>
                             @}
-                            @if(shiro.hasPermission("/coupon/importCode")){
-                                <#button name="券码导入" icon="fa fa-cloud-upload" clickFun="Coupon.importCode()" space="true" btnCss="success"/>
-                            @}
+                                <!-- <#button name="券码导入" icon="fa fa-cloud-upload" clickFun="Coupon.importCode()" space="true" btnCss="success"/> -->
                         </div>
                         <#table id="CouponTable"/>
                     </div>

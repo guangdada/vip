@@ -1,0 +1,28 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+    	<form action="" id="couponCodeForm" name="couponCodeForm">
+	        <div class="form-horizontal">
+	
+	            <input type="hidden" id="couponId" value="${coupon.id}">
+	
+				
+	            <div class="form-group">
+					<label for="num" class="col-sm-2 control-label">发行数量</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" id="num" name="num" placeholder="" maxlength="3">
+					</div>
+				</div>
+	
+	            <div class="row btn-group-m-t col-sm-offset-2">
+	                <div class="col-sm-3">
+	                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CouponInfoDlg.publish()"/>
+	                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CouponInfoDlg.closeLayer()"/>
+	                </div>
+	            </div>
+	        </div>
+        </form>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/coupon/coupon_info.js"></script>
+@}

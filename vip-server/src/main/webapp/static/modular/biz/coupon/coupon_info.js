@@ -49,6 +49,13 @@ CouponInfoDlg.close = function() {
 }
 
 /**
+ * 关闭此对话框
+ */
+CouponInfoDlg.closeLayer = function() {
+    parent.layer.close(window.parent.Coupon.layerIndex);
+}
+
+/**
  * 收集数据
  */
 CouponInfoDlg.collectData = function() {
@@ -70,6 +77,34 @@ CouponInfoDlg.collectData = function() {
 	.set('isAtLeast',isAtLeast).set('isShare',isShare).set('atLeast').set('quota',quota).set('cardId',cardId)
 	.set('description').set('servicePhone').set('startAt',startAt).set('endAt',endAt).set('storeId').set('storeIds',storeIds.join(","));
 }
+
+
+/**
+ * 发行现金券管理
+ */
+CouponInfoDlg.publish = function () {
+	var param = {};
+	param.couponId = $("#couponId").val();
+	param.num = $("#num").val();
+	if(!param.num){
+		Feng.error("请输入发行数量");
+		return;
+	}
+	var reg = /^[1-9]\d*$/;
+	if(!reg.test(param.num)){
+		Feng.error("发行数量必须大于0");
+		return;
+	}
+	var ajax = new $ax(Feng.ctxPath + "/coupon/publish", function (data) {
+        Feng.success("发行成功!");
+        CouponInfoDlg.closeLayer();
+        CouponInfoDlg.table.refresh();
+    }, function (data) {
+        Feng.error("发行失败!" + data.responseJSON.message + "!");
+    });
+    ajax.set(param);
+    ajax.start();
+};
 
 /**
  * 提交添加
