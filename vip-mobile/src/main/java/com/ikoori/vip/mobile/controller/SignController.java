@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
@@ -28,6 +29,16 @@ public class SignController {
 	@RequestMapping(value = "/toSign", method = { RequestMethod.GET, RequestMethod.POST })
 	public String sign(HttpServletRequest request, Map<String, Object> map, Long storeId) throws Exception {
 		log.info("进入sign");
+		//获取微信信息
+		UserInfo userInfo = WeChatAPI.getUserInfo(request.getSession());
+		if (userInfo == null) {
+			throw new Exception("登录信息有误");
+		}
+		
+		// 获取微信头像和昵称
+		//String openId = WeChatAPI.getOpenId(request.getSession());
+		//Object userInfo = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
+		map.put("userInfo", userInfo);
 		return "/member_sign.html";
 	}
 

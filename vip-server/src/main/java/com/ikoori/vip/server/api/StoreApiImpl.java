@@ -72,6 +72,7 @@ public class StoreApiImpl implements StoreApi {
 	@Override
 	public JSONObject getStoreDetail(Long storeId) {
 		log.info("进入getStoreDetail");
+		log.info("进入getStoreDetail>>storeId=" + storeId);
 		Store store = storeDao.getStoreDetail(storeId);
 		JSONObject obj = new JSONObject();
 		List<Picture> pictures = storePhotoDao.selectStorePhoto(storeId);
@@ -99,6 +100,7 @@ public class StoreApiImpl implements StoreApi {
 	@Override
 	public List<Map<String, Object>> getStore(String openId) {
 		log.info("进入getStore");
+		log.info("进入getStore>>openId=" + openId);
 		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId,StoreType.st.getCode());
 		if (store == null) {
 			log.info("store == null");

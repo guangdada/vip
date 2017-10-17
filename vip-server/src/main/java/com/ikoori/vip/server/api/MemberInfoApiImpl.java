@@ -91,6 +91,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Override
 	public JSONObject getMemberInfoByOpenId(String openId) {
 		log.info("进入getMemberInfoByOpenId");
+		log.info("进入getMemberInfoByOpenId>>openId=" + openId);
 		Member member = memberDao.getMemberByOpenId(openId);
 		if (member == null) {
 			return null;
@@ -138,6 +139,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address, String area) {
 		log.info("进入updateMemberInfoByOpenId");
+		log.info("进入updateMemberInfoByOpenId>>openId=" + openId);
 		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday, area);
 	}
 
@@ -157,6 +159,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Override
 	public Object getMemberByMobile(String mobile) {
 		log.info("进入getMemberByMobile");
+		log.info("进入getMemberByMobile>>mobile=" + mobile);
 		Member member = memberDao.getMemberByMobile(mobile);
 		if (member == null) {
 			log.info("member == null");
@@ -272,6 +275,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	public int activeMemberByOpenId(String openId, String mobile) {
 		synchronized (mobile.intern()) {
 			log.info("进入activeMemberByOpenId");
+			log.info("进入activeMemberByOpenId>>openId=" + openId);
+			log.info("进入activeMemberByOpenId>>mobile=" + mobile);
 			int count = memberDao.updateMemberInfoByOpenId(openId, null, mobile, 1, null, null, null);
 			if (count > 0) {
 				shareService.activeShare(openId);
@@ -291,6 +296,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Override
 	public Object getWxUserByOpenId(String openId) {
 		log.info("进入getWxUserByOpenId");
+		log.info("进入getWxUserByOpenId>>openId=" + openId);
 		return memberDao.getWxUserByOpenId(openId);
 	}
 

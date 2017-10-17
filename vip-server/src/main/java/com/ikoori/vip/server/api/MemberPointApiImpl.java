@@ -32,6 +32,7 @@ public class MemberPointApiImpl implements MemberPointApi {
 	@Override
 	public List<Map<String, Object>> getMemberPointByOpenId(String openId) {
 		log.info("进入getMemberPointByOpenId");
+		log.info("进入getMemberPointByOpenId>>openId=" + openId);
 		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(openId);
 		return points;
 	}

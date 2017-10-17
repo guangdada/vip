@@ -31,6 +31,7 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	@Override
 	public List<Map<String, Object>> getMemberCouponByOpenId(String openId) {
 		log.info("进入getMemberCouponByOpenId");
+		log.info("进入getMemberCouponByOpenId>>openId=" + openId);
 		List<Map<String, Object>> result=couponFetchDao.selectCoupon(openId);
 	    if(result==null){
 	    	log.info("优惠券信息为空");
@@ -52,6 +53,8 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	@Override
 	public Object getMemberCouponDetailByCouponId(Long couponId,Long id) {
 		log.info("进入getMemberCouponDetailByCouponId");
+		log.info("进入getMemberCouponDetailByCouponId>>couponId=" + couponId);
+		log.info("进入getMemberCouponDetailByCouponId>>id=" + id);
 		Object result=couponFetchDao.selectCouponDetail(couponId, id);
 		if(result==null){
 			log.info("优惠券详细信息为空");
