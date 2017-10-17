@@ -7,7 +7,7 @@ package com.ikoori.vip.common.constant.state;
  *
  */
 public enum StoreType {
-	online(0, "线上店铺"), offline(1, "线下店铺");
+	tb(0, "淘宝"), tm(1, "天猫"),jd(2, "京东"),st(3, "实体");
 
 	int code;
 	String message;

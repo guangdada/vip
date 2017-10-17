@@ -99,7 +99,7 @@ public class StoreApiImpl implements StoreApi {
 	@Override
 	public List<Map<String, Object>> getStore(String openId) {
 		log.info("进入getStore");
-		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId,StoreType.offline.getCode());
+		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId,StoreType.st.getCode());
 		if (store == null) {
 			log.info("store == null");
 			return null;
