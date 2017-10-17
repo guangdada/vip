@@ -3,8 +3,11 @@ package com.ikoori.vip.server.api;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -31,6 +34,7 @@ import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
  */
 @Service
 public class SignApiImpl implements SignApi {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	MemberDao memberDao;
 	@Autowired
@@ -70,6 +74,7 @@ public class SignApiImpl implements SignApi {
 	 * @author: chengxg
 	 */
 	public JSONObject getSignInfo(String openId) throws Exception {
+		log.info("进入getSignInfo>>openId=" + openId);
 		JSONObject obj = new JSONObject();
 		// openId获得会员
 		Member member = memberDao.getMemberByOpenId(openId);
@@ -92,8 +97,10 @@ public class SignApiImpl implements SignApi {
 	 * @date: 2017年9月29日 下午4:07:58
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false)
 	@Override
 	public JSONObject signIn(String openId) throws Exception {
+		log.info("进入signIn>>openId=" + openId);
 		JSONObject obj = new JSONObject();
 		obj.put("code", true);
 		obj.put("msg", "签到成功");
@@ -187,6 +194,7 @@ public class SignApiImpl implements SignApi {
 				}
 			}
 		}
+		log.info("结束signIn" + openId);
 		return obj;
 	}
 }

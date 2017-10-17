@@ -195,7 +195,7 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 		return couponFetchMapper.selectCount(w) == 0 ? false : true;
 	}
 	
-	public boolean saveCouponFetch(Member member, Coupon coupon) {
+	public boolean saveCouponFetch(Member member, Coupon coupon,String verifyCode) {
 		CouponFetch couponFetch = new CouponFetch();
 		couponFetch.setMemberId(member.getId());
 		couponFetch.setCouponId(coupon.getId());
@@ -203,10 +203,11 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 		couponFetch.setExpireTime(coupon.getEndAt());
 		couponFetch.setValidTime(coupon.getStartAt());
 		couponFetch.setIsInvalid(true);
+		couponFetch.setMobile(member.getMobile());
 		couponFetch.setIsUsed(CouponUseState.NO_USED.getCode());
 		couponFetch.setMerchantId(coupon.getMerchantId());
 		couponFetch.setMessage("谢谢关注！");
-		couponFetch.setVerifyCode(RandomUtil.generateCouponCode());
+		couponFetch.setVerifyCode(verifyCode == null ? RandomUtil.generateCouponCode() : verifyCode);
 		couponFetch.setValue(coupon.getOriginValue());
 		couponFetch.setUsedValue(0);
 		int count = couponFetchMapper.insert(couponFetch);

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -45,9 +46,12 @@ public class ShareApiImpl implements ShareApi {
 	 * @date: 2017年10月9日 上午9:28:15
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false)
 	@Override
 	public void saveShareLog(String shareOpenid, String receiveOpenid, String receiveIp) throws Exception {
-		log.info("进入saveShareLog");
+		log.info("进入saveShareLog>>shareOpenid=" + shareOpenid);
+		log.info("进入saveShareLog>>receiveOpenid=" + receiveOpenid);
+		log.info("进入saveShareLog>>receiveIp=" + receiveIp);
 		// 邀请人不存在， 不处理
 		Member shareMem = memberDao.getMemberByOpenId(shareOpenid);
 		if (shareMem == null) {

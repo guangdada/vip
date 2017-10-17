@@ -45,7 +45,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 	
 	@Override
 	public JSONObject getMemberCardByOpenId(String openId) {
-		log.info("进入getMemberCardByOpenId");
+		log.info("进入getMemberCardByOpenId>>openId=" + openId);
 		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
 			log.info("member == null");
@@ -82,7 +82,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 	 */  
 	@Override
 	public JSONObject selectByMemberId(String openId) {
-		log.info("进入selectByMemberId");
+		log.info("进入selectByMemberId>>openId" + openId);
 		Member member = memberDao.getMemberByOpenId(openId);
 		if(member == null){
 			log.info("member == null");

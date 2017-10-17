@@ -251,7 +251,7 @@ public class ShareServiceImpl implements IShareService {
 		if (couponId != null) {
 			Coupon coupon = couponMapper.selectById(couponId);
 			log.info("奖励邀请人优惠券：" + coupon.getName());
-			couponFetchService.saveCouponFetch(shareMem, coupon);
+			couponFetchService.saveCouponFetch(shareMem, coupon,null);
 		}
 
 		// 修改邀请记录状态为“邀请成功”

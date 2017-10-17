@@ -1,4 +1,4 @@
-@layout("/common/_container.html",{title:"激活优惠券"}){
+@layout("/common/_container.html",{title:"激活现金券"}){
 <link href="${ctxPath}/static/layer_mobile/need/layer.css"
 	rel="stylesheet">
 <link href="${ctxPath}/static/styles/index.css" rel="stylesheet">
@@ -11,12 +11,12 @@
 
 	<header class='demos-header background-img-green'>
 		<h4 align="center">
-			<font color="white">激活优惠券</font>
+			<font color="white">激活现金券</font>
 		</h4>
 		<br>
 	</header>
 
-	<div class="active-header">请输入优惠券券号</div>
+	<div class="active-header">请输入现金券券号</div>
 	<form action="${ctxPath}/coupon/active" id="activeForm" method="post">
 		<input type="hidden" id="verifyCode" name="verifyCode"/>
 		<div class="weui-cells weui-cells_form">
@@ -33,6 +33,10 @@
 	</form>
 	<script>
 		$(function(){
+			$("#verifyCode1").val("");
+			$("#verifyCode2").val("");
+			$("#verifyCode3").val("");
+			$("#verifyCode4").val("");
 			$("#activeBtn").bind("click",function(){
 				var verifyCode1 = $("#verifyCode1").val();
 				var verifyCode2 = $("#verifyCode2").val();
@@ -64,8 +68,19 @@
 					$.toptip('券号格式不正确!');
 					return;
 				}
-				$("#verifyCode").val(verifyCode);
-				$("#activeForm").submit();		
+				
+				var ajax = new $ax("${ctxPath}/coupon/active", function(data){
+					if(data.code != '200'){
+						$.toptip(data.msg);
+					}else{
+						location.href="${ctxPath}/coupon/toResult";
+					}
+				},function(data){
+				});
+				ajax.set({"verifyCode":verifyCode});
+				ajax.start();
+				//$("#verifyCode").val(verifyCode);
+				//$("#activeForm").submit();		
 			});
 		});
 	</script>

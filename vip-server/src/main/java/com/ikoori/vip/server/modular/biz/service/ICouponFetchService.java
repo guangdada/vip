@@ -74,9 +74,10 @@ public interface ICouponFetchService {
 	 * @Title: saveCouponFetch   
 	 * @param member
 	 * @param coupon
+	 * @param verifyCode
 	 * @return
 	 * @date:   2017年9月23日 下午5:27:54 
 	 * @author: chengxg
 	 */
-	public boolean saveCouponFetch(Member member , Coupon coupon);
+	public boolean saveCouponFetch(Member member , Coupon coupon,String verifyCode);
 }

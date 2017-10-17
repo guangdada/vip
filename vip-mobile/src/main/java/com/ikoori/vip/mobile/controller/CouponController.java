@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.mobile.config.DubboConsumer;
@@ -55,28 +56,63 @@ public class CouponController {
 		}
 	}
 	
+	/**
+	 * 跳转现金券激活结果页面
+	 * @Title: toResult   
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 * @date:   2017年10月17日 下午1:58:26 
+	 * @author: chengxg
+	 */
+	@RequestMapping(value = "/toResult", method = { RequestMethod.GET, RequestMethod.POST })
+	public String toResult(HttpServletRequest request,Model model) throws Exception {
+		model.addAttribute("code", true);
+		model.addAttribute("msg", "该券已经放入您的账户");
+		return "/coupon_active_result.html";
+	}
+	
+	/**
+	 * 激活现金券方法
+	 * @Title: active   
+	 * @param request
+	 * @param verifyCode
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 * @date:   2017年10月17日 下午2:00:37 
+	 * @author: chengxg
+	 */
 	@RequestMapping(value = "/active", method = { RequestMethod.GET, RequestMethod.POST })
-	public String active(HttpServletRequest request, String verifyCode, Model model) throws Exception {
+	@ResponseBody
+	public Object active(HttpServletRequest request, String verifyCode, Model model) throws Exception {
+		JSONObject obj = new JSONObject();
 		try {
 			String openId = WeChatAPI.getOpenId(request.getSession());
 			if (openId == null) {
 				throw new Exception("登录信息有误");
 			}
 			consumer.getCouponApi().get().activeCoupon(verifyCode, openId);
-			model.addAttribute("code",true);
-			model.addAttribute("msg","该券已经放入您的账户");
+			//model.addAttribute("code",true);
+			//model.addAttribute("msg","该券已经放入您的账户");
+			obj.put("code", "200");
+			obj.put("msg", "该券已经放入您的账户");
 		} catch (Exception e) {
 			log.error("优惠券激活失败", e);
-			model.addAttribute("code",false);
+			//model.addAttribute("code",false);
 			// 判断是否为业务异常
 			if (StringUtils.isNotBlank(e.getMessage()) && e.getMessage().matches("\\{(.*)\\}")) {
-				model.addAttribute("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
+				//model.addAttribute("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
+				obj.put("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
 			}else{
-				model.addAttribute("msg","发生未知错误！");
+				obj.put("msg", "发生未知错误！");
+				//model.addAttribute("msg","发生未知错误！");
 			}
 		}
 		// 跳转激活结果页面
-		return "/coupon_active_result.html";
+		//return "/coupon_active_result.html";
+		return obj;
 	}
 	
 

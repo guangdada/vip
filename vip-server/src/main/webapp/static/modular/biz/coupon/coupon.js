@@ -31,7 +31,7 @@ Coupon.initColumn = function () {
         {title: '操作', field: 'operate', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	var qrcode = '<button type="button"';
         	if(row.is_invalid == "未生效"){
-        		qrcode += ' disabled title="优惠券还未生效" class="btn btn-default btn-xs"';
+        		qrcode += ' disabled title="优惠券还未生效" class="btn btn-default btn-xs"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发券</button>';
         	}else if(row.type == 1){
         		qrcode += ' class="btn btn-info btn-xs"';
         		qrcode += ' onclick="Coupon.openPublishCoupon('+row.id+')"><i class="fa fa-qrcode" aria-hidden="true"></i>&nbsp;发行</button>';
