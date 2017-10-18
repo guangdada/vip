@@ -73,9 +73,9 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 	 * @see com.ikoori.vip.server.modular.biz.service.IStoreEmployeeService#getStoreEmployeeList(com.baomidou.mybatisplus.plugins.Page, java.lang.String, java.lang.String, java.lang.Long, java.lang.Long, java.lang.String, boolean)   
 	 */  
 	@Override
-	public List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Long storeId,Long roleId ,String orderByField,
+	public List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Integer sex,Long storeId,Long roleId ,String orderByField,
 			boolean isAsc) {
-		return storeEmployeeDao.getStoreEmployeeList(page, employeeName, mobile, storeId, roleId,orderByField, isAsc);
+		return storeEmployeeDao.getStoreEmployeeList(page, employeeName, mobile,sex, storeId, roleId,orderByField, isAsc);
 	}
 	
 	@Transactional(readOnly=false)

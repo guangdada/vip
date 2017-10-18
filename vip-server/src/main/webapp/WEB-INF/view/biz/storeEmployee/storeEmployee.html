@@ -18,12 +18,10 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="input-group">
-									    <div class="input-group-btn">
-									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-									        	店铺名称
-									        </button>
-									    </div>
-									    <select class="form-control" id="storeName">
+									<div class="input-group-btn">
+										<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">店铺名称</button>
+									</div>
+									<select class="form-control" id="storeName">
 									    	<option value="" selected="">请选择</option>
 									    	@for(c in stores!){ 
 											  <option value="${c.id}">${c.name!}</option> 
@@ -37,22 +35,35 @@
                         </div>
                         
                         <div class="row">
-	                        <div class="col-sm-3">
-	                                <div class="input-group">
-									    <div class="input-group-btn">
-									        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-									        	权限
-									        </button>
-									    </div>
-									    <select class="form-control" id="roleType">
-									    	<option value="" selected="">请选择</option>
-									    	@for(c in roles!){ 
-											  <option value="${c.code!}">${c.message!}</option> 
-											@}
-									    </select>
+                        	<div class="col-sm-3">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button data-toggle="dropdown"
+											class="btn btn-white dropdown-toggle" type="button">
+											性别</button>
 									</div>
+									<select class="form-control" id="employeeSex">
+										<option value="" selected="">请选择</option>
+										<option value="1">男</option>
+										<option value="0">女</option>
+									</select>
+								</div>
+							</div>
+	                        <div class="col-sm-3">
+	                        	<div class="input-group">
+								    <div class="input-group-btn">
+								        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+								        	权限
+								        </button>
+								    </div>
+								    <select class="form-control" id="roleType">
+								    	<option value="" selected="">请选择</option>
+								    	@for(c in roles!){ 
+										  <option value="${c.code!}">${c.message!}</option> 
+										@}
+								    </select>
+								</div>
 	                        </div>
-                        
                         </div>
                         
                         <div class="hidden-xs" id="StoreEmployeeTableToolbar" role="group">

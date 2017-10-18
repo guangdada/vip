@@ -135,9 +135,9 @@ public class StoreEmployeeController extends BaseController {
     @Permission
     @RequestMapping(value = "/list")
     @ResponseBody
-	public Object list(String employeeName,String mobile,Long storeId,Long roleId) {
+	public Object list(String employeeName,String mobile,Integer sex,Long storeId,Long roleId) {
 	    Page<Map<String,Object>> page=new PageFactory<Map<String,Object>>().defaultPage();
-	    List<Map<String,Object>> result=storeEmployeeService.getStoreEmployeeList(page, employeeName, mobile, storeId, roleId, page.getOrderByField(), page.isAsc());
+	    List<Map<String,Object>> result=storeEmployeeService.getStoreEmployeeList(page, employeeName, mobile,sex, storeId, roleId, page.getOrderByField(), page.isAsc());
 	    page.setRecords((List<Map<String, Object>>) new StoreEmployeeWarpper(result).warp());
 	    return super.packForBT(page);
     }

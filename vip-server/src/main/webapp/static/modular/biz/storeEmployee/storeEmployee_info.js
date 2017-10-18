@@ -62,6 +62,7 @@ StoreEmployeeInfoDlg.set = function(key, value) {
     return this;
 }
 
+
 /**
  * 设置对话框中的数据
  *

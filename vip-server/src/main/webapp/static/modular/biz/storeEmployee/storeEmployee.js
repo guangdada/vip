@@ -15,11 +15,11 @@ StoreEmployee.initColumn = function () {
     return [
     	{field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '店铺名称', field: 'storeName',visible: true, align: 'center', valign: 'middle', sortable: true},
-        {title: '员工姓名', field: 'name', visible: true,align: 'center', valign: 'middle', sortable: true},
-      /*  {title: '性别', field: 'sexName', visible: true,align: 'center', valign: 'middle', sortable: true},*/
-        {title: '账号', field: 'mobile', visible: true,align: 'center', valign: 'middle', sortable: true},
-        {title: '赋予权限', field: 'roleType',visible: true, align: 'center', valign: 'middle', sortable: true},
+        {title: '店铺名称', field: 'storeName',visible: true, align: 'center', valign: 'middle'},
+        {title: '员工姓名', field: 'name', visible: true,align: 'center', valign: 'middle'},
+        {title: '账号', field: 'mobile', visible: true,align: 'center', valign: 'middle'},
+        {title: '性别', field: 'sex', visible: true,align: 'center', valign: 'middle'},
+        {title: '赋予权限', field: 'roleType',visible: true, align: 'center', valign: 'middle'},
     ];
 };
 
@@ -101,6 +101,7 @@ StoreEmployee.search = function () {
     queryData['mobile']=$("#mobile").val();
     queryData['storeId']=$("#storeName").find("option:selected").val();
     queryData['roleId']=$("#roleType").find("option:selected").val();
+    queryData['sex']=$("#employeeSex").find("option:selected").val();
     StoreEmployee.table.refresh({query: queryData});
 };
 

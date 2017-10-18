@@ -2,18 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.StoreEmployeeDao">
 	<select id="getStoreEmployeeList" resultType="map">
-        select * from v_store_employee where 1 = 1 and status = 1
+        select e.*,u.sex AS sex
+        from v_store_employee e 
+        left join s_user u on u.id=e.user_id
+        where 1 = 1 and e.status = 1
         <if test="employeeName != null and employeeName !=''">
-            and name like CONCAT('%',#{employeeName},'%')
+            and e.name like CONCAT('%',#{employeeName},'%')
         </if>
         <if test="mobile != null and mobile !=''">
-            and mobile like CONCAT('%',#{mobile},'%')
+            and e.mobile like CONCAT('%',#{mobile},'%')
         </if>
         <if test="roleId != null and roleId !=''">
-            and role_id =#{roleId}
+            and e.role_id =#{roleId}
         </if>
         <if test="storeId != null and storeId !=''">
-            and store_id =#{storeId}
+            and e.store_id =#{storeId}
+        </if>
+        <if test="sex != null">
+            and u.sex = #{sex}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

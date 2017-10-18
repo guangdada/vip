@@ -273,11 +273,12 @@
 								<div class="control-group">
 									<label class="control-label" for="servicePhone">限额：</label>
 									<div class="controls">
-										<input type="text" id="tradeAmountLimit" name="tradeAmountLimit" maxlength="6" 
+										<input type="text"  id="tradeAmountLimit" name="tradeAmountLimit" maxlength="6" 
 										@if(isNotEmpty(card.tradeAmountLimit)){
 											value="${card.tradeAmountLimit!/100}" 
 										@}
-										placeholder="请输入每个月按内购价格可以购买的额度">&nbsp;元
+										>&nbsp;元
+										<p class="help-desc">请输入每个月按内购价格可以购买的额度</p>
 									</div>
 								</div>
 								<div class="control-group">

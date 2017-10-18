@@ -28,6 +28,6 @@ public interface IStoreEmployeeService {
 	
 	public void saveEmployee(StoreEmployee storeEmployee, String password, String sex);
 	
-	List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Long storeId,Long roleId ,String orderByField,
+	List<Map<String, Object>> getStoreEmployeeList(Page<Map<String, Object>> page, String employeeName,String mobile,Integer sex,Long storeId,Long roleId ,String orderByField,
 			boolean isAsc);
 }
