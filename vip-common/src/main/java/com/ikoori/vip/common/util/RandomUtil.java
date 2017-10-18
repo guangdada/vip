@@ -165,7 +165,7 @@ public class RandomUtil {
 	 * @return
 	 */
 	public static String generateCardNum(String prefix){
-		return prefix + generateOnlyNumber(8) + "88";
+		return prefix + generateOnlyNumber(10);
 	}
 	
 	/**
