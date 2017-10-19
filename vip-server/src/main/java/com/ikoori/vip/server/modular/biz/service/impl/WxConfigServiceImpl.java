@@ -2,6 +2,7 @@ package com.ikoori.vip.server.modular.biz.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ikoori.vip.common.persistence.dao.WxConfigMapper;
@@ -26,7 +27,7 @@ public class WxConfigServiceImpl implements IWxConfigService {
 	IMerchantService merchantService;
 	
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveWxConfig(WxConfig wxConfig){
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);

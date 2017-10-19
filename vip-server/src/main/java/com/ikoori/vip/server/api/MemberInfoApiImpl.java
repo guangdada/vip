@@ -6,23 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
-import com.ikoori.vip.common.constant.state.CardGrantType;
-import com.ikoori.vip.common.constant.state.MemSourceType;
-import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
 import com.ikoori.vip.common.persistence.dao.WxUserMapper;
-import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.persistence.model.Point;
 import com.ikoori.vip.common.persistence.model.WxUser;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.dao.CardDao;
@@ -33,7 +29,6 @@ import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
 import com.ikoori.vip.server.modular.biz.service.IShareService;
-import com.ikoori.vip.server.modular.biz.service.impl.ShareServiceImpl;
 
 /**
  * @ClassName: MemberInfoApiImpl
@@ -134,7 +129,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 *      java.lang.String, java.lang.String, int, java.util.Date,
 	 *      java.lang.String)
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
 	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
 			String address, String area) {
@@ -178,12 +173,12 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @date:   2017年9月18日 上午12:26:24 
 	 * @author: chengxg
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
 	public void saveMemberInfo(UserInfo userInfo) throws Exception {
 		log.info("进入saveMemberInfo");
 		log.info("关注微信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		JSONObject obj = new JSONObject();
+		/*JSONObject obj = new JSONObject();
 		obj.put("code", false);
 		Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
 		if (member == null) {
@@ -230,7 +225,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			wxUser = wxUserMapper.selectOne(wxUser);
 			setWxUserInfo(userInfo, wxUser);
 			wxUserMapper.updateById(wxUser);
-		}
+		}*/
+		memberService.saveMember(userInfo);
 		log.info("结束saveMemberInfo");
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<关注微信");
 	}
@@ -271,10 +267,9 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @author: chengxg
 	 */
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public int activeMemberByOpenId(String openId, String mobile) {
 		synchronized (mobile.intern()) {
-			log.info("进入activeMemberByOpenId");
 			log.info("进入activeMemberByOpenId>>openId=" + openId);
 			log.info("进入activeMemberByOpenId>>mobile=" + mobile);
 			int count = memberDao.updateMemberInfoByOpenId(openId, null, mobile, 1, null, null, null);
@@ -295,7 +290,6 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */  
 	@Override
 	public Object getWxUserByOpenId(String openId) {
-		log.info("进入getWxUserByOpenId");
 		log.info("进入getWxUserByOpenId>>openId=" + openId);
 		return memberDao.getWxUserByOpenId(openId);
 	}

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
@@ -55,7 +56,7 @@ public class StoreServiceImpl implements IStoreService {
 		return storeMapper.insert(store);
 	}
 	
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveStore(Store store, String pics) {
 		if (store.getId() != null) {
 			Wrapper<StorePhoto> wrapper = new EntityWrapper<StorePhoto>();

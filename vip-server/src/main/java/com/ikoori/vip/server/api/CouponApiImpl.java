@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
@@ -107,7 +108,7 @@ public class CouponApiImpl implements CouponApi {
 	 * @author: chengxg
 	 * @throws Exception
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
 	public JSONObject getCoupon(String alias, String openId) throws Exception {
 		log.info("进入getCoupon");
@@ -232,7 +233,7 @@ public class CouponApiImpl implements CouponApi {
 	 * @author: chengxg
 	 * @throws Exception
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public JSONObject activeCoupon(String verifyCode, String openId) throws Exception {
 		log.info("进入activeCoupon");
 		log.info("进入activeCoupon>>verifyCode=" + verifyCode);

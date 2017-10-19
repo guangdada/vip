@@ -30,7 +30,6 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
-		log.info("进入getMemberOrderByOpenId");
 		log.info("进入getMemberOrderByOpenId>>openId=" + openId);
 		Member member = memberDao.getMemberByOpenId(openId);
 		if (member == null) {
@@ -55,7 +54,6 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberOrderDetailByOrderId(Long orderId) {
-		log.info("进入getMemberOrderDetailByOrderId");
 		log.info("进入getMemberOrderDetailByOrderId>>orderId=" + orderId);
 		List<Map<String, Object>> orderDetail = orderDao.selectOrderDetailListByOrderId(orderId);
 		if (orderDetail == null) {

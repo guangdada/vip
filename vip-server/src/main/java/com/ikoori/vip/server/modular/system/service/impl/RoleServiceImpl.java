@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.system.service.impl;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ikoori.vip.common.persistence.dao.RelationMapper;
@@ -25,7 +26,7 @@ public class RoleServiceImpl implements IRoleService {
     @Resource
     RelationMapper relationMapper;
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void setAuthority(Integer roleId, String ids) {
 
         // 删除该角色所有的权限
@@ -41,7 +42,7 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void delRoleById(Integer roleId) {
         //删除角色
         this.roleMapper.deleteById(roleId);

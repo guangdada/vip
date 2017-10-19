@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.StoreCouponMapper;
@@ -59,6 +61,7 @@ public class StoreCouponServiceImpl implements IStoreCouponService {
 	 * @date:   2017年9月23日 下午2:29:56 
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveStoreCoupon(Long couponId,String storeIds){
 		// 先删除优惠券可用店铺
 		if(couponId != null){

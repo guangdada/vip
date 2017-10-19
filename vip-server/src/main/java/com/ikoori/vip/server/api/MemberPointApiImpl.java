@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ikoori.vip.api.service.MemberPointApi;
-import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
 import com.ikoori.vip.server.modular.biz.dao.PointDao;
 
@@ -31,7 +30,6 @@ public class MemberPointApiImpl implements MemberPointApi {
 	 */  
 	@Override
 	public List<Map<String, Object>> getMemberPointByOpenId(String openId) {
-		log.info("进入getMemberPointByOpenId");
 		log.info("进入getMemberPointByOpenId>>openId=" + openId);
 		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(openId);
 		return points;

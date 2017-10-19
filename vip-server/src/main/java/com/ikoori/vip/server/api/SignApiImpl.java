@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
@@ -97,7 +98,7 @@ public class SignApiImpl implements SignApi {
 	 * @date: 2017年9月29日 下午4:07:58
 	 * @author: chengxg
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
 	public JSONObject signIn(String openId) throws Exception {
 		log.info("进入signIn>>openId=" + openId);

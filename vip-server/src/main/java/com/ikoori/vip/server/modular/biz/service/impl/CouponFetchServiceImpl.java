@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -77,7 +78,7 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 		return couponFetchDao.selectByMemberId(memberId,storeNo);
 	}
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public String batchImportCode(Workbook wb, Coupon coupon, File tempFile) {
 		// 错误信息接收器
 		StringBuilder errorMsg = new StringBuilder("");
@@ -195,6 +196,7 @@ public class CouponFetchServiceImpl implements ICouponFetchService {
 		return couponFetchMapper.selectCount(w) == 0 ? false : true;
 	}
 	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveCouponFetch(Member member, Coupon coupon,String verifyCode) {
 		CouponFetch couponFetch = new CouponFetch();
 		couponFetch.setMemberId(member.getId());

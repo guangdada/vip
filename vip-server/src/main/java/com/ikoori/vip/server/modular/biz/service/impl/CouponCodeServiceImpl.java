@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -72,7 +73,7 @@ public class CouponCodeServiceImpl implements ICouponCodeService {
 	 * @date: 2017年10月14日 下午1:54:43
 	 * @author: chengxg
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public String genarateCode(Long merchantId, Integer num) {
 		String batchNo = DateUtil.getAllTime();
 		if (checkBatchNo(batchNo)) {
@@ -120,6 +121,7 @@ public class CouponCodeServiceImpl implements ICouponCodeService {
 	 * @date: 2017年10月14日 下午10:06:17
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void updateByBatchNo(String batchNo, Long merchantId, Integer useStatus) {
 		couponCodeDao.updateByBatchNo(batchNo, merchantId, useStatus);
 	}
@@ -134,6 +136,7 @@ public class CouponCodeServiceImpl implements ICouponCodeService {
 	 * @date: 2017年10月15日 下午4:42:19
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void updateUseStatus(Map<String, Object> params) {
 		couponCodeDao.updateUseStatus(params);
 	}
@@ -163,6 +166,7 @@ public class CouponCodeServiceImpl implements ICouponCodeService {
 	 * @author: chengxg
 	 */
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void deleteByIds(Long[] ids) {
 		for(Long id : ids){
 			CouponCode code = couponCodeMapper.selectById(id);

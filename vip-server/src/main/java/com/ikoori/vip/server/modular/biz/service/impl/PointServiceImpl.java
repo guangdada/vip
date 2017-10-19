@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -43,6 +45,7 @@ public class PointServiceImpl implements IPointService {
 	 * @date:   2017年9月20日 下午9:30:42 
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void savePoint(Point point) {
 		if (point.getRuleType().equals(PointType.SUBSCRIBE_WX.getCode())
 				&& !checkPoint(point.getMerchantId(), point.getId())) {

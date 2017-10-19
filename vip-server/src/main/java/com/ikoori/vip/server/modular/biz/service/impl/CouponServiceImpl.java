@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -144,6 +145,7 @@ public class CouponServiceImpl implements ICouponService {
 s	 * @date:   2017年10月16日 下午2:02:56 
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void publishCoupon(Long couponId,Integer num){
 		Coupon coupon = couponMapper.selectById(couponId);
 		if(coupon == null){
@@ -179,7 +181,7 @@ s	 * @date:   2017年10月16日 下午2:02:56
 	 * @date:   2017年9月18日 下午2:34:36 
 	 * @author: chengxg
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveCoupon(Coupon coupon,String storeIds){
 		if (coupon.getValue() != null) {
 			coupon.setOriginValue(coupon.getValue() * 100);

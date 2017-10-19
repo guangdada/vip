@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -84,7 +85,7 @@ public class ShareServiceImpl implements IShareService {
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveShare(Share share) {
 		if (share.getId() == null) {
 			if (!checkShare(share.getMerchantId())) {
@@ -199,7 +200,7 @@ public class ShareServiceImpl implements IShareService {
 	 * @date: 2017年10月9日 上午10:04:53
 	 * @author: chengxg
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void activeShare(String receiveOpenid) {
 		log.info("进入activeShare" + receiveOpenid);
 		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);

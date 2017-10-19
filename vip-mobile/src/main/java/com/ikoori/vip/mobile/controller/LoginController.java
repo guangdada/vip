@@ -65,7 +65,7 @@ public class LoginController {
 		if (userInfo == null) {
 			userInfo = WeChatAPI.getUserInfo(openid);
 		}
-		if (userInfo == null) {
+		if (userInfo == null || userInfo.getOpenid() == null) {
 			log.error("没有找到用户");
 			throw new Exception("没有找到用户");
 		}
