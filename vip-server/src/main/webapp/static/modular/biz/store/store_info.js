@@ -3,96 +3,6 @@
  */
 var StoreInfoDlg = {
     storeInfoData : {},
-    validateFields: {
-    	name: {
-            validators: {
-                notEmpty: {
-                    message: '店铺名称不能为空'
-                },
-                stringLength:{
-                	 max: 30,
-                	 message: '长度必须小于30个字符'
-                }
-            }
-        },
-        servicePhone: {
-            validators: {
-                notEmpty: {
-                    message: '联系电话不能为空'
-                },
-                stringLength:{
-               	 max: 20,
-               	 message: '长度必须小于20个字符'
-               }
-            }
-        },
-        area: {
-            validators: {
-                notEmpty: {
-                    message: '所需区域不能为空'
-                }
-            }
-        },
-        address: {
-            validators: {
-                notEmpty: {
-                    message: '详细地址不能为空'
-                },
-                stringLength:{
-               	 max: 50,
-               	 message: '长度必须小于50个字符'
-               }
-            }
-        },
-        openTime: {
-            validators: {
-                notEmpty: {
-                    message: '运营开始时间不能为空'
-                },
-                stringLength:{
-               	 max: 2,
-               	 message: '长度必须小于2个字符'
-               }
-            }
-        },
-        closeTime: {
-            validators: {
-                notEmpty: {
-                    message: '运营结束时间不能为空'
-                },
-                stringLength:{
-               	 max: 2,
-               	 message: '长度必须小于2个字符'
-               }
-            }
-        },
-        coordinate: {
-            validators: {
-                notEmpty: {
-                    message: '坐标不能为空'
-                },
-                stringLength:{
-               	 max: 30,
-               	 message: '长度必须小于30个字符'
-               }
-            }
-        },
-        description: {
-            validators: {
-                stringLength:{
-               	 max: 200,
-               	 message: '长度必须小于200个字符'
-               }
-            }
-        },
-        storeType: {
-            validators: {
-                notEmpty: {
-                    message: '店铺类型不能为空'
-                }
-            }
-        },
-    }
 };
 
 /**
@@ -172,11 +82,11 @@ StoreInfoDlg.collectData = function() {
  * 提交添加
  */
 StoreInfoDlg.addSubmit = function() {
-
-    this.clearData();
-    if (!this.validate()) {
-        return;
+	var valid = $("#storeInfoForm").valid();
+    if(!valid){
+    	return;
     }
+    this.clearData();
     this.collectData();
 
     //提交信息
@@ -194,11 +104,11 @@ StoreInfoDlg.addSubmit = function() {
  * 提交修改
  */
 StoreInfoDlg.editSubmit = function() {
-
-    this.clearData();
-    if (!this.validate()) {
-        return;
+	var valid = $("#storeInfoForm").valid();
+    if(!valid){
+    	return;
     }
+    this.clearData();
     this.collectData();
 
     //提交信息
@@ -248,6 +158,103 @@ StoreInfoDlg.bindEvent = function (){
 }
 
 $(function() {
+	$("#storeInfoForm").validate({
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());
+		},
+		rules: {
+			name:{
+				required :true,
+				maxlength: 30
+			},
+			servicePhone:{
+				required :true,
+				maxlength: 20
+			},
+			openTime:{
+				required :true,
+				maxlength: 2
+			},
+			closeTime:{
+				required :true,
+				maxlength: 2
+			},
+			description:{
+				maxlength: 200
+			},
+			storeType:{
+				required :true,
+			},
+			coordinate:{
+				required :function(){
+						var p1=$("#storeType option:selected").val();
+						if(p1==3){
+							return true;
+						}else{
+							return false;
+						}
+				},
+				maxlength: 30
+			},
+			area:{
+				required :function(){
+						var p1=$("#storeType option:selected").val(); 
+						if(p1==3){
+							return true;
+						}else{
+							return false;
+						}
+				},
+			},
+			address:{
+				required :function(){
+						var p1=$("#storeType option:selected").val(); 
+						if(p1==3){
+							return true;
+						}else{
+							return false;
+						}
+				},
+				maxlength: 50
+			}
+		},
+		messages: {
+			coordinate: {
+	    		required:"坐标不能为空",
+	    		rangelength:"长度必须小于30个字符"
+	    	},
+	    	area: {
+	    		required:"所需区域不能为空",
+	    	},
+	    	name: {
+	    		required:"详细地址不能为空",
+	    		rangelength:"长度必须小于50个字符"
+	    	},
+	    	address: {
+	    		required:"店铺名称不能为空",
+	    		rangelength:"长度必须小于30个字符"
+	    	},
+	    	servicePhone: {
+	    		required:"联系电话不能为空",
+	    		rangelength:"长度必须小于20个字符"
+	    	},
+	    	openTime: {
+	    		required:"运营开始时间不能为空",
+	    		rangelength:"长度必须小于2个字符"
+	    	},
+	    	closeTime: {
+	    		required:"运营开始时间不能为空",
+	    		rangelength:"长度必须小于2个字符"
+	    	},
+	    	description: {
+	    		rangelength:"长度必须小于200个字符"
+	    	},
+	    	storeType: {
+	    		required:"店铺类型不能为空"
+	    	}
+		}
+	});
+	
 	StoreInfoDlg.bindEvent();
 	
 	var storeId = $("#storeId").val();
@@ -264,7 +271,7 @@ $(function() {
 		area: $("#area")
 	});
 	
-	Feng.initValidator("storeInfoForm", StoreInfoDlg.validateFields,{});
+	//Feng.initValidator("storeInfoForm", StoreInfoDlg.validateFields,{});
 	// 店铺logo上传
     var avatarUp = new $WebUpload("logo");
     avatarUp.setUploadBarId("progressBar");
