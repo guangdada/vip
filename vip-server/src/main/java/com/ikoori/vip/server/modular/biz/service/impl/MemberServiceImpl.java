@@ -275,52 +275,54 @@ public class MemberServiceImpl implements IMemberService {
 			log.info("微信用户openid为空");
 			throw new Exception("微信用户openid为空");
 		}
-		Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
-		if (member == null) {
-			// 保存微信用户
-			log.info("保存微信用户");
-			WxUser wxUser = new WxUser();
-			setWxUserInfo(userInfo, wxUser);
-			wxUserMapper.insert(wxUser);
+		synchronized (userInfo.getOpenid().intern()) {
+			Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
+			if (member == null) {
+				// 保存微信用户
+				log.info("保存微信用户");
+				WxUser wxUser = new WxUser();
+				setWxUserInfo(userInfo, wxUser);
+				wxUserMapper.insert(wxUser);
 
-			// 保存会员
-			log.info("保存会员信息");
-			member = new Member();
-			member.setOpenId(wxUser.getOpenid());
-			member.setIsActive(false);
-			// 需要根据appid获得商户id
-			member.setMerchantId(gunsProperties.getMerchantId());
-			member.setPoints(0);
-			member.setSourceType(MemSourceType.wechat.getCode());
-			memberMapper.insert(member);
+				// 保存会员
+				log.info("保存会员信息");
+				member = new Member();
+				member.setOpenId(wxUser.getOpenid());
+				member.setIsActive(false);
+				// 需要根据appid获得商户id
+				member.setMerchantId(gunsProperties.getMerchantId());
+				member.setPoints(0);
+				member.setSourceType(MemSourceType.wechat.getCode());
+				memberMapper.insert(member);
 
-			// 查询获取类型为“关注微信”的会员卡
-			log.info("查询获取类型为“关注微信”的会员卡");
-			Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(),
-					CardGrantType.SUB_WX.getCode());
-			if (card == null) {
-				log.info("没有找到会员卡类型");
-				//obj.put("msg", "没有找到会员卡类型");
-				//throw new Exception(obj.toJSONString());
-				throw new Exception("没有找到会员卡类型");
+				// 查询获取类型为“关注微信”的会员卡
+				log.info("查询获取类型为“关注微信”的会员卡");
+				Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(),
+						CardGrantType.SUB_WX.getCode());
+				if (card == null) {
+					log.info("没有找到会员卡类型");
+					//obj.put("msg", "没有找到会员卡类型");
+					//throw new Exception(obj.toJSONString());
+					throw new Exception("没有找到会员卡类型");
+				}
+
+				log.info("保存会员卡领取记录");
+				upgradeMemberCard(member, card);
+
+				// 关注微信返回积分
+				Point point = pointDao.getSubscribeWx(member.getMerchantId());
+				if (point != null) {
+					pointTradeService.savePointTrade(true, PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
+							member.getId(), point.getId(), member.getMerchantId(), null, "");
+				}
+			} else {
+				log.info("用户已经存在，开始更新微信账号信息");
+				WxUser wxUser = new WxUser();
+				wxUser.setOpenid(userInfo.getOpenid());
+				wxUser = wxUserMapper.selectOne(wxUser);
+				setWxUserInfo(userInfo, wxUser);
+				wxUserMapper.updateById(wxUser);
 			}
-
-			log.info("保存会员卡领取记录");
-			upgradeMemberCard(member, card);
-			
-			// 关注微信返回积分
-			Point point = pointDao.getSubscribeWx(member.getMerchantId());
-			if (point != null) {
-				pointTradeService.savePointTrade(true, PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
-						member.getId(), point.getId(), member.getMerchantId(),null, "");
-			}
-		} else {
-			log.info("用户已经存在，开始更新微信账号信息");
-			WxUser wxUser = new WxUser();
-			wxUser.setOpenid(userInfo.getOpenid());
-			wxUser = wxUserMapper.selectOne(wxUser);
-			setWxUserInfo(userInfo, wxUser);
-			wxUserMapper.updateById(wxUser);
 		}
 	}
 	

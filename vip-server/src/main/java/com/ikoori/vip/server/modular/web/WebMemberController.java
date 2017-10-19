@@ -311,30 +311,31 @@ public class WebMemberController extends BaseController {
 				data.put("openid", openid);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (isSign) {
+				if (!isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
 			}
 			if (isSign) {
-				UserInfo userInfo = WeChatAPI.getUserInfo(openid);
-				if (userInfo == null || userInfo.getOpenid() == null) {
-					result.put("code", "500");
-					result.put("msg", "没有找到该openid的微信用户");
-				} else {
-					memberService.saveMember(userInfo);
-					Map<String, Object> member = memberService.getWxUserByOpenId(openid);
-					if (member != null) {
-						JSONObject obj = new JSONObject();
-						obj.put("mobile", member.get("mobile"));
-						obj.put("sex", member.get("sex"));
-						obj.put("point", member.get("points"));
-						obj.put("headImg", member.get("headimgurl"));
-						obj.put("nickname", member.get("nickname"));
-						result.put("content", obj);
+				Map<String, Object> member = memberService.getWxUserByOpenId(openid);
+				if (member == null) {
+					UserInfo userInfo = WeChatAPI.getUserInfo(openid);
+					if (userInfo == null || userInfo.getOpenid() == null) {
+						result.put("code", "500");
+						result.put("msg", "没有找到该openid的微信用户");
 					} else {
-						log.error("没有该会员信息openid=" + openid);
+						memberService.saveMember(userInfo);
+						member = memberService.getWxUserByOpenId(openid);
 					}
+				}
+				if (member != null) {
+					JSONObject obj = new JSONObject();
+					obj.put("mobile", member.get("mobile"));
+					obj.put("sex", member.get("sex"));
+					obj.put("point", member.get("points"));
+					obj.put("headImg", member.get("headimgurl"));
+					obj.put("nickname", member.get("nickname"));
+					result.put("content", obj);
 				}
 			}
 		} catch (Exception e) {
