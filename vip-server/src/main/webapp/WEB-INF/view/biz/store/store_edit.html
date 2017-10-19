@@ -3,7 +3,8 @@
 <div class="ibox float-e-margins">
 	<div class="ibox-title"><h5>店铺详情</h5></div>
     <div class="ibox-content">
-        <div class="form-horizontal" id="storeInfoForm">
+    <form action="" id="storeInfoForm" name="storeInfoForm">
+        <div class="form-horizontal">
             <input type="hidden" id="id" value="${store.id}">
             <input type="hidden" id="areaId" name="areaId" value="${store.areaId}"/>
             <input type="hidden" id="provinceId" name="provinceId" value="${store.provinceId}"/>
@@ -115,7 +116,7 @@
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">商家推荐:</label>
 				<div class="col-sm-7">
-					<textarea rows="5" id="description" class="form-control"  placeholder="可以描述店铺的活动或相关备注信息（最多200个字）">${store.description!}</textarea>
+					<textarea rows="5" id="description" name="description" class="form-control"  placeholder="可以描述店铺的活动或相关备注信息（最多200个字）">${store.description!}</textarea>
 				</div>
 			</div>
 			
@@ -165,7 +166,7 @@
                 </div>
             </div>
         </div>
-
+	</form>
     </div>
 </div>
 <script src="${ctxPath}/static/modular/biz/store/store_info.js"></script>

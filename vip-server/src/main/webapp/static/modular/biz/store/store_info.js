@@ -183,12 +183,12 @@ $(function() {
 				maxlength: 200
 			},
 			storeType:{
-				required :true,
+				required :true
 			},
 			coordinate:{
 				required :function(){
-						var p1=$("#storeType option:selected").val();
-						if(p1==3){
+						var p1=$("select[name='storeType'] option:selected").val();
+						if(!p1 ||p1==3){
 							return true;
 						}else{
 							return false;
@@ -198,8 +198,8 @@ $(function() {
 			},
 			area:{
 				required :function(){
-						var p1=$("#storeType option:selected").val(); 
-						if(p1==3){
+						var p1=$("select[name='storeType'] option:selected").val(); 
+						if(!p1 ||p1==3){
 							return true;
 						}else{
 							return false;
@@ -208,8 +208,8 @@ $(function() {
 			},
 			address:{
 				required :function(){
-						var p1=$("#storeType option:selected").val(); 
-						if(p1==3){
+						var p1=$("select[name='storeType'] option:selected").val(); 
+						if(!p1 || p1==3){
 							return true;
 						}else{
 							return false;
@@ -219,20 +219,9 @@ $(function() {
 			}
 		},
 		messages: {
-			coordinate: {
-	    		required:"坐标不能为空",
-	    		rangelength:"长度必须小于30个字符"
-	    	},
-	    	area: {
-	    		required:"所需区域不能为空",
-	    	},
-	    	name: {
+			name: {
 	    		required:"详细地址不能为空",
 	    		rangelength:"长度必须小于50个字符"
-	    	},
-	    	address: {
-	    		required:"店铺名称不能为空",
-	    		rangelength:"长度必须小于30个字符"
 	    	},
 	    	servicePhone: {
 	    		required:"联系电话不能为空",
@@ -251,6 +240,17 @@ $(function() {
 	    	},
 	    	storeType: {
 	    		required:"店铺类型不能为空"
+	    	},
+	    	coordinate: {
+	    		required:"坐标不能为空",
+	    		rangelength:"长度必须小于30个字符"
+	    	},
+	    	area: {
+	    		required:"所需区域不能为空",
+	    	},
+	    	address: {
+	    		required:"店铺名称不能为空",
+	    		rangelength:"长度必须小于30个字符"
 	    	}
 		}
 	});
