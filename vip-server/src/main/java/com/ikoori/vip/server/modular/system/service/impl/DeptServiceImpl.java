@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -14,7 +15,7 @@ import com.ikoori.vip.common.persistence.model.Dept;
 import com.ikoori.vip.server.modular.system.service.IDeptService;
 
 @Service
-@Transactional
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class DeptServiceImpl implements IDeptService {
 
     @Resource

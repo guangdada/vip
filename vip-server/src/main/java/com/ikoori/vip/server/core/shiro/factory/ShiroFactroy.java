@@ -11,6 +11,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ikoori.vip.common.constant.state.ManagerStatus;
@@ -24,7 +25,7 @@ import com.ikoori.vip.server.modular.system.dao.UserMgrDao;
 
 @Service
 @DependsOn("springContextHolder")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class ShiroFactroy implements IShiro {
 
     @Autowired

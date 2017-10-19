@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,12 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.api.vo.UserInfo;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.MemCardState;
+import com.ikoori.vip.common.constant.state.MemSourceType;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
@@ -24,19 +29,24 @@ import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
 import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
+import com.ikoori.vip.common.persistence.dao.WxUserMapper;
 import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.CardRight;
 import com.ikoori.vip.common.persistence.model.Coupon;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.MemberCard;
 import com.ikoori.vip.common.persistence.model.Merchant;
+import com.ikoori.vip.common.persistence.model.Point;
+import com.ikoori.vip.common.persistence.model.WxUser;
 import com.ikoori.vip.common.util.RandomUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.shiro.ShiroKit;
+import com.ikoori.vip.server.modular.biz.dao.CardDao;
 import com.ikoori.vip.server.modular.biz.dao.CardRightDao;
 import com.ikoori.vip.server.modular.biz.dao.CouponDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberCardDao;
 import com.ikoori.vip.server.modular.biz.dao.MemberDao;
+import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
@@ -79,7 +89,12 @@ public class MemberServiceImpl implements IMemberService {
 	IPointTradeService pointTradeService;
     @Autowired
     ICouponFetchService couponFetchService;
-    
+    @Autowired
+	WxUserMapper wxUserMapper;
+    @Autowired
+	CardDao cardDao;
+    @Autowired
+	PointDao pointDao;
 	@Override
 	public Integer deleteById(Long id) {
 		return memberMapper.deleteById(id);
@@ -95,12 +110,6 @@ public class MemberServiceImpl implements IMemberService {
 		return memberMapper.selectById(id);
 	}
 	
-	@Override
-	public Member selecByMobile(String mobile){
-		Member member = new Member();
-		member.setMobile(mobile);
-		return memberMapper.selectOne(member);
-	}
 
 	@Override
 	public Integer insert(Member member) {
@@ -109,7 +118,7 @@ public class MemberServiceImpl implements IMemberService {
 
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveMember(Member member, Long cardId) {
 		//当前登录账号
     	Long createUserId = Long.valueOf(ShiroKit.getUser().getId());
@@ -130,7 +139,7 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void deleteMember(Long memberId) {
 		Member member=this.selectById(memberId);
 		MemberCard mc=new MemberCard();
@@ -149,13 +158,13 @@ public class MemberServiceImpl implements IMemberService {
 	 * @see com.ikoori.vip.server.modular.biz.service.IMemberService#updateMember(com.ikoori.vip.common.persistence.model.Member, java.lang.Long, int)   
 	 */  
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void updateMember(Member member, Long cardId, int point) {
 		Member dbMember = selectById(member.getId());
 		// 会员没激活，填手机号码，判断手机号码是否唯一
 		if (!dbMember.isIsActive()) {
 			// 修改会员， 判断账号是否重复
-			Member memberRe = selecByMobile(member.getMobile());
+			Member memberRe = selectByMobile(member.getMobile());
 			if (memberRe != null) {
 				throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
 			}
@@ -212,6 +221,7 @@ public class MemberServiceImpl implements IMemberService {
 	 * @param memberId
 	 * @return
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public int updateDefaultCard(Long cardId,Long memberId){
 		return memberCardDao.updateDefaultCard(memberId, cardId);
 	}
@@ -232,6 +242,90 @@ public class MemberServiceImpl implements IMemberService {
 		return null;
 	}
 	
+	
+	/**
+	 * 初始化微信用户信息
+	 * 
+	 * @Title: setWxUserInfo
+	 * @param userInfo
+	 * @param wxUser
+	 * @date: 2017年9月18日 上午12:25:58
+	 * @author: chengxg
+	 */
+	private void setWxUserInfo(UserInfo userInfo, WxUser wxUser) {
+		log.info("进入setWxUserInfo");
+		wxUser.setCity(userInfo.getCity());
+		wxUser.setCountry(userInfo.getCity());
+		wxUser.setHeadimgurl(userInfo.getHeadimgurl());
+		wxUser.setIsSubscribe(true);
+		wxUser.setLanguage(userInfo.getLanguage());
+		wxUser.setNickname(userInfo.getNickname());
+		wxUser.setOpenid(userInfo.getOpenid());
+		wxUser.setProvince(userInfo.getProvince());
+		wxUser.setRemark(userInfo.getRemark());
+		wxUser.setSex(userInfo.getSex());
+		wxUser.setUnionid(userInfo.getUnionid());
+		wxUser.setSubscribeTime(new Date());
+		log.info("结束setWxUserInfo");
+	}
+	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public void saveMember(UserInfo userInfo) throws Exception{
+		if(userInfo.getOpenid() == null){
+			log.info("微信用户openid为空");
+			throw new Exception("微信用户openid为空");
+		}
+		synchronized (userInfo.getOpenid().intern()) {
+			Member member = memberDao.getMemberByOpenId(userInfo.getOpenid());
+			if (member == null) {
+				// 保存微信用户
+				log.info("保存微信用户");
+				WxUser wxUser = new WxUser();
+				setWxUserInfo(userInfo, wxUser);
+				wxUserMapper.insert(wxUser);
+
+				// 保存会员
+				log.info("保存会员信息");
+				member = new Member();
+				member.setOpenId(wxUser.getOpenid());
+				member.setIsActive(false);
+				// 需要根据appid获得商户id
+				member.setMerchantId(gunsProperties.getMerchantId());
+				member.setPoints(0);
+				member.setSourceType(MemSourceType.wechat.getCode());
+				memberMapper.insert(member);
+
+				// 查询获取类型为“关注微信”的会员卡
+				log.info("查询获取类型为“关注微信”的会员卡");
+				Card card = cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(),
+						CardGrantType.SUB_WX.getCode());
+				if (card == null) {
+					log.info("没有找到会员卡类型");
+					//obj.put("msg", "没有找到会员卡类型");
+					//throw new Exception(obj.toJSONString());
+					throw new Exception("没有找到会员卡类型");
+				}
+
+				log.info("保存会员卡领取记录");
+				upgradeMemberCard(member, card);
+
+				// 关注微信返回积分
+				Point point = pointDao.getSubscribeWx(member.getMerchantId());
+				if (point != null) {
+					pointTradeService.savePointTrade(true, PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
+							member.getId(), point.getId(), member.getMerchantId(), null, "");
+				}
+			} else {
+				log.info("用户已经存在，开始更新微信账号信息");
+				WxUser wxUser = new WxUser();
+				wxUser.setOpenid(userInfo.getOpenid());
+				wxUser = wxUserMapper.selectOne(wxUser);
+				setWxUserInfo(userInfo, wxUser);
+				wxUserMapper.updateById(wxUser);
+			}
+		}
+	}
+	
 	/**
 	 * 升级会员卡和权益
 	 * @Title: upgradeMemCard   
@@ -240,6 +334,7 @@ public class MemberServiceImpl implements IMemberService {
 	 * @date:   2017年9月18日 下午1:51:33 
 	 * @author: chengxg
 	 */
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void upgradeMemberCard(Member member, Card card) {
 		MemberCard mc = getMemberCard(member.getId(), card.getId());
 		if (mc != null) {
@@ -300,9 +395,24 @@ public class MemberServiceImpl implements IMemberService {
 		log.info("修改会员的默认会员卡");
 		updateDefaultCard(card.getId(),member.getId());
 	}
-	
-	
-	public void activeCoupon(String ve){
-		
+
+	/**
+	 * 根据openid查询会员
+	 * @Title: selectByOpenid   
+	 * @param openid
+	 * @return
+	 * @date:   2017年10月19日 上午10:19:25 
+	 * @author: chengxg
+	 */
+	@Override
+	public Member selectByOpenid(String openid) {
+		Member member = memberDao.getMemberByOpenId(openid);
+		return member;
+	}
+
+	@Override
+	public Map<String, Object> getWxUserByOpenId(String openId) {
+		Map<String, Object> member = memberDao.getWxUserByOpenId(openId);
+		return member;
 	}
 }

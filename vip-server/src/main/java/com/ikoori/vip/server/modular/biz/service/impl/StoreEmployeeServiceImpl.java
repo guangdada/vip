@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -78,7 +79,7 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 		return storeEmployeeDao.getStoreEmployeeList(page, employeeName, mobile,sex, storeId, roleId,orderByField, isAsc);
 	}
 	
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveEmployee(StoreEmployee storeEmployee,String password, String sex) {
 		if(storeEmployee.getId() == null){
 			User user=new User();
@@ -110,6 +111,7 @@ public class StoreEmployeeServiceImpl implements IStoreEmployeeService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void deleteEmployee(long storeEmployeeId) {
 		// TODO Auto-generated method stub
 		StoreEmployee storeEmployee=storeEmployeeService.selectById(storeEmployeeId);

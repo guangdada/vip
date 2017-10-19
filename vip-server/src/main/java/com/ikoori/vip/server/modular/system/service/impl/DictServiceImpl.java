@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -22,7 +23,7 @@ import com.ikoori.vip.server.modular.system.dao.DictDao;
 import com.ikoori.vip.server.modular.system.service.IDictService;
 
 @Service
-@Transactional
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class DictServiceImpl implements IDictService {
 
     @Resource

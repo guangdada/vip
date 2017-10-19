@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.common.utils.CollectionUtils;
@@ -135,7 +136,7 @@ public class OrderServiceImpl implements IOrderService {
 	 * 根据积分规则累加积分
 	 * 根据会员卡规则升级会员卡
 	 */
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveOrder(OrderPayDo orderPayDo) throws Exception{
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>保存门店订单数据>>>>>>>>>>>>>>>>>>>>>>>>");
 		Store store = storeDao.selectByStoreNo(orderPayDo.getStoreNo());

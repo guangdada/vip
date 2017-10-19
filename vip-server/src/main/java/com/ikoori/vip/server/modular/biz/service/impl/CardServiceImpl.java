@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
@@ -75,7 +76,7 @@ public class CardServiceImpl implements ICardService {
 		return cardDao.getCardList(page, name, orderByField, isAsc,merchantId);
 	}
 
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveCard(Card card, String rights) {
 		if (card.getGrantType().intValue() == CardGrantType.RULE.getCode()
 				&& !checkCardLevel(card.getId(), card.getCardLevel(), card.getMerchantId())) {

@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.support.HttpKit;
+import com.ikoori.vip.common.util.EmojiFilter;
 
 /**
  * 微信公众平台API调用工具
@@ -121,11 +122,12 @@ public class WeChatAPI {
 	 * @return
 	 */
 	public static String getOpenId(HttpSession session) {
-		/*Object obj = session.getAttribute(SESSION_USER_INFO);
+		Object obj = session.getAttribute(SESSION_USER_INFO);
 		if (obj != null) {
 			return ((UserInfo) obj).getOpenid();
-		}*/
-		return "o19yZsw5CT7CDk_ikBRiGNbyu7Tw";
+		}
+		//return "o19yZsw5CT7CDk_ikBRiGNbyu7Tw";
+		return null;
 	}
 
 	/**

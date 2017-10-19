@@ -45,9 +45,6 @@ public class SignLogServiceImpl implements ISignLogService {
 		return signLogMapper.insert(signLog);
 	}
 	
-	public void saveSignlog(Long memberId,Long merchantId){
-		
-	}
 
 	@Override
 	public List<Map<String, Object>> getSignLogList(Page<Map<String, Object>> page, String name, String nickname, String mobile,

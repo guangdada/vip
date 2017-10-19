@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.CardTermsType;
 import com.ikoori.vip.common.constant.state.MemCardState;
@@ -26,6 +27,7 @@ import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.WXPayUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.config.properties.GunsProperties;
+import com.ikoori.vip.server.core.util.WeChatAPI;
 import com.ikoori.vip.server.modular.biz.service.ICardRightService;
 import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 import com.ikoori.vip.server.modular.biz.service.IMemberCardService;
@@ -55,14 +57,15 @@ public class WebMemberController extends BaseController {
 
 	@Autowired
 	ICouponFetchService couponFetchService;
-	
+
 	@Autowired
-    GunsProperties gunsProperties;
+	GunsProperties gunsProperties;
 
 	@ApiOperation("根据手机号获得会员积分")
 	@RequestMapping(value = "getPoints", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getPoints(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getPoints(
+			@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -70,18 +73,18 @@ public class WebMemberController extends BaseController {
 		result.put("msg", "请求成功");
 		try {
 			boolean isSign = true;
-			if(gunsProperties.isCheckSign()){
-				Map<String, String> data = new HashMap<String,String>();
+			if (gunsProperties.isCheckSign()) {
+				Map<String, String> data = new HashMap<String, String>();
 				data.put("storeNo", storeNo);
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if (isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				JSONObject obj = new JSONObject();
 				Member member = memberService.selectByMobile(mobile);
 				obj.put("mobile", member.getMobile());
@@ -89,7 +92,7 @@ public class WebMemberController extends BaseController {
 				result.put("content", obj);
 			}
 		} catch (Exception e) {
-			log.error("",e);
+			log.error("", e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -99,7 +102,8 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得会员卡")
 	@RequestMapping(value = "getCards", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getCards(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getCards(
+			@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -107,29 +111,29 @@ public class WebMemberController extends BaseController {
 		result.put("msg", "请求成功");
 		try {
 			boolean isSign = true;
-			if(gunsProperties.isCheckSign()){
-				Map<String, String> data = new HashMap<String,String>();
+			if (gunsProperties.isCheckSign()) {
+				Map<String, String> data = new HashMap<String, String>();
 				data.put("storeNo", storeNo);
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if (isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				Member member = memberService.selectByMobile(mobile);
-				if(member == null){
+				if (member == null) {
 					result.put("code", "500");
 					result.put("msg", "没有找到会员信息");
-				}else{
+				} else {
 					JSONObject card = initCard(member.getId());
 					result.put("content", card);
 				}
 			}
 		} catch (Exception e) {
-			log.error("",e);
+			log.error("", e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -139,7 +143,7 @@ public class WebMemberController extends BaseController {
 	private JSONObject initCard(Long memberId) {
 		// 获得会员的默认会员卡
 		Map<String, Object> defaultCard = memberCardService.selectByMemberId(memberId);
-		if(defaultCard == null){
+		if (defaultCard == null) {
 			return null;
 		}
 		JSONObject obj = new JSONObject();
@@ -158,20 +162,22 @@ public class WebMemberController extends BaseController {
 			if (termType != null) {
 				int tt = Integer.valueOf(termType.toString());
 				String nowDay = DateUtil.getDay();
-				if(CardTermsType.DAYS.getCode() == tt){
+				if (CardTermsType.DAYS.getCode() == tt) {
 					// 1、有效期为 XX天
 					int days = Integer.valueOf(termDays.toString());
 					// 计算领取日期和当前日期相隔天数，是否大于设置的天数
-					long daySub = DateUtil.getDaySub(createTime.toString(),nowDay);
-					if(daySub > days){
+					long daySub = DateUtil.getDaySub(createTime.toString(), nowDay);
+					if (daySub > days) {
 						obj.put("state", MemCardState.EXPIRED.getCode());
 					}
-				}else if(CardTermsType.RANGE.getCode() == tt){
+				} else if (CardTermsType.RANGE.getCode() == tt) {
 					// 2、有效期开始和结束时间，判断当前日期是否在生效和失效时间内
-					if(!DateUtil.compareDate(nowDay,termStartAt.toString())){ // 未到 生效 时间
+					if (!DateUtil.compareDate(nowDay, termStartAt.toString())) { // 未到
+																					// 生效
+																					// 时间
 						obj.put("state", MemCardState.UN_USED.getCode());
-					}else if(!DateUtil.compareDate(termEndAt.toString(),nowDay)){ // 超过失效时间
-						obj.put("state", MemCardState.EXPIRED.getCode()); 
+					} else if (!DateUtil.compareDate(termEndAt.toString(), nowDay)) { // 超过失效时间
+						obj.put("state", MemCardState.EXPIRED.getCode());
 					}
 				}
 			}
@@ -197,7 +203,8 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得优惠券")
 	@RequestMapping(value = "getCoupon", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getCoupon(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> getCoupon(
+			@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -205,38 +212,38 @@ public class WebMemberController extends BaseController {
 		result.put("msg", "请求成功");
 		try {
 			boolean isSign = true;
-			if(gunsProperties.isCheckSign()){
-				Map<String, String> data = new HashMap<String,String>();
+			if (gunsProperties.isCheckSign()) {
+				Map<String, String> data = new HashMap<String, String>();
 				data.put("storeNo", storeNo);
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if (isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				Member member = memberService.selectByMobile(mobile);
-				JSONArray content = initCoupon(member.getId(),storeNo);
+				JSONArray content = initCoupon(member.getId(), storeNo);
 				result.put("content", content);
 			}
 		} catch (Exception e) {
-			log.error("",e);
+			log.error("", e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
 		return result;
 	}
 
-	private JSONArray initCoupon(Long memberId,String storeNo) {
+	private JSONArray initCoupon(Long memberId, String storeNo) {
 		JSONArray content = new JSONArray();
-		List<Map<String, Object>> couponFetchs = couponFetchService.selectByMemberId(memberId,storeNo);
+		List<Map<String, Object>> couponFetchs = couponFetchService.selectByMemberId(memberId, storeNo);
 		for (Map<String, Object> mc : couponFetchs) {
 			JSONObject obj = new JSONObject();
 			obj.put("verifyCode", mc.get("verifyCode"));
 			obj.put("type", mc.get("type"));
-			obj.put("value", Double.valueOf(""+mc.get("value")) * 100);
+			obj.put("value", Double.valueOf("" + mc.get("value")) * 100);
 			obj.put("availableValue", mc.get("availableValue"));
 			obj.put("atLeast", mc.get("originAtLeast"));
 			obj.put("description", mc.get("description"));
@@ -249,7 +256,8 @@ public class WebMemberController extends BaseController {
 	@ApiOperation("根据手机号获得优惠券、积分、会员卡")
 	@RequestMapping(value = "info", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> info(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> info(
+			@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "手机号", required = true) @RequestParam(required = true) String mobile,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -257,22 +265,22 @@ public class WebMemberController extends BaseController {
 		result.put("msg", "请求成功");
 		try {
 			boolean isSign = true;
-			if(gunsProperties.isCheckSign()){
-				Map<String, String> data = new HashMap<String,String>();
+			if (gunsProperties.isCheckSign()) {
+				Map<String, String> data = new HashMap<String, String>();
 				data.put("storeNo", storeNo);
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if (isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				JSONObject content = new JSONObject();
 				Member member = memberService.selectByMobile(mobile);
 				JSONObject card = initCard(member.getId());
-				JSONArray coupons = initCoupon(member.getId(),storeNo);
+				JSONArray coupons = initCoupon(member.getId(), storeNo);
 				content.put("mobile", member.getMobile());
 				content.put("point", member.getPoints());
 				content.put("card", card);
@@ -280,7 +288,58 @@ public class WebMemberController extends BaseController {
 				result.put("content", content);
 			}
 		} catch (Exception e) {
-			log.error("",e);
+			log.error("", e);
+			result.put("code", "500");
+			result.put("msg", "请求失败");
+		}
+		return result;
+	}
+
+	@ApiOperation("根据openid获得会员信息")
+	@RequestMapping(value = "getMember", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getMember(
+			@ApiParam(value = "openid", required = true) @RequestParam(required = true) String openid,
+			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "200");
+		result.put("msg", "请求成功");
+		try {
+			boolean isSign = true;
+			if (gunsProperties.isCheckSign()) {
+				Map<String, String> data = new HashMap<String, String>();
+				data.put("openid", openid);
+				data.put("sign", sign);
+				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
+				if (!isSign) {
+					result.put("code", "500");
+					result.put("msg", "签名失败");
+				}
+			}
+			if (isSign) {
+				Map<String, Object> member = memberService.getWxUserByOpenId(openid);
+				if (member == null) {
+					UserInfo userInfo = WeChatAPI.getUserInfo(openid);
+					if (userInfo == null || userInfo.getOpenid() == null) {
+						result.put("code", "500");
+						result.put("msg", "没有找到该openid的微信用户");
+					} else {
+						memberService.saveMember(userInfo);
+						member = memberService.getWxUserByOpenId(openid);
+					}
+				}
+				if (member != null) {
+					JSONObject obj = new JSONObject();
+					obj.put("mobile", member.get("mobile"));
+					obj.put("sex", member.get("sex"));
+					obj.put("point", member.get("points"));
+					obj.put("headImg", member.get("headimgurl"));
+					obj.put("nickname", member.get("nickname"));
+					result.put("content", obj);
+				}
+			}
+		} catch (Exception e) {
+			log.error("", e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
@@ -288,20 +347,21 @@ public class WebMemberController extends BaseController {
 	}
 
 	public static void main(String[] args) {
-		/*Map<String, Object> point = new HashMap<String, Object>();
-		point.put("memberId", 1);
-		point.put("mobile", "18508443775");
-		point.put("point", 88);
-		System.out.println(JSONObject.toJSONString(point));*/
-		
-		/*测试时间对比*/
+		/*
+		 * Map<String, Object> point = new HashMap<String, Object>();
+		 * point.put("memberId", 1); point.put("mobile", "18508443775");
+		 * point.put("point", 88);
+		 * System.out.println(JSONObject.toJSONString(point));
+		 */
+
+		/* 测试时间对比 */
 		String termStartAt = "2017-09-14";
 		System.out.println(DateUtil.compareDate(termStartAt, DateUtil.getDay()));
-		
-		/*测试相隔天数*/
+
+		/* 测试相隔天数 */
 		String createTime = "2017-09-13 11:11:11";
 		// 计算领取日期和当前日期相隔天数，是否大于设置的天数
-		long daySub = DateUtil.getDaySub(createTime.toString(),DateUtil.getDay());
+		long daySub = DateUtil.getDaySub(createTime.toString(), DateUtil.getDay());
 		System.out.println(daySub);
 	}
 }

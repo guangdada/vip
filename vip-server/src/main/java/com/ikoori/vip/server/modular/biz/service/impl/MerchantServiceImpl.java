@@ -5,6 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -39,7 +40,7 @@ public class MerchantServiceImpl implements IMerchantService {
 	@Autowired
 	GunsProperties gunsProperties;
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveMerchant(Merchant merchant){
 		if(merchant.getId() == null){
 			User theUser = managerDao.getByAccount(merchant.getMobile());

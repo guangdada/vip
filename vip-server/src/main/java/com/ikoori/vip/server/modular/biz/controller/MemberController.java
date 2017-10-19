@@ -132,7 +132,7 @@ public class MemberController extends BaseController {
     @ResponseBody
     public Object add(Member member,Long cardId) {
     	//添加会员， 判断账号是否重复
-    	Member memberRe=memberService.selecByMobile(member.getMobile());
+    	Member memberRe=memberService.selectByMobile(member.getMobile());
     	if(memberRe!=null){
     		 throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
     	}

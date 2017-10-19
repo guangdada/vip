@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.persistence.dao.PointTradeMapper;
@@ -55,6 +57,7 @@ public class PointTradeServiceImpl implements IPointTradeService {
 				orderByField, isAsc);
 	}
 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean savePointTrade(Boolean inout, Integer tradeType, Integer points, Long memberId, Long pointId,
 			Long merchantId, Long storeId,String tag) {
 		PointTrade pointTrade = new PointTrade();

@@ -10,7 +10,7 @@ import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.User;
 
 /**
- * 会员卡Service
+ * 会员Service
  *
  * @author chengxg
  * @Date 2017-08-04 11:07:42

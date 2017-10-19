@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ikoori.vip.common.support.CollectionKit;
@@ -33,7 +34,7 @@ import com.ikoori.vip.server.core.shiro.ShiroUser;
  */
 @Service
 @DependsOn("springContextHolder")
-@Transactional(readOnly = true)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 public class PermissionCheckFactory implements ICheck {
 
     public static ICheck me() {

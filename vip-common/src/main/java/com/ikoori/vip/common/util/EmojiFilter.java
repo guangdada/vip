@@ -1,4 +1,4 @@
-package com.ikoori.vip.mobile.util;
+package com.ikoori.vip.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 
