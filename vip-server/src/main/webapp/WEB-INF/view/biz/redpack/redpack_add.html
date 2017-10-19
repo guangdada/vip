@@ -1,0 +1,106 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+		<form id="redpackInfoForm" name="redpackInfoForm">
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <!-- <div class="col-sm-6 b-r">
+					<#input id="name" name="红包名称" underline="true" value=""/>
+                </div> -->
+				<div class="form-group">
+					<label class="col-sm-2 control-label">红包名称:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="name" name="name"
+							placeholder="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">红包类型:</label>
+					<div class="col-sm-5">
+						<select class="form-control" name="packType" id="packType">
+							<option value="">请选择</option>
+							@for(c in packType!){
+							<option value="${c.code!}">${c.message!}</option>
+							@}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">发送方式:</label>
+					<div class="col-sm-5">
+						<label class="checkbox inline">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="sendType" id="optionsRadios4" value="0" checked>固定金额
+							&nbsp; &nbsp; &nbsp; &nbsp; 
+							<input type="radio" name="sendType" id="optionsRadios5" value="1">随机金额
+						</label>
+					</div>
+				</div>
+				<!-- <div class="control-group">
+					<label class="control-label"><em class="required">*</em>面额:</label>
+					<div class="controls">
+						<div>
+							<input type="text" id="amount" name="amount" value=""
+								class="input-small"> <span class="add-on">元</span>
+						</div>
+					</div>
+				</div> -->
+				<div class="form-group amount1" style="display:block;">
+					<label class="col-sm-2 control-label">面额:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="amount" name="amount"
+							placeholder="单位：元" />
+						<!-- <label class="col-sm-1 control-label">元</label> -->
+					</div>
+				</div>
+				<div class="form-group amount2" style="display:none;">
+					<label class="col-sm-2 control-label">最小金额:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="minAmount" name="minAmount"
+							placeholder="单位：元" />
+					</div>
+					<label class="col-sm-2 control-label">最大金额:</label>
+					<div class="col-sm-2">
+						<input type="text" class="form-control" id="maxAmount" name="maxAmount"
+							placeholder="单位：元" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">活动名称:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="actName" name="actName"
+							placeholder="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">红包祝福语:</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="wishing" name="wishing"
+							placeholder="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">备注:</label>
+					<div class="col-sm-5">
+						<textarea class="form-control" id="remark" name="remark" value=""></textarea>
+					</div>
+				</div>
+				<!-- <div class="col-sm-6">
+
+                </div> -->
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-12 text-right">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="RedpackInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="RedpackInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+	</form>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/biz/redpack/redpack_info.js"></script>
+@}

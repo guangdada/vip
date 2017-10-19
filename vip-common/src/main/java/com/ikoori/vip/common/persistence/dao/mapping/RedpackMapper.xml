@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.common.persistence.dao.RedpackMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.Redpack">
+		<id column="id" property="id" />
+		<result column="merchant_id" property="merchantId" />
+		<result column="name" property="name" />
+		<result column="pack_type" property="packType" />
+		<result column="send_type" property="sendType" />
+		<result column="amount" property="amount" />
+		<result column="min_amount" property="minAmount" />
+		<result column="max_amount" property="maxAmount" />
+		<result column="send_count" property="sendCount" />
+		<result column="send_amount" property="sendAmount" />
+		<result column="receive_count" property="receiveCount" />
+		<result column="receive_amount" property="receiveAmount" />
+		<result column="act_name" property="actName" />
+		<result column="wishing" property="wishing" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+	</resultMap>
+
+</mapper>
