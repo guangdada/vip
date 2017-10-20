@@ -58,11 +58,6 @@ public class RedpackServiceImpl implements IRedpackService {
 
 	@Override
 	public void saveRedPack(Redpack redpack) {
-		// 已有同类型的红包， 不能再添加
-		Redpack rpack=new Redpack();
-		rpack.setPackType(redpack.getPackType());
-		rpack=redpackMapper.selectOne(rpack);
-		
 		// 根据发放类型，清除金额
 		BigDecimal cleanAmount = new BigDecimal("0");
 		if (redpack.getSendType().intValue() == RedpackSendType.fixed.getCode()) {
@@ -72,33 +67,30 @@ public class RedpackServiceImpl implements IRedpackService {
 			redpack.setAmount(cleanAmount);
 		}
 		
+		// 根据红包类型查找红包规则记录
+		Redpack rpack=new Redpack();
+		rpack.setPackType(redpack.getPackType());
+		rpack.setStatus(1);
+		rpack=redpackMapper.selectOne(rpack);
 		if (redpack.getId() == null) {
-		 	if(rpack!=null){
-	    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
-	    	}else{
-	    		redpackMapper.insert(redpack);
-	    	}
-		} else {
-			/*
-			 * Redpack rpack =redpackService.selectById(redpack.getId());
-			 * 
-			 * Redpack repack=new Redpack();
-			 * repack.setPackType(redpack.getPackType());
-			 * repack=redpackMapper.selectOne(repack);
-			 * 
-			 * if (rpack.getPackType() == redpack.getPackType()) {
-			 * redpackService.saveRedPack(redpack); return super.SUCCESS_TIP; }
-			 * else { if(rpack!=null){ throw new
-			 * BussinessException(BizExceptionEnum.EXISTED_PACKTYPE); }else{
-			 * redpackService.saveRedPack(redpack); return super.SUCCESS_TIP; }
-			 * }
-			 */
-			if (rpack.getPackType() == redpack.getPackType() || rpack==null) {
-				redpackMapper.updateById(redpack);
-			}else{
+			if (rpack != null) {
 				throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+			} else {
+				redpackMapper.insert(redpack);
 			}
-			
+		} else {
+			Redpack repack = this.selectById(redpack.getId());
+			if (redpack.getPackType() == repack.getPackType()) {
+				redpackMapper.updateById(redpack);
+			} else {
+				if (rpack == null) {
+					redpackMapper.updateById(redpack);
+				} else {
+					throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+				}
+
+			}
+
 		}
 	}
 
