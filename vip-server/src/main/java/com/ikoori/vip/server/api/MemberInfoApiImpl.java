@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
-import com.ikoori.vip.common.constant.state.PackType;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
+import com.ikoori.vip.common.constant.state.RedpackType;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
@@ -272,7 +272,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			if (count > 0) {
 				Member receiveMem = memberDao.getMemberByOpenId(openId);
 				shareService.activeShare(receiveMem);
-				Redpack redpack = redpackService.selectByPackType(PackType.re.getCode(), receiveMem.getMerchantId());
+				Redpack redpack = redpackService.selectByPackType(RedpackType.re.getCode(), receiveMem.getMerchantId());
 				if (redpack != null) {
 					Integer amount = redpack.getAmount().multiply(new BigDecimal(100)).intValue();
 					if (redpack.getSendType().intValue() == RedpackSendType.random.getCode()) {
