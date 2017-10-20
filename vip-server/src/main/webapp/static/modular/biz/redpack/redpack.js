@@ -51,7 +51,7 @@ Redpack.openAddRedpack = function () {
     var index = layer.open({
         type: 2,
         title: '添加红包',
-        area: ['800px', '420px'], //宽高
+        area: ['800px', '650px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: Feng.ctxPath + '/redpack/redpack_add'
@@ -71,7 +71,7 @@ Redpack.openRedpackDetail = function () {
         var index = layer.open({
             type: 2,
             title: '红包详情',
-            area: ['800px', '420px'], //宽高
+            area: ['800px', '650px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: Feng.ctxPath + '/redpack/redpack_update/' + Redpack.seItem.id

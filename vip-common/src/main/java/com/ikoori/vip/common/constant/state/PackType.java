@@ -7,8 +7,7 @@ package com.ikoori.vip.common.constant.state;
  *
  */
 public enum PackType {
-	re(0, "注册红包"),
-	gm(1,"购买红包");
+	re(0, "注册红包");
 	int code;
 	String message;
 

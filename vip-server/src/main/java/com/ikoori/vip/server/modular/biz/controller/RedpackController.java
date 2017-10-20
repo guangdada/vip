@@ -105,20 +105,11 @@ public class RedpackController extends BaseController {
     @Permission
     @ResponseBody
     public Object add(Redpack redpack) {
-    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		redpack.setMerchantId(merchant.getId());
-		
-		Redpack rpack=new Redpack();
-		rpack.setPackType(redpack.getPackType());
-		rpack=redpackMapper.selectOne(rpack);
-    	if(rpack!=null){
-    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
-    	}else{
-    		redpackService.saveRedPack(redpack);
-            return super.SUCCESS_TIP;
-    	}
-		
+		redpackService.saveRedPack(redpack);
+		return super.SUCCESS_TIP;
     }
 
     /**
@@ -143,24 +134,8 @@ public class RedpackController extends BaseController {
     	if (ToolUtil.isEmpty(redpack) || redpack.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	Redpack rpack =redpackService.selectById(redpack.getId());
-    	
-    	Redpack repack=new Redpack();
-		repack.setPackType(redpack.getPackType());
-		repack=redpackMapper.selectOne(repack);
-		
-		if (rpack.getPackType() == redpack.getPackType()) {
-			redpackService.saveRedPack(redpack);
-	        return super.SUCCESS_TIP;
-		} else {
-			if(rpack!=null){
-	    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
-	    	}else{
-	    		redpackService.saveRedPack(redpack);
-	            return super.SUCCESS_TIP;
-	    	}
-		}
-    	
+	    redpackService.saveRedPack(redpack);
+	    return super.SUCCESS_TIP;
     }
 
     /**
