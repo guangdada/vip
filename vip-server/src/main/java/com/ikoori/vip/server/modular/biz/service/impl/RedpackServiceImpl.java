@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
 import com.ikoori.vip.common.persistence.dao.RedpackMapper;
@@ -69,6 +71,14 @@ public class RedpackServiceImpl implements IRedpackService {
 		} else {
 			redpackMapper.updateById(redpack);
 		}
+	}
+
+	@Override
+	public List<Redpack> selectByMerchantId(Long merchantId) {
+		Wrapper<Redpack> w = new EntityWrapper<>();
+		w.eq("merchant_id", merchantId);
+		w.eq("status", 1);
+		return redpackMapper.selectList(w);
 	}
 }
 

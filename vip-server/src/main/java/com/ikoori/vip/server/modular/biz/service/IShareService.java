@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.Share;
 
 /**
@@ -26,6 +27,6 @@ public interface IShareService {
 
 	public void saveShare(Share share);
 
-	public void activeShare(String receiveOpenid);
+	public void activeShare(Member receiveMem);
 
 }

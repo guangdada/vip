@@ -196,14 +196,14 @@ public class ShareServiceImpl implements IShareService {
 	 * 受邀人激活成功后，奖励邀请人
 	 * 
 	 * @Title: activeShare
-	 * @param receiveOpenid
+	 * @param receiveMem 受邀人
 	 * @date: 2017年10月9日 上午10:04:53
 	 * @author: chengxg
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public void activeShare(String receiveOpenid) {
-		log.info("进入activeShare" + receiveOpenid);
-		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
+	public void activeShare(Member receiveMem) {
+		log.info("进入activeShare" + receiveMem.getOpenId());
+		//Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
 		// 获得分享规则
 		Share share = getShare(receiveMem.getMerchantId());
 		if (share == null) {
@@ -211,7 +211,7 @@ public class ShareServiceImpl implements IShareService {
 			return;
 		}
 		// 获得邀请记录，得到邀请人信息
-		ShareLog shareLog = getShareLog(receiveOpenid);
+		ShareLog shareLog = getShareLog(receiveMem.getOpenId());
 		if (shareLog == null) {
 			log.info("没有找到邀请记录");
 			return;

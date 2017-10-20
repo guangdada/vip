@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ikoori.vip.server.modular.biz.dao.RedpackLogDao">
+	<select id="getRedpackLogList" resultType="map">
+        SELECT
+			rpl.*, rp.`name` AS redpackName
+		FROM
+			v_redpack_log rpl
+		LEFT JOIN v_redpack rp ON rpl.redpack_id = rp.id
+		WHERE
+			rpl.`status` = 1
+        <if test="billno != null and billno !=''">
+            and rpl.billno like CONCAT('%',#{billno},'%')
+        </if>
+        <if test="openid != null and openid !=''">
+            and rpl.openid like CONCAT('%',#{openid},'%')
+        </if>
+        <if test="sendStatus != null">
+            and rpl.send_status = #{sendStatus}
+        </if>
+       	<if test="sendS != null and sendS != ''">
+      		<![CDATA[ and rpl.create_time >= #{sendS}  ]]>
+      	</if>
+      	<if test="sendE != null and sendE != ''">
+      		<![CDATA[ and rpl.create_time <= #{sendE} ]]>
+      	</if>
+      	<if test="redpackId != null">
+            and AND rpl.redpack_id  = #{redpackId}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by orderByField ASC
+                    </when>
+                    <otherwise>
+                        order by orderByField DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by rpl.id DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
