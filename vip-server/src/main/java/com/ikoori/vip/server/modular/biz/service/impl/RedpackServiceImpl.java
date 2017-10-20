@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -57,15 +58,14 @@ public class RedpackServiceImpl implements IRedpackService {
 	public void saveRedPack(Redpack redpack) {
 		// 已有同类型的红包， 不能再添加
 		// 根据发放类型，清除金额
+		BigDecimal cleanAmount = new BigDecimal("0");
 		if (redpack.getSendType().intValue() == RedpackSendType.fixed.getCode()) {
-			//redpack.setAmount(redpack.getAmount() * 100);
-			redpack.setMinAmount(0);
-			redpack.setMaxAmount(0);
+			redpack.setMinAmount(cleanAmount);
+			redpack.setMaxAmount(cleanAmount);
 		} else {
-			redpack.setAmount(0);
-			//redpack.setMinAmount(redpack.getMinAmount() * 100);
-			//redpack.setMaxAmount(redpack.getMaxAmount() * 100);
+			redpack.setAmount(cleanAmount);
 		}
+		
 		if (redpack.getId() == null) {
 			redpackMapper.insert(redpack);
 		} else {
