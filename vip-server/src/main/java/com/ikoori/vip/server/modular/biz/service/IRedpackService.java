@@ -21,5 +21,6 @@ public interface IRedpackService {
 			boolean isAsc);
 	public void saveRedPack(Redpack redpack);
 	public List<Redpack> selectByMerchantId(Long merchantId);
+	public Redpack selectByPackType(Integer packType,Long merchantId); 
 	
 }

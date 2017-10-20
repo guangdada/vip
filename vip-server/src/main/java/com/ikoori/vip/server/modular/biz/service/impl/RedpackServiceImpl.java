@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -108,6 +109,15 @@ public class RedpackServiceImpl implements IRedpackService {
 		w.eq("merchant_id", merchantId);
 		w.eq("status", 1);
 		return redpackMapper.selectList(w);
+	}
+	
+	public Redpack selectByPackType(Integer packType, Long merchantId) {
+		Wrapper<Redpack> w = new EntityWrapper<>();
+		w.eq("merchant_id", merchantId);
+		w.eq("pack_type", packType);
+		w.eq("status", 1);
+		List<Redpack> redpacks = redpackMapper.selectList(w);
+		return CollectionUtils.isEmpty(redpacks) ? null : redpacks.get(0);
 	}
 }
 

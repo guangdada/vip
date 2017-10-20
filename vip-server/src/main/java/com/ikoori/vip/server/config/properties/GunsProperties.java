@@ -193,15 +193,6 @@ public class GunsProperties {
 	}
 
 	public String getCertPath() {
-		// 判断有没有结尾符,没有得加上
-		if (!certPath.endsWith(File.separator)) {
-			certPath = certPath + File.separator;
-		}
-		// 判断目录存不存在,不存在得加上
-		File file = new File(certPath);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
 		return certPath;
 	}
 

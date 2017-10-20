@@ -172,6 +172,7 @@ public class MemberController {
 		try {
 			// 更新会员信息
 			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile(),IpUtil.getIpAddr(request));
+			request.getSession().removeAttribute(Constant.MOBILE_CODE);
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);

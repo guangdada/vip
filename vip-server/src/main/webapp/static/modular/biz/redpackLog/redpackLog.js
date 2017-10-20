@@ -15,10 +15,12 @@ RedpackLog.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '红包ID', field: 'billno', visible: true, align: 'center', valign: 'middle'},
         {title: '微信ID', field: 'openid', visible: true, align: 'center', valign: 'middle'},
         {title: '红包名称', field: 'redpackName', visible: true, align: 'center', valign: 'middle'},
-        {title: '发送金额', field: 'send_amount', visible: true, align: 'center', valign: 'middle'},
-        {title: '交易号', field: 'billno', visible: true, align: 'center', valign: 'middle'},
+        {title: '发送金额(元)', field: 'send_amount', visible: true, align: 'center', valign: 'middle',formatter:function(index,row,value){
+    			return !row.send_amount ? "-" : row.send_amount/100; 
+    	}},
         {title: '红包状态', field: 'sendStatus', visible: true, align: 'center', valign: 'middle'},
         {title: '发送结果', field: 'reason', visible: true, align: 'center', valign: 'middle'},
         {title: '发送时间', field: 'create_time', visible: true, align: 'center', valign: 'middle'},

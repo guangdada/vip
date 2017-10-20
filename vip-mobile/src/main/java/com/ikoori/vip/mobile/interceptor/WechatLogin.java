@@ -40,7 +40,7 @@ public class WechatLogin implements HandlerInterceptor {
 			String redirect_uri = basePath + "?lastAccessUrl=" + lastAccessUrl;
 			
 			StringBuffer sb = new StringBuffer(WeChatAPI.weboauth);
-			sb.append("?").append("scope=snsapi_userinfo").append("&state=").append(state).append("&redirect_uri=").append(redirect_uri);
+			sb.append("?").append("scope=snsapi_base").append("&state=").append(state).append("&redirect_uri=").append(redirect_uri);
 			log.info("redirect:" +sb.toString());
 			response.sendRedirect(sb.toString());
 		} else {

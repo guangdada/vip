@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.service.MemberInfoApi;
 import com.ikoori.vip.api.vo.UserInfo;
+import com.ikoori.vip.common.constant.state.PackType;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
 import com.ikoori.vip.common.persistence.dao.CouponFetchMapper;
 import com.ikoori.vip.common.persistence.dao.CouponMapper;
@@ -32,6 +33,7 @@ import com.ikoori.vip.server.modular.biz.dao.PointDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IPointTradeService;
 import com.ikoori.vip.server.modular.biz.service.IRedpackLogService;
+import com.ikoori.vip.server.modular.biz.service.IRedpackService;
 import com.ikoori.vip.server.modular.biz.service.IShareService;
 
 /**
@@ -76,6 +78,8 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	IShareService shareService;
 	@Autowired
 	IRedpackLogService redpackLogService;
+	@Autowired
+	IRedpackService redpackService;
 
 	/**
 	 * <p>
@@ -268,15 +272,17 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 			if (count > 0) {
 				Member receiveMem = memberDao.getMemberByOpenId(openId);
 				shareService.activeShare(receiveMem);
-				Redpack redpack = new Redpack();
-				Integer amount = redpack.getAmount().multiply(new BigDecimal(100)).intValue();
-				if (redpack.getSendType().intValue() == RedpackSendType.random.getCode()) {
-					int max = redpack.getMaxAmount().multiply(new BigDecimal(100)).intValue();
-					int min = redpack.getMinAmount().multiply(new BigDecimal(100)).intValue();
-					amount = (int) (Math.random() * (max - min + 1) + min);
+				Redpack redpack = redpackService.selectByPackType(PackType.re.getCode(), receiveMem.getMerchantId());
+				if (redpack != null) {
+					Integer amount = redpack.getAmount().multiply(new BigDecimal(100)).intValue();
+					if (redpack.getSendType().intValue() == RedpackSendType.random.getCode()) {
+						int max = redpack.getMaxAmount().multiply(new BigDecimal(100)).intValue();
+						int min = redpack.getMinAmount().multiply(new BigDecimal(100)).intValue();
+						amount = (int) (Math.random() * (max - min + 1) + min);
+					}
+					redpackLogService.saveRedPackLog(amount, openId, ip, receiveMem.getMerchantId(), redpack.getId(),
+							redpack.getActName(), redpack.getRemark(), redpack.getWishing());
 				}
-				redpackLogService.saveRedPackLog(amount, openId, ip, receiveMem.getMerchantId(), redpack.getId(),
-						redpack.getActName(), redpack.getRemark(), redpack.getWishing());
 			}
 			log.info("结束activeMemberByOpenId");
 			return count;
