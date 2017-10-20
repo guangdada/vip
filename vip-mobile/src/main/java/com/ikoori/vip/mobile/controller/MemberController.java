@@ -34,6 +34,7 @@ import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.sms.Client;
 import com.ikoori.vip.common.support.HttpKit;
+import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.common.util.MD5;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.constant.Constant;
@@ -170,7 +171,7 @@ public class MemberController {
 		
 		try {
 			// 更新会员信息
-			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile());
+			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile(),IpUtil.getIpAddr(request));
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);

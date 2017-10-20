@@ -1,13 +1,15 @@
 package com.ikoori.vip.common.persistence.model;
 
-import com.baomidou.mybatisplus.enums.IdType;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  * <p>
@@ -46,17 +48,17 @@ public class Redpack extends Model<Redpack> {
     /**
      * 面额
      */
-	private Integer amount;
+	private BigDecimal amount;
     /**
      * 最小金额
      */
 	@TableField("min_amount")
-	private Integer minAmount;
+	private BigDecimal minAmount;
     /**
      * 最大金额
      */
 	@TableField("max_amount")
-	private Integer maxAmount;
+	private BigDecimal maxAmount;
     /**
      * 发放量
      */
@@ -147,27 +149,28 @@ public class Redpack extends Model<Redpack> {
 		this.sendType = sendType;
 	}
 
-	public Integer getAmount() {
+
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Integer amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
-	public Integer getMinAmount() {
+	public BigDecimal getMinAmount() {
 		return minAmount;
 	}
 
-	public void setMinAmount(Integer minAmount) {
+	public void setMinAmount(BigDecimal minAmount) {
 		this.minAmount = minAmount;
 	}
 
-	public Integer getMaxAmount() {
+	public BigDecimal getMaxAmount() {
 		return maxAmount;
 	}
 
-	public void setMaxAmount(Integer maxAmount) {
+	public void setMaxAmount(BigDecimal maxAmount) {
 		this.maxAmount = maxAmount;
 	}
 

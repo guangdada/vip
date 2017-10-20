@@ -164,7 +164,17 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
-		
+		<dependency>
+            <groupId>org.coolfish</groupId>
+            <artifactId>weixin</artifactId>
+            <version>${weixin.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.thoughtworks.xstream</groupId>
+		    <artifactId>xstream</artifactId>
+		    <version>1.4.9</version>
+		</dependency> 
+        
 		<!-- <dependency>
 		    <groupId>com.foreveross</groupId>
 		    <artifactId>spring-boot-starter-dubbox</artifactId>

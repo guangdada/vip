@@ -20,5 +20,6 @@ public interface IRedpackService {
 	List<Map<String, Object>> getRedpackList(Page<Map<String, Object>> page, String name,Integer packType,Integer sendType,Long merchantId,String orderByField,
 			boolean isAsc);
 	public void saveRedPack(Redpack redpack);
+	public List<Redpack> selectByMerchantId(Long merchantId);
 	
 }
