@@ -18,6 +18,7 @@ import com.ikoori.vip.common.constant.state.PackType;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.RedpackMapper;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Redpack;
 import com.ikoori.vip.common.util.ToolUtil;
@@ -43,6 +44,9 @@ public class RedpackController extends BaseController {
 
     @Autowired
 	IMerchantService merchantService;
+    
+    @Autowired
+	RedpackMapper redpackMapper;
     /**
      * 跳转到红包首页
      */
@@ -71,9 +75,9 @@ public class RedpackController extends BaseController {
     	if(redpack==null){
     		 throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
     	}
-    	model.addAttribute("amount", redpack.getAmount() == null ? "" : redpack.getAmount() / 100);
-    	model.addAttribute("minAmount", redpack.getMinAmount() == null ? "" : redpack.getMinAmount() / 100);
-    	model.addAttribute("maxAmount", redpack.getMaxAmount() == null ? "" : redpack.getMaxAmount() / 100);
+    	//model.addAttribute("amount", redpack.getAmount() == null ? "" : redpack.getAmount() / 100);
+    	//model.addAttribute("minAmount", redpack.getMinAmount() == null ? "" : redpack.getMinAmount() / 100);
+    	//model.addAttribute("maxAmount", redpack.getMaxAmount() == null ? "" : redpack.getMaxAmount() / 100);
     	model.addAttribute("packType", PackType.values());
     	model.addAttribute(redpack);
         return PREFIX + "redpack_edit.html";
@@ -104,14 +108,17 @@ public class RedpackController extends BaseController {
     	Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		redpack.setMerchantId(merchant.getId());
-		/*if(redpack.getAmount()!=null){
-			redpack.setAmount(redpack.getAmount()*100);
-		}else{
-			redpack.setMinAmount(redpack.getMinAmount()*100);
-			redpack.setMaxAmount(redpack.getMaxAmount()*100);
-		}*/
-    	redpackService.saveRedPack(redpack);
-        return super.SUCCESS_TIP;
+		
+		Redpack rpack=new Redpack();
+		rpack.setPackType(redpack.getPackType());
+		rpack=redpackMapper.selectOne(rpack);
+    	if(rpack!=null){
+    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+    	}else{
+    		redpackService.saveRedPack(redpack);
+            return super.SUCCESS_TIP;
+    	}
+		
     }
 
     /**
@@ -136,8 +143,24 @@ public class RedpackController extends BaseController {
     	if (ToolUtil.isEmpty(redpack) || redpack.getId() == null) {
             throw new BussinessException(BizExceptionEnum.REQUEST_NULL);
         }
-    	redpackService.saveRedPack(redpack);
-        return super.SUCCESS_TIP;
+    	Redpack rpack =redpackService.selectById(redpack.getId());
+    	
+    	Redpack repack=new Redpack();
+		repack.setPackType(redpack.getPackType());
+		repack=redpackMapper.selectOne(repack);
+		
+		if (rpack.getPackType() == redpack.getPackType()) {
+			redpackService.saveRedPack(redpack);
+	        return super.SUCCESS_TIP;
+		} else {
+			if(rpack!=null){
+	    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+	    	}else{
+	    		redpackService.saveRedPack(redpack);
+	            return super.SUCCESS_TIP;
+	    	}
+		}
+    	
     }
 
     /**

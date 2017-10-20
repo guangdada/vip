@@ -118,8 +118,8 @@ $(function() {
 							return false;
 						}
 				},
-				digits:true,
-				maxlength: 2
+				checkAmount:true,
+				checkAmountFormat : true
 			},
 			minAmount : {
 				required : function() {
@@ -130,8 +130,8 @@ $(function() {
 						return false;
 					}
 				},
-				digits:true,
-				maxlength : 2
+				checkAmount:true,
+				checkAmountFormat : true
 			},
 			maxAmount:{
 				required : function() {
@@ -142,8 +142,8 @@ $(function() {
 						return false;
 					}
 				},
-				digits:true,
-				maxlength : 2
+				checkAmount:true,
+				checkAmountFormat : true
 			},
 			actName:{
 				required :true,
@@ -167,19 +167,13 @@ $(function() {
 	    		required:"红包类型不能为空"
 	    	},
 	    	amount: {
-	    		digits:'请输入整数',
-	    		required:"面额不能为空",
-	    		rangelength:"长度必须小于2个字符"
+	    		required:"面额不能为空"
 	    	},
 	    	minAmount: {
-	    		digits:'请输入整数',
-	    		required:"最小金额不能为空",
-	    		rangelength:"长度必须小于2个字符"
+	    		required:"最小金额不能为空"
 	    	},
 	    	maxAmount: {
-	    		digits:'请输入整数',
-	    		required:"最大金额不能为空",
-	    		rangelength:"长度必须小于2个字符"
+	    		required:"最大金额不能为空"
 	    	},
 	    	storeType: {
 	    		required:"店铺类型不能为空"
@@ -198,6 +192,22 @@ $(function() {
 	    	}
 		}
 	});
+	
+
+	// 自定义正则表达示验证方法
+	$.validator.addMethod("checkAmount", function(value, element, params) {
+		var checkAmount = /^[0-9]+([.]{1}[0-9]+){0,1}$/;
+		return this.optional(element) || (checkAmount.test(value));
+	}, "请输入正确的面额！"); 
+	
+	$.validator.addMethod("checkAmountFormat",function(value,element,params){
+		if(value>=1 && value<=200){
+			return true;
+		}else{
+			return false;
+		}
+	},"面额必须大于1小于200！");
+	
 	$("input[name='sendType']").bind("click", function() {
 		var type = $(this).val();
 		if (type == '0') {
@@ -208,5 +218,6 @@ $(function() {
 			$(".amount2").show();
 		}
 	});
-
+	
+	
 });

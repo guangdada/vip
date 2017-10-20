@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
+import com.ikoori.vip.common.exception.BizExceptionEnum;
+import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.RedpackMapper;
 import com.ikoori.vip.common.persistence.model.Redpack;
 import com.ikoori.vip.server.modular.biz.dao.RedpackDao;
@@ -57,6 +59,10 @@ public class RedpackServiceImpl implements IRedpackService {
 	@Override
 	public void saveRedPack(Redpack redpack) {
 		// 已有同类型的红包， 不能再添加
+		Redpack rpack=new Redpack();
+		rpack.setPackType(redpack.getPackType());
+		rpack=redpackMapper.selectOne(rpack);
+		
 		// 根据发放类型，清除金额
 		BigDecimal cleanAmount = new BigDecimal("0");
 		if (redpack.getSendType().intValue() == RedpackSendType.fixed.getCode()) {
@@ -67,9 +73,32 @@ public class RedpackServiceImpl implements IRedpackService {
 		}
 		
 		if (redpack.getId() == null) {
-			redpackMapper.insert(redpack);
+		 	if(rpack!=null){
+	    		throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+	    	}else{
+	    		redpackMapper.insert(redpack);
+	    	}
 		} else {
-			redpackMapper.updateById(redpack);
+			/*
+			 * Redpack rpack =redpackService.selectById(redpack.getId());
+			 * 
+			 * Redpack repack=new Redpack();
+			 * repack.setPackType(redpack.getPackType());
+			 * repack=redpackMapper.selectOne(repack);
+			 * 
+			 * if (rpack.getPackType() == redpack.getPackType()) {
+			 * redpackService.saveRedPack(redpack); return super.SUCCESS_TIP; }
+			 * else { if(rpack!=null){ throw new
+			 * BussinessException(BizExceptionEnum.EXISTED_PACKTYPE); }else{
+			 * redpackService.saveRedPack(redpack); return super.SUCCESS_TIP; }
+			 * }
+			 */
+			if (rpack.getPackType() == redpack.getPackType() || rpack==null) {
+				redpackMapper.updateById(redpack);
+			}else{
+				throw new BussinessException(BizExceptionEnum.EXISTED_PACKTYPE);
+			}
+			
 		}
 	}
 

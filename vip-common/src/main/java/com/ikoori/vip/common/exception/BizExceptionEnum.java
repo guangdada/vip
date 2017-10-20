@@ -56,6 +56,14 @@ public enum BizExceptionEnum {
 	ERROR_MOBILE_CODE(411,"短信验证码不正确"),
 	EXISTED_MOBILE(412,"菜单编号重复，不能添加"),
 	
+
+	/**
+	 * 红包问题
+	 * @param code
+	 * @param message
+	 */
+	EXISTED_PACKTYPE(400,"红包类型已有，请选择其他红包类型！"),
+	
 	/**
 	 * 会员问题
 	 * @param code

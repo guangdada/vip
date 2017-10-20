@@ -18,27 +18,9 @@ Redpack.initColumn = function () {
         {title: '红包名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
         {title: '红包类型', field: 'pack_type', visible: true, align: 'center', valign: 'middle'},
         {title: '发送方式', field: 'send_type', visible: true, align: 'center', valign: 'middle'},
-        {title: '金额', field: 'amount', visible: true, align: 'center', valign: 'middle',
-        	formatter:function(index,row,value){
-        		if(row.amount){
-        			return row.amount/100;
-        		}
-    		}
-        },
-        {title: '最小金额', field: 'min_amount', visible: true, align: 'center', valign: 'middle',
-        	formatter:function(index,row,value){
-        		if(row.min_amount){
-        			return row.min_amount/100;	
-        		}
-    		}
-        },
-        {title: '最大金额', field: 'max_amount', visible: true, align: 'center', valign: 'middle',
-        	formatter:function(index,row,value){
-        		if(row.min_amount){
-        			return row.max_amount/100;
-        		}
-        	}
-        },
+        {title: '金额', field: 'amount', visible: true, align: 'center', valign: 'middle'},
+        {title: '最小金额', field: 'min_amount', visible: true, align: 'center', valign: 'middle'},
+        {title: '最大金额', field: 'max_amount', visible: true, align: 'center', valign: 'middle'},
         {title: '活动名称', field: 'act_name', visible: true, align: 'center', valign: 'middle'},
         {title: '祝福语', field: 'wishing', visible: true, align: 'center', valign: 'middle'},
         {title: '备注', field: 'remark', visible: true, align: 'center', valign: 'middle'},
