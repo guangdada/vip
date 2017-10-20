@@ -6,12 +6,12 @@ package com.ikoori.vip.common.constant.state;
  * @author chengxg
  *
  */
-public enum PackType {
+public enum RedpackType {
 	re(0, "注册红包");
 	int code;
 	String message;
 
-	PackType(int code, String message) {
+	RedpackType(int code, String message) {
 		this.code = code;
 		this.message = message;
 	}
@@ -36,7 +36,7 @@ public enum PackType {
 		if (type == null) {
 			return "";
 		} else {
-			for (PackType s : PackType.values()) {
+			for (RedpackType s : RedpackType.values()) {
 				if (s.getCode() == type) {
 					return s.getMessage();
 				}

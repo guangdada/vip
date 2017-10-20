@@ -19,8 +19,27 @@ Redpack.initColumn = function () {
         {title: '红包类型', field: 'pack_type', visible: true, align: 'center', valign: 'middle'},
         {title: '发送方式', field: 'send_type', visible: true, align: 'center', valign: 'middle'},
         {title: '金额', field: 'amount', visible: true, align: 'center', valign: 'middle'},
-        {title: '最小金额', field: 'min_amount', visible: true, align: 'center', valign: 'middle'},
-        {title: '最大金额', field: 'max_amount', visible: true, align: 'center', valign: 'middle'},
+        {title: '最小/最大金额', field: 'min_amount', visible: true, align: 'center', valign: 'middle',
+        	formatter:function(index,row,value){
+        		var minAmount=row.min_amount ? row.min_amount : "";
+        		var maxAmount=row.max_amount ? row.max_amount : "";
+        		return minAmount + "/" + maxAmount; 
+    		}
+        },
+        {title: '发放/领取数量', field: 'send_count', visible: true, align: 'center', valign: 'middle',
+        	formatter:function(index,row,value){
+        		var sendCount=row.send_count ? row.send_count : "";
+        		var receiveCount=row.receive_count ? row.receive_count : "";
+        		return sendCount + "/" + receiveCount; 
+    		}
+        },
+        {title: '发放/领取金额', field: 'send_amount', visible: true, align: 'center', valign: 'middle',
+        	formatter:function(index,row,value){
+        		var sendAmount=row.send_amount ? row.send_amount : "";
+        		var receiveAmount=row.receive_amount ? row.receive_amount : "";
+        		return sendAmount + "/" + receiveAmount;
+    		}
+        },
         {title: '活动名称', field: 'act_name', visible: true, align: 'center', valign: 'middle'},
         {title: '祝福语', field: 'wishing', visible: true, align: 'center', valign: 'middle'},
         {title: '备注', field: 'remark', visible: true, align: 'center', valign: 'middle'},

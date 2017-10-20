@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
-import com.ikoori.vip.common.constant.state.PackType;
+import com.ikoori.vip.common.constant.state.RedpackType;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -52,7 +52,7 @@ public class RedpackController extends BaseController {
      */
     @RequestMapping("")
     public String index(Model model) {
-    	model.addAttribute("packType", PackType.values());
+    	model.addAttribute("packType", RedpackType.values());
     	model.addAttribute("sendType", RedpackSendType.values());
         return PREFIX + "redpack.html";
     }
@@ -62,7 +62,7 @@ public class RedpackController extends BaseController {
      */
     @RequestMapping("/redpack_add")
     public String redpackAdd(Model model) {
-    	model.addAttribute("packType", PackType.values());
+    	model.addAttribute("packType", RedpackType.values());
         return PREFIX + "redpack_add.html";
     }
 
@@ -78,7 +78,7 @@ public class RedpackController extends BaseController {
     	//model.addAttribute("amount", redpack.getAmount() == null ? "" : redpack.getAmount() / 100);
     	//model.addAttribute("minAmount", redpack.getMinAmount() == null ? "" : redpack.getMinAmount() / 100);
     	//model.addAttribute("maxAmount", redpack.getMaxAmount() == null ? "" : redpack.getMaxAmount() / 100);
-    	model.addAttribute("packType", PackType.values());
+    	model.addAttribute("packType", RedpackType.values());
     	model.addAttribute(redpack);
         return PREFIX + "redpack_edit.html";
     }

@@ -3,7 +3,7 @@ package com.ikoori.vip.server.modular.biz.warpper;
 import java.util.List;
 import java.util.Map;
 
-import com.ikoori.vip.common.constant.state.PackType;
+import com.ikoori.vip.common.constant.state.RedpackType;
 import com.ikoori.vip.common.constant.state.RoleType;
 import com.ikoori.vip.common.constant.state.RedpackSendType;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
@@ -23,7 +23,7 @@ public class RedpackWarpper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
-    	map.put("pack_type", PackType.valueOf(Integer.valueOf(map.get("pack_type").toString())));
+    	map.put("pack_type", RedpackType.valueOf(Integer.valueOf(map.get("pack_type").toString())));
     	map.put("send_type", RedpackSendType.valueOf(Integer.valueOf(map.get("send_type").toString())));
     }
 
