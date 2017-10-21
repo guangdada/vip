@@ -78,6 +78,10 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 		log.info("进入saveRedPackLog>>remark = " + remark);
 		log.info("进入saveRedPackLog>>wishing = " + wishing);
 		log.info("进入saveRedPackLog>>certPath = " + gunsProperties.getCertPath());
+		if(!gunsProperties.getRedpackFlag()){
+			log.info("发送红包开关没有打开");
+			return;
+		}
 		String billno = "kryhb" + new SimpleDateFormat("yyyyMMddHHmmssSSSS").format(new Date());
 		RedPackResData rprd = RedPackUtil.redPackSend(amount, actName, remark, wishing, openid, billno,
 				gunsProperties.getCertPath());

@@ -114,7 +114,10 @@ public class UserInfo implements java.io.Serializable{
 
 	@Override
 	public String toString() {
-		return "UserInfo [subscribe=" + subscribe + ", openid=" + openid + ", nickname=" + nickname + ", sex=" + sex + ", language=" + language + ", city=" + city + ", province=" + province + ", country=" + country + ", headimgurl=" + headimgurl + ", subscribe_time=" + subscribe_time + ", unionid=" + unionid + ", remark=" + remark + "]";
+		return "UserInfo [subscribe=" + subscribe + ", openid=" + openid + ", nickname=" + nickname + ", sex=" + sex
+				+ ", language=" + language + ", city=" + city + ", province=" + province + ", country=" + country
+				+ ", headimgurl=" + headimgurl + ", subscribe_time=" + subscribe_time + ", unionid=" + unionid
+				+ ", remark=" + remark + "]";
 	}
 
 }

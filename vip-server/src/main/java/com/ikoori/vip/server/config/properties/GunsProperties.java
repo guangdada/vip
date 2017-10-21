@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 public class GunsProperties {
 
 	public static final String PREFIX = "guns";
+	// 是否发送红包开关
+	private boolean redpackFlag = false;
 	// 微信支付证书路径
 	private String certPath;
 	// 微信端地址
@@ -199,4 +201,13 @@ public class GunsProperties {
 	public void setCertPath(String certPath) {
 		this.certPath = certPath;
 	}
+
+	public boolean getRedpackFlag() {
+		return redpackFlag;
+	}
+
+	public void setRedpackFlag(boolean redpackFlag) {
+		this.redpackFlag = redpackFlag;
+	}
+	
 }

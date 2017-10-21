@@ -271,6 +271,7 @@ public class MemberServiceImpl implements IMemberService {
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveMember(UserInfo userInfo) throws Exception{
+		log.info("进去saveMember>>userInfo:" + userInfo.toString());
 		if(userInfo.getOpenid() == null){
 			log.info("微信用户openid为空");
 			throw new Exception("微信用户openid为空");

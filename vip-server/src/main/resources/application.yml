@@ -20,6 +20,7 @@ guns:
   merchant-id: 1 #商户id
   merchant-role-id: 6 #商户角色id
   cert-path: d:/cert/apiclient_cert.p12 #微信支付证书路径
+  redpack-flag: false #发送红包开关
 
 ###################  项目启动端口  ###################
 server:
