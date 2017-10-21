@@ -30,7 +30,6 @@ public class RedpackQueryJob {
 	IRedpackLogService redpackService;
 
 	//@Scheduled(cron = "0 0 0/1 * * ?") // 每小时执行一次
-	@Scheduled(cron = "0/20 * * * * ?") // 每20秒执行一次
 	public void scheduler() {
 		log.info(">>>>>>>>>>>>> 同步红包数据开始 ... " + DateUtil.getDayTime());
 		List<RedpackLog> rs = redpackService.selectBySendStatus(RedPackSendStatus.SENDING.getCode());
