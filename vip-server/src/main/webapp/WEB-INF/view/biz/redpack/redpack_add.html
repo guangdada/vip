@@ -5,20 +5,19 @@
 		<form id="redpackInfoForm" name="redpackInfoForm">
             <input type="hidden" id="id" value="">
 
-            <div class="row">
                 <!-- <div class="col-sm-6 b-r">
 					<#input id="name" name="红包名称" underline="true" value=""/>
                 </div> -->
 				<div class="form-group">
 					<label class="col-sm-2 control-label">红包名称:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="name" name="name"
 							placeholder="" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">红包类型:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<select class="form-control" name="packType" id="packType">
 							<option value="">请选择</option>
 							@for(c in packType!){
@@ -29,12 +28,11 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">发送方式:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<label class="checkbox inline">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="sendType" id="optionsRadios4" value="0" checked>固定金额
-							&nbsp; &nbsp; &nbsp; &nbsp; 
-							<input type="radio" name="sendType" id="optionsRadios5" value="1">随机金额
+							<input type="radio" name="sendType" id="optionsRadios4" value="0" checked><label for="optionsRadios4">固定金额</label>
+							&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+							<input type="radio" name="sendType" id="optionsRadios5" value="1"><label for="optionsRadios5">随机金额</label>
 						</label>
 					</div>
 				</div>
@@ -49,7 +47,7 @@
 				</div> -->
 				<div class="form-group amount1" style="display:block;">
 					<label class="col-sm-2 control-label">面额:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="amount" name="amount"
 							placeholder="单位：元" />
 						<!-- <label class="col-sm-1 control-label">元</label> -->
@@ -69,31 +67,30 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">活动名称:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="actName" name="actName"
 							placeholder="" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">红包祝福语:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<input type="text" class="form-control" id="wishing" name="wishing"
 							placeholder="" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">备注:</label>
-					<div class="col-sm-5">
+					<div class="col-sm-6">
 						<textarea class="form-control" id="remark" name="remark" value=""></textarea>
 					</div>
 				</div>
 				<!-- <div class="col-sm-6">
 
                 </div> -->
-            </div>
 
-            <div class="row btn-group-m-t">
-                <div class="col-sm-12 text-right">
+            <div class="row btn-group-m-t col-sm-offset-2">
+                <div class="col-sm-12">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="RedpackInfoDlg.addSubmit()"/>
                     <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="RedpackInfoDlg.close()"/>
                 </div>
