@@ -35,6 +35,19 @@ public enum RedPackSendStatus {
     public void setMessage(String message) {
         this.message = message;
     }
+    
+	public static Integer getCode(String message) {
+		if (message == null) {
+			return null;
+		} else {
+			for (RedPackSendStatus s : RedPackSendStatus.values()) {
+				if (s.name().equals(message)) {
+					return s.getCode();
+				}
+			}
+			return null;
+		}
+	}
 
     public static String valueOf(Integer status) {
         if (status == null) {

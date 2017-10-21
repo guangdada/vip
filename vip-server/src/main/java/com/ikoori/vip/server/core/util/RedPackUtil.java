@@ -3,14 +3,143 @@ package com.ikoori.vip.server.core.util;
 import com.coolfish.weixin.pay.WXPay;
 import com.coolfish.weixin.pay.common.PayConfig;
 import com.coolfish.weixin.pay.common.Util;
+import com.coolfish.weixin.redpack.business.listener.RedPackQueryListener;
 import com.coolfish.weixin.redpack.business.listener.RedPackSendListener;
 import com.coolfish.weixin.redpack.protocol.RedPackResData;
+import com.coolfish.weixin.redpack.protocol.query.RedPackQueryReqData;
+import com.coolfish.weixin.redpack.protocol.query.RedPackQueryResData;
 import com.coolfish.weixin.redpack.protocol.send.RedPackSendReqData;
 import com.coolfish.weixin.redpack.protocol.send.RedPackSendResData;
 
 public class RedPackUtil {
+	public static RedPackQueryResData redPackQuery(String mch_billno,String certLocalPath) {
+		final RedPackQueryResData rprd = new RedPackQueryResData();
+		try {
+			WXPay.initSDKConfiguration("JTZM88CKRKSWNUAUUF8HMJ7FJPGIY3NA", "wx71e66431bed0303e", "1229321102", "",
+					certLocalPath, "1229321102");
+			PayConfig.setIp(Util.localIp());
+			PayConfig.setHttpsRequestClassName("com.coolfish.weixin.pay.common.HttpsRequest");
+			RedPackQueryReqData redPackQueryReqData = new RedPackQueryReqData(mch_billno);
+			WXPay.doRedPackQueryBusiness(redPackQueryReqData, new RedPackQueryListener() {
+
+				@Override
+				public void onXmlError(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onSystemError(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onSignError(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onParamError(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onNoAuth(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onFreqLimit(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onCaError(RedPackResData payResData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(payResData.getErr_code());
+					rprd.setErr_code_des(payResData.getErr_code_des());
+					rprd.setResult_code(payResData.getResult_code());
+					rprd.setReturn_code(payResData.getReturn_code());
+					rprd.setReturn_msg(payResData.getReturn_msg());
+				}
+
+				@Override
+				public void onSuccess(RedPackQueryResData resData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(resData.getErr_code());
+					rprd.setErr_code_des(resData.getErr_code_des());
+					rprd.setResult_code(resData.getResult_code());
+					rprd.setReturn_code(resData.getReturn_code());
+					rprd.setReturn_msg(resData.getReturn_msg());
+					rprd.setStatus(resData.getStatus());
+					rprd.setReason(resData.getReason());
+					rprd.setRefund_time(resData.getRefund_time());
+				}
+
+				@Override
+				public void onOtherError(RedPackQueryResData resData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(resData.getErr_code());
+					rprd.setErr_code_des(resData.getErr_code_des());
+					rprd.setResult_code(resData.getResult_code());
+					rprd.setReturn_code(resData.getReturn_code());
+					rprd.setReturn_msg(resData.getReturn_msg());
+					rprd.setStatus(resData.getStatus());
+					rprd.setReason(resData.getReason());
+					rprd.setRefund_time(resData.getRefund_time());
+				}
+
+				@Override
+				public void onNotFound(RedPackQueryResData resData) {
+					// TODO Auto-generated method stub
+					rprd.setErr_code(resData.getErr_code());
+					rprd.setErr_code_des(resData.getErr_code_des());
+					rprd.setResult_code(resData.getResult_code());
+					rprd.setReturn_code(resData.getReturn_code());
+					rprd.setReturn_msg(resData.getReturn_msg());
+					rprd.setStatus(resData.getStatus());
+					rprd.setReason(resData.getReason());
+					rprd.setRefund_time(resData.getRefund_time());
+				}
+			});
+			return rprd;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static RedPackResData redPackSend(int amount, String actName, String remark, String wishing, String openid,
-			String billno,String certLocalPath) {
+			String billno, String certLocalPath) {
 		try {
 			final RedPackResData rprd = new RedPackResData();
 			// --------------------------------------------------------------------
@@ -18,7 +147,8 @@ public class RedPackUtil {
 			// --------------------------------------------------------------------
 
 			// certLocalPath /data/apps/weixin/apiclient_cert.p12
-			WXPay.initSDKConfiguration("JTZM88CKRKSWNUAUUF8HMJ7FJPGIY3NA", "wx71e66431bed0303e", "1229321102", "",certLocalPath, "1229321102");
+			WXPay.initSDKConfiguration("JTZM88CKRKSWNUAUUF8HMJ7FJPGIY3NA", "wx71e66431bed0303e", "1229321102", "",
+					certLocalPath, "1229321102");
 			// Configure.setAppID("wx71e66431bed0303e");
 			// Configure.setKey("JTZM88CKRKSWNUAUUF8HMJ7FJPGIY3NA");
 			// Configure.setMchID("1229321102");
@@ -33,7 +163,8 @@ public class RedPackUtil {
 					PayConfig.getIP(), actName, remark);
 
 			// 也可以直接调用服务，自己处理error_code
-			// UnifiedOrderResData unifiedOrderResData=WXPay.requestUnifiedOrderService(unifiedOrderReqData);
+			// UnifiedOrderResData
+			// unifiedOrderResData=WXPay.requestUnifiedOrderService(unifiedOrderReqData);
 			// System.out.println(unifiedOrderResData);
 			// 封装好错误的商业服务
 			WXPay.doRedPackSendBusiness(sendRedPackReqData, new RedPackSendListener() {

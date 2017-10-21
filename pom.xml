@@ -44,7 +44,7 @@
         <vip.api.version>0.0.1</vip.api.version>
         <poi.version>3.9</poi.version>
         <httpclient.version>4.5.2</httpclient.version>
-        <weixin.version>1.8</weixin.version>
+        <weixin.version>1.8.3</weixin.version>
         <xstream.version>1.4.9</xstream.version>
 	</properties>
 

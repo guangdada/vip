@@ -12,13 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.coolfish.weixin.redpack.protocol.RedPackResData;
+import com.coolfish.weixin.redpack.protocol.query.RedPackQueryResData;
 import com.ikoori.vip.common.constant.state.RedPackSendStatus;
 import com.ikoori.vip.common.persistence.dao.RedpackLogMapper;
+import com.ikoori.vip.common.persistence.dao.RedpackMapper;
 import com.ikoori.vip.common.persistence.model.RedpackLog;
+import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.core.util.RedPackUtil;
+import com.ikoori.vip.server.modular.biz.dao.RedpackDao;
 import com.ikoori.vip.server.modular.biz.dao.RedpackLogDao;
 import com.ikoori.vip.server.modular.biz.service.IRedpackLogService;
 
@@ -37,6 +43,10 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 	RedpackLogMapper redpackLogMapper;
 	@Autowired
 	GunsProperties gunsProperties;
+	@Autowired
+	RedpackMapper redpackMapper;
+	@Autowired
+	RedpackDao redpackDao;
 
 	@Override
 	public Integer deleteById(Long id) {
@@ -67,6 +77,38 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public void updateRedPackLog(RedpackLog redpackLog) {
+		log.info("进入updateRedPackLog>>redpackLog = " + redpackLog.toString());
+		RedPackQueryResData rprd = RedPackUtil.redPackQuery(redpackLog.getBillno(), gunsProperties.getCertPath());
+		// 通信成功则记录发送日志
+		if (rprd != null) {
+			if ("SUCCESS".equals(rprd.getReturn_code())) {
+				if ("SUCCESS".equals(rprd.getErr_code())) {
+					Integer code = RedPackSendStatus.getCode(rprd.getStatus());
+					if (code != null) {
+						redpackLog.setSendStatus(code);
+						redpackLog.setReason(rprd.getReason());
+						if (RedPackSendStatus.REFUND.name().equals(rprd.getStatus())) {
+							redpackLog.setRefundTime(DateUtil.parseDate(rprd.getRefund_time()));
+						}
+						if (RedPackSendStatus.RECEIVED.name().equals(rprd.getStatus())) {
+							// 修改领取信息
+							redpackDao.updateReciveInfo(redpackLog.getSendAmount(), redpackLog.getRedpackId());
+						}
+						redpackLogMapper.updateById(redpackLog);
+					}
+				} else {
+					log.error("查询红包发送结果>>Err_code_des = " + rprd.getErr_code_des());
+					redpackLog.setSendStatus(RedPackSendStatus.FAILED.getCode());
+					redpackLogMapper.updateById(redpackLog);
+				}
+			} else {
+				log.error("查询红包发送结果>>Return_msg = " + rprd.getReturn_msg());
+			}
+		}
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void saveRedPackLog(int amount, String openid, String ip, Long merchantId, Long redpackId, String actName,
 			String remark, String wishing) {
 		log.info("进入saveRedPackLog>>amount = " + amount);
@@ -78,7 +120,7 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 		log.info("进入saveRedPackLog>>remark = " + remark);
 		log.info("进入saveRedPackLog>>wishing = " + wishing);
 		log.info("进入saveRedPackLog>>certPath = " + gunsProperties.getCertPath());
-		if(!gunsProperties.getRedpackFlag()){
+		if (!gunsProperties.getRedpackFlag()) {
 			log.info("发送红包开关没有打开");
 			return;
 		}
@@ -86,7 +128,7 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 		RedPackResData rprd = RedPackUtil.redPackSend(amount, actName, remark, wishing, openid, billno,
 				gunsProperties.getCertPath());
 		// 通信成功则记录发送日志
-		if ("SUCCESS".equals(rprd.getReturn_code())) {
+		if (rprd != null && "SUCCESS".equals(rprd.getReturn_code())) {
 			RedpackLog log = new RedpackLog();
 			log.setBillno(billno);
 			log.setIp(ip);
@@ -101,16 +143,32 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 				log.setSendStatus(RedPackSendStatus.FAILED.getCode());
 			}
 			redpackLogMapper.insert(log);
+			//修改发放信息
+			redpackDao.updateSendInfo(amount, redpackId);
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		//RedpackLogServiceImpl d = new RedpackLogServiceImpl();
-		//d.saveRedPackLog(1, "o19yZsw5CT7CDk_ikBRiGNbyu7Tw", "", merchantId, redpackId, actName, remark, wishing);
-		String billno = "kryhb" + new SimpleDateFormat("yyyyMMddHHmmssSSSS").format(new Date());
-		RedPackResData rprd = RedPackUtil.redPackSend(1, "活动名称", "活动备注", "恭喜发财，大吉大利", "o19yZsw5CT7CDk_ikBRiGNbyu7Tw", billno,
-				"D:\\cert\\apiclient_cert.p12");
-		System.out.println(rprd);
+		// RedpackLogServiceImpl d = new RedpackLogServiceImpl();
+		// d.saveRedPackLog(1, "o19yZsw5CT7CDk_ikBRiGNbyu7Tw", "", merchantId,
+		// redpackId, actName, remark, wishing);
+		/*
+		 * String billno = "kryhb" + new
+		 * SimpleDateFormat("yyyyMMddHHmmssSSSS").format(new Date());
+		 * RedPackResData rprd = RedPackUtil.redPackSend(1, "活动名称", "活动备注",
+		 * "恭喜发财，大吉大利", "o19yZsw5CT7CDk_ikBRiGNbyu7Tw", billno,
+		 * "D:\\cert\\apiclient_cert.p12"); System.out.println(rprd);
+		 */
+
+		RedPackQueryResData dd = RedPackUtil.redPackQuery("kryhb201710201653510203", "D:\\cert\\apiclient_cert.p12");
+		System.out.println(dd.toString());
+	}
+
+	@Override
+	public List<RedpackLog> selectBySendStatus(Integer sendStatus) {
+		Wrapper<RedpackLog> w = new EntityWrapper<>();
+		w.eq("status", "1").eq("send_status", sendStatus);
+		return redpackLogMapper.selectList(w);
 	}
 
 }

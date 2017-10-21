@@ -41,4 +41,22 @@ public interface IRedpackLogService {
 	 */
 	public void saveRedPackLog(int amount, String openid, String ip, Long merchantId, Long redpackId, String actName,
 			String remark, String wishing);
+	
+	/**
+	 * 同步红包发送结果
+	 * @Title: updateRedPackLog   
+	 * @param redpackLog
+	 * @date:   2017年10月21日 下午12:43:09 
+	 * @author: chengxg
+	 */
+	public void updateRedPackLog(RedpackLog redpackLog);
+	
+	/**
+	 * 根据发送状态查询
+	 * @Title: selectBySendStatus   
+	 * @param sendStatus
+	 * @date:   2017年10月21日 下午1:42:21 
+	 * @author: chengxg
+	 */
+	public List<RedpackLog> selectBySendStatus(Integer sendStatus);
 }

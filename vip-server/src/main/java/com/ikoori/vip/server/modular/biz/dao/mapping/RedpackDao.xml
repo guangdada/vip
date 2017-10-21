@@ -29,4 +29,14 @@
             </otherwise>
         </choose>
     </select>
+    
+    <!-- 修改发放信息 -->
+    <update id="updateSendInfo">
+    	update v_redpack set send_count = send_count + 1 , send_amount = send_amount + #{sendAmount} where id = #{id]
+    </update>
+    
+    <!-- 修改领取信息 -->
+    <update id="updateReciveInfo">
+    	UPDATE v_redpack SET receive_count = receive_count + 1 , receive_amount  = receive_amount + #{receiveAmount} where id = #{id}
+    </update>
 </mapper>
