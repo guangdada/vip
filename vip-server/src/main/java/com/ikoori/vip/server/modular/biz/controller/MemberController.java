@@ -60,7 +60,7 @@ public class MemberController extends BaseController {
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("merchantId", merchant.getId());
-		List<Card> cards = cardService.selectByCondition(condition);
+		List<Card> cards = cardService.findByCondition(condition);
 		model.addAttribute("cards", cards);
 		return PREFIX + "member.html";
 	}

@@ -16,10 +16,17 @@ import com.ikoori.vip.common.persistence.model.Card;
  */
 public interface ICardService {
 	public Integer deleteById(Long id);
+	
 	public Integer updateById(Card card);
+	
 	public Card selectById(Long id);
+	
 	public Integer insert(Card card);
+	
 	public List<Card> selectByCondition(Map<String, Object> condition);
+	
+	public List<Card> findByCondition(Map<String, Object> condition);
+	
 	List<Map<String, Object>> getCardList(@Param("page") Page<Card> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
 	
 	/**

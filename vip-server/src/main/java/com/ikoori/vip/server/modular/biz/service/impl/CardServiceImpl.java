@@ -67,6 +67,10 @@ public class CardServiceImpl implements ICardService {
 		return cardMapper.insert(card);
 	}
 	
+	public List<Card> findByCondition(Map<String, Object> condition) {
+		return cardMapper.selectList(new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId")));
+	}
+	
 	public List<Card> selectByCondition(Map<String, Object> condition) {
 		return cardMapper.selectList(new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId")).eq("grant_type", condition.get("grantType")));
 	}
