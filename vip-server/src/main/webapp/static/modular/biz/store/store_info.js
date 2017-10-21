@@ -160,7 +160,14 @@ StoreInfoDlg.bindEvent = function (){
 $(function() {
 	$("#storeInfoForm").validate({
 		errorPlacement: function(error, element) {
-			error.appendTo(element.parent());
+			var name = element.attr("name");
+			if(name == "openTime"){
+				error.appendTo(element.parents(".col-sm-2"));
+			}else if(name == "closeTime"){
+				error.appendTo(element.parents(".col-sm-2"));
+			}else{
+				error.appendTo(element.parent());
+			}
 		},
 		rules: {
 			name:{
