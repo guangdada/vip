@@ -3,7 +3,7 @@
  */
 var StoreEmployeeInfoDlg = {
 	storeEmployeeInfoData : {},
-	validateFields : {
+	/*validateFields : {
 		name : {
 			validators : {
 				notEmpty : {
@@ -39,7 +39,7 @@ var StoreEmployeeInfoDlg = {
 				}
 			}
 		}
-	}
+	}*/
 
 };
 
@@ -100,12 +100,15 @@ StoreEmployeeInfoDlg.collectData = function() {
  * 提交添加
  */
 StoreEmployeeInfoDlg.addSubmit = function() {
-	
+	var valid = $("#storeEmployeeConfigInfoForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
-    if (!this.validate()) {
+   /* if (!this.validate()) {
         return;
-    }
+    }*/
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/storeEmployee/add", function(data){
         Feng.success("添加成功!");
@@ -122,11 +125,15 @@ StoreEmployeeInfoDlg.addSubmit = function() {
  * 提交修改
  */
 StoreEmployeeInfoDlg.editSubmit = function() {
+	var valid = $("#storeEmployeeConfigInfoForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
-    if (!this.validate()) {
+   /* if (!this.validate()) {
         return;
-    }
+    }*/
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/storeEmployee/update", function(data){
         Feng.success("修改成功!");
@@ -140,5 +147,52 @@ StoreEmployeeInfoDlg.editSubmit = function() {
 }
 
 $(function() {
+	$("#storeEmployeeConfigInfoForm").validate({
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());
+		},
+		rules: {
+	    	stores: {
+	    		required :true
+	    	},
+	    	mobile: {
+	    		required :true,
+	    		rangelength:[11,11],
+	    		checkMobile:true
+	    	},
+	    	name: {
+	    		required :true,
+	    		rangelength:[1,10]
+	    	},
+	    	password :{
+	    		required:true,
+	    		maxlength:20
+	    		
+	    	}
+	    },
+	    messages: {
+	    	stores:{
+	    		required:"店铺不能为空"
+	    	},
+	    	name: {
+	    		required:"姓名不能为空",
+	    		rangelength:"长度必须小于20个字符"
+	    	},
+	    	mobile: {
+	    		required:"账号不能为空",
+	    		rangelength:"长度11个字符"
+	    	},
+	    	password: {
+	    		required:"密码不能为空",
+	    		maxlength:"长度必须小于20个字符"
+	    	}
+	    }
+	});
+	
+	// 自定义正则表达示验证方法
+	$.validator.addMethod("checkMobile", function(value, element, params) {
+		var checkMobile = /^1[3|5|8]{1}[0-9]{9}$/;
+		return this.optional(element) || (checkMobile.test(value));
+	}, "请输入正确的手机号码！"); 
 	Feng.initValidator("storeEmployeeConfigInfoForm", StoreEmployeeInfoDlg.validateFields);
 });

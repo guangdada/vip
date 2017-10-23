@@ -3,7 +3,7 @@
  */
 var MemberInfoDlg = {
     memberInfoData : {},
-    validateFields : {
+   /* validateFields : {
 		mobile : {
 			validators : {
 				notEmpty : {
@@ -33,7 +33,7 @@ var MemberInfoDlg = {
 			}
 		},
 		
-	}
+	}*/
 };
 
 /**
@@ -92,11 +92,15 @@ MemberInfoDlg.validate = function () {
  * 提交添加
  */
 MemberInfoDlg.addSubmit = function() {
+	var valid = $("#memberForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
-    if (!this.validate()) {
+    /*if (!this.validate()) {
         return;
-    }
+    }*/
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/member/add", function(data){
         Feng.success("添加成功!");
@@ -113,12 +117,15 @@ MemberInfoDlg.addSubmit = function() {
  * 提交修改
  */
 MemberInfoDlg.editSubmit = function() {
-	
+	var valid = $("#memberForm").valid();
+    if(!valid){
+    	return;
+    }
     this.clearData();
     this.collectData();
-    if (!this.validate()) {
+    /*if (!this.validate()) {
         return;
-    }
+    }*/
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/member/update", function(data){
         Feng.success("修改成功!");
@@ -132,5 +139,41 @@ MemberInfoDlg.editSubmit = function() {
 }
 
 $(function() {
+	$("#memberForm").validate({
+		errorPlacement: function(error, element) {
+			error.appendTo(element.parent());
+		},
+		rules: {
+	    	mobile: {
+	    		required :true,
+	    		rangelength:[11,11],
+	    		checkMobile:true
+	    	},
+	    	point: {
+	    		required :true,
+	    		checkPoint:true
+	    	}
+	    },
+	    messages: {
+	    	mobile: {
+	    		required:"账号不能为空",
+	    		rangelength:"长度11个字符",
+	    	},
+	    	point: {
+	    		required:"积分不能为空"
+	    	}
+	    }
+	});
+	
+	// 自定义正则表达示验证方法
+	$.validator.addMethod("checkMobile", function(value, element, params) {
+		var checkMobile = /^1[3|5|8]{1}[0-9]{9}$/;
+		return this.optional(element) || (checkMobile.test(value));
+	}, "请输入正确的手机号码！"); 
+	
+	$.validator.addMethod("checkPoint", function(value, element, params) {
+		var checkPoint = /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/;
+		return this.optional(element) || (checkPoint.test(value));
+	}, "请输入正确的积分！"); 
 	Feng.initValidator("memberForm", MemberInfoDlg.validateFields);
 });
