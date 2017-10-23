@@ -65,7 +65,7 @@
                             @}
                             
                             @if(shiro.hasPermission("/card/delete")){
-                                <#button name="已制卡" icon="fa-exclamation-triangle" clickFun="CouponCode.makeCard()" space="true" btnCss="warning"/>
+                                <#button name="制卡" icon="fa-exclamation-triangle" clickFun="CouponCode.makeCard()" space="true" btnCss="warning"/>
                             @}
                             
                             @if(shiro.hasPermission("/card/update")){

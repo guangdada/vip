@@ -22,4 +22,5 @@ public interface ICouponService {
 	List<Coupon> selectByCondition(Map<String,Object> condition);
 	public void saveCoupon(Coupon coupon,String storeIds);
 	public void publishCoupon(Long couponId,Integer num);
+	public Integer getPublishCount(Long couponId,Long merchantId);
 }

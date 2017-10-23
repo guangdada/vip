@@ -15,6 +15,7 @@ PointTrade.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '微信ID', field: 'open_id', visible: true, align: 'center', valign: 'middle'},
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '收入方式', field: 'inOut', visible: true, align: 'center', valign: 'middle'},

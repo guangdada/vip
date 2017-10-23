@@ -10,6 +10,7 @@
 			pt.trade_type,
 			wx.nickname,
 			m.mobile,
+			m.open_id,
 			p.`name` AS pointName
 		FROM
 			v_point_trade pt

@@ -131,6 +131,9 @@ public class CouponController extends BaseController {
 	@RequestMapping("/coupon_publish/{couponId}")
 	public String couponPublish(@PathVariable Long couponId, Model model) {
 		Coupon coupon = couponService.selectById(couponId);
+		Integer count = couponService.getPublishCount(couponId, coupon.getMerchantId());
+		Integer leftnum = coupon.getTotal() - count;
+		model.addAttribute("leftnum",leftnum);
 		model.addAttribute(coupon);
 		return PREFIX + "coupon_publish.html";
 	}

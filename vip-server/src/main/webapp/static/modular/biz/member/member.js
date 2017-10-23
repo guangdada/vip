@@ -33,7 +33,7 @@ Member.initColumn = function () {
         {title: '积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
         {title: '交易金额', field: 'trade_amount', visible: true, align: 'center', valign: 'middle'},
         {title: '交易时间', field: 'last_trade_time', visible: true, align: 'center', valign: 'middle'},
-        {title: '余额', field: 'balance', visible: true, align: 'center', valign: 'middle'},
+        /*{title: '余额', field: 'balance', visible: true, align: 'center', valign: 'middle'},*/
         {title: '是否激活', field: 'isActive', visible: true, align: 'center', valign: 'middle'}
         
         ];
