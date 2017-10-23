@@ -160,6 +160,13 @@ public class Card extends Model<Card> {
      */
 	@TableField("term_to_card_id")
 	private Long termToCardId;
+	
+	/**
+     * 超出限额时，默认使用的会员卡
+     */
+	@TableField("amount_limit_card_id")
+	private Long amountLimitCardId;
+	
     /**
      * 激活条件json
      */
@@ -489,6 +496,14 @@ public class Card extends Model<Card> {
 
 	public void setTradeAmountLimit(Integer tradeAmountLimit) {
 		this.tradeAmountLimit = tradeAmountLimit;
+	}
+	
+	public Long getAmountLimitCardId() {
+		return amountLimitCardId;
+	}
+
+	public void setAmountLimitCardId(Long amountLimitCardId) {
+		this.amountLimitCardId = amountLimitCardId;
 	}
 
 	@Override

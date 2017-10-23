@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.Coupon;
@@ -65,6 +66,7 @@ public class ShareController extends BaseController {
     	
     	Map<String, Object> couponCon = new HashMap<String, Object>();
 		couponCon.put("merchantId", merchant.getId());
+		couponCon.put("type", CouponType.YHQ.getCode());
 		couponCon.put("invalid", true);
 		List<Coupon> coupons  = couponService.selectByCondition(couponCon);
     	// 查询优惠群
@@ -82,6 +84,7 @@ public class ShareController extends BaseController {
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Map<String, Object> couponCon = new HashMap<String, Object>();
 		couponCon.put("merchantId", merchant.getId());
+		couponCon.put("type", CouponType.YHQ.getCode());
 		couponCon.put("invalid", true);
 		List<Coupon> coupons  = couponService.selectByCondition(couponCon);
 		

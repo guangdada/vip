@@ -23,6 +23,7 @@ import com.ikoori.vip.common.constant.Const;
 import com.ikoori.vip.common.constant.factory.PageFactory;
 import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.constant.state.ColorType;
+import com.ikoori.vip.common.constant.state.CouponType;
 import com.ikoori.vip.common.constant.state.RightType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
@@ -90,10 +91,8 @@ public class CardController extends BaseController {
     	Map<String, Object> couponCon = new HashMap<String, Object>();
 		couponCon.put("merchantId", merchant.getId());
 		couponCon.put("invalid", true);
+		couponCon.put("type", CouponType.YHQ.getCode());
 		
-    	Map<String,Object> condition = new HashMap<String,Object>();
-    	condition.put("merchantId", merchant.getId());
-    	
     	model.addAttribute("merchantName", merchant.getName());
     	List<Coupon> coupons  = couponService.selectByCondition(couponCon);
     	// 查询优惠群
@@ -103,6 +102,9 @@ public class CardController extends BaseController {
     	
     	model.addAttribute("grantType", CardGrantType.values());
     	
+    	Map<String,Object> condition = new HashMap<String,Object>();
+    	condition.put("merchantId", merchant.getId());
+    	condition.put("grantType", CardGrantType.NO_RULE.getCode());
     	List<Card> cards = cardService.selectByCondition(condition);
     	// 查询会员卡
     	model.addAttribute("cards", cards);
@@ -124,10 +126,8 @@ public class CardController extends BaseController {
 		Map<String, Object> couponCon = new HashMap<String, Object>();
 		couponCon.put("merchantId", merchant.getId());
 		couponCon.put("invalid", true);
+		couponCon.put("type", CouponType.YHQ.getCode());
 		
-		Map<String, Object> condition = new HashMap<String, Object>();
-		condition.put("merchantId", merchant.getId());
-
 		model.addAttribute("merchantName", merchant.getName());
 		List<Coupon> coupons = couponService.selectByCondition(couponCon);
 		// 查询优惠群
@@ -137,6 +137,10 @@ public class CardController extends BaseController {
 
 		model.addAttribute("grantType", CardGrantType.values());
 
+		Map<String, Object> condition = new HashMap<String, Object>();
+		condition.put("merchantId", merchant.getId());
+		condition.put("grantType", CardGrantType.NO_RULE.getCode());
+		condition.put("excludeCardId", cardId);
 		List<Card> cards = cardService.selectByCondition(condition);
 		// 查询会员卡
 		model.addAttribute("cards", cards);

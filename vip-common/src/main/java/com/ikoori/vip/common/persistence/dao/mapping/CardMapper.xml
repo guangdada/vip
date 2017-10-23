@@ -20,6 +20,7 @@
 		<result column="weixin_card_id" property="weixinCardId" />
 		<result column="card_number_prefix" property="cardNumberPrefix" />
 		<result column="trade_amount_limit" property="tradeAmountLimit" />
+		<result column="amount_limit_card_id" property="amountLimitCardId" />
 		<result column="description" property="description" />
 		<result column="is_allow_share" property="isAllowShare" />
 		<result column="term_days" property="termDays" />

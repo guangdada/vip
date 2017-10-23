@@ -72,7 +72,14 @@ public class CardServiceImpl implements ICardService {
 	}
 	
 	public List<Card> selectByCondition(Map<String, Object> condition) {
-		return cardMapper.selectList(new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId")).eq("grant_type", condition.get("grantType")));
+		Wrapper<Card> w = new EntityWrapper<Card>().eq("status", 1).eq("merchant_id", condition.get("merchantId"));
+		if(condition.get("grantType") != null){
+			w.eq("grant_type", condition.get("grantType"));
+		}
+		if(condition.get("excludeCardId") != null){
+			w.ne("id", condition.get("excludeCardId"));
+		}
+		return cardMapper.selectList(w);
 	}
 
 	@Override

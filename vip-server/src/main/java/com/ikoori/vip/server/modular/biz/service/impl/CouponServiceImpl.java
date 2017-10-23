@@ -96,8 +96,13 @@ public class CouponServiceImpl implements ICouponService {
 	 */
 	@Override
 	public List<Coupon> selectByCondition(Map<String, Object> condition) {
-		return couponMapper.selectList(new EntityWrapper<Coupon>().eq("status", 1).eq("is_invalid", 1).eq("merchant_id",
-				condition.get("merchantId")));
+		Wrapper<Coupon> w = new EntityWrapper<>();
+		w.eq("status", 1).eq("is_invalid", 1).eq("merchant_id",
+				condition.get("merchantId"));
+		if(condition.get("type") != null){
+			w.eq("type", condition.get("type"));
+		}
+		return couponMapper.selectList(w);
 	}
 	
 	/**

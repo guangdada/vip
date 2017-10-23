@@ -100,8 +100,9 @@ CardInfoDlg.collectData = function() {
 	var servicePhone = $("#servicePhone").val();
 	var coverType = $("input[name='coverType']:checked").val();
 	var coverPic = $("#coverPic").val();
+	var amountLimitCardId = $("#amountLimitCardId").val();
 	this.set('id').set('name').set('tradeAmountLimit').set('description').set('servicePhone',servicePhone).set('colorCode').set('termType',termDaysRadio).set('coverType',coverType).set('coverPic',coverPic)
-	.set('grantType',grantType).set('termToCardId',termToCardId).set('cardLevel',level).set('pointsLimit',pointsLimit).set('amountLimit',amountLimit).set('tradeLimit',tradeLimit)
+	.set('amountLimitCardId',amountLimitCardId).set('grantType',grantType).set('termToCardId',termToCardId).set('cardLevel',level).set('pointsLimit',pointsLimit).set('amountLimit',amountLimit).set('tradeLimit',tradeLimit)
     .set('rights',JSON.stringify(CardInfoDlg.rights));
 	
 	if (termDaysRadio == '1'){
@@ -362,6 +363,12 @@ $(function() {
 	    	},
 	    	pointsLimit:{
 	    		digits:true
+	    	},
+	    	amountLimitCardId:{
+	    		required:function (){
+	    			var tradeAmountLimit = $("#tradeAmountLimit").val();
+	    			return tradeAmountLimit ? true : false;
+	    		}
 	    	}
 	    },
 	    messages: {

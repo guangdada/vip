@@ -282,6 +282,22 @@
 									</div>
 								</div>
 								<div class="control-group">
+									<label class="control-label">超额后使用：</label>
+									<div class="controls">
+										<select name="amountLimitCardId" id="amountLimitCardId">
+											<option value="">请选择</option>
+											@for(c in cards!){
+												<option value="${c.id}"
+													@if(c.id == card.amountLimitCardId){
+														selected
+													@}
+												>${c.name}</option>
+											@}
+										</select>
+										<p class="help-desc">超出限额时，默认使用的会员卡</p>
+									</div>
+								</div>
+								<div class="control-group">
 									<label class="control-label" for="description"><em
 										class="required">*</em>使用须知：</label>
 									<div class="controls">
