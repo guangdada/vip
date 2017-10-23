@@ -1,7 +1,8 @@
 @layout("/common/_container.html"){
 <div class="ibox float-e-margins">
+    <form id="memberForm">
     <div class="ibox-content">
-        <div class="form-horizontal" id="memberForm">
+        <div class="form-horizontal" >
             <input type="hidden" id="id" value="${member.id}">
               <div class="row">
 				<div class="col-sm-6 b-r">
@@ -50,7 +51,7 @@
                 </div>
             </div>
         </div>
-
+	</form>
     </div>
 </div>
 <script src="${ctxPath}/static/modular/biz/member/member_info.js"></script>

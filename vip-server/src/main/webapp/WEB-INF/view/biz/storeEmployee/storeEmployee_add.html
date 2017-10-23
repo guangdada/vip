@@ -1,14 +1,15 @@
 @layout("/common/_container.html"){
 <div class="ibox float-e-margins">
+	<form name="storeEmployeeConfigInfoForm" id="storeEmployeeConfigInfoForm">
     <div class="ibox-content">
-        <div class="form-horizontal" id="storeEmployeeConfigInfoForm">
+        <div class="form-horizontal">
             <input type="hidden" id="id" value="">
             <input type="hidden" id="storeId" value=""/>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">店铺名称:</label>
 				<div class="col-sm-5">
 				<select class="form-control" name="stores" id="stores" >
-				<!--  <option value="0">请选择</option> -->
+				 <option value="">请选择</option>
 				  @for(c in stores!){ 
 				  <option value="${c.id}">${c.name}</option> 
 				  @}
@@ -66,6 +67,7 @@
         </div>
 
     </div>
+    </form>
 </div>
 <script src="${ctxPath}/static/modular/biz/storeEmployee/storeEmployee_info.js"></script>
 @}
