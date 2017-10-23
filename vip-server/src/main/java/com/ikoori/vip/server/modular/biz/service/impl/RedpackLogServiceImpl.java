@@ -79,6 +79,10 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void updateRedPackLog(RedpackLog redpackLog) {
 		log.info("进入updateRedPackLog>>redpackLog = " + redpackLog.toString());
+		if (!gunsProperties.getRedpackFlag()) {
+			log.info("发送红包开关没有打开");
+			return;
+		}
 		RedPackQueryResData rprd = RedPackUtil.redPackQuery(redpackLog.getBillno(), gunsProperties.getCertPath());
 		// 通信成功则记录发送日志
 		if (rprd != null) {
