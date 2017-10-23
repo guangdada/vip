@@ -586,3 +586,13 @@ input[type=file], select {
     padding-top: 5px;
     text-align: right;
 }
+
+.btnBottom{
+	position: fixed;
+	z-index: 100;
+	float: auto;
+	width: 100%;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

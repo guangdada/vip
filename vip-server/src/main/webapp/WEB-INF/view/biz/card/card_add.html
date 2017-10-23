@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="${ctxPath}/static/css/card/pc.css">
 <link rel="stylesheet" href="${ctxPath}/static/css/card/cards.css">
 <div class="ibox float-e-margins">
-	<div class="ibox-content">
+	<div class="box-content">
 		<input type="hidden"  name="colorCode" id="colorCode" value="${colors[0].code}"/>
 		<input type="hidden"  name="colorValue" id="colorValue" value="${colors[0].color}"/>
 		<!-- <input type="hidden"  name="grantType" id="grantType" value="${grantType[0].code}"/> -->
@@ -85,6 +85,7 @@
 					<div></div>
 				</div>
 			</div>
+			
 			<div class="app-sidebar" style="margin-top: 0px;">
 				<div class="arrow"></div>
 				<div class="app-sidebar-inner js-sidebar-region">
@@ -410,10 +411,7 @@
 			</div>
 		</div>
 
-
-
-
-		<div class="row  text-center">
+		<div class="row  text-center btnBottom">
 			<div class="col-sm-12">
 				<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
 					clickFun="CardInfoDlg.addSubmit()" />
@@ -426,4 +424,14 @@
 
 
 <script src="${ctxPath}/static/modular/biz/card/card_info.js"></script>
+<script>
+	$(function() {
+		var height = $(window).height();
+		$(".btnBottom").css("top", height - 45);
+		$(window).scroll(function() {
+			var scrollTop = $(document).scrollTop();
+			$(".btnBottom").css("top", height + scrollTop - 45);
+		});
+	});
+</script>
 @}

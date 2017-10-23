@@ -1152,3 +1152,23 @@ input[name=termEndAt], input[name=termStartAt] {
     text-align: right;
 }
 
+.box-content {
+	background-color: #ffffff;
+	color: inherit;
+	border-color: #e7eaec;
+	-webkit-border-image: none;
+	-o-border-image: none;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 1px 0px;
+}
+
+.btnBottom{
+	position: fixed;
+	z-index: 100;
+	float: auto;
+	width: 100%;
+	background-color: #f8f8f8;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

@@ -3,7 +3,7 @@
 <link rel="stylesheet"
 	href="${ctxPath}/static/css/coupon/tradeincard.css">
 	<div class="ibox float-e-margins">
-	<div class="ibox-content">
+	<div class="box-content">
 		<input type="hidden" id="id" value="${coupon.id}">
 		<div class="app-design clearfix">
 			<div class="page-tradeincard">
@@ -545,8 +545,8 @@
 		</div>
 
 	
-	<div class="row  text-center">
-		<div class="col-sm-12" style="margin-top:10px;">
+	<div class="row  text-center btnBottom">
+		<div class="col-sm-12">
 			<#button btnCss="info" name="提交" id="ensure" icon="fa-check"
 				clickFun="CouponInfoDlg.editSubmit()" />
 			<#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser"
@@ -557,4 +557,14 @@
 </div>
 
 <script src="${ctxPath}/static/modular/biz/coupon/coupon_info.js"></script>
+<script>
+	$(function() {
+		var height = $(window).height();
+		$(".btnBottom").css("top", height - 45);
+		$(window).scroll(function() {
+			var scrollTop = $(document).scrollTop();
+			$(".btnBottom").css("top", height + scrollTop - 45);
+		});
+	});
+</script>
 @}
