@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.CardGrantType;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.MemberCardMapper;
@@ -102,7 +103,7 @@ public class MemberController extends BaseController {
     	Merchant merchant = merchantService.getMerchantUserId(userId);
     	Map<String,Object> condition = new HashMap<String,Object>();
     	condition.put("merchantId", merchant.getId());
-    	condition.put("grantType",card.getGrantType());
+    	condition.put("grantType",CardGrantType.NO_RULE.getCode());
     	List<Card> cards=cardService.selectByCondition(condition);
     	model.addAttribute("cards",cards);
     	
