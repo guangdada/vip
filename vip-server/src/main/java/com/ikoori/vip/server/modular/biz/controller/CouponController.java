@@ -113,12 +113,12 @@ public class CouponController extends BaseController {
 
 		Map<String, Object> condition = new HashMap<String, Object>();
 		condition.put("merchantId", merchant.getId());
-		List<Store> stores = storeService.selectByCondition(condition);
 		// 查询店铺
+		List<Store> stores = storeService.selectByCondition(condition);
 		model.addAttribute("stores", stores);
 
-		List<Card> cards = cardService.selectByCondition(condition);
 		// 查询会员卡
+		List<Card> cards = cardService.selectByCondition(condition);
 		model.addAttribute("cards", cards);
 		model.addAttribute("merchantName", merchant.getName());
 		return PREFIX + "coupon_add.html";

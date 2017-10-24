@@ -184,7 +184,7 @@ public class MemberServiceImpl implements IMemberService {
 
 		// 更新会员卡
 		Card card = cardMapper.selectById(cardId);
-		upgradeMemberCard(member, card);
+		upgradeMemberCard(dbMember, card);
 	}
 	
 	public Member selectByMobile(String mobile){

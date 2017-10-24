@@ -87,29 +87,27 @@ public class MemberController extends BaseController {
      */
     @Permission
     @RequestMapping("/member_update/{memberId}")
-    public String memberUpdate(@PathVariable Long memberId, Model model) {
-    	Member member = memberService.selectById(memberId);
-    	Long userId = Long.valueOf(ShiroKit.getUser().getId());
-    	
-    	MemberCard memberCard=new MemberCard();
-    	memberCard.setMemberId(member.getId());
-    	memberCard.setIsDefault(true);
-    	memberCard=memberCardMapper.selectOne(memberCard);
-    	model.addAttribute("memberCard",memberCard);
-    	
-    	Card card=cardService.selectById(memberCard.getCardId());
-    	
-    	//会员卡
-    	Merchant merchant = merchantService.getMerchantUserId(userId);
-    	Map<String,Object> condition = new HashMap<String,Object>();
-    	condition.put("merchantId", merchant.getId());
-    	condition.put("grantType",CardGrantType.NO_RULE.getCode());
-    	List<Card> cards=cardService.selectByCondition(condition);
-    	model.addAttribute("cards",cards);
-    	
-    	model.addAttribute("member",member);
-        return PREFIX + "member_edit.html";
-    }
+	public String memberUpdate(@PathVariable Long memberId, Model model) {
+		Member member = memberService.selectById(memberId);
+		Long userId = Long.valueOf(ShiroKit.getUser().getId());
+
+		MemberCard memberCard = new MemberCard();
+		memberCard.setMemberId(member.getId());
+		memberCard.setIsDefault(true);
+		memberCard = memberCardMapper.selectOne(memberCard);
+		model.addAttribute("memberCard", memberCard);
+
+		// 会员卡
+		Merchant merchant = merchantService.getMerchantUserId(userId);
+		Map<String, Object> condition = new HashMap<String, Object>();
+		condition.put("merchantId", merchant.getId());
+		condition.put("inGrantType", new Object[] { CardGrantType.NO_RULE.getCode(), CardGrantType.SUB_WX.getCode() });
+		List<Card> cards = cardService.selectByCondition(condition);
+		model.addAttribute("cards", cards);
+
+		model.addAttribute("member", member);
+		return PREFIX + "member_edit.html";
+	}
 
     /**
      * 获取会员列表

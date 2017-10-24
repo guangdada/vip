@@ -76,6 +76,11 @@ public class CardServiceImpl implements ICardService {
 		if(condition.get("grantType") != null){
 			w.eq("grant_type", condition.get("grantType"));
 		}
+		
+		if(condition.get("inGrantType") != null){
+			w.in("grant_type", (Object[])condition.get("grantType"));
+		}
+		
 		if(condition.get("excludeCardId") != null){
 			w.ne("id", condition.get("excludeCardId"));
 		}

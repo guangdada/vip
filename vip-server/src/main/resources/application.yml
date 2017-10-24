@@ -43,7 +43,7 @@ spring:
     port: 6379
     password:
   profiles:
-    active: dev
+    active: produce
   mvc:
     static-path-pattern: /static/**
     view:
