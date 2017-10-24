@@ -54,6 +54,12 @@
 			<name>team snapshots repository</name>
 			<url>http://192.168.168.3:8081/nexus/content/repositories/snapshots/</url>
 		</repository>
+
+		<repository>
+			<id>thirdparty</id>  
+			<name>3rd party</name>
+			<url>http://192.168.168.3:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
 	</repositories>
 	
 	<dependencyManagement>
