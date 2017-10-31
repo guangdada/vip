@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
 public class WechatLogin implements HandlerInterceptor {
@@ -17,7 +18,7 @@ public class WechatLogin implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("进入WechatLogin");
+		log.info("进入WechatLogin>>IP = " + IpUtil.getIpAddr(request));
 		// 从session中获取登录者实体
 		Object obj = request.getSession().getAttribute(WeChatAPI.SESSION_USER_INFO);
 		if (null == obj) {

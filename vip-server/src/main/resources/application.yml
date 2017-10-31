@@ -130,7 +130,7 @@ spring:
 
 logging:
   level.root: info
-  level.com.ikoori: info
+  level.com.ikoori: debug
   path: logs/
   file: krvip.log
 
