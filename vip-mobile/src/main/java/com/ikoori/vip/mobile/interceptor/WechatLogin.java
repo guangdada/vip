@@ -7,14 +7,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ikoori.vip.common.util.IpUtil;
+import com.ikoori.vip.mobile.config.properties.GunsProperties;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
 public class WechatLogin implements HandlerInterceptor {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	GunsProperties gunsProperties;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -27,8 +31,9 @@ public class WechatLogin implements HandlerInterceptor {
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			// 网页授权后回调的地址
-			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ "/login";
+			//String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					//+ "/login";
+			String basePath = gunsProperties.getClientUrl() + "/login";
 			log.info("basePath:" +basePath);
 			
 			// 用户最后访问的地址

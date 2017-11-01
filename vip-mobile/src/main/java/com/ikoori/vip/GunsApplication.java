@@ -7,11 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.ikoori.vip.mobile.interceptor.WechatLogin;
 
 /**
  * SpringBoot方式启动类
@@ -32,20 +28,20 @@ public class GunsApplication extends WebMvcConfigurerAdapter {
 	 * @date: 2017年9月16日 下午3:27:04
 	 * @author: chengxg
 	 */
-	@Override
+	/*@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new WechatLogin()).excludePathPatterns("/login").excludePathPatterns("/kaptcha")
 				.excludePathPatterns("/global/error").excludePathPatterns("/error").addPathPatterns("/**");
-	}
+	}*/
 
 	/**
 	 * 增加swagger的支持
 	 */
-	@Override
+	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("MP_verify_5Pq2JtlE1OUTmVqL.txt")
 				.addResourceLocations("classpath:/META-INF/resources/");
-	}
+	}*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(GunsApplication.class, args);

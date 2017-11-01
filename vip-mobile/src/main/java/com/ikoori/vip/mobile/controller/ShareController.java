@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.mobile.config.DubboConsumer;
+import com.ikoori.vip.mobile.config.properties.GunsProperties;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
 @Controller
@@ -24,6 +25,8 @@ public class ShareController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	DubboConsumer consumer;
+	@Autowired
+	GunsProperties gunsProperties;
 
 	/**
 	 * 跳转邀请函转发页面
@@ -48,8 +51,9 @@ public class ShareController {
 		//Object user = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
 		//map.put("user", user);
 		map.put("userInfo", userInfo);
-		String shareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-				+ "/share/invited/" + userInfo.getOpenid();
+		//String shareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				//+ "/share/invited/" + userInfo.getOpenid();
+		String shareUrl = gunsProperties.getClientUrl() +  "/share/invited/" + userInfo.getOpenid();
 		map.put("shareUrl", shareUrl);
 		log.info("结束invitation");
 		return "/member_invitation.html";

@@ -37,6 +37,7 @@ import com.ikoori.vip.common.support.HttpKit;
 import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.common.util.MD5;
 import com.ikoori.vip.mobile.config.DubboConsumer;
+import com.ikoori.vip.mobile.config.properties.GunsProperties;
 import com.ikoori.vip.mobile.constant.Constant;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
@@ -52,6 +53,8 @@ import com.ikoori.vip.mobile.util.WeChatAPI;
 @RequestMapping("/member")
 public class MemberController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	GunsProperties gunsProperties;
 
 	@Autowired
 	DubboConsumer consumer;
@@ -336,8 +339,9 @@ public class MemberController {
 		UserInfo userInfo = WeChatAPI.getUserInfo(request.getSession());
 		map.put("userInfo", userInfo);
 		
-		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-		map.put("basePath", basePath);
+		//String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+		//map.put("basePath", basePath);
+		map.put("basePath", gunsProperties.getClientUrl());
 		log.info("结束couponDetail");
 		return "/member_couponDetail.html";
 	}
