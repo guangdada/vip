@@ -7,11 +7,15 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextListener;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import com.ikoori.vip.common.util.xss.XssFilter;
 import com.ikoori.vip.core.listener.ConfigListener;
+import com.ikoori.vip.mobile.interceptor.WechatLogin;
 
 /**
  * web 配置类
@@ -20,7 +24,35 @@ import com.ikoori.vip.core.listener.ConfigListener;
  * @date 2016年11月12日 下午5:03:32
  */
 @Configuration
-public class WebConfig {
+public class WebConfig extends WebMvcConfigurerAdapter {
+    @Bean
+    WechatLogin wechatLogin() {
+        return new WechatLogin();
+    }
+    
+    /**
+	 * 微信登录拦截器
+	 * 
+	 * @Title: addInterceptors
+	 * @param registry
+	 * @date: 2017年9月16日 下午3:27:04
+	 * @author: chengxg
+	 */
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(wechatLogin()).excludePathPatterns("/login").excludePathPatterns("/kaptcha")
+				.excludePathPatterns("/global/error").excludePathPatterns("/error").addPathPatterns("/**");
+	}
+	
+	/**
+	 * 增加swagger的支持
+	 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("MP_verify_5Pq2JtlE1OUTmVqL.txt")
+				.addResourceLocations("classpath:/META-INF/resources/");
+	}
+
     /**
      * xssFilter注册
      */

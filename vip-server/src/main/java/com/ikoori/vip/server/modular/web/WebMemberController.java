@@ -144,12 +144,14 @@ public class WebMemberController extends BaseController {
 		// 获得会员的默认会员卡
 		Map<String, Object> defaultCard = memberCardService.selectByMemberId(memberId);
 		if (defaultCard == null) {
+			log.info("没有找到会员卡>>memberId=" + memberId);
 			return null;
 		}
 		JSONObject obj = new JSONObject();
 		obj.put("cardNumber", defaultCard.get("cardNumber"));
 		obj.put("name", defaultCard.get("name"));
 		obj.put("description", defaultCard.get("description"));
+		obj.put("state", MemCardState.USED.getCode());
 		// 判断是否生效或过期
 		Object grantType = defaultCard.get("grantType");
 		Object termType = defaultCard.get("termType");
@@ -172,9 +174,8 @@ public class WebMemberController extends BaseController {
 					}
 				} else if (CardTermsType.RANGE.getCode() == tt) {
 					// 2、有效期开始和结束时间，判断当前日期是否在生效和失效时间内
-					if (!DateUtil.compareDate(nowDay, termStartAt.toString())) { // 未到
-																					// 生效
-																					// 时间
+					if (!DateUtil.compareDate(nowDay, termStartAt.toString())) { 
+						// 未到 生效 时间
 						obj.put("state", MemCardState.UN_USED.getCode());
 					} else if (!DateUtil.compareDate(termEndAt.toString(), nowDay)) { // 超过失效时间
 						obj.put("state", MemCardState.EXPIRED.getCode());
@@ -197,6 +198,7 @@ public class WebMemberController extends BaseController {
 			}
 		}
 		obj.put("cardRights", rights);
+		log.info("查找会员卡initCard>>obj=" + obj.toJSONString());
 		return obj;
 	}
 
@@ -335,6 +337,20 @@ public class WebMemberController extends BaseController {
 					obj.put("point", member.get("points"));
 					obj.put("headImg", member.get("headimgurl"));
 					obj.put("nickname", member.get("nickname"));
+					obj.put("discount", 100);
+					JSONObject card = initCard(Long.valueOf(member.get("id").toString()));
+					if (card != null && card.get("state").toString().equals(MemCardState.USED.getCode() + "")) {
+						JSONArray rights = card.getJSONArray("cardRights");
+						for (int i = 0; i < rights.size(); i++) {
+							JSONObject o = rights.getJSONObject(i);
+							if (o.containsKey(RightType.DISCOUNT.getCode())) {
+								Integer discount = o.getInteger(RightType.DISCOUNT.getCode());
+								obj.put("discount", discount);
+							}
+						}
+					} else {
+						log.info("没有找到会员卡，或者会员卡已经过期>>openid=" + openid);
+					}
 					result.put("content", obj);
 				}
 			}
