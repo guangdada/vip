@@ -40,8 +40,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(wechatLogin()).excludePathPatterns("/login").excludePathPatterns("/kaptcha")
-				.excludePathPatterns("/global/error").excludePathPatterns("/error").addPathPatterns("/**");
+		String [] excludePath = {"/login","/kaptcha","/global/error","/error"};
+		registry.addInterceptor(wechatLogin()).excludePathPatterns(excludePath).addPathPatterns("/**");
 	}
 	
 	/**

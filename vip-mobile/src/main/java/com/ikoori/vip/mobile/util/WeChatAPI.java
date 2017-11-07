@@ -29,15 +29,6 @@ public class WeChatAPI {
 	 * 保存网页授权state
 	 */
 	public static String SESSION_USER_STATE = "state";
-	/**
-	 * 酷锐运动服务号appid
-	 */
-	public static String APPID = "wx71e66431bed0303e";
-	
-	/**
-	 * 酷锐运动服务号secret
-	 */
-	public static String secret = "bc0c1bade2341c8c544126fe1cd114eb";
 
 	private WeChatAPI() {
 		throw new AssertionError("不能从这里运行");
@@ -49,8 +40,9 @@ public class WeChatAPI {
 	public static final String weboauth = "http://krvip.ikoori.com/oauth/weixin/weboauth";
 	/** 获得jsApiTicket */
 	public static final String jsapiTicket = "http://krvip.ikoori.com/getJsApiTicket";
-	/** 获得accesstoken */
-	public static final String accesstoken = "http://krvip.ikoori.com/weixin/accesstoken";
+	
+	/** 根据code调用微信接口换取openid和session_key*/
+	public static final String jscode2session = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
 	
 
 	/**

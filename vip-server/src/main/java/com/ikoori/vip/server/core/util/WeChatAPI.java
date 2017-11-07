@@ -16,34 +16,6 @@ import com.ikoori.vip.common.util.EmojiFilter;
  * 微信公众平台API调用工具
  */
 public class WeChatAPI {
-	/**
-	 * 小程序appid
-	 */
-	public static String xcx_appid = "wx8932382efdd56d5a";
-	
-	/**
-	 * 小程序secret
-	 */
-	public static String xcx_secret = "736e2a6dbdfdc846899836950b667ac4";
-	
-	/**
-	 * 保存用于openId
-	 */
-	public static String SESSION_USER_INFO = "userInfo";
-
-	/**
-	 * 保存网页授权state
-	 */
-	public static String SESSION_USER_STATE = "state";
-	/**
-	 * 酷锐运动服务号appid
-	 */
-	public static String APPID = "wx71e66431bed0303e";
-	
-	/**
-	 * 酷锐运动服务号secret
-	 */
-	public static String secret = "bc0c1bade2341c8c544126fe1cd114eb";
 
 	private WeChatAPI() {
 		throw new AssertionError("不能从这里运行");
@@ -51,16 +23,10 @@ public class WeChatAPI {
 
 	/** 获得用户信息 */
 	public static final String findUserInfo = "http://krvip.ikoori.com/findUserInfo";
-	/** 发起网页授权 */
-	public static final String weboauth = "http://krvip.ikoori.com/oauth/weixin/weboauth";
-	/** 获得jsApiTicket */
-	public static final String jsapiTicket = "http://krvip.ikoori.com/getJsApiTicket";
 	/** 获得accesstoken */
 	public static final String accesstoken = "http://krvip.ikoori.com/weixin/accesstoken";
 	/** 批量获取信息 */
 	public static final String batchget = "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
-	/** 根据code调用微信接口换取openid和session_key*/
-	public static final String jscode2session = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
 	
 
 	/**

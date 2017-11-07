@@ -1,4 +1,4 @@
-package com.ikoori.vip.server.modular.xcx;
+package com.ikoori.vip.mobile.controller.xcx;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -18,11 +18,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.common.constant.cache.Cache;
 import com.ikoori.vip.common.support.HttpUtil;
 import com.ikoori.vip.core.cache.CacheKit;
-import com.ikoori.vip.server.common.controller.BaseController;
-import com.ikoori.vip.server.config.properties.GunsProperties;
-import com.ikoori.vip.server.core.util.WeChatAPI;
-
-import io.swagger.annotations.ApiParam;
+import com.ikoori.vip.mobile.config.properties.GunsProperties;
+import com.ikoori.vip.mobile.config.properties.WechatProperties;
+import com.ikoori.vip.mobile.controller.BaseController;
+import com.ikoori.vip.mobile.util.WeChatAPI;
 
 /**
  * 小程序会员接口
@@ -36,17 +35,18 @@ public class XcxMemberController extends BaseController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	GunsProperties gunsProperties;
+	@Autowired
+	WechatProperties wechatProperties;
 
 	@RequestMapping(value = "onLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> onLogin(
-			@ApiParam(value = "小程序jscode", required = true) @RequestParam(required = true) String code) {
+	public Map<String, Object> onLogin(@RequestParam(required = true) String code) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "200");
 		result.put("msg", "请求成功");
 		try {
-			String url = MessageFormat.format(WeChatAPI.jscode2session, WeChatAPI.xcx_appid, WeChatAPI.xcx_secret,
-					code);
+			String url = MessageFormat.format(WeChatAPI.jscode2session, wechatProperties.getXcxAppid(),
+					wechatProperties.getXcxSecret(), code);
 			String msg = HttpUtil.get(url);
 			JSONObject data = JSONObject.parseObject(msg);
 			String openid = data.getString("openid");

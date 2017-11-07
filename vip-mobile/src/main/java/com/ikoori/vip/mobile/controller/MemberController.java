@@ -38,6 +38,7 @@ import com.ikoori.vip.common.util.IpUtil;
 import com.ikoori.vip.common.util.MD5;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.config.properties.GunsProperties;
+import com.ikoori.vip.mobile.config.properties.WechatProperties;
 import com.ikoori.vip.mobile.constant.Constant;
 import com.ikoori.vip.mobile.util.WeChatAPI;
 
@@ -55,6 +56,8 @@ public class MemberController {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	GunsProperties gunsProperties;
+	@Autowired
+	WechatProperties wechatProperties;
 
 	@Autowired
 	DubboConsumer consumer;
@@ -615,7 +618,7 @@ public class MemberController {
 			String sign = paramArr[0].concat("&" + paramArr[1]).concat("&" + paramArr[2]).concat("&"+paramArr[3]);
 			log.info("signStr:"+sign);
 			String signature = WeChatAPI.SHA1(sign);
-			ret.put("appId", WeChatAPI.APPID);
+			ret.put("appId", wechatProperties.getAppid());
 			ret.put("timestamp", timestamp);
 			ret.put("nonceStr", nonceStr);
 			ret.put("signature", signature);

@@ -6,6 +6,13 @@
 guns:
   client-url: http://localhost:8088 #微信端地址
 
+###################  wechat配置  ###################
+wechat:
+  xcx-appid: 1 #小程序appid
+  xcx-secret: 1 #小程序secret
+  appid: 1 #服务号appid
+  secret: 1 #服务号secret
+
 ###################  项目启动端口  ###################
 server:
   port: 8088
