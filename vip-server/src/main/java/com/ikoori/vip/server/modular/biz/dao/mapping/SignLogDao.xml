@@ -13,13 +13,13 @@
 	</select>
 	<select id="getSignLogList" resultType="map">
         SELECT
-			sl.*, wx.nickname,wx.openid,
+			sl.*, wx.nickname,wx.unionid,
 			m.mobile,
 			m.`name`
 		FROM
 			v_sign_log sl
 		LEFT JOIN v_member m ON sl.member_id = m.id
-		LEFT JOIN v_wx_user wx ON wx.openid = m.open_id
+		LEFT JOIN v_wx_user wx ON wx.unionid = m.unionid
 		WHERE
 			1 = 1
 		AND sl. STATUS = 1

@@ -23,15 +23,15 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	OrderDao orderDao;
     
 	/**   
-	 * <p>Title: getMemberOrderByOpenId</p>   
+	 * <p>Title: getMemberOrderByUnionid</p>   
 	 * <p>Description: 获取会员订单</p>   
-	 * @param openId
+	 * @param unionid
 	 * @return   
 	 */  
 	@Override
-	public List<Map<String, Object>> getMemberOrderByOpenId(String openId) {
-		log.info("进入getMemberOrderByOpenId>>openId=" + openId);
-		Member member = memberDao.getMemberByOpenId(openId);
+	public List<Map<String, Object>> getMemberOrderByUnionid(String unionid) {
+		log.info("进入getMemberOrderByUnionid>>unionid=" + unionid);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			log.info("member == null");
 			return null;
@@ -41,7 +41,7 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 			log.info("orders==null");
 			return null;
 		}
-		log.info("结束getMemberOrderByOpenId");
+		log.info("结束getMemberOrderByUnionid");
 		return orders;
 	}
 	

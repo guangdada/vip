@@ -6,9 +6,7 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.ikoori.vip.common.constant.cache.Cache;
 import com.ikoori.vip.common.constant.cache.CacheKey;
-import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Dict;
-import com.ikoori.vip.common.persistence.model.Member;
 
 /**
  * 常量生产工厂的接口
@@ -58,12 +56,6 @@ public interface IConstantFactory {
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
     String getDeptName(Integer deptId);
     
-/*    *//**
-     * 获取图片类型名称
-     *//*
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.PICTYPE_NAME + "'+#pictypeId")
-    String getPictypeName(Long pictypeId);*/
-
     /**
      * 获取菜单的名称们(多个)
      */
@@ -118,21 +110,4 @@ public interface IConstantFactory {
      * 获取被缓存的对象(用户删除业务)
      */
     String getCacheObject(String para);
-    
-    /**
-     * 获取店铺名称
-     */
-    String getStoreName(Long storeId);
-    
-    /**
-     * 通过会员卡id获取会员卡
-     */
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_CARD + "'+#cardId")
-    Card getCard(Long cardId);
-    
-    /**
-     * 通过会员id获取会员
-     */
-    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_MEMBER + "'+#memberId")
-    Member getMember(Long memberId);
 }

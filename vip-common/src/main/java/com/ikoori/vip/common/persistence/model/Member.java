@@ -53,8 +53,8 @@ public class Member extends Model<Member> {
     /**
      * 微信号
      */
-	@TableField("wx_code")
-	private String wxCode;
+	//@TableField("wx_code")
+	//private String wxCode;
     /**
      * 微信用户id
      */
@@ -204,13 +204,13 @@ public class Member extends Model<Member> {
 		this.name = name;
 	}
 
-	public String getWxCode() {
+	/*public String getWxCode() {
 		return wxCode;
 	}
 
 	public void setWxCode(String wxCode) {
 		this.wxCode = wxCode;
-	}
+	}*/
 
 	public Integer getSignDays() {
 		return signDays;
@@ -338,6 +338,19 @@ public class Member extends Model<Member> {
 		this.openId = openId;
 	}
 	
+	/**
+     * unionId
+     */
+	private String unionid;
+	
+
+	public String getUnionid() {
+		return unionid;
+	}
+
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
+	}
 
 	public Integer getVersion() {
 		return version;
@@ -371,7 +384,6 @@ public class Member extends Model<Member> {
 			", merchantId=" + merchantId +
 			", isActive=" + isActive +
 			", name=" + name +
-			", wxCode=" + wxCode +
 			", sex=" + sex +
 			", birthday=" + birthday +
 			", sourceType=" + sourceType +

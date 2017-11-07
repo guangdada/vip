@@ -83,21 +83,21 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 
 	/**
 	 * <p>
-	 * Title: getMemberInfoByOpenId
+	 * Title: getMemberInfoByUnionid
 	 * </p>
 	 * <p>
 	 * Description:获取会员信息
 	 * </p>
 	 * 
-	 * @param openId
+	 * @param unionid
 	 * @return
-	 * @see com.ikoori.vip.api.service.MemberInfoApi#getMemberInfoByOpenId(java.lang.String)
+	 * @see com.ikoori.vip.api.service.MemberInfoApi#getMemberInfoByUnionid(java.lang.String)
 	 */
 	@Override
-	public JSONObject getMemberInfoByOpenId(String openId) {
-		log.info("进入getMemberInfoByOpenId");
-		log.info("进入getMemberInfoByOpenId>>openId=" + openId);
-		Member member = memberDao.getMemberByOpenId(openId);
+	public JSONObject getMemberInfoByUnionid(String unionid) {
+		log.info("进入getMemberInfoByUnionid");
+		log.info("进入getMemberInfoByUnionid>>unionid=" + unionid);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			return null;
 		}
@@ -111,19 +111,19 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 		obj.put("mobile", member.getMobile());
 		obj.put("isActive", member.isIsActive());
 		obj.put("area", member.getArea());
-		log.info("结束getMemberInfoByOpenId");
+		log.info("结束getMemberInfoByUnionid");
 		return obj;
 	}
 
 	/**
 	 * <p>
-	 * Title: updateMemberInofByOpenId
+	 * Title: updateMemberInofByUnionid
 	 * </p>
 	 * <p>
 	 * Description: 修改会员信息
 	 * </p>
 	 * 
-	 * @param openId
+	 * @param unionid
 	 * @param mobile
 	 *            会员手机号
 	 * @param name
@@ -135,17 +135,17 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @param address
 	 *            会员地址
 	 * @return
-	 * @see com.ikoori.vip.api.service.MemberInfoApi#updateMemberInofByOpenId(java.lang.String,
+	 * @see com.ikoori.vip.api.service.MemberInfoApi#updateMemberInofByUnionid(java.lang.String,
 	 *      java.lang.String, java.lang.String, int, java.util.Date,
 	 *      java.lang.String)
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
+	public int updateMemberInfoByUnionid(String unionid, String mobile, String name, int sex, Date birthday,
 			String address, String area) {
-		log.info("进入updateMemberInfoByOpenId");
-		log.info("进入updateMemberInfoByOpenId>>openId=" + openId);
-		return memberDao.updateMemberInfoByOpenId(openId, name, mobile, sex, address, birthday, area);
+		log.info("进入updateMemberInfoByUnionid");
+		log.info("进入updateMemberInfoByUnionid>>unionid=" + unionid);
+		return memberDao.updateMemberInfoByUnionid(unionid, name, mobile, sex, address, birthday, area);
 	}
 
 	/**
@@ -187,76 +187,18 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
 	public void saveMemberInfo(UserInfo userInfo) throws Exception {
-		log.info("进入saveMemberInfo");
+		log.info("进入saveMemberInfo>> userInfo ==" + userInfo.toString());
 		log.info("关注微信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		/*
-		 * JSONObject obj = new JSONObject(); obj.put("code", false); Member
-		 * member = memberDao.getMemberByOpenId(userInfo.getOpenid()); if
-		 * (member == null) { // 保存微信用户 log.info("保存微信用户"); WxUser wxUser = new
-		 * WxUser(); setWxUserInfo(userInfo, wxUser);
-		 * wxUserMapper.insert(wxUser);
-		 * 
-		 * // 保存会员 log.info("保存会员信息"); member = new Member();
-		 * member.setOpenId(wxUser.getOpenid()); member.setIsActive(false); //
-		 * 需要根据appid获得商户id member.setMerchantId(gunsProperties.getMerchantId());
-		 * member.setPoints(0);
-		 * member.setSourceType(MemSourceType.wechat.getCode());
-		 * memberMapper.insert(member);
-		 * 
-		 * // 查询获取类型为“关注微信”的会员卡 log.info("查询获取类型为“关注微信”的会员卡"); Card card =
-		 * cardDao.getCardByGrantTypeAndMerchantId(gunsProperties.getMerchantId(
-		 * ), CardGrantType.SUB_WX.getCode()); if (card == null) {
-		 * log.info("没有找到会员卡类型"); obj.put("msg", "没有找到会员卡类型"); throw new
-		 * Exception(obj.toJSONString()); }
-		 * 
-		 * log.info("保存会员卡领取记录"); memberService.upgradeMemberCard(member, card);
-		 * 
-		 * // 关注微信返回积分 Point point =
-		 * pointDao.getSubscribeWx(member.getMerchantId()); if (point != null) {
-		 * pointTradeService.savePointTrade(true,
-		 * PointTradeType.SUBSCRIBE_WX.getCode(), point.getPoints(),
-		 * member.getId(), point.getId(), member.getMerchantId(),null, ""); } }
-		 * else { log.info("用户已经存在，开始更新微信账号信息"); WxUser wxUser = new WxUser();
-		 * wxUser.setOpenid(userInfo.getOpenid()); wxUser =
-		 * wxUserMapper.selectOne(wxUser); setWxUserInfo(userInfo, wxUser);
-		 * wxUserMapper.updateById(wxUser); }
-		 */
-		memberService.saveMember(userInfo);
+		memberService.saveMember(userInfo,true);
 		log.info("结束saveMemberInfo");
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<关注微信");
 	}
 
 	/**
-	 * 初始化微信用户信息
-	 * 
-	 * @Title: setWxUserInfo
-	 * @param userInfo
-	 * @param wxUser
-	 * @date: 2017年9月18日 上午12:25:58
-	 * @author: chengxg
-	 */
-	private void setWxUserInfo(UserInfo userInfo, WxUser wxUser) {
-		log.info("进入setWxUserInfo");
-		wxUser.setCity(userInfo.getCity());
-		wxUser.setCountry(userInfo.getCity());
-		wxUser.setHeadimgurl(userInfo.getHeadimgurl());
-		wxUser.setIsSubscribe(true);
-		wxUser.setLanguage(userInfo.getLanguage());
-		wxUser.setNickname(userInfo.getNickname());
-		wxUser.setOpenid(userInfo.getOpenid());
-		wxUser.setProvince(userInfo.getProvince());
-		wxUser.setRemark(userInfo.getRemark());
-		wxUser.setSex(userInfo.getSex());
-		wxUser.setUnionid(userInfo.getUnionid());
-		wxUser.setSubscribeTime(new Date());
-		log.info("结束setWxUserInfo");
-	}
-
-	/**
 	 * 激活会员
 	 * 
-	 * @Title: activeMemberByOpenId
-	 * @param openId
+	 * @Title: activeMemberByUnionid
+	 * @param unionid
 	 * @param mobile
 	 * @return
 	 * @date: 2017年10月9日 上午10:54:16
@@ -264,13 +206,13 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public int activeMemberByOpenId(String openId, String mobile, String ip) {
+	public int activeMemberByUnionid(String unionid, String mobile, String ip) {
 		synchronized (mobile.intern()) {
-			log.info("进入activeMemberByOpenId>>openId=" + openId);
-			log.info("进入activeMemberByOpenId>>mobile=" + mobile);
-			int count = memberDao.updateMemberInfoByOpenId(openId, null, mobile, 1, null, null, null);
+			log.info("进入activeMemberByUnionid>>unionid=" + unionid);
+			log.info("进入activeMemberByUnionid>>mobile=" + mobile);
+			int count = memberDao.updateMemberInfoByUnionid(unionid, null, mobile, 1, null, null, null);
 			if (count > 0) {
-				Member receiveMem = memberDao.getMemberByOpenId(openId);
+				Member receiveMem = memberDao.getMemberByUnionid(unionid);
 				shareService.activeShare(receiveMem);
 				Redpack redpack = redpackService.selectByPackType(RedpackType.re.getCode(), receiveMem.getMerchantId());
 				if (redpack != null) {
@@ -280,23 +222,30 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 						int min = redpack.getMinAmount().multiply(new BigDecimal(100)).intValue();
 						amount = (int) (Math.random() * (max - min + 1) + min);
 					}
-					redpackLogService.saveRedPackLog(amount, openId, ip, receiveMem.getMerchantId(), redpack.getId(),
-							redpack.getActName(), redpack.getRemark(), redpack.getWishing());
+
+					WxUser wxuser = new WxUser();
+					wxuser.setUnionid(unionid);
+					wxuser = wxUserMapper.selectOne(wxuser);
+					if (wxuser != null) {
+						redpackLogService.saveRedPackLog(amount, unionid, wxuser.getOpenid(), ip,
+								receiveMem.getMerchantId(), redpack.getId(), redpack.getActName(), redpack.getRemark(),
+								redpack.getWishing());
+					}
 				}
 			}
-			log.info("结束activeMemberByOpenId");
+			log.info("结束activeMemberByUnionid");
 			return count;
 		}
 	}
 
 	/**
-	 * @Title: getWxUserByOpenId @Description: 获取微信号的信息 @date: 2017年10月10日
+	 * @Title: getWxUserByUnionid @Description: 获取微信号的信息 @date: 2017年10月10日
 	 *         下午3:42:02 @author: huanglin @throws
 	 */
 	@Override
-	public Object getWxUserByOpenId(String openId) {
-		log.info("进入getWxUserByOpenId>>openId=" + openId);
-		return memberDao.getWxUserByOpenId(openId);
+	public Object getWxUserByUnionid(String unionid) {
+		log.info("进入getWxUserByUnionid>>unionid=" + unionid);
+		return memberDao.getWxUserByUnionid(unionid);
 	}
 
 }

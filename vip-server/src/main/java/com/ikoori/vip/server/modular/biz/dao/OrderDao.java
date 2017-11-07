@@ -24,4 +24,14 @@ public interface OrderDao {
    
    /*查询某用户某订单详情*/
    List<Map<String,Object>>selectOrderDetailListByOrderId(@Param("orderId") Long orderId);
+   
+   /**
+    * 查询用户当月交易金额
+    * @Title: selectMemTradeAmount   
+    * @param memberId
+    * @return
+    * @date:   2017年11月7日 下午4:16:14 
+    * @author: chengxg
+    */
+   Integer selectMemTradeAmount(@Param("memberId") Long memberId);
 }

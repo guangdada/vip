@@ -84,6 +84,20 @@ Merchant.delete = function () {
     }
 };
 
+
+/**
+ * 删除商户
+ */
+Merchant.updateUnionid = function () {
+    var ajax = new $ax(Feng.ctxPath + "/merchant/updateUnionid", function (data) {
+        Feng.success("操作成功!");
+        Merchant.table.refresh();
+    }, function (data) {
+        Feng.error("操作失败!" + data.responseJSON.message + "!");
+    });
+    ajax.start();
+};
+
 /**
  * 查询表单提交参数对象
  * @returns {{}}

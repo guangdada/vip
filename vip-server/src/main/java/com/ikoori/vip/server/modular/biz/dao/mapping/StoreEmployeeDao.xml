@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.StoreEmployeeDao">
 	<select id="getStoreEmployeeList" resultType="map">
-        select e.*,u.sex AS sex
+        select e.*,u.sex AS sex,s.`name` AS storeName
         from v_store_employee e 
         left join s_user u on u.id=e.user_id
+        LEFT JOIN v_store s ON e.store_id = s.id
         where 1 = 1 and e.status = 1
         <if test="employeeName != null and employeeName !=''">
             and e.name like CONCAT('%',#{employeeName},'%')

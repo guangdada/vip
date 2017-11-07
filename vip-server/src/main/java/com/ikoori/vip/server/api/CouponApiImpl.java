@@ -102,7 +102,7 @@ public class CouponApiImpl implements CouponApi {
 	 * 
 	 * @Title: getStoreDetail
 	 * @param alias
-	 * @param openId
+	 * @param unionid
 	 * @return
 	 * @date: 2017年9月14日 下午10:59:05
 	 * @author: chengxg
@@ -110,10 +110,10 @@ public class CouponApiImpl implements CouponApi {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject getCoupon(String alias, String openId) throws Exception {
+	public JSONObject getCoupon(String alias, String unionid) throws Exception {
 		log.info("进入getCoupon");
 		log.info("进入getCoupon >> alias=" + alias);
-		log.info("进入getCoupon >> openId=" + openId);
+		log.info("进入getCoupon >> unionid=" + unionid);
 		JSONObject obj = new JSONObject();
 		obj.put("code", true);
 		obj.put("msg", "领取成功");
@@ -125,9 +125,9 @@ public class CouponApiImpl implements CouponApi {
 			obj.put("msg", "该优惠券已经过期啦");
 			throw new Exception(obj.toJSONString());
 		}
-		// openId获得会员
+		// unionid获得会员
 		// 判断会员卡是否过期
-		Member member = memberDao.getMemberByOpenId(openId);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			log.error("您还不是会员哦");
 			obj.put("msg", "您还不是会员哦");
@@ -228,22 +228,22 @@ public class CouponApiImpl implements CouponApi {
 	 * 
 	 * @Title: activeCoupon
 	 * @param verifyCode
-	 * @param openId
+	 * @param unionid
 	 * @date: 2017年9月18日 下午4:18:12
 	 * @author: chengxg
 	 * @throws Exception
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public JSONObject activeCoupon(String verifyCode, String openId) throws Exception {
+	public JSONObject activeCoupon(String verifyCode, String unionid) throws Exception {
 		log.info("进入activeCoupon");
 		log.info("进入activeCoupon>>verifyCode=" + verifyCode);
-		log.info("进入activeCoupon>>openId=" + openId);
+		log.info("进入activeCoupon>>unionid=" + unionid);
 		JSONObject obj = new JSONObject();
 		obj.put("code", true);
 		obj.put("msg", "领取成功");
-		// openId获得会员
+		// unionid获得会员
 		// 判断会员卡是否过期
-		Member member = memberDao.getMemberByOpenId(openId);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			log.error("您还不是会员哦");
 			obj.put("msg", "您还不是会员哦");

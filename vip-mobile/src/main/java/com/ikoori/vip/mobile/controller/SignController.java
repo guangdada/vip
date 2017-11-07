@@ -35,9 +35,6 @@ public class SignController {
 			throw new Exception("登录信息有误");
 		}
 		
-		// 获取微信头像和昵称
-		//String openId = WeChatAPI.getOpenId(request.getSession());
-		//Object userInfo = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
 		map.put("userInfo", userInfo);
 		return "/member_sign.html";
 	}
@@ -46,10 +43,10 @@ public class SignController {
 	@ResponseBody
 	public Object signIn(HttpSession session) {
 		log.info("进入signIn");
-		String openId = WeChatAPI.getOpenId(session);
+		String unionid = WeChatAPI.getUnionid(session);
 		JSONObject obj = new JSONObject();
 		try {
-			obj = consumer.getSignApi().get().signIn(openId);
+			obj = consumer.getSignApi().get().signIn(unionid);
 		} catch (Exception e) {
 			log.error("领取优惠券失败", e);
 			obj.put("code", 500);
@@ -68,8 +65,8 @@ public class SignController {
 	@ResponseBody
 	public Object signInfo(HttpSession session) throws Exception {
 		log.info("进入signInfo");
-		String openId = WeChatAPI.getOpenId(session);
-		JSONObject obj = consumer.getSignApi().get().getSignInfo(openId);
+		String unionid = WeChatAPI.getUnionid(session);
+		JSONObject obj = consumer.getSignApi().get().getSignInfo(unionid);
 		log.info("结束signInfo");
 		return obj;
 	}

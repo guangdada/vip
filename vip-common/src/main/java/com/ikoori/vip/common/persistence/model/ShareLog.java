@@ -25,15 +25,15 @@ public class ShareLog extends Model<ShareLog> {
 	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
     /**
-     * 分享人openId
+     * 分享人unionid
      */
-	@TableField("share_openid")
-	private String shareOpenid;
+	@TableField("share_unionid")
+	private String shareUnionid;
     /**
-     * 接受人openId
+     * 接受人unionid
      */
-	@TableField("receive_openid")
-	private String receiveOpenid;
+	@TableField("receive_unionid")
+	private String receiveUnionid;
     /**
      * 分享状态0:未成功1:成功
      */
@@ -69,20 +69,20 @@ public class ShareLog extends Model<ShareLog> {
 		this.id = id;
 	}
 
-	public String getShareOpenid() {
-		return shareOpenid;
+	public String getShareUnionid() {
+		return shareUnionid;
 	}
 
-	public void setShareOpenid(String shareOpenid) {
-		this.shareOpenid = shareOpenid;
+	public void setShareUnionid(String shareUnionid) {
+		this.shareUnionid = shareUnionid;
 	}
 
-	public String getReceiveOpenid() {
-		return receiveOpenid;
+	public String getReceiveUnionid() {
+		return receiveUnionid;
 	}
 
-	public void setReceiveOpenid(String receiveOpenid) {
-		this.receiveOpenid = receiveOpenid;
+	public void setReceiveUnionid(String receiveUnionid) {
+		this.receiveUnionid = receiveUnionid;
 	}
 
 	public Boolean isReceiveStatus() {
@@ -134,8 +134,8 @@ public class ShareLog extends Model<ShareLog> {
 	public String toString() {
 		return "ShareLog{" +
 			"id=" + id +
-			", shareOpenid=" + shareOpenid +
-			", receiveOpenid=" + receiveOpenid +
+			", shareUnionid=" + shareUnionid +
+			", receiveUnionid=" + receiveUnionid +
 			", receiveStatus=" + receiveStatus +
 			", receiveIp=" + receiveIp +
 			", createTime=" + createTime +

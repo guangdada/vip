@@ -87,12 +87,12 @@ public class RedpackLogController extends BaseController {
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	@Permission
-	public Object list(String billno, String openid, Integer sendStatus, String sendS, String sendE,
+	public Object list(String billno, String unionid, Integer sendStatus, String sendS, String sendE,
 			Integer redpackId) {
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		Merchant merchant = merchantService.getMerchantUserId(userId);
 		Page<Map<String, Object>> page = new PageFactory<Map<String, Object>>().defaultPage();
-		List<Map<String, Object>> result = redpackLogService.getRedpackLogList(page, merchant.getId(), billno, openid,
+		List<Map<String, Object>> result = redpackLogService.getRedpackLogList(page, merchant.getId(), billno, unionid,
 				sendStatus, sendS, sendE, redpackId, page.getOrderByField(), page.isAsc());
 		page.setRecords((List<Map<String, Object>>) new RedpackLogWarpper(result).warp());
 		return super.packForBT(page);

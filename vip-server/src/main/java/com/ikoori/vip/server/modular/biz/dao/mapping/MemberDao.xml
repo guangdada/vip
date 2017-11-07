@@ -5,7 +5,7 @@
         select m.*,wu.nickname ,wu.headimgurl,
         mc.card_number AS cardNumber
         from v_member m 
-        LEFT JOIN v_wx_user wu on wu.openid=m.open_id
+        LEFT JOIN v_wx_user wu on wu.unionid=m.unionid
         LEFT JOIN v_member_card mc on mc.member_id=m.id
         where 1 = 1 and m.status = 1 and mc.is_default=1
         <if test="memName != null and memName !=''">
@@ -17,8 +17,8 @@
         <if test="memNickName != null and memNickName !=''">
             and wu.nickname like CONCAT('%',#{memNickName},'%')
         </if>
-        <if test="openId != null and openId !=''">
-            and wu.openid like CONCAT('%',#{openId},'%')
+        <if test="unionid != null and unionid !=''">
+            and wu.unionid like CONCAT('%',#{unionid},'%')
         </if>
         <if test="memSex != null">
             and m.sex = #{memSex}
@@ -49,14 +49,26 @@
         </choose>
     </select>
     
-    <select id="getMemberByOpenId" resultType="com.ikoori.vip.common.persistence.model.Member">
+    <select id="getMemberByUnionid" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
 			*
 		FROM
 			v_member
 		WHERE
 			STATUS = 1
-		AND open_id = #{openId}
+		AND unionid = #{unionid}
+    </select>
+    
+    <select id="getMemberByOpenid" resultType="map">
+    	SELECT
+			m.*
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
+		WHERE
+		<if test="openid != null">
+        	wu.openid = #{openid}
+        </if>
     </select>
     
     <select id="getMemberByMobile" resultType="com.ikoori.vip.common.persistence.model.Member">
@@ -89,7 +101,7 @@
     </update>
     
      <!-- 修改会员信息 -->
-    <update id="updateMemberInfoByOpenId">
+    <update id="updateMemberInfoByUnionid">
 	    update v_member m set
 	    m.name= #{name},
 	    m.sex=#{sex},
@@ -98,7 +110,7 @@
 	    m.mobile=#{mobile},
 	    m.area=#{area},
 	    m.is_active=true
-	    where m.open_id = #{openId}
+	    where m.unionid = #{unionid}
     </update>
     
     <select id="selectByMemberId" resultType="com.ikoori.vip.common.persistence.model.Member">
@@ -106,7 +118,7 @@
 			m.*,wu.nickname AS nickname
 		FROM
 			v_member m
-		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
+		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
 		WHERE
 		<if test="memberId != null">
         	 m.id = #{memberId}
@@ -118,23 +130,42 @@
 			m.*,wu.nickname AS nickname
 		FROM
 			v_member m
-		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
+		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
 		WHERE
 		<if test="memberId != null">
         	 m.id = #{memberId}
         </if>
     </select>
     
-    <select id="getWxUserByOpenId" resultType="map">
+    <select id="getWxUserByUnionid" resultType="map">
     	SELECT
 			m.*,wu.nickname,wu.headimgurl
 		FROM
 			v_member m
-		LEFT JOIN v_wx_user wu  ON wu.openid=m.open_id	
+		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
 		WHERE
-		<if test="openId != null">
-        	m.open_id = #{openId}
+		<if test="unionid != null">
+        	m.unionid = #{unionid}
         </if>
     </select>
-   
+    
+    <select id="getWxUserByOpenid" resultType="map">
+    	SELECT
+			m.*,wu.nickname,wu.headimgurl
+		FROM
+			v_member m
+		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
+		WHERE
+		<if test="unionid != null">
+        	wu.openid = #{openid}
+        </if>
+    </select>
+    
+    <update id="updateMemUnionid">
+    	update v_member set unionid = #{unionid} where open_id=#{openid}
+    </update>
+    
+    <update id="updateWxUnionid">
+    	update v_wx_user set unionid = #{unionid} where openid=#{openid}
+    </update>
 </mapper>

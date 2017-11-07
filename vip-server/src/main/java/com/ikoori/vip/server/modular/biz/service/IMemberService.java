@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.persistence.model.Card;
@@ -50,7 +51,7 @@ public interface IMemberService {
 	 * @author: chengxg
 	 */
 	List<Map<String, Object>> getMemberList(Page<Map<String, Object>> page, String memName, Integer memSex,
-			String memNickName, String memMobile, Long cardId, String cardNumber, Integer isActive,String openId,String orderByField, boolean isAsc);
+			String memNickName, String memMobile, Long cardId, String cardNumber, Integer isActive,String unionid,String orderByField, boolean isAsc);
 
 	/**
 	 * 根据手机号和店铺编号查询会员
@@ -74,7 +75,7 @@ public interface IMemberService {
 	public void upgradeMemberCard(Member member, Card card);
 	
 	/**
-	 * 根据openid查询会员
+	 * 根据unionid查询会员
 	 * @Title: selectByMobile
 	 * @param mobile
 	 * @param storeNo
@@ -82,25 +83,54 @@ public interface IMemberService {
 	 * @date:   2017年9月18日 下午1:56:47 
 	 * @author: chengxg
 	 */
-	public Member selectByOpenid(String openid);
+	public Member selectByUnionid(String unionid);
 	
 	/**
-	 * 根据openid查询会员
-	 * @Title: getWxUserByOpenId   
-	 * @param openId
+	 * 根据unionid查询会员
+	 * @Title: getWxUserByUnionid   
+	 * @param Unionid
 	 * @return
 	 * @date:   2017年10月19日 上午10:45:24 
 	 * @author: chengxg
 	 */
-	Map<String, Object> getWxUserByOpenId(@Param("openId") String openId);
+	Map<String, Object> getWxUserByUnionid(@Param("unionid") String unionid);
+	
+	/**
+	 * 根据openid查询会员
+	 * @Title: getWxUserByOpenid   
+	 * @param openid
+	 * @return
+	 * @date:   2017年11月7日 下午4:42:52 
+	 * @author: chengxg
+	 */
+	public Map<String, Object> getWxUserByOpenid(String openid);
 	
 	/**
 	 * 保存新会员
 	 * @Title: saveMember   
-	 * @param userInfo
+	 * @param userInfo 微信用户信息
+	 * @param update 是否更新微信用户信息
 	 * @throws Exception
 	 * @date:   2017年10月19日 下午12:37:35 
 	 * @author: chengxg
 	 */
-	public void saveMember(UserInfo userInfo) throws Exception;
+	public void saveMember(UserInfo userInfo,boolean update) throws Exception;
+	
+	/**
+	 * 批量修改openid
+	 * @Title: updateUnionid   
+	 * @date:   2017年11月7日 上午9:47:50 
+	 * @author: chengxg
+	 */
+	public void updateUnionid();
+	
+	/**
+	 * 初始化会员卡信息
+	 * @Title: initCard   
+	 * @param memberId
+	 * @return
+	 * @date:   2017年11月7日 上午9:48:04 
+	 * @author: chengxg
+	 */
+	public JSONObject initCard(Long memberId);
 }

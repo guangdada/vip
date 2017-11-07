@@ -5,6 +5,7 @@ import java.util.List;
 public class OrderPayDo {
 	private String orderNo;
 	private String mobile;
+	private String openid;
 	private String cardNumber;
 	private String storeNo;
 	private Integer balanceDue;
@@ -95,4 +96,13 @@ public class OrderPayDo {
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+	
 }

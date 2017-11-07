@@ -22,13 +22,14 @@ public interface IRedpackLogService {
 	public Integer insert(RedpackLog redpackLog);
 
 	List<Map<String, Object>> getRedpackLogList(Page<Map<String, Object>> page, Long merchantId, String billno,
-			String openid, Integer sendStatus, String sendS, String sendE, Integer redpackId, String orderByField,
+			String unionid, Integer sendStatus, String sendS, String sendE, Integer redpackId, String orderByField,
 			boolean isAsc);
 
 	/**
 	 * 发送微信红包
 	 * @Title: saveRedPackLog   
 	 * @param amount
+	 * @param unionid
 	 * @param openid
 	 * @param ip
 	 * @param merchantId
@@ -39,7 +40,7 @@ public interface IRedpackLogService {
 	 * @date:   2017年10月19日 下午6:13:57 
 	 * @author: chengxg
 	 */
-	public void saveRedPackLog(int amount, String openid, String ip, Long merchantId, Long redpackId, String actName,
+	public void saveRedPackLog(int amount, String unionid, String openid,String ip, Long merchantId, Long redpackId, String actName,
 			String remark, String wishing);
 	
 	/**

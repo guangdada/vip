@@ -6,7 +6,6 @@ import java.util.Map;
 import com.ikoori.vip.common.constant.state.RoleType;
 import com.ikoori.vip.common.constant.state.SexType;
 import com.ikoori.vip.common.warpper.BaseControllerWarpper;
-import com.ikoori.vip.server.common.constant.factory.ConstantFactory;
 
 /**
  * 用户管理的包装类
@@ -26,8 +25,6 @@ public class StoreEmployeeWarpper extends BaseControllerWarpper {
     	map.put("sex", map.get("sex") == null ? "" : SexType.valueOf(Integer.valueOf(map.get("sex").toString())));
     	Long roleId = (Long)map.get("role_id");
     	map.put("roleType", RoleType.valueOf(roleId));
-    	Long storeId = (Long)map.get("store_id");
-    	map.put("storeName", ConstantFactory.me().getStoreName(storeId));
     }
 
 }

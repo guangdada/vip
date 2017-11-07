@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ikoori.vip.server.modular.biz.dao.TicketDao">
 	<select id="getTicketList" resultType="map">
-        select * from v_ticket where 1 = 1 and status = 1 and merchant_id=#{merchantId}
+		SELECT
+			t.*,s.`name` storeName
+		FROM
+			v_ticket t
+		LEFT JOIN v_store s ON t.store_id = s.id
+		WHERE
+			1 = 1
+		AND t. STATUS = 1
+		AND t.merchant_id = #{merchantId}
         <if test="ticketName != null and ticketName !=''">
             and name like CONCAT('%',#{ticketName},'%')
         </if>

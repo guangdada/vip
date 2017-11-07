@@ -4,18 +4,23 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.ikoori.vip.common.constant.cache.Cache;
+import com.ikoori.vip.common.constant.cache.CacheKey;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.MerchantState;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
+import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
+import com.ikoori.vip.common.persistence.dao.WxUserMapper;
 import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.server.config.properties.GunsProperties;
@@ -37,6 +42,10 @@ public class MerchantServiceImpl implements IMerchantService {
 	UserMgrDao managerDao;
 	@Autowired
 	UserMapper userMapper;
+	@Autowired
+	WxUserMapper wxUserMapper;
+	@Autowired
+	MemberMapper memberMapper;
 	@Autowired
 	GunsProperties gunsProperties;
 	
@@ -86,16 +95,15 @@ public class MerchantServiceImpl implements IMerchantService {
 		return userMapper.selectCount(user) == 0;
 	}
 	
+	@Cacheable(value = Cache.MERCHANT, key = "'" + CacheKey.SINGLE_MERCHANT + "'+#userId")
 	public Merchant getMerchantUserId(Long userId){
 		Merchant merchant = new Merchant();
 		merchant.setUserId(userId);
 		return merchantMapper.selectOne(merchant);
-		/*List<Merchant> mlist = merchantMapper.selectList(new EntityWrapper<Merchant>().eq("user_id", userId));
-		return CollectionUtils.isEmpty(mlist) ? null : mlist.get(0);*/
 	}
 	
-	public Long getCurrentMerchantId(){
+	public Merchant getCurrentMerchant(){
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
-		return getMerchantUserId(userId).getId();
+		return getMerchantUserId(userId);
 	}
 }

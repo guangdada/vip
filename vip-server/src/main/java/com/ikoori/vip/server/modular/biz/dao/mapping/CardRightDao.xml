@@ -32,4 +32,16 @@
 			`status` = 1
 		AND card_id = #{cardId};
     </select>
+    
+    <select id="selectByRightType" resultType="com.ikoori.vip.common.persistence.model.CardRight">
+    	SELECT
+			*
+		FROM
+			v_card_right
+		WHERE
+			`status` = 1
+		AND card_id = #{cardId} 
+		AND right_type = #{rightType}
+		limit 1
+    </select>
 </mapper>

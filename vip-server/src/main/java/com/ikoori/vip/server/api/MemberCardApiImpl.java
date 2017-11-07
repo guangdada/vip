@@ -44,9 +44,9 @@ public class MemberCardApiImpl implements MemberCardApi {
 	IMemberCardService memberCardService;
 	
 	@Override
-	public JSONObject getMemberCardByOpenId(String openId) {
-		log.info("进入getMemberCardByOpenId>>openId=" + openId);
-		Member member = memberDao.getMemberByOpenId(openId);
+	public JSONObject getMemberCardByUnionid(String unionid) {
+		log.info("进入getMemberCardByUnionid>>unionid=" + unionid);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if(member == null){
 			log.info("member == null");
 			return null;
@@ -69,7 +69,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 		obj.put("merchantLogo", merchant.getHeadImg());
 		obj.put("cardName", card.getName());
 		obj.put("cardNum", memberCard.getCardNumber());
-		log.info("结束getMemberCardByOpenId");
+		log.info("结束getMemberCardByUnionid");
 		return obj;
 	}
 
@@ -81,9 +81,9 @@ public class MemberCardApiImpl implements MemberCardApi {
 	 * @throws   
 	 */  
 	@Override
-	public JSONObject selectByMemberId(String openId) {
-		log.info("进入selectByMemberId>>openId" + openId);
-		Member member = memberDao.getMemberByOpenId(openId);
+	public JSONObject selectByMemberId(String unionid) {
+		log.info("进入selectByMemberId>>unionid" + unionid);
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if(member == null){
 			log.info("member == null");
 			return null;

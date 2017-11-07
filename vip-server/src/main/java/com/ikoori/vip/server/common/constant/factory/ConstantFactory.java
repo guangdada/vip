@@ -9,25 +9,17 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
 import com.ikoori.vip.common.constant.state.MenuStatus;
-import com.ikoori.vip.common.persistence.dao.CardMapper;
 import com.ikoori.vip.common.persistence.dao.DeptMapper;
 import com.ikoori.vip.common.persistence.dao.DictMapper;
-import com.ikoori.vip.common.persistence.dao.MemberMapper;
 import com.ikoori.vip.common.persistence.dao.MenuMapper;
-import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.dao.NoticeMapper;
-import com.ikoori.vip.common.persistence.dao.PictureTypeMapper;
 import com.ikoori.vip.common.persistence.dao.RoleMapper;
-import com.ikoori.vip.common.persistence.dao.StoreMapper;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
-import com.ikoori.vip.common.persistence.model.Card;
 import com.ikoori.vip.common.persistence.model.Dept;
 import com.ikoori.vip.common.persistence.model.Dict;
-import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.persistence.model.Menu;
 import com.ikoori.vip.common.persistence.model.Notice;
 import com.ikoori.vip.common.persistence.model.Role;
-import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.common.support.StrKit;
 import com.ikoori.vip.common.util.Convert;
@@ -50,12 +42,7 @@ public class ConstantFactory implements IConstantFactory {
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
-    private StoreMapper storeMapper = SpringContextHolder.getBean(StoreMapper.class);
     private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);
-    private MemberMapper memberMapper = SpringContextHolder.getBean(MemberMapper.class);
-    private CardMapper cardMapper = SpringContextHolder.getBean(CardMapper.class);
-    private MerchantMapper merchantMapper = SpringContextHolder.getBean(MerchantMapper.class);
-    private PictureTypeMapper pictureTypeMapper = SpringContextHolder.getBean(PictureTypeMapper.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -150,14 +137,6 @@ public class ConstantFactory implements IConstantFactory {
         }
         return "";
     }
-    
-    /**
-     * 获取图片类型名称
-     */
-    /*@Override
-    public String getPictypeName(Long pictypeId){
-    	return pictureTypeMapper.selectById(pictypeId).getName();
-    }*/
 
     /**
      * 获取菜单的名称们(多个)
@@ -317,24 +296,4 @@ public class ConstantFactory implements IConstantFactory {
     public String getCacheObject(String para) {
         return LogObjectHolder.me().get().toString();
     }
-
-	@Override
-	public String getStoreName(Long storeId) {
-		Store store= new Store();
-		store.setId(storeId);
-		store = storeMapper.selectOne(store);
-		return store == null ?  "--" : store.getName();
-	}
-
-	@Override
-	public Card getCard(Long cardId) {
-		Card card = cardMapper.selectById(cardId);
-		return card;
-	}
-
-	@Override
-	public Member getMember(Long memberId) {
-		Member member = memberMapper.selectById(memberId);
-		return member;
-	}
 }

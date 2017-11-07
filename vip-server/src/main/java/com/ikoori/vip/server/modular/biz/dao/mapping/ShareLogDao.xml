@@ -8,17 +8,17 @@
 			sl.create_time,
 			sl.update_time,
 			m.mobile,
-			wx.openid shareOpenid,
+			wx.unionid shareUnionid,
 			wx.nickname shareName,
 			wx.headimgurl shareHead,
-			wx1.openid receiveOpenid,
+			wx1.unionid receiveUnionid,
 			wx1.nickname AS receiveName,
 			wx1.headimgurl AS receiveHead
 		FROM
 			v_share_log sl
-		LEFT JOIN v_member m ON sl.share_openid = m.open_id
-		LEFT JOIN v_wx_user wx ON sl.share_openid = wx.openid
-		LEFT JOIN v_wx_user wx1 ON sl.receive_openid = wx1.openid
+		LEFT JOIN v_member m ON sl.share_unionid = m.unionid
+		LEFT JOIN v_wx_user wx ON sl.share_unionid = wx.unionid
+		LEFT JOIN v_wx_user wx1 ON sl.receive_unionid = wx1.unionid
 		WHERE
 			1 = 1
 		AND sl. STATUS = 1
@@ -64,7 +64,7 @@
 				#{shareDate},
 				'%Y-%m'
 			) = date_format(create_time, '%Y-%m')
-		AND share_openid = #{shareOpenid}
+		AND share_unionid = #{shareUnionid}
 		AND receive_status = 1
 		AND `status` = 1
 	</select>

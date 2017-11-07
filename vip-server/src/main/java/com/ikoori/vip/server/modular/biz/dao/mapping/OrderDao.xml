@@ -60,4 +60,15 @@
         	and i.order_id = #{orderId}
         </if>
     </select>
+    
+    <select id="selectMemTradeAmount" resultType="int">
+    	SELECT
+			SUM(payment) AS payment
+		FROM
+			v_order
+		WHERE
+			DATE_FORMAT(NOW(), '%Y-%m') = DATE_FORMAT(NOW(), '%Y-%m') = 1
+		AND member_id = 1
+		AND `status` = 1
+    </select>
 </mapper>

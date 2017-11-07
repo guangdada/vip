@@ -92,14 +92,14 @@ public class StoreApiImpl implements StoreApi {
 	/**   
 	 * <p>Title: getStore</p>   
 	 * <p>Description: 获取附近门店</p>   
-	 * @param openId 
+	 * @param unionid 
 	 * @return   
 	 * @see com.ikoori.vip.api.service.StoreApi#getStore(java.lang.String)   
 	 */  
 	@Override
-	public List<Map<String, Object>> getStore(String openId) {
-		log.info("进入getStore>>openId=" + openId);
-		List<Map<String, Object>> store = storeDao.getStoreByOpenId(openId,StoreType.st.getCode());
+	public List<Map<String, Object>> getStore(String unionid) {
+		log.info("进入getStore>>unionid=" + unionid);
+		List<Map<String, Object>> store = storeDao.getStoreByUnionid(unionid,StoreType.st.getCode());
 		if (store == null) {
 			log.info("store == null");
 			return null;

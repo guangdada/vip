@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ikoori.vip.api.vo.UserInfo;
-import com.ikoori.vip.common.constant.state.CardGrantType;
-import com.ikoori.vip.common.constant.state.CardTermsType;
-import com.ikoori.vip.common.constant.state.MemCardState;
-import com.ikoori.vip.common.constant.state.RightType;
-import com.ikoori.vip.common.persistence.model.CardRight;
 import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.WXPayUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.config.properties.GunsProperties;
-import com.ikoori.vip.server.core.util.WeChatAPI;
 import com.ikoori.vip.server.modular.biz.service.ICardRightService;
 import com.ikoori.vip.server.modular.biz.service.ICouponFetchService;
 import com.ikoori.vip.server.modular.biz.service.IMemberCardService;
@@ -128,7 +120,7 @@ public class WebMemberController extends BaseController {
 					result.put("code", "500");
 					result.put("msg", "没有找到会员信息");
 				} else {
-					JSONObject card = initCard(member.getId());
+					JSONObject card = memberService.initCard(member.getId());
 					result.put("content", card);
 				}
 			}
@@ -138,68 +130,6 @@ public class WebMemberController extends BaseController {
 			result.put("msg", "请求失败");
 		}
 		return result;
-	}
-
-	private JSONObject initCard(Long memberId) {
-		// 获得会员的默认会员卡
-		Map<String, Object> defaultCard = memberCardService.selectByMemberId(memberId);
-		if (defaultCard == null) {
-			log.info("没有找到会员卡>>memberId=" + memberId);
-			return null;
-		}
-		JSONObject obj = new JSONObject();
-		obj.put("cardNumber", defaultCard.get("cardNumber"));
-		obj.put("name", defaultCard.get("name"));
-		obj.put("description", defaultCard.get("description"));
-		obj.put("state", MemCardState.USED.getCode());
-		// 判断是否生效或过期
-		Object grantType = defaultCard.get("grantType");
-		Object termType = defaultCard.get("termType");
-		Object termDays = defaultCard.get("termDays");
-		Object termStartAt = defaultCard.get("termStartAt");
-		Object termEndAt = defaultCard.get("termEndAt");
-		Object createTime = defaultCard.get("createTime");
-		// 按规则升级的会员卡无限期，其他的需要判断期限
-		if (grantType != null && CardGrantType.RULE.getCode() != Integer.valueOf(grantType.toString())) {
-			if (termType != null) {
-				int tt = Integer.valueOf(termType.toString());
-				String nowDay = DateUtil.getDay();
-				if (CardTermsType.DAYS.getCode() == tt) {
-					// 1、有效期为 XX天
-					int days = Integer.valueOf(termDays.toString());
-					// 计算领取日期和当前日期相隔天数，是否大于设置的天数
-					long daySub = DateUtil.getDaySub(createTime.toString(), nowDay);
-					if (daySub > days) {
-						obj.put("state", MemCardState.EXPIRED.getCode());
-					}
-				} else if (CardTermsType.RANGE.getCode() == tt) {
-					// 2、有效期开始和结束时间，判断当前日期是否在生效和失效时间内
-					if (!DateUtil.compareDate(nowDay, termStartAt.toString())) { 
-						// 未到 生效 时间
-						obj.put("state", MemCardState.UN_USED.getCode());
-					} else if (!DateUtil.compareDate(termEndAt.toString(), nowDay)) { // 超过失效时间
-						obj.put("state", MemCardState.EXPIRED.getCode());
-					}
-				}
-			}
-		}
-
-		// 获得会员卡权益
-		Long cardId = Long.valueOf("" + defaultCard.get("cardId"));
-		List<CardRight> cardRights = cardRightService.selectByCardId(cardId);
-		JSONArray rights = new JSONArray();
-		if (CollectionUtils.isNotEmpty(cardRights)) {
-			for (CardRight cardRight : cardRights) {
-				if (cardRight.getRightType().equals(RightType.DISCOUNT.getCode())) {
-					JSONObject right = new JSONObject();
-					right.put(RightType.DISCOUNT.getCode(), cardRight.getDiscount());
-					rights.add(right);
-				}
-			}
-		}
-		obj.put("cardRights", rights);
-		log.info("查找会员卡initCard>>obj=" + obj.toJSONString());
-		return obj;
 	}
 
 	@ApiOperation("根据手机号获得优惠券")
@@ -281,78 +211,13 @@ public class WebMemberController extends BaseController {
 			if (isSign) {
 				JSONObject content = new JSONObject();
 				Member member = memberService.selectByMobile(mobile);
-				JSONObject card = initCard(member.getId());
+				JSONObject card = memberService.initCard(member.getId());
 				JSONArray coupons = initCoupon(member.getId(), storeNo);
 				content.put("mobile", member.getMobile());
 				content.put("point", member.getPoints());
 				content.put("card", card);
 				content.put("coupon", coupons);
 				result.put("content", content);
-			}
-		} catch (Exception e) {
-			log.error("", e);
-			result.put("code", "500");
-			result.put("msg", "请求失败");
-		}
-		return result;
-	}
-
-	@ApiOperation("根据openid获得会员信息")
-	@RequestMapping(value = "getMember", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> getMember(
-			@ApiParam(value = "openid", required = true) @RequestParam(required = true) String openid,
-			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("code", "200");
-		result.put("msg", "请求成功");
-		try {
-			boolean isSign = true;
-			if (gunsProperties.isCheckSign()) {
-				Map<String, String> data = new HashMap<String, String>();
-				data.put("openid", openid);
-				data.put("sign", sign);
-				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (!isSign) {
-					result.put("code", "500");
-					result.put("msg", "签名失败");
-				}
-			}
-			if (isSign) {
-				Map<String, Object> member = memberService.getWxUserByOpenId(openid);
-				if (member == null) {
-					UserInfo userInfo = WeChatAPI.getUserInfo(openid);
-					if (userInfo == null || userInfo.getOpenid() == null) {
-						result.put("code", "500");
-						result.put("msg", "没有找到该openid的微信用户");
-					} else {
-						memberService.saveMember(userInfo);
-						member = memberService.getWxUserByOpenId(openid);
-					}
-				}
-				if (member != null) {
-					JSONObject obj = new JSONObject();
-					obj.put("mobile", member.get("mobile"));
-					obj.put("sex", member.get("sex"));
-					obj.put("point", member.get("points"));
-					obj.put("headImg", member.get("headimgurl"));
-					obj.put("nickname", member.get("nickname"));
-					obj.put("discount", 100);
-					JSONObject card = initCard(Long.valueOf(member.get("id").toString()));
-					if (card != null && card.get("state").toString().equals(MemCardState.USED.getCode() + "")) {
-						JSONArray rights = card.getJSONArray("cardRights");
-						for (int i = 0; i < rights.size(); i++) {
-							JSONObject o = rights.getJSONObject(i);
-							if (o.containsKey(RightType.DISCOUNT.getCode())) {
-								Integer discount = o.getInteger(RightType.DISCOUNT.getCode());
-								obj.put("discount", discount);
-							}
-						}
-					} else {
-						log.info("没有找到会员卡，或者会员卡已经过期>>openid=" + openid);
-					}
-					result.put("content", obj);
-				}
 			}
 		} catch (Exception e) {
 			log.error("", e);

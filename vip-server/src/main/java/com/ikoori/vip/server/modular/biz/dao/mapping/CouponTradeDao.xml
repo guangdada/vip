@@ -46,7 +46,7 @@
 			v_coupon_trade ct
 		LEFT JOIN v_coupon c ON ct.coupon_id = c.id
 		LEFT JOIN v_member m ON ct.member_id = m.id
-		LEFT JOIN v_wx_user u ON m.open_id = u.openid
+		LEFT JOIN v_wx_user u ON m.unionid = u.unionid
 		WHERE
 			ct.`status` = 1
 		AND c.`status` = 1

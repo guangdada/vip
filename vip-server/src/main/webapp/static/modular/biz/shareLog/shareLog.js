@@ -15,9 +15,9 @@ ShareLog.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '邀请人id', field: 'shareOpenid', visible: true, align: 'center', valign: 'middle'},
+        {title: '邀请人id', field: 'shareUnionid', visible: true, align: 'center', valign: 'middle'},
         {title: '邀请人', field: 'shareName', visible: true, align: 'center', valign: 'middle'},
-        {title: '受邀人id', field: 'receiveOpenid', visible: true, align: 'center', valign: 'middle'},
+        {title: '受邀人id', field: 'receiveUnionid', visible: true, align: 'center', valign: 'middle'},
         {title: '受邀人', field: 'receiveName', visible: true, align: 'center', valign: 'middle'},
         {title: '邀请状态', field: 'receiveStatus', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	return row.receiveStatus == true ? "邀请成功" : "邀请中";

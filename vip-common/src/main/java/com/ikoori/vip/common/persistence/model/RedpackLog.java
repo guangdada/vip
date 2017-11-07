@@ -45,9 +45,9 @@ public class RedpackLog extends Model<RedpackLog> {
 	@TableField("send_amount")
 	private Integer sendAmount;
     /**
-     * 用户openid
+     * 用户unionid
      */
-	private String openid;
+	private String unionid;
 	/**
      * 用户ip
      */
@@ -127,12 +127,12 @@ public class RedpackLog extends Model<RedpackLog> {
 		this.sendAmount = sendAmount;
 	}
 
-	public String getOpenid() {
-		return openid;
+	public String getUnionid() {
+		return unionid;
 	}
 
-	public void setOpenid(String openid) {
-		this.openid = openid;
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
 	}
 
 	public String getBillno() {
@@ -212,7 +212,7 @@ public class RedpackLog extends Model<RedpackLog> {
 			", redpackId=" + redpackId +
 			", sendStatus=" + sendStatus +
 			", sendAmount=" + sendAmount +
-			", openid=" + openid +
+			", unionid=" + unionid +
 			", billno=" + billno +
 			", reason=" + reason +
 			", refundTime=" + refundTime +

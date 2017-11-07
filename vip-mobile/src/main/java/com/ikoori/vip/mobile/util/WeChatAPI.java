@@ -129,6 +129,22 @@ public class WeChatAPI {
 		//return "o19yZsw5CT7CDk_ikBRiGNbyu7Tw";
 		return null;
 	}
+	
+	
+	/**
+	 * 取得session中保存的unionid
+	 * 
+	 * @param session
+	 * @return
+	 */
+	public static String getUnionid(HttpSession session) {
+		Object obj = session.getAttribute(SESSION_USER_INFO);
+		if (obj != null) {
+			return ((UserInfo) obj).getUnionid();
+		}
+		//return "o19yZsw5CT7CDk_ikBRiGNbyu7Tw";
+		return null;
+	}
 
 	/**
 	 * 签名

@@ -20,7 +20,7 @@ Member.initColumn = function () {
         	return img;
         }},
         {title: '姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
-        {title: '微信id', field: 'open_id', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信id', field: 'unionid', visible: true, align: 'center', valign: 'middle'},
         {title: '微信昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
         {title: '手机号码', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '会员卡号', field: 'cardNumber', visible: true, align: 'center', valign: 'middle'},
@@ -114,7 +114,7 @@ Member.delete = function () {
 Member.search = function () {
     var queryData = {};
     queryData['memName'] = $.trim($("#memName").val());
-    queryData['openId'] =  $.trim($("#openId").val());
+    queryData['unionid'] =  $.trim($("#unionid").val());
     queryData['memMobile']= $.trim($("#memMobile").val());
     queryData['memSex']=$("#memSex").find("option:selected").val();
     queryData['cardId']=$("#cardId").find("option:selected").val();

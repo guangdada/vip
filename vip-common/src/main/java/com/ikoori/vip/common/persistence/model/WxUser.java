@@ -29,8 +29,8 @@ public class WxUser extends Model<WxUser> {
     /**
      * 是否关注公众号
      */
-	@TableField("is_subscribe")
-	private Boolean isSubscribe;
+	@TableField("subscribe")
+	private Integer subscribe;
     /**
      * openid
      */
@@ -100,12 +100,12 @@ public class WxUser extends Model<WxUser> {
 		this.id = id;
 	}
 
-	public Boolean isIsSubscribe() {
-		return isSubscribe;
+	public Integer getSubscribe() {
+		return subscribe;
 	}
 
-	public void setIsSubscribe(Boolean isSubscribe) {
-		this.isSubscribe = isSubscribe;
+	public void setSubscribe(Integer subscribe) {
+		this.subscribe = subscribe;
 	}
 
 	public String getOpenid() {
@@ -228,7 +228,7 @@ public class WxUser extends Model<WxUser> {
 	public String toString() {
 		return "WxUser{" +
 			"id=" + id +
-			", isSubscribe=" + isSubscribe +
+			", subscribe=" + subscribe +
 			", openid=" + openid +
 			", nickname=" + nickname +
 			", sex=" + sex +

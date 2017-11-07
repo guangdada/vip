@@ -15,7 +15,7 @@
 			v_member_card mc
 		LEFT JOIN v_member m ON mc.member_id = m.id
 		LEFT JOIN v_card c ON mc.card_id = c.id
-		LEFT JOIN v_wx_user wu ON m.open_id = wu.openid
+		LEFT JOIN v_wx_user wu ON m.unionid = wu.unionid
 		WHERE
 			mc.`status` = 1
 		AND m.`status` = 1
@@ -99,6 +99,8 @@
 			c.term_start_at AS termStartAt,
 			c.term_end_at AS termEndAt,
 			c.create_time AS createTime,
+			c.amount_limit_card_id as amountLimitCardId,
+			c.trade_amount_limit as tradeAmountLimit,
 			mc.card_number AS cardNumber
 		FROM
 			v_member_card mc

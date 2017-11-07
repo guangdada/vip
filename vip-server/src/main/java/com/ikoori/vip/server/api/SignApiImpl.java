@@ -68,17 +68,17 @@ public class SignApiImpl implements SignApi {
 	 * 获得签到信息
 	 * 
 	 * @Title: getSignInfo
-	 * @param openId
+	 * @param unionid
 	 * @return
 	 * @throws Exception
 	 * @date: 2017年9月29日 下午4:21:09
 	 * @author: chengxg
 	 */
-	public JSONObject getSignInfo(String openId) throws Exception {
-		log.info("进入getSignInfo>>openId=" + openId);
+	public JSONObject getSignInfo(String unionid) throws Exception {
+		log.info("进入getSignInfo>>unionid=" + unionid);
 		JSONObject obj = new JSONObject();
-		// openId获得会员
-		Member member = memberDao.getMemberByOpenId(openId);
+		// unionid获得会员
+		Member member = memberDao.getMemberByUnionid(unionid);
 		obj.put("points", member == null ? 0 : member.getPoints());
 		obj.put("signDate", member == null ? 0 : member.getSignDate());
 		obj.put("signDays", member == null ? 0 : member.getSignDays());
@@ -92,7 +92,7 @@ public class SignApiImpl implements SignApi {
 	 * 每日签到方法
 	 * 
 	 * @Title: signIn
-	 * @param openId
+	 * @param unionid
 	 * @return
 	 * @throws Exception
 	 * @date: 2017年9月29日 下午4:07:58
@@ -100,13 +100,13 @@ public class SignApiImpl implements SignApi {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject signIn(String openId) throws Exception {
-		log.info("进入signIn>>openId=" + openId);
+	public JSONObject signIn(String unionid) throws Exception {
+		log.info("进入signIn>>unionid=" + unionid);
 		JSONObject obj = new JSONObject();
 		obj.put("code", true);
 		obj.put("msg", "签到成功");
-		// openId获得会员
-		Member member = memberDao.getMemberByOpenId(openId);
+		// unionid获得会员
+		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			obj.put("msg", "您还不是会员哦");
 			throw new Exception(obj.toJSONString());
@@ -118,7 +118,7 @@ public class SignApiImpl implements SignApi {
 		String nowDateStr = DateUtil.getDay(new Date());
 		String yesDateStr = DateUtil.getDay(yesDate);
 
-		synchronized (openId.intern()) {
+		synchronized (unionid.intern()) {
 			// 最后签到日期
 			Date signDate = member.getSignDate();
 			// 获得会员最后签到日期
@@ -195,7 +195,7 @@ public class SignApiImpl implements SignApi {
 				}
 			}
 		}
-		log.info("结束signIn" + openId);
+		log.info("结束signIn" + unionid);
 		return obj;
 	}
 }

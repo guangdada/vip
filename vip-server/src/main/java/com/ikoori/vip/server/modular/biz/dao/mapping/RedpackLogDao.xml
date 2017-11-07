@@ -12,8 +12,8 @@
         <if test="billno != null and billno !=''">
             and rpl.billno like CONCAT('%',#{billno},'%')
         </if>
-        <if test="openid != null and openid !=''">
-            and rpl.openid like CONCAT('%',#{openid},'%')
+        <if test="unionid != null and unionid !=''">
+            and rpl.unionid like CONCAT('%',#{unionid},'%')
         </if>
         <if test="sendStatus != null">
             and rpl.send_status = #{sendStatus}
@@ -25,7 +25,7 @@
       		<![CDATA[ and rpl.create_time <= #{sendE} ]]>
       	</if>
       	<if test="redpackId != null">
-            and AND rpl.redpack_id  = #{redpackId}
+            and rpl.redpack_id  = #{redpackId}
         </if>
         <choose>
             <when test="orderByField != null and orderByField !=''">

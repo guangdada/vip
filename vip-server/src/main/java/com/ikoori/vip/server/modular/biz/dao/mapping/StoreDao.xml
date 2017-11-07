@@ -53,16 +53,15 @@
     	SELECT * from v_store where STATUS =1 AND id = #{storeId};
    </select>
     
-   <select id="getStoreByOpenId" resultType="map">
+   <select id="getStoreByUnionid" resultType="map">
     	SELECT s.* from v_store  s
 		LEFT JOIN v_member m ON m.merchant_id=s.merchant_id
 		WHERE 1 = 1 and s.status = 1
-        <if test="openId != null and openId != ''">
-        	and m.open_id = #{openId}
+        <if test="unionid != null and unionid != ''">
+        	and m.unionid = #{unionid}
         </if>
         <if test="storeType != null">
         	and s.store_type = #{storeType}
         </if>
-        
    </select>
 </mapper>

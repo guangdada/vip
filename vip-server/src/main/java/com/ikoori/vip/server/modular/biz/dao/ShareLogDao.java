@@ -20,6 +20,6 @@ public interface ShareLogDao {
 			@Param("merchantId") Long merchantId, @Param("orderByField") String orderByField,
 			@Param("isAsc") boolean isAsc);
 
-	Integer getShareCount(@Param("shareOpenid") String shareOpenid,@Param("shareDate") String shareDate);
+	Integer getShareCount(@Param("shareUnionid") String shareUnionid,@Param("shareDate") String shareDate);
 
 }

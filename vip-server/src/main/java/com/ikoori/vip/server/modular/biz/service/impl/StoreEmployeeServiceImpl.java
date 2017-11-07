@@ -13,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.constant.state.ManagerStatus;
-import com.ikoori.vip.common.constant.state.RoleType;
 import com.ikoori.vip.common.persistence.dao.StoreEmployeeMapper;
 import com.ikoori.vip.common.persistence.dao.UserMapper;
-import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.StoreEmployee;
 import com.ikoori.vip.common.persistence.model.User;
 import com.ikoori.vip.server.core.shiro.ShiroKit;

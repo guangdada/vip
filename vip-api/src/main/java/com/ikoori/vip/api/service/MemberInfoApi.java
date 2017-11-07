@@ -7,16 +7,16 @@ import com.ikoori.vip.api.vo.UserInfo;
 
 public interface MemberInfoApi {
 
-	public JSONObject getMemberInfoByOpenId(String openId);
+	public JSONObject getMemberInfoByUnionid(String unionid);
 	
-	public Object getWxUserByOpenId(String openId);
+	public Object getWxUserByUnionid(String unionid);
 	
 	public Object getMemberByMobile(String mobile);
 
 	public void saveMemberInfo(UserInfo userInfo) throws Exception;
 
-	public int updateMemberInfoByOpenId(String openId, String mobile, String name, int sex, Date birthday,
+	public int updateMemberInfoByUnionid(String unionid, String mobile, String name, int sex, Date birthday,
 			String address, String area);
 	
-	public int activeMemberByOpenId(String openId, String mobile,String ip);
+	public int activeMemberByUnionid(String unionid, String mobile,String ip);
 }

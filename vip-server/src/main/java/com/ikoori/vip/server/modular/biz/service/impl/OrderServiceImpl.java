@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,9 +146,14 @@ public class OrderServiceImpl implements IOrderService {
 			throw new BussinessException(500,"没有找到店铺信息");
 		}
 		// 判断积分是否足够
-		Member member = memberDao.selectByMobile(orderPayDo.getMobile());
+		Member member = null;
+		if(StringUtils.isNotBlank(orderPayDo.getMobile())){
+			member = memberDao.selectByMobile(orderPayDo.getMobile());
+		}else if(StringUtils.isNotBlank(orderPayDo.getOpenid())){
+			member = memberDao.getMemberByOpenid(orderPayDo.getOpenid());
+		}
 		if(member == null){
-			log.error("没有找到该会员信息,手机号：" + orderPayDo.getMobile());
+			log.error("没有找到该会员信息>>" + orderPayDo.getMobile());
 			throw new BussinessException(500,"没有找到该会员信息");
 		}
 		

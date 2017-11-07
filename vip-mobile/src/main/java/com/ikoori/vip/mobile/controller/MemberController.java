@@ -71,14 +71,14 @@ public class MemberController {
 	public String info(HttpServletRequest request, Map<String, Object> map) {
 		try {
 			log.info("进入info");
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
-				log.info("openId==null");
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
+				log.info("unionid==null");
 				throw new Exception("登录信息有误");
 			}
 			
 			//获取会员信息
-			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByUnionid(unionid);
 			if (!(member.getBoolean("isActive"))) {
 				map.put("member", member);
 				log.info("结束info");
@@ -110,13 +110,13 @@ public class MemberController {
 	public Object updateInfo(HttpServletRequest request, Map<String, Object> map,@Valid Member mem) {
 		try {
 			log.info("进入updateInfo");
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
-				log.info("openId == null");
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
+				log.info("unionid == null");
 				throw new Exception("登录信息有误");
 			}
 
-			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+			JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByUnionid(unionid);
 			if (member == null || !member.getBooleanValue("isActive")) {
 				throw new Exception("用户没有激活");
 			}
@@ -126,7 +126,7 @@ public class MemberController {
 			}
 
 			// 修改会员信息
-			consumer.getMemberInfoApi().get().updateMemberInfoByOpenId(openId, mem.getMobile(), mem.getName(),
+			consumer.getMemberInfoApi().get().updateMemberInfoByUnionid(unionid, mem.getMobile(), mem.getName(),
 					mem.getSex(), mem.getBirthday(), mem.getAddress(), mem.getArea());
 
 		} catch (Exception e) {
@@ -152,9 +152,9 @@ public class MemberController {
 	public Object registerMember(HttpServletRequest request, Map<String, Object> map, @Valid Member mem,
 			String mobileCode) {
 		log.info("进入registerMember");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 		
@@ -174,7 +174,7 @@ public class MemberController {
 		
 		try {
 			// 更新会员信息
-			consumer.getMemberInfoApi().get().activeMemberByOpenId(openId, mem.getMobile(),IpUtil.getIpAddr(request));
+			consumer.getMemberInfoApi().get().activeMemberByUnionid(unionid, mem.getMobile(),IpUtil.getIpAddr(request));
 			request.getSession().removeAttribute(Constant.MOBILE_CODE);
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
@@ -278,14 +278,14 @@ public class MemberController {
 	@RequestMapping("/point")
 	public String point(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		log.info("进入point");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
 		
 		//获取会员积分
-		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByOpenId(openId);
+		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
 		log.info("结束point");
@@ -305,14 +305,14 @@ public class MemberController {
 	@RequestMapping(value="/coupon",method={RequestMethod.GET,RequestMethod.POST})
 	public String coupon(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		log.info("进入coupon");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
 		
 		//获取会员优惠券
-		List<Map<String, Object>> Coupons = consumer.getMemberCouponApi().get().getMemberCouponByOpenId(openId);
+		List<Map<String, Object>> Coupons = consumer.getMemberCouponApi().get().getMemberCouponByUnionid(unionid);
 		map.put("Coupons", Coupons);
 		log.info("结束coupon");
 		return "/member_coupon.html";
@@ -359,14 +359,14 @@ public class MemberController {
 	@RequestMapping(value = "/storeOrder", method = { RequestMethod.GET, RequestMethod.POST })
 	public String storeOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		log.info("进入storeOrder");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
 		
 		//获取会员订单信息
-		List<Map<String, Object>> orders = consumer.getMemberOrderApi().get().getMemberOrderByOpenId(openId);
+		List<Map<String, Object>> orders = consumer.getMemberOrderApi().get().getMemberOrderByUnionid(unionid);
 		map.put("orders", orders);
 		log.info("结束storeOrder");
 		return "/member_order.html";
@@ -404,13 +404,13 @@ public class MemberController {
 	@RequestMapping(value = "/onlineOrder", method = { RequestMethod.GET, RequestMethod.POST })
 	public String onlineOrder(HttpServletRequest request, Map<String, Object> map) throws Exception {
 		log.info("进入onlineOrder");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
 		JSONArray orders=null;
-		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByOpenId(openId);
+		JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByUnionid(unionid);
 		if(StringUtils.isNotBlank(member.getString("mobile"))){
 			//orders=this.getTbOrderByMobile("13975171495");
 			orders = this.getTbOrderByMobile(member.getString("mobile"));
@@ -430,9 +430,9 @@ public class MemberController {
 	@RequestMapping(value = "/onlineOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String onlineOrderDetail(HttpServletRequest request, Map<String, Object> map,String tid,String totalPayment) throws Exception {
 		log.info("进入onlineOrderDetail");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if (openId == null) {
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if (unionid == null) {
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
 		
@@ -559,12 +559,12 @@ public class MemberController {
 	@RequestMapping(value = "/store", method = { RequestMethod.GET, RequestMethod.POST })
 	public String store(HttpServletRequest request, Map<String, Object> map)throws Exception  {
 		log.info("进入store");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if(openId == null){
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if(unionid == null){
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
-		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(openId);
+		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(unionid);
 		map.put("store", store);
 		log.info("结束store");
 		return "/store.html";
@@ -637,12 +637,12 @@ public class MemberController {
 	@RequestMapping(value = "/cardDetail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String cardDetail(HttpServletRequest request, Map<String, Object> map, Long storeId)throws Exception  {
 		log.info("进入cardDetail");
-		String openId = WeChatAPI.getOpenId(request.getSession());
-		if(openId == null){
-			log.info("openId == null");
+		String unionid = WeChatAPI.getUnionid(request.getSession());
+		if(unionid == null){
+			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
-		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(openId);
+		JSONObject obj =consumer.getMemberCardApi().get().selectByMemberId(unionid);
 		map.put("card", obj);
 		log.info("结束cardDetail");
 		return "/member_cardDetail.html";

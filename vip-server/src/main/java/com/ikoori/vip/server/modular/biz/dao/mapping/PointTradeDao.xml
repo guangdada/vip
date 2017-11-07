@@ -10,13 +10,13 @@
 			pt.trade_type,
 			wx.nickname,
 			m.mobile,
-			m.open_id,
+			m.unionid,
 			p.`name` AS pointName
 		FROM
 			v_point_trade pt
 		LEFT JOIN v_point p ON pt.point_id = p.id
 		LEFT JOIN v_member m ON m.id = pt.member_id
-		LEFT JOIN v_wx_user wx ON wx.openid = m.open_id
+		LEFT JOIN v_wx_user wx ON wx.unionid = m.unionid
 		WHERE
 			1 = 1
 		AND pt.`status` = 1

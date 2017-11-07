@@ -37,10 +37,10 @@ public class ShareApiImpl implements ShareApi {
 	 * 保存邀请记录
 	 * 
 	 * @Title: saveShareLog
-	 * @param shareOpenid
-	 *            邀请人openId
-	 * @param receiveOpenid
-	 *            受邀人openId
+	 * @param shareUnionid
+	 *            邀请人unionid
+	 * @param receiveUnionid
+	 *            受邀人unionid
 	 * @param receiveIp
 	 *            受邀人ip
 	 * @throws Exception
@@ -49,34 +49,34 @@ public class ShareApiImpl implements ShareApi {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public void saveShareLog(String shareOpenid, String receiveOpenid, String receiveIp) throws Exception {
-		log.info("进入saveShareLog>>shareOpenid=" + shareOpenid);
-		log.info("进入saveShareLog>>receiveOpenid=" + receiveOpenid);
+	public void saveShareLog(String shareUnionid, String receiveUnionid, String receiveIp) throws Exception {
+		log.info("进入saveShareLog>>shareUnionid=" + shareUnionid);
+		log.info("进入saveShareLog>>receiveUnionid=" + receiveUnionid);
 		log.info("进入saveShareLog>>receiveIp=" + receiveIp);
 		// 邀请人不存在， 不处理
-		Member shareMem = memberDao.getMemberByOpenId(shareOpenid);
+		Member shareMem = memberDao.getMemberByUnionid(shareUnionid);
 		if (shareMem == null) {
 			log.info("邀请人不存在");
 			return;
 		}
 		// 受邀人不是会员 或者已激活不处理
-		Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
+		Member receiveMem = memberDao.getMemberByUnionid(receiveUnionid);
 		if (receiveMem == null || receiveMem.isIsActive()) {
 			log.info("受邀人不存在");
 			return;
 		}
 		
 		Wrapper<ShareLog> w = new EntityWrapper<ShareLog>();
-		w.eq("share_openid", shareOpenid);
-		w.eq("receive_openid", receiveOpenid);
+		w.eq("share_unionid", shareUnionid);
+		w.eq("receive_unionid", receiveUnionid);
 		int count = shareLogMapper.selectCount(w);
 		if(count > 0){
 			log.info("已有邀请记录");
 			return;
 		}
 		ShareLog shareLog = new ShareLog();
-		shareLog.setShareOpenid(shareOpenid);
-		shareLog.setReceiveOpenid(receiveOpenid);
+		shareLog.setShareUnionid(shareUnionid);
+		shareLog.setReceiveUnionid(receiveUnionid);
 		shareLog.setReceiveIp(receiveIp);
 		shareLog.setReceiveStatus(false);
 		shareLogMapper.insert(shareLog);

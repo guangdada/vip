@@ -9,7 +9,7 @@
 		<result column="redpack_id" property="redpackId" />
 		<result column="send_status" property="sendStatus" />
 		<result column="send_amount" property="sendAmount" />
-		<result column="openid" property="openid" />
+		<result column="unionid" property="unionid" />
 		<result column="billno" property="billno" />
 		<result column="ip" property="ip" />
 		<result column="reason" property="reason" />

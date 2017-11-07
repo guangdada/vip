@@ -22,21 +22,21 @@ public class MemberCouponApiImpl implements MemberCouponApi {
 	CouponFetchDao couponFetchDao;
 	
 	/**   
-	 * <p>Title: getMemberCouponByOpenId</p>   
+	 * <p>Title: getMemberCouponByUnionid</p>   
 	 * <p>Description:优惠券信息 </p>   
-	 * @param openId
+	 * @param unionid
 	 * @return   
-	 * @see com.ikoori.vip.api.service.MemberCouponApi#getMemberCouponByOpenId(java.lang.String)   
+	 * @see com.ikoori.vip.api.service.MemberCouponApi#getMemberCouponByUnionid(java.lang.String)   
 	 */  
 	@Override
-	public List<Map<String, Object>> getMemberCouponByOpenId(String openId) {
-		log.info("进入getMemberCouponByOpenId>>openId=" + openId);
-		List<Map<String, Object>> result=couponFetchDao.selectCoupon(openId);
+	public List<Map<String, Object>> getMemberCouponByUnionid(String unionid) {
+		log.info("进入getMemberCouponByUnionid>>unionid=" + unionid);
+		List<Map<String, Object>> result=couponFetchDao.selectCoupon(unionid);
 	    if(result==null){
 	    	log.info("优惠券信息为空");
 	    	return null;
 	    }
-	    log.info("结束getMemberCouponByOpenId");
+	    log.info("结束getMemberCouponByUnionid");
 	    return result;
 	}
 	

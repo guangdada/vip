@@ -5,8 +5,8 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.ikoori.vip.common.persistence.model.ShareLog">
 		<id column="id" property="id" />
-		<result column="share_openid" property="shareOpenid" />
-		<result column="receive_openid" property="receiveOpenid" />
+		<result column="share_unionid" property="shareUnionid" />
+		<result column="receive_unionid" property="receiveUnionid" />
 		<result column="receive_status" property="receiveStatus" />
 		<result column="receive_ip" property="receiveIp" />
 		<result column="create_time" property="createTime" />

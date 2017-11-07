@@ -5,15 +5,27 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.support.HttpKit;
+import com.ikoori.vip.common.support.HttpUtil;
 import com.ikoori.vip.common.util.EmojiFilter;
 
 /**
  * 微信公众平台API调用工具
  */
 public class WeChatAPI {
+	/**
+	 * 小程序appid
+	 */
+	public static String xcx_appid = "wx8932382efdd56d5a";
+	
+	/**
+	 * 小程序secret
+	 */
+	public static String xcx_secret = "736e2a6dbdfdc846899836950b667ac4";
+	
 	/**
 	 * 保存用于openId
 	 */
@@ -45,6 +57,10 @@ public class WeChatAPI {
 	public static final String jsapiTicket = "http://krvip.ikoori.com/getJsApiTicket";
 	/** 获得accesstoken */
 	public static final String accesstoken = "http://krvip.ikoori.com/weixin/accesstoken";
+	/** 批量获取信息 */
+	public static final String batchget = "https://api.weixin.qq.com/cgi-bin/user/info/batchget";
+	/** 根据code调用微信接口换取openid和session_key*/
+	public static final String jscode2session = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
 	
 
 	/**
@@ -67,6 +83,26 @@ public class WeChatAPI {
 		userInfo.setNickname(nickname);
 		return userInfo;
 	}
+	
+	public static String getAccesstoken(){
+		String token = HttpKit.sendGet(WeChatAPI.accesstoken, null);
+		if (StringUtils.isNotBlank(token)) {
+			JSONObject obj = JSONObject.parseObject(token);
+			return obj.getString("obj");
+		}
+		return "";
+	}
+	
+	public static String batchget(String data){
+		String url = WeChatAPI.batchget + "?access_token=" + WeChatAPI.getAccesstoken();
+		try {
+			String result = HttpUtil.wpost(url, data);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	
 	public static void main(String[] args) {
@@ -80,5 +116,44 @@ public class WeChatAPI {
 		System.out.println(obj.get("msg"));*/
 		
 		//System.out.print(getMenu());
+		
+		String url = WeChatAPI.batchget + "?access_token=" + WeChatAPI.getAccesstoken();
+		JSONObject oo = new JSONObject();
+		
+		JSONArray a = new JSONArray();
+		JSONObject sobj = new JSONObject();
+		sobj.put("openid", "o19yZs3bzlU0Hk5fat_xa-CmG6E4");
+		sobj.put("lang", "zh_CN");
+		a.add(sobj);
+		
+		JSONObject sobj1 = new JSONObject();
+		sobj1.put("openid", "o19yZs-kTAu1omBUVgtS3XeL_AXY");
+		sobj1.put("lang", "zh_CN");
+		a.add(sobj1);
+		
+		JSONObject sobj2 = new JSONObject();
+		sobj2.put("openid", "o19yZs2aNm71Nofvb9hc4FdGbhQc");
+		sobj2.put("lang", "zh_CN");
+		a.add(sobj2);
+		
+		JSONObject sobj3 = new JSONObject();
+		sobj3.put("openid", "o19yZs3SUmLFaSkABYVImJ-mr7gY");
+		sobj3.put("lang", "zh_CN");
+		a.add(sobj3);
+		
+		oo.put("user_list", a);
+		
+		try {
+			String result = HttpUtil.wpost(url, oo.toJSONString());
+			JSONObject obj = JSONObject.parseObject(result);
+			JSONArray users = (JSONArray) obj.get("user_info_list");
+			for (int i = 0; i < users.size(); i++) {
+				JSONObject dd  = (JSONObject) users.get(i);
+				System.out.println(dd.get("unionid"));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -123,14 +123,14 @@ public class ShareServiceImpl implements IShareService {
 	 * 获得当前激活用户的邀请人
 	 * 
 	 * @Title: getShareLog
-	 * @param receiveOpenId
+	 * @param receiveUnionid
 	 * @return
 	 * @date: 2017年10月9日 上午11:19:16
 	 * @author: chengxg
 	 */
-	public ShareLog getShareLog(String receiveOpenId) {
+	public ShareLog getShareLog(String receiveUnionid) {
 		Wrapper<ShareLog> w = new EntityWrapper<ShareLog>();
-		w.eq("receive_openid", receiveOpenId);
+		w.eq("receive_unionid", receiveUnionid);
 		w.eq("receive_status", 0);
 		w.eq("status", 1);
 		w.orderBy("id", false);
@@ -160,14 +160,14 @@ public class ShareServiceImpl implements IShareService {
 	 * 获得邀请人某月已经邀请成功的人数
 	 * 
 	 * @Title: getShareCount
-	 * @param shareOpenid
+	 * @param shareUnionid
 	 * @return
 	 * @date: 2017年10月9日 上午11:24:09
 	 * @author: chengxg
 	 */
-	public int getShareCount(String shareOpenid, Date date) {
+	public int getShareCount(String shareUnionid, Date date) {
 		Wrapper<ShareLog> w = new EntityWrapper<ShareLog>();
-		w.eq("share_openid", shareOpenid);
+		w.eq("share_unionid", shareUnionid);
 		w.eq("receive_status", 1);
 		w.eq("status", 1);
 		return shareLogMapper.selectCount(w);
@@ -177,15 +177,15 @@ public class ShareServiceImpl implements IShareService {
 	 * 获得邀请人，邀请某个IP的数量
 	 * 
 	 * @Title: getShareCountByIp
-	 * @param shareOpenid
+	 * @param shareUnionid
 	 * @param ip
 	 * @return
 	 * @date: 2017年10月9日 上午11:25:13
 	 * @author: chengxg
 	 */
-	public int getShareCountByIp(String shareOpenid, String ip) {
+	public int getShareCountByIp(String shareUnionid, String ip) {
 		Wrapper<ShareLog> w = new EntityWrapper<ShareLog>();
-		w.eq("share_openid", shareOpenid);
+		w.eq("share_unionid", shareUnionid);
 		w.eq("receive_status", 1);
 		w.eq("receive_ip", ip);
 		w.eq("status", 1);
@@ -202,8 +202,8 @@ public class ShareServiceImpl implements IShareService {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void activeShare(Member receiveMem) {
-		log.info("进入activeShare" + receiveMem.getOpenId());
-		//Member receiveMem = memberDao.getMemberByOpenId(receiveOpenid);
+		log.info("进入activeShare" + receiveMem.getUnionid());
+		//Member receiveMem = memberDao.getMemberByUnionid(receiveUnionid);
 		// 获得分享规则
 		Share share = getShare(receiveMem.getMerchantId());
 		if (share == null) {
@@ -211,7 +211,7 @@ public class ShareServiceImpl implements IShareService {
 			return;
 		}
 		// 获得邀请记录，得到邀请人信息
-		ShareLog shareLog = getShareLog(receiveMem.getOpenId());
+		ShareLog shareLog = getShareLog(receiveMem.getUnionid());
 		if (shareLog == null) {
 			log.info("没有找到邀请记录");
 			return;
@@ -219,7 +219,7 @@ public class ShareServiceImpl implements IShareService {
 
 		// 判断邀请人当月已经邀请人数(激活成功为准)是否已经超过限制
 		if (share.getShareCount() != null) {
-			int shareCount = shareLogDao.getShareCount(shareLog.getShareOpenid(),
+			int shareCount = shareLogDao.getShareCount(shareLog.getShareUnionid(),
 					DateUtil.getDay(shareLog.getCreateTime()));
 			if (shareCount >= share.getShareCount()) {
 				log.info("邀请人当月邀请人数为：" + shareCount + "超过限制的：" + share.getShareCount());
@@ -228,16 +228,16 @@ public class ShareServiceImpl implements IShareService {
 		}
 
 		// 同一IP仅限第一个注册的好友加积分
-		int shareIpCount = getShareCountByIp(shareLog.getShareOpenid(), shareLog.getReceiveIp());
+		int shareIpCount = getShareCountByIp(shareLog.getShareUnionid(), shareLog.getReceiveIp());
 		if (shareIpCount >= 1) {
 			log.info("邀请人已经邀请过ip:" + shareLog.getReceiveIp() + "获得奖励");
 			return;
 		}
 
 		// 邀请人
-		Member shareMem = memberDao.getMemberByOpenId(shareLog.getShareOpenid());
+		Member shareMem = memberDao.getMemberByUnionid(shareLog.getShareUnionid());
 		if (shareMem == null) {
-			log.info("没有找到openId:" + shareLog.getShareOpenid() + "的邀请人");
+			log.info("没有找到unionid:" + shareLog.getShareUnionid() + "的邀请人");
 			return;
 		}
 

@@ -22,16 +22,16 @@ public class MemberPointApiImpl implements MemberPointApi {
 	PointDao pointDao;
 	
 	/**   
-	 * <p>Title: getMemberPointByOpenId</p>   
+	 * <p>Title: getMemberPointByUnionid</p>   
 	 * <p>Description:查询会员积分 </p>   
-	 * @param openId
+	 * @param unionid
 	 * @return   
-	 * @see com.ikoori.vip.api.service.MemberPointApi#getMemberPointByOpenId(java.lang.String)   
+	 * @see com.ikoori.vip.api.service.MemberPointApi#getMemberPointByUnionid(java.lang.String)   
 	 */  
 	@Override
-	public List<Map<String, Object>> getMemberPointByOpenId(String openId) {
-		log.info("进入getMemberPointByOpenId>>openId=" + openId);
-		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(openId);
+	public List<Map<String, Object>> getMemberPointByUnionid(String unionid) {
+		log.info("进入getMemberPointByUnionid>>unionid=" + unionid);
+		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(unionid);
 		return points;
 	}
 

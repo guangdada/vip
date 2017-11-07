@@ -70,9 +70,9 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 
 	@Override
 	public List<Map<String, Object>> getRedpackLogList(Page<Map<String, Object>> page, Long merchantId, String billno,
-			String openid, Integer sendStatus, String sendS, String sendE, Integer redpackId, String orderByField,
+			String unionid, Integer sendStatus, String sendS, String sendE, Integer redpackId, String orderByField,
 			boolean isAsc) {
-		return redpackLogDao.getRedpackLogList(page, merchantId, billno, openid, sendStatus, sendS, sendE, redpackId,
+		return redpackLogDao.getRedpackLogList(page, merchantId, billno, unionid, sendStatus, sendS, sendE, redpackId,
 				orderByField, isAsc);
 	}
 
@@ -113,9 +113,10 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public void saveRedPackLog(int amount, String openid, String ip, Long merchantId, Long redpackId, String actName,
+	public void saveRedPackLog(int amount, String unionid,String openid, String ip, Long merchantId, Long redpackId, String actName,
 			String remark, String wishing) {
 		log.info("进入saveRedPackLog>>amount = " + amount);
+		log.info("进入saveRedPackLog>>unionid = " + unionid);
 		log.info("进入saveRedPackLog>>openid = " + openid);
 		log.info("进入saveRedPackLog>>ip = " + ip);
 		log.info("进入saveRedPackLog>>merchantId = " + merchantId);
@@ -138,7 +139,7 @@ public class RedpackLogServiceImpl implements IRedpackLogService {
 			log.setIp(ip);
 			log.setRedpackId(redpackId);
 			log.setMerchantId(merchantId);
-			log.setOpenid(openid);
+			log.setUnionid(unionid);
 			log.setReason(rprd.getErr_code_des());
 			log.setSendAmount(amount);
 			if ("SUCCESS".equals(rprd.getErr_code())) {

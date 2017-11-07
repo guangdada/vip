@@ -38,7 +38,7 @@
         LEFT JOIN v_member m ON m.id =pt.member_id
         where pt.status = 1
 		AND m.`status`=1
-        AND m.open_id=#{openId}
+        AND m.unionid=#{unionid}
         ORDER BY pt.id DESC
         LIMIT 20
     </select>

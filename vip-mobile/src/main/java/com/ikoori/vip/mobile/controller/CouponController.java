@@ -45,8 +45,8 @@ public class CouponController {
 	@RequestMapping(value = "/toActive", method = { RequestMethod.GET, RequestMethod.POST })
 	public String toActive(HttpServletRequest request,Model model) throws Exception {
 		try {
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
 				throw new Exception("登录信息有误");
 			}
 			return "/coupon_active.html";
@@ -89,11 +89,11 @@ public class CouponController {
 	public Object active(HttpServletRequest request, String verifyCode, Model model) throws Exception {
 		JSONObject obj = new JSONObject();
 		try {
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
 				throw new Exception("登录信息有误");
 			}
-			consumer.getCouponApi().get().activeCoupon(verifyCode, openId);
+			consumer.getCouponApi().get().activeCoupon(verifyCode, unionid);
 			//model.addAttribute("code",true);
 			//model.addAttribute("msg","该券已经放入您的账户");
 			obj.put("code", "200");
@@ -130,8 +130,8 @@ public class CouponController {
 	@RequestMapping(value = "/tofetch/{alias}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String tofetch(HttpServletRequest request, @PathVariable String alias,Model model) throws Exception {
 		try {
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
 				throw new Exception("登录信息有误");
 			}
 			Object obj = consumer.getCouponApi().get().getCouponByAlias(alias);
@@ -157,11 +157,11 @@ public class CouponController {
 	@RequestMapping(value = "/fetch/{alias}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String fetch(HttpServletRequest request, @PathVariable String alias, Model model) throws Exception {
 		try {
-			String openId = WeChatAPI.getOpenId(request.getSession());
-			if (openId == null) {
+			String unionid = WeChatAPI.getUnionid(request.getSession());
+			if (unionid == null) {
 				throw new Exception("登录信息有误");
 			}
-			consumer.getCouponApi().get().getCoupon(alias, openId);
+			consumer.getCouponApi().get().getCoupon(alias, unionid);
 			model.addAttribute("code",true);
 			model.addAttribute("msg","该券已经放入您的账户");
 		} catch (Exception e) {

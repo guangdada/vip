@@ -47,13 +47,8 @@ public class ShareController {
 			throw new Exception("登录信息有误");
 		}
 
-		// 获取微信头像和昵称
-		//Object user = consumer.getMemberInfoApi().get().getWxUserByOpenId(openId);
-		//map.put("user", user);
 		map.put("userInfo", userInfo);
-		//String shareUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-				//+ "/share/invited/" + userInfo.getOpenid();
-		String shareUrl = gunsProperties.getClientUrl() +  "/share/invited/" + userInfo.getOpenid();
+		String shareUrl = gunsProperties.getClientUrl() +  "/share/invited/" + userInfo.getUnionid();
 		map.put("shareUrl", shareUrl);
 		log.info("结束invitation");
 		return "/member_invitation.html";
@@ -69,17 +64,17 @@ public class ShareController {
 	 * @author: chengxg
 	 * @throws Exception
 	 */
-	@RequestMapping("/invited/{shareOpenid}")
-	public String invited(@PathVariable String shareOpenid, HttpSession session, HttpServletRequest request)
+	@RequestMapping("/invited/{shareUnionid}")
+	public String invited(@PathVariable String shareUnionid, HttpSession session, HttpServletRequest request)
 			throws Exception {
 		log.info("进入invited");
-		String openId = WeChatAPI.getOpenId(session);
-		if (openId == null) {
+		String unionid = WeChatAPI.getUnionid(session);
+		if (unionid == null) {
 			throw new Exception("登录信息有误");
 		}
-		if (!shareOpenid.equals(openId)) {
+		if (!shareUnionid.equals(unionid)) {
 			log.info("进入invited");
-			consumer.getShareApi().get().saveShareLog(shareOpenid, openId, IpUtil.getIpAddr(request));
+			consumer.getShareApi().get().saveShareLog(shareUnionid, unionid, IpUtil.getIpAddr(request));
 		}
 		log.info("结束invited");
 		return "redirect:/index";

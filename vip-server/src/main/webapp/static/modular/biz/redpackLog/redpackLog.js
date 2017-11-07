@@ -16,7 +16,7 @@ RedpackLog.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '红包ID', field: 'billno', visible: true, align: 'center', valign: 'middle'},
-        {title: '微信ID', field: 'openid', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信ID', field: 'unionid', visible: true, align: 'center', valign: 'middle'},
         {title: '红包名称', field: 'redpackName', visible: true, align: 'center', valign: 'middle'},
         {title: '发送金额(元)', field: 'send_amount', visible: true, align: 'center', valign: 'middle',formatter:function(index,row,value){
     			return !row.send_amount ? "-" : row.send_amount/100; 
@@ -97,7 +97,7 @@ RedpackLog.delete = function () {
 RedpackLog.search = function () {
     var queryData = {};
     queryData['billno'] = $("#billno").val();
-    queryData['openid'] = $("#openid").val();
+    queryData['unionid'] = $("#unionid").val();
     queryData['redpackId'] = $("#redpackId").val();
     queryData['sendStatus'] = $("#sendStatus").val();
     queryData['sendS'] = $("#sendS").val();

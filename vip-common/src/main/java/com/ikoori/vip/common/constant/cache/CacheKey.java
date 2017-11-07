@@ -19,15 +19,6 @@ public interface CacheKey {
 
     String DEPT_NAME = "dept_name_";
     
-    String SINGLE_CARD = "single_card_";
-    
-    String SINGLE_MEMBER = "single_member_";
-    
     String SINGLE_MERCHANT = "single_merchant_";
     
-    String SINGLE_MERCHANT_USER = "single_merchant_user_";
-    
-    //String PICTYPE_NAME = "pictype_name_";
-
-
 }

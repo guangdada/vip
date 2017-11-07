@@ -23,22 +23,22 @@ public interface CouponApi {
 	 * 领取优惠券
 	 * @Title: getStoreDetail   
 	 * @param alias
-	 * @param openId
+	 * @param unionid
 	 * @return
 	 * @date:   2017年9月14日 下午10:59:29 
 	 * @author: chengxg
 	 */
-	public JSONObject getCoupon(String couponId,String openId) throws Exception;
+	public JSONObject getCoupon(String couponId,String unionid) throws Exception;
 	
 	/**
 	 * 根据券号激活优惠券
 	 * @Title: activeCoupon   
 	 * @param verifyCode
-	 * @param openId
+	 * @param unionid
 	 * @return
 	 * @throws Exception
 	 * @date:   2017年9月18日 下午5:38:19 
 	 * @author: chengxg
 	 */
-	public JSONObject activeCoupon(String verifyCode, String openId) throws Exception;
+	public JSONObject activeCoupon(String verifyCode, String unionid) throws Exception;
 }

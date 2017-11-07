@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 public interface RedpackLogDao {
 	List<Map<String, Object>> getRedpackLogList(@Param("page") Page<Map<String, Object>> page,
-			@Param("merchantId") Long merchantId, @Param("billno") String billno, @Param("openid") String openid,
+			@Param("merchantId") Long merchantId, @Param("billno") String billno, @Param("unionid") String unionid,
 			@Param("sendStatus") Integer sendStatus, @Param("sendS") String sendS, @Param("sendE") String sendE,
 			@Param("redpackId") Integer redpackId, @Param("orderByField") String orderByField,
 			@Param("isAsc") boolean isAsc);
