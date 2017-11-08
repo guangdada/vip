@@ -155,6 +155,7 @@ public class ShiroConfig {
         hashMap.put("/files/**", "anon");
         // 外部接口目录
         hashMap.put("/web/**", "anon");
+        hashMap.put("/gw/**", "anon");
         hashMap.put("/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
