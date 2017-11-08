@@ -25,9 +25,10 @@ import com.ikoori.vip.mobile.util.WeChatAPI;
 
 /**
  * 小程序会员接口
- * @ClassName:  XcxMemberController
+ * 
+ * @ClassName: XcxMemberController
  * @author: chengxg
- * @date:   2017年11月6日 上午9:30:17
+ * @date: 2017年11月6日 上午9:30:17
  */
 @Controller
 @RequestMapping("/xcx/member")
@@ -48,18 +49,24 @@ public class XcxMemberController extends BaseController {
 			String url = MessageFormat.format(WeChatAPI.jscode2session, wechatProperties.getXcxAppid(),
 					wechatProperties.getXcxSecret(), code);
 			String msg = HttpUtil.get(url);
+			log.info("msg>>>" + msg);
 			JSONObject data = JSONObject.parseObject(msg);
 			String openid = data.getString("openid");
 			String session_key = data.getString("session_key");
 			String unionid = data.getString("unionid");
-			String sessionId = openid + "-" + session_key + "-" + unionid;
-			CacheKit.put(Cache.XCXSESSIONID, UUID.randomUUID(), sessionId);
-			result.put("content", sessionId);
+			JSONObject userInfo = new JSONObject();
+			userInfo.put("openid", openid);
+			userInfo.put("session_key", session_key);
+			userInfo.put("unionid", unionid);
+			String sessionid = UUID.randomUUID().toString();
+			CacheKit.put(Cache.XCXSESSIONID, sessionid, userInfo.toString());
+			result.put("content", sessionid);
 		} catch (Exception e) {
 			log.error("", e);
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
+		log.info("result>>>" + result);
 		return result;
 	}
 }
