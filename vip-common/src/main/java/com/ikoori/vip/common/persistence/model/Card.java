@@ -122,7 +122,7 @@ public class Card extends Model<Card> {
 	private String cardNumberPrefix;
     
 	 /**
-     * 每个月按内购价格可以购买的额度（单位：分）
+     * 每个月按内购价格可以购买的额度（单位：元）
      */
 	@TableField("trade_amount_limit")
 	private Integer tradeAmountLimit;

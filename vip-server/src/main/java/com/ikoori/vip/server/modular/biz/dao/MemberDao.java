@@ -25,7 +25,7 @@ public interface MemberDao {
 	
 	Map<String, Object> getWxUserByUnionid(@Param("unionid") String unionid);
 	
-	Map<String, Object> getWxUserByOpenid(String openid);
+	Map<String, Object> getWxUserByOpenid(@Param("openid")  String openid);
 	
 	Member selectByMobile(@Param("mobile") String mobile);
 	

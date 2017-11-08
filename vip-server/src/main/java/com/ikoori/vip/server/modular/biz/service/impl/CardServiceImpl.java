@@ -113,9 +113,6 @@ public class CardServiceImpl implements ICardService {
 		}else{
 			card.setCoverPic("");
 		}
-		if(card.getTradeAmountLimit()!=null){
-			card.setTradeAmountLimit(card.getTradeAmountLimit()*100);
-		}
 		
 		card.setCardNumberPrefix("KR");
 		if(card.getId() != null){

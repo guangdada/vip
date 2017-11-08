@@ -156,7 +156,7 @@
 			v_member m
 		LEFT JOIN v_wx_user wu  ON wu.unionid=m.unionid	
 		WHERE
-		<if test="unionid != null">
+		<if test="openid != null">
         	wu.openid = #{openid}
         </if>
     </select>
