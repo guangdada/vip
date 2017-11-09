@@ -59,9 +59,15 @@ public class XcxMemberController extends BaseController {
 			log.info("jscode2session >>>" + msg);
 			JSONObject data = JSONObject.parseObject(msg);
 			String session_key = data.getString("session_key");
-			
+			//登录凭证不能为空
+	        if (StringUtils.isBlank(session_key)) {
+	        	result.put("code", 500);
+	        	result.put("msg", "session_key获取失败");
+	            return result;
+	        }
 			// 解密用戶信息
 			String info = AesCbcUtil.decrypt(encryptedData, session_key, iv, "UTF-8");
+			log.info("userInfoJSON >>>" + info);
             if (StringUtils.isNotBlank(info)) {
                 JSONObject userInfoJSON = JSONObject.parseObject(info);
                 /*Map userInfo = new HashMap();
@@ -75,7 +81,6 @@ public class XcxMemberController extends BaseController {
                 userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl"));*/
     			String sessionid = UUID.randomUUID().toString();
     			CacheKit.put(Cache.XCXSESSIONID, sessionid, userInfoJSON);
-    			log.info("userInfoJSON >>>");
     			result.put("content", sessionid);
             }
 		} catch (Exception e) {
