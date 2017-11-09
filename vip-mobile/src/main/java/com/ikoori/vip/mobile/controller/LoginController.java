@@ -72,7 +72,7 @@ public class LoginController {
 
 		// 新用户生成会员信息
 		try {
-			consumer.getMemberInfoApi().get().saveMemberInfo(userInfo);
+			consumer.getMemberInfoApi().get().saveMemberInfo(userInfo,true);
 		} catch (Exception e) {
 			log.error("保存会员信息失败", e);
 			throw new Exception("保存会员信息失败");

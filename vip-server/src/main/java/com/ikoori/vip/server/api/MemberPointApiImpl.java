@@ -29,9 +29,9 @@ public class MemberPointApiImpl implements MemberPointApi {
 	 * @see com.ikoori.vip.api.service.MemberPointApi#getMemberPointByUnionid(java.lang.String)   
 	 */  
 	@Override
-	public List<Map<String, Object>> getMemberPointByUnionid(String unionid) {
+	public List<Map<String, Object>> getMemberPointByUnionid(String unionid,Integer start) {
 		log.info("进入getMemberPointByUnionid>>unionid=" + unionid);
-		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(unionid);
+		List<Map<String, Object>> points = pointDao.selectPointListByMemberId(unionid,start);
 		return points;
 	}
 

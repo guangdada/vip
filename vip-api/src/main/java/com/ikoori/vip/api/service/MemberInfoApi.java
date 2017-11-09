@@ -13,7 +13,7 @@ public interface MemberInfoApi {
 	
 	public Object getMemberByMobile(String mobile);
 
-	public void saveMemberInfo(UserInfo userInfo) throws Exception;
+	public void saveMemberInfo(UserInfo userInfo,boolean update) throws Exception;
 
 	public int updateMemberInfoByUnionid(String unionid, String mobile, String name, int sex, Date birthday,
 			String address, String area);

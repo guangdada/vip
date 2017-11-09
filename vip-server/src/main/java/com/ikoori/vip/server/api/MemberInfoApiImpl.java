@@ -179,6 +179,7 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * 
 	 * @Title: saveMemberInfo
 	 * @param userInfo
+	 * @param update 是否更新微信信息（小程序不要更新）
 	 * @return
 	 * @throws Exception
 	 * @date: 2017年9月18日 上午12:26:24
@@ -186,10 +187,10 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public void saveMemberInfo(UserInfo userInfo) throws Exception {
+	public void saveMemberInfo(UserInfo userInfo,boolean update) throws Exception {
 		log.info("进入saveMemberInfo>> userInfo ==" + userInfo.toString());
 		log.info("关注微信>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		memberService.saveMember(userInfo,true);
+		memberService.saveMember(userInfo,update);
 		log.info("结束saveMemberInfo");
 		log.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<关注微信");
 	}

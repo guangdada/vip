@@ -288,7 +288,7 @@ public class MemberController {
 		}
 		
 		//获取会员积分
-		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid);
+		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid,0);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
 		log.info("结束point");
