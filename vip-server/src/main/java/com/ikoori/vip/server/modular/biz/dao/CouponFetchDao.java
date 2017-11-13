@@ -59,7 +59,7 @@ public interface CouponFetchDao {
 	/*
 	 * 可用优惠券（未使用、未失效） 失效优惠券（使用、失效）
 	 */
-	List<Map<String, Object>> selectCoupon(@Param("unionid") String unionid,int start,int pageSize);
+	List<Map<String, Object>> selectCoupon(@Param("unionid") String unionid, @Param("start") int start,@Param("pageSize") int pageSize);
 
 	/*
 	 * 优惠券详情
