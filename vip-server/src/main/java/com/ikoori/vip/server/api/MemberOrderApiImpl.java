@@ -29,14 +29,14 @@ public class MemberOrderApiImpl implements MemberOrderApi {
 	 * @return   
 	 */  
 	@Override
-	public List<Map<String, Object>> getMemberOrderByUnionid(String unionid) {
+	public List<Map<String, Object>> getMemberOrderByUnionid(String unionid,int start,int pageSize) {
 		log.info("进入getMemberOrderByUnionid>>unionid=" + unionid);
 		Member member = memberDao.getMemberByUnionid(unionid);
 		if (member == null) {
 			log.info("member == null");
 			return null;
 		}
-		List<Map<String, Object>> orders = orderDao.selectOrderListByMemberId(member.getId());
+		List<Map<String, Object>> orders = orderDao.selectOrderListByMemberId(member.getId(),start,pageSize);
 		if (orders == null) {
 			log.info("orders==null");
 			return null;

@@ -48,7 +48,7 @@ public class SignController {
 		try {
 			obj = consumer.getSignApi().get().signIn(unionid);
 		} catch (Exception e) {
-			log.error("领取优惠券失败", e);
+			log.error("签到失败", e);
 			obj.put("code", 500);
 			// 判断是否为业务异常
 			if (StringUtils.isNotBlank(e.getMessage()) && e.getMessage().matches("\\{(.*)\\}")) {

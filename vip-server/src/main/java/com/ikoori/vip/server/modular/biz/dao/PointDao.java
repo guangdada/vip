@@ -32,7 +32,7 @@ public interface PointDao {
 			@Param("merchantId") Long merchantId);
 
 	/* 得到所以积分 */
-	List<Map<String, Object>> selectPointListByMemberId(@Param("unionid") String unionid,@Param("start") Integer start);
+	List<Map<String, Object>> selectPointListByMemberId(@Param("unionid") String unionid,@Param("start") int start,@Param("pageSize") int pageSize);
 
 	/**
 	 * 获得所有的积分规则

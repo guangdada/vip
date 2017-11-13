@@ -201,36 +201,40 @@ public class MemberInfoApiImpl implements MemberInfoApi {
 	 * @Title: activeMemberByUnionid
 	 * @param unionid
 	 * @param mobile
+	 * @param ip 
+	 * @param sendPack 发送红包
 	 * @return
 	 * @date: 2017年10月9日 上午10:54:16
 	 * @author: chengxg
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public int activeMemberByUnionid(String unionid, String mobile, String ip) {
+	public int activeMemberByUnionid(String unionid, String mobile, String ip,boolean sendPack) {
 		synchronized (mobile.intern()) {
 			log.info("进入activeMemberByUnionid>>unionid=" + unionid);
 			log.info("进入activeMemberByUnionid>>mobile=" + mobile);
-			int count = memberDao.updateMemberInfoByUnionid(unionid, null, mobile, 1, null, null, null);
+			int count = memberDao.registerMember(unionid, mobile);
 			if (count > 0) {
 				Member receiveMem = memberDao.getMemberByUnionid(unionid);
 				shareService.activeShare(receiveMem);
-				Redpack redpack = redpackService.selectByPackType(RedpackType.re.getCode(), receiveMem.getMerchantId());
-				if (redpack != null) {
-					Integer amount = redpack.getAmount().multiply(new BigDecimal(100)).intValue();
-					if (redpack.getSendType().intValue() == RedpackSendType.random.getCode()) {
-						int max = redpack.getMaxAmount().multiply(new BigDecimal(100)).intValue();
-						int min = redpack.getMinAmount().multiply(new BigDecimal(100)).intValue();
-						amount = (int) (Math.random() * (max - min + 1) + min);
-					}
+				if(sendPack){
+					Redpack redpack = redpackService.selectByPackType(RedpackType.re.getCode(), receiveMem.getMerchantId());
+					if (redpack != null) {
+						Integer amount = redpack.getAmount().multiply(new BigDecimal(100)).intValue();
+						if (redpack.getSendType().intValue() == RedpackSendType.random.getCode()) {
+							int max = redpack.getMaxAmount().multiply(new BigDecimal(100)).intValue();
+							int min = redpack.getMinAmount().multiply(new BigDecimal(100)).intValue();
+							amount = (int) (Math.random() * (max - min + 1) + min);
+						}
 
-					WxUser wxuser = new WxUser();
-					wxuser.setUnionid(unionid);
-					wxuser = wxUserMapper.selectOne(wxuser);
-					if (wxuser != null) {
-						redpackLogService.saveRedPackLog(amount, unionid, wxuser.getOpenid(), ip,
-								receiveMem.getMerchantId(), redpack.getId(), redpack.getActName(), redpack.getRemark(),
-								redpack.getWishing());
+						WxUser wxuser = new WxUser();
+						wxuser.setUnionid(unionid);
+						wxuser = wxUserMapper.selectOne(wxuser);
+						if (wxuser != null) {
+							redpackLogService.saveRedPackLog(amount, unionid, wxuser.getOpenid(), ip,
+									receiveMem.getMerchantId(), redpack.getId(), redpack.getActName(), redpack.getRemark(),
+									redpack.getWishing());
+						}
 					}
 				}
 			}

@@ -45,6 +45,7 @@
         <if test="memberId != null">
         	and o.member_id = #{memberId}
         </if>
+        limit #{start},#{pageSize}
     </select>
      <select id="selectOrderDetailListByOrderId" resultType="map">
 			select

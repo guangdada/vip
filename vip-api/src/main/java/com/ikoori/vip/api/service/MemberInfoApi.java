@@ -18,5 +18,5 @@ public interface MemberInfoApi {
 	public int updateMemberInfoByUnionid(String unionid, String mobile, String name, int sex, Date birthday,
 			String address, String area);
 	
-	public int activeMemberByUnionid(String unionid, String mobile,String ip);
+	public int activeMemberByUnionid(String unionid, String mobile,String ip,boolean sendPack);
 }

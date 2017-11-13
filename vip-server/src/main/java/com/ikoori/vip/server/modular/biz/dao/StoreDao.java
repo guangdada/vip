@@ -16,15 +16,20 @@ import com.ikoori.vip.common.persistence.model.Store;
  * @Date 2017-08-07 17:52:18
  */
 public interface StoreDao {
-   List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,@Param("merchantId") Long merchantId);
-   
-   public Store selectByStoreNo(@Param("storeNo") String storeNo);
-  
-   List<Map<String, Object>> getStore(@Param("lat") double lat, @Param("lon") double lon,@Param("minLat") double minLat,@Param("minLng") double minLng, @Param("maxLat") double maxLat,@Param("maxLng") double maxLng);
-   
-   Store getStoreDetail(@Param("storeId") Long storeId);
-   
-   List<Map<String,Object>> getStoreByUnionid(@Param("unionid")String unionid,@Param("storeType") Integer storeType);
-   
-   public List<Store> selectStore(@Param("merchantId") Long merchantId);
+	List<Map<String, Object>> getStoreList(@Param("page") Page<Store> page, @Param("name") String name,
+			@Param("orderByField") String orderByField, @Param("isAsc") boolean isAsc,
+			@Param("merchantId") Long merchantId);
+
+	public Store selectByStoreNo(@Param("storeNo") String storeNo);
+
+	List<Map<String, Object>> getStore(@Param("lat") double lat, @Param("lon") double lon,
+			@Param("minLat") double minLat, @Param("minLng") double minLng, @Param("maxLat") double maxLat,
+			@Param("maxLng") double maxLng);
+
+	Store getStoreDetail(@Param("storeId") Long storeId);
+
+	List<Map<String, Object>> getStoreByUnionid(@Param("unionid") String unionid, @Param("storeType") Integer storeType,
+			@Param("start") Integer start, @Param("pageSize") Integer pageSize);
+
+	public List<Store> selectStore(@Param("merchantId") Long merchantId);
 }

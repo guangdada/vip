@@ -1,20 +1,15 @@
 package com.ikoori.vip.mobile.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.code.kaptcha.Constants;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.state.PointTradeType;
 import com.ikoori.vip.common.constant.tips.ErrorTip;
 import com.ikoori.vip.common.constant.tips.SuccessTip;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.persistence.model.Member;
-import com.ikoori.vip.common.sms.Client;
-import com.ikoori.vip.common.support.HttpKit;
 import com.ikoori.vip.common.util.IpUtil;
-import com.ikoori.vip.common.util.MD5;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.config.properties.GunsProperties;
 import com.ikoori.vip.mobile.config.properties.WechatProperties;
@@ -52,7 +43,7 @@ import com.ikoori.vip.mobile.util.WeChatAPI;
  */
 @Controller
 @RequestMapping("/member")
-public class MemberController {
+public class MemberController extends BaseController{
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	GunsProperties gunsProperties;
@@ -162,8 +153,8 @@ public class MemberController {
 		}
 		
 		// 验证手机短信验证码是否正确
-		String mobileCode1 = (Integer) request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
-		if (!(mobileCode1.equals(mobileCode))) {
+		String mobileCode1 = request.getSession().getAttribute(Constant.MOBILE_CODE) + "";
+		if (StringUtils.isBlank(mobileCode1) || !mobileCode1.equals(mobileCode)) {
 			log.info(BizExceptionEnum.ERROR_MOBILE_CODE.getMessage());
 			return new ErrorTip(BizExceptionEnum.ERROR_MOBILE_CODE);
 		}
@@ -176,8 +167,9 @@ public class MemberController {
 		}
 		
 		try {
-			// 更新会员信息
-			consumer.getMemberInfoApi().get().activeMemberByUnionid(unionid, mem.getMobile(),IpUtil.getIpAddr(request));
+			// 激活会员信息
+			consumer.getMemberInfoApi().get().activeMemberByUnionid(unionid, mem.getMobile(),IpUtil.getIpAddr(request),true);
+			// 移除短信码
 			request.getSession().removeAttribute(Constant.MOBILE_CODE);
 		} catch (Exception e) {
 			log.error("会员激活失败", e);
@@ -205,14 +197,14 @@ public class MemberController {
 			String code, String mobile) {
 		log.info("进入validateCode");
 		// 验证验证码是否正确，正确则发送手机短信验证码
-		String code1 = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		String imgCode = (String) request.getSession().getAttribute(Constant.IMG_CODE);
 		if (mobile.equals("")) {
 			log.info(BizExceptionEnum.EMPTY_MOBILE.getMessage());
 			return new ErrorTip(BizExceptionEnum.EMPTY_MOBILE);
-		} else if (code1.equals(code)) {
-			sendMessage(request, mobile);
-			
-			request.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+		} else if (imgCode.equals(code)) {
+			request.getSession().setAttribute(Constant.MOBILE_CODE, sendMessage(mobile));
+			// 移除图形验证码
+			request.getSession().removeAttribute(Constant.IMG_CODE);
 			log.info("结束validateCode");
 			return new SuccessTip();
 		} else {
@@ -220,29 +212,6 @@ public class MemberController {
 			return new ErrorTip(BizExceptionEnum.SERVER_ERROR);
 		}
 	}
-	
-	
-	/** 
-	* @Title: sendMessage 
-	* @Description: 发送手机短信验证码
-	* @param  request
-	* @param  mobile  手机号 
-	* @return void     
-	* @throws 
-	*/
-	public void sendMessage(HttpServletRequest request, String mobile) {
-		log.info("进入sendMessage");
-		int max = 999999;
-		int min = 100000;
-		Random random = new Random();
-		int s = random.nextInt(max) % (max - min + 1) + min;
-		request.getSession().setAttribute(Constant.MOBILE_CODE, s);
-		String content = "【酷锐运动】您的激活验证码是：" + s;
-		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
-		log.info("结束sendMessage");
-		return;
-	}
-	
 	
 	/** 
 	* @Title: validateMoblie 
@@ -288,7 +257,7 @@ public class MemberController {
 		}
 		
 		//获取会员积分
-		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid,0);
+		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid,0,pageSize);
 		map.put("pointTradeType", PointTradeType.values());
 		map.put("points", points);
 		log.info("结束point");
@@ -315,7 +284,7 @@ public class MemberController {
 		}
 		
 		//获取会员优惠券
-		List<Map<String, Object>> Coupons = consumer.getMemberCouponApi().get().getMemberCouponByUnionid(unionid);
+		List<Map<String, Object>> Coupons = consumer.getMemberCouponApi().get().getMemberCouponByUnionid(unionid,0,pageSize);
 		map.put("Coupons", Coupons);
 		log.info("结束coupon");
 		return "/member_coupon.html";
@@ -369,7 +338,7 @@ public class MemberController {
 		}
 		
 		//获取会员订单信息
-		List<Map<String, Object>> orders = consumer.getMemberOrderApi().get().getMemberOrderByUnionid(unionid);
+		List<Map<String, Object>> orders = consumer.getMemberOrderApi().get().getMemberOrderByUnionid(unionid,0,pageSize);
 		map.put("orders", orders);
 		log.info("结束storeOrder");
 		return "/member_order.html";
@@ -439,98 +408,11 @@ public class MemberController {
 			throw new Exception("登录信息有误");
 		}
 		
-		JSONArray orderDetail=null;
-		orderDetail = this.getTbOrderByTid(tid);
+		JSONArray orderDetail= this.getTbOrderByTid(tid);
 		map.put("totalPayment", totalPayment);
 		map.put("orderDetail", orderDetail);
 		log.info("结束onlineOrderDetail");
 		return "/member_onlineOrderDetail.html";
-	}
-	
-	
-	/**   
-	 * @Title: getTbOrderByMobile   
-	 * @date:   2017年9月28日 下午2:40:19 
-	 * @author: huanglin
-	 * @return: JSONArray      
-	 * @throws   
-	 */  
-	public JSONArray getTbOrderByMobile(String mobile) {
-		log.info("进入getTbOrderByMobile");
-		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
-	/*	String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
-		Map<String, String> asObject = new TreeMap<String, String>();
-		asObject.put("agent_id", "1");
-		asObject.put("api", "getTbOrderByMobile");
-		asObject.put("mobile", mobile);
-
-		String secretkey = "lucy";
-
-		String sign = MD5.signTopRequestNew(asObject, secretkey, false).toUpperCase();
-		asObject.put("secretkey", secretkey);
-
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-
-		NameValuePair p1 = new BasicNameValuePair("secretkey", secretkey);
-		parameters.add(p1);
-
-		NameValuePair p2 = new BasicNameValuePair("agent_id", asObject.get("agent_id"));
-		parameters.add(p2);
-
-		NameValuePair p3 = new BasicNameValuePair("api", asObject.get("api"));
-		parameters.add(p3);
-
-		NameValuePair p4 = new BasicNameValuePair("mobile", asObject.get("mobile"));
-		parameters.add(p4);
-
-		NameValuePair p5 = new BasicNameValuePair("sign", sign);
-		parameters.add(p5);
-
-		String result = HttpKit.sendAndReciveData(url, parameters);
-		JSONObject jsonResult = JSONObject.parseObject(result);
-		JSONArray orders = jsonResult.getJSONArray("data");
-		
-		log.info("结束getTbOrderByMobile");
-		return orders;
-	}
-
-	public JSONArray getTbOrderByTid(String tid) {
-		log.info("进入getTbOrderByTid");
-		String url = "http://api.ikoori.com:8899/dispatch/tbapi";
-		/*String url = "http://192.168.168.194:8089/ikoori_api/dispatch/tbapi";*/
-		Map<String, String> asObject = new TreeMap<String, String>();
-		asObject.put("agent_id", "1");
-		asObject.put("api", "getTbOrderByTid");
-		asObject.put("tid", tid);
-
-		String secretkey = "lucy";
-
-		String sign = MD5.signTopRequestNew(asObject, secretkey, false).toUpperCase();
-		asObject.put("secretkey", secretkey);
-
-		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-
-		NameValuePair p1 = new BasicNameValuePair("secretkey", secretkey);
-		parameters.add(p1);
-
-		NameValuePair p2 = new BasicNameValuePair("agent_id", asObject.get("agent_id"));
-		parameters.add(p2);
-
-		NameValuePair p3 = new BasicNameValuePair("api", asObject.get("api"));
-		parameters.add(p3);
-
-		NameValuePair p4 = new BasicNameValuePair("tid", asObject.get("tid"));
-		parameters.add(p4);
-
-		NameValuePair p5 = new BasicNameValuePair("sign", sign);
-		parameters.add(p5);
-
-		String result = HttpKit.sendAndReciveData(url, parameters);
-		JSONObject jsonResult = JSONObject.parseObject(result);
-		JSONArray orders = jsonResult.getJSONArray("data");
-		
-		log.info("结束getTbOrderByTid");
-		return orders;
 	}
 	
 	/** 按照经纬度查找附近门店
@@ -567,7 +449,7 @@ public class MemberController {
 			log.info("unionid == null");
 			throw new Exception("登录信息有误");
 		}
-		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(unionid);
+		List<Map<String,Object>> store=consumer.getStoreApi().get().getStore(unionid,0,pageSize);
 		map.put("store", store);
 		log.info("结束store");
 		return "/store.html";

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.cache.Cache;
+import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.support.HttpUtil;
 import com.ikoori.vip.common.util.EmojiFilter;
 import com.ikoori.vip.core.cache.CacheKit;
@@ -48,19 +52,21 @@ public class XcxMemberController extends BaseController {
 
 	/**
 	 * 小程序登录入口
-	 * @Title: onLogin   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @date:   2017年11月9日 下午4:20:14 
+	 * 
+	 * @Title: onLogin
+	 * @param encryptedData
+	 * @param iv
+	 * @param code
+	 * @return
+	 * @date: 2017年11月13日 上午11:12:58
 	 * @author: chengxg
-	 * @return: Map<String,Object>      
-	 * @throws
 	 */
 	@RequestMapping(value = "onLogin", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> onLogin(String encryptedData, String iv, String code) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "500");
-		result.put("msg", "请求失败");
+		result.put("msg", "网络开了小差");
 		try {
 			// 登录凭证不能为空
 			if (StringUtils.isBlank(code) || StringUtils.isBlank(encryptedData) || StringUtils.isBlank(iv)) {
@@ -104,67 +110,325 @@ public class XcxMemberController extends BaseController {
 			}
 		} catch (Exception e) {
 			log.error("", e);
-			result.put("msg", "请求失败");
 		}
 		log.info("result>>>" + result);
 		return result;
 	}
-	
+
 	/**
-	 * 查询会员积分明细
-	 * @Title: point   
-	 * @Description: TODO(这里用一句话描述这个方法的作用)   
-	 * @date:   2017年11月9日 下午4:19:35 
+	 * 我的资料
+	 * 
+	 * @Title: info
+	 * @param sessionid
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:13:05
 	 * @author: chengxg
-	 * @return: Map<String,Object>      
-	 * @throws
 	 */
 	@ResponseBody
-	@RequestMapping(value="/point",method = {RequestMethod.GET,RequestMethod.POST})
-	public Map<String, Object> point(String sessionid, Integer start) throws Exception {
+	@RequestMapping(value = "/info", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> info(String sessionid) throws Exception {
+		log.info("进入info");
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				// 获取会员信息
+				JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByUnionid(unionid);
+				result.put("code", "200");
+				result.put("content", member);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		log.info("结束info");
+		return result;
+	}
+
+	/**
+	 * 验证图形码
+	 * 
+	 * @Title: validateCode
+	 * @param sessionid
+	 * @param code
+	 * @param mobile
+	 * @return
+	 * @date: 2017年11月13日 上午11:13:28
+	 * @author: chengxg
+	 */
+	@RequestMapping(value = "/validateCode", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Object validateCode(String sessionid, String code, String mobile) {
+		log.info("进入validateCode");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				// 验证验证码是否正确，正确则发送手机短信验证码
+				String imageCode = CacheKit.get(Cache.XCXIMGCODE, sessionid);
+				if (StringUtils.isBlank(imageCode) || !imageCode.equals(code)) {
+					result.put("msg", "验证码错误");
+					return result;
+				}
+				CacheKit.put(Cache.XCXMSGCODE, sessionid, sendMessage(mobile));
+				// 移除图形码
+				CacheKit.remove(Cache.XCXIMGCODE, sessionid);
+				result.put("code", "200");
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		return result;
+	}
+
+	/**
+	 * 修改我的资料
+	 * 
+	 * @Title: update
+	 * @param sessionid
+	 * @param mem
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:13:47
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> update(String sessionid, @Valid Member mem) throws Exception {
+		log.info("进入update");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				// 修改会员信息
+				consumer.getMemberInfoApi().get().updateMemberInfoByUnionid(unionid, mem.getMobile(), mem.getName(),
+						mem.getSex(), mem.getBirthday(), mem.getAddress(), mem.getArea());
+				result.put("code", "200");
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		log.info("结束update");
+		return result;
+	}
+
+	/**
+	 * 会员激活
+	 * 
+	 * @Title: register
+	 * @param sessionid
+	 * @param mobile
+	 * @param mobileCode
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:13:57
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/register", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> register(String sessionid, String mobile, String mobileCode) throws Exception {
+		log.info("进入register");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				String msgCode = CacheKit.get(Cache.XCXMSGCODE, sessionid);
+				if (StringUtils.isBlank(msgCode) || !msgCode.equals(mobileCode)) {
+					log.error("短信验证码错误");
+					result.put("msg", "短信验证码错误");
+					return result;
+				}
+				// 验证手机号是否唯一
+				Object member = consumer.getMemberInfoApi().get().getMemberByMobile(mobile);
+				if (member != null) {
+					log.info("手机号已经存在>>>" + mobile);
+					result.put("msg", "手机号已经存在");
+				}
+				// 激活会员信息
+				consumer.getMemberInfoApi().get().activeMemberByUnionid(unionid, mobile, "", false);
+				// 移除短信码
+				CacheKit.remove(Cache.XCXMSGCODE, sessionid);
+				result.put("code", "200");
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		log.info("结束register");
+		return result;
+	}
+
+	/**
+	 * 查询会员积分明细
+	 * 
+	 * @Title: point
+	 * @param sessionid
+	 * @param start
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:14:04
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/point", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> point(String sessionid, Integer start) throws Exception {
 		log.info("进入point");
-		if (sessionid == null || start == null) {
-			log.error("参数不正确");
-			result.put("msg", "参数不正确");
-			return result;
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			if (sessionid == null || start == null) {
+				log.error("参数不正确");
+				result.put("msg", "参数不正确");
+				return result;
+			}
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				// 获取会员积分
+				List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid,
+						start, pageSize);
+				result.put("code", "200");
+				result.put("content", points);
+			}
+		} catch (Exception e) {
+			log.error("", e);
 		}
-		String unionid = CacheKit.get(Cache.XCXSESSIONID, sessionid);
-		if (unionid == null) {
-			log.error("没有找到sessionid>>" + sessionid);
-			result.put("msg", "没有找到sessionid");
-			return result;
-		}
-		// 获取会员积分
-		List<Map<String, Object>> points = consumer.getMemberPointApi().get().getMemberPointByUnionid(unionid,start);
-		result.put("code", "200");
-		result.put("content", points);
 		log.info("结束point");
 		return result;
 	}
-	
+
+	/**
+	 * 首页查询会员卡信息
+	 * 
+	 * @Title: card
+	 * @param sessionid
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:14:12
+	 * @author: chengxg
+	 */
 	@ResponseBody
-	@RequestMapping(value ="/card",method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/card", method = { RequestMethod.GET, RequestMethod.POST })
 	public Map<String, Object> card(String sessionid) throws Exception {
 		log.info("进入card");
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "500");
-		if (StringUtils.isBlank(sessionid)) {
-			log.error("sessionid不能为空");
-			result.put("msg", "sessionid不能为空");
-			return result;
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				JSONObject obj = consumer.getMemberCardApi().get().getMemberCardByUnionid(unionid);
+				result.put("code", "200");
+				result.put("content", obj);
+			}
+		} catch (Exception e) {
+			log.error("", e);
 		}
-		String unionid = CacheKit.get(Cache.XCXSESSIONID, sessionid);
-		if (StringUtils.isBlank(unionid)) {
-			log.error("没有找到sessionid>>" + sessionid);
-			result.put("msg", "没有找到sessionid");
-			return result;
-		}
-		JSONObject obj = consumer.getMemberCardApi().get().getMemberCardByUnionid(unionid);
-		result.put("code", "200");
-		result.put("content", obj);
 		log.info("结束card");
+		return result;
+	}
+
+	/**
+	 * 会员卡详情
+	 * @Title: cardDetail   
+	 * @param sessionid
+	 * @return
+	 * @throws Exception
+	 * @date:   2017年11月13日 上午11:14:38 
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/cardDetail", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> cardDetail(String sessionid) throws Exception {
+		log.info("进入cardDetail");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				JSONObject obj = consumer.getMemberCardApi().get().selectByMemberId(unionid);
+				result.put("code", "200");
+				result.put("content", obj);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		log.info("结束cardDetail");
+		return result;
+	}
+
+	/**
+	 * 线上订单
+	 * 
+	 * @Title: order
+	 * @param sessionid
+	 * @param start
+	 * @return
+	 * @throws Exception
+	 * @date: 2017年11月13日 上午11:12:46
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/onlineOrder", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> order(String sessionid, int start) throws Exception {
+		log.info("进入order");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				JSONArray orders = null;
+				JSONObject member = consumer.getMemberInfoApi().get().getMemberInfoByUnionid(unionid);
+				if (StringUtils.isNotBlank(member.getString("mobile"))) {
+					orders = getTbOrderByMobile(member.getString("mobile"));
+				}
+				result.put("code", "200");
+				result.put("content", orders);
+			}
+			log.info("结束order");
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		return result;
+	}
+
+	/**
+	 * 线上订单详情
+	 * @Title: orderDetail   
+	 * @param sessionid
+	 * @param tid
+	 * @return
+	 * @throws Exception
+	 * @date:   2017年11月13日 上午11:15:21 
+	 * @author: chengxg
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/onlineOrderDetail", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String, Object> orderDetail(String sessionid, String tid) throws Exception {
+		log.info("进入orderDetail");
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "500");
+		result.put("msg", "网络开了小差");
+		try {
+			String unionid = getUnionid(sessionid, result);
+			if (StringUtils.isNotBlank(unionid)) {
+				JSONArray orderDetail = getTbOrderByTid(tid);
+				result.put("code", "200");
+				result.put("content", orderDetail);
+			}
+		} catch (Exception e) {
+			log.error("", e);
+		}
+		log.info("结束orderDetail");
 		return result;
 	}
 }

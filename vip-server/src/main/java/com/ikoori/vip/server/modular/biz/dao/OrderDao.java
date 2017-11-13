@@ -20,7 +20,7 @@ public interface OrderDao {
 			@Param("orderSource") Long orderSource, @Param("orderNo") String orderNo);
   
 	/*查询某用户所有订单*/
-   List<Map<String,Object>>selectOrderListByMemberId(@Param("memberId") Long memberId);
+   List<Map<String,Object>>selectOrderListByMemberId(@Param("memberId") Long memberId,int start,int pageSize);
    
    /*查询某用户某订单详情*/
    List<Map<String,Object>>selectOrderDetailListByOrderId(@Param("orderId") Long orderId);

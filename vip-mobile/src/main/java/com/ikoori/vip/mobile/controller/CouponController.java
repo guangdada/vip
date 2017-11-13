@@ -78,7 +78,6 @@ public class CouponController {
 	 * @Title: active   
 	 * @param request
 	 * @param verifyCode
-	 * @param model
 	 * @return
 	 * @throws Exception
 	 * @date:   2017年10月17日 下午2:00:37 
@@ -86,7 +85,7 @@ public class CouponController {
 	 */
 	@RequestMapping(value = "/active", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public Object active(HttpServletRequest request, String verifyCode, Model model) throws Exception {
+	public Object active(HttpServletRequest request, String verifyCode) throws Exception {
 		JSONObject obj = new JSONObject();
 		try {
 			String unionid = WeChatAPI.getUnionid(request.getSession());
@@ -94,24 +93,17 @@ public class CouponController {
 				throw new Exception("登录信息有误");
 			}
 			consumer.getCouponApi().get().activeCoupon(verifyCode, unionid);
-			//model.addAttribute("code",true);
-			//model.addAttribute("msg","该券已经放入您的账户");
 			obj.put("code", "200");
 			obj.put("msg", "该券已经放入您的账户");
 		} catch (Exception e) {
 			log.error("优惠券激活失败", e);
-			//model.addAttribute("code",false);
 			// 判断是否为业务异常
 			if (StringUtils.isNotBlank(e.getMessage()) && e.getMessage().matches("\\{(.*)\\}")) {
-				//model.addAttribute("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
 				obj.put("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
 			}else{
 				obj.put("msg", "发生未知错误！");
-				//model.addAttribute("msg","发生未知错误！");
 			}
 		}
-		// 跳转激活结果页面
-		//return "/coupon_active_result.html";
 		return obj;
 	}
 	

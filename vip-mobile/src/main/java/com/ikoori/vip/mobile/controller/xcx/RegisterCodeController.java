@@ -1,4 +1,4 @@
-package com.ikoori.vip.mobile.controller;
+package com.ikoori.vip.mobile.controller.xcx;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -7,14 +7,15 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.code.kaptcha.Producer;
-import com.ikoori.vip.mobile.constant.Constant;
+import com.ikoori.vip.common.constant.cache.Cache;
+import com.ikoori.vip.core.cache.CacheKit;
 
 
 /**
@@ -24,19 +25,23 @@ import com.ikoori.vip.mobile.constant.Constant;
  * @date 2017-05-05 23:10
  */
 @Controller
-@RequestMapping("/kaptcha")
-public class KaptchaController {
+@RequestMapping("/xcx/code")
+public class RegisterCodeController {
 
     @Autowired
     Producer producer;
 
     /**
      * 生成验证码
+     * @Title: index   
+     * @param request
+     * @param response
+     * @param sessionid
+     * @date:   2017年11月13日 上午11:11:17 
+     * @author: chengxg
      */
-    @RequestMapping("")
-    public void index(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-
+    @RequestMapping("/register/{sessionid}")
+    public void index(HttpServletRequest request, HttpServletResponse response,@PathVariable String sessionid) {
         response.setDateHeader("Expires", 0);
 
         // Set standard HTTP/1.1 no-cache headers.
@@ -55,7 +60,8 @@ public class KaptchaController {
         String capText = producer.createText();
 
         // store the text in the session
-        session.setAttribute(Constant.IMG_CODE, capText);
+        //session.setAttribute(Constants.KAPTCHA_SESSION_KEY, capText);
+        CacheKit.put(Cache.XCXIMGCODE, sessionid, capText);
 
         // create the image with the text
         BufferedImage bi = producer.createImage(capText);

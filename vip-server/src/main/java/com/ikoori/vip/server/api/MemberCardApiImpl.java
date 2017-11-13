@@ -63,6 +63,7 @@ public class MemberCardApiImpl implements MemberCardApi {
 			return null;
 		}
 		JSONObject obj = new JSONObject();
+		obj.put("coverType", card.getCoverType());
 		obj.put("coverPic", card.getCoverPic());
 		obj.put("colorCode", ColorType.valOf(card.getColorCode()));
 		obj.put("merchantName", merchant.getName());

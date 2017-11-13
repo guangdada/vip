@@ -14,4 +14,6 @@ public interface Cache {
     String CONSTANT = "CONSTANT";
     String MERCHANT = "MERCHANT";
     String XCXSESSIONID = "XCXSESSIONID";
+    String XCXMSGCODE = "XCXMSGCODE";
+    String XCXIMGCODE = "XCXIMGCODE";
 }

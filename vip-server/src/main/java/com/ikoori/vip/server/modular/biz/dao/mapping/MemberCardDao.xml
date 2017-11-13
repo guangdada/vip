@@ -65,6 +65,7 @@
 			m.`name` AS mem_name,
 			c.id AS card_id,
 			c.cover_pic,
+			c.cover_type,
 			c.color_code,
 			c.`name` card_name,
 			me.id AS merchant_id,
@@ -136,6 +137,7 @@
     		<result property="name" column="card_name"/>
     		<result property="coverPic" column="cover_pic"/>
     		<result property="colorCode" column="color_code"/>
+    		<result property="coverType" column="cover_type"/>
     	</association>
     </resultMap>
     

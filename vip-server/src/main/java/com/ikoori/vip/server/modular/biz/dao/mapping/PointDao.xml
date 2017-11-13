@@ -40,7 +40,7 @@
 		AND m.`status`=1
         AND m.unionid=#{unionid}
         ORDER BY pt.id DESC
-        LIMIT #{start},1
+        LIMIT #{start},#{pageSize}
     </select>
     
     <select id="selectByMerchantId" resultType="com.ikoori.vip.common.persistence.model.Point">

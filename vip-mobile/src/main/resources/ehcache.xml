@@ -16,7 +16,19 @@
             diskExpiryThreadIntervalSeconds="120"
     />
     
+    <!-- 保存小程序用户sessionid -->
     <cache name="XCXSESSIONID"
+            maxElementsInMemory="50000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="3600"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+	/>
+            
+   	<!-- 保存小程序	激活验证码 -->
+    <cache name="XCXREGISTERCODE"
             maxElementsInMemory="50000"
             eternal="false"
             timeToIdleSeconds="3600"

@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface MemberPointApi {
 	
-	public List<Map<String,Object>> getMemberPointByUnionid(String unionid,Integer start);
+	public List<Map<String,Object>> getMemberPointByUnionid(String unionid,int start,int pageSize);
 }
