@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.mobile.config.DubboConsumer;
 import com.ikoori.vip.mobile.config.properties.GunsProperties;
 import com.ikoori.vip.mobile.config.properties.WechatProperties;
@@ -129,6 +130,10 @@ public class XcxCouponController extends BaseController {
 			}
 		} catch (Exception e) {
 			log.error("", e);
+			// 判断是否为业务异常
+			if (StringUtils.isNotBlank(e.getMessage()) && e.getMessage().matches("\\{(.*)\\}")) {
+				result.put("msg", JSONObject.parseObject(e.getMessage()).get("msg"));
+			}
 		}
 		log.info("结束active");
 		return result;

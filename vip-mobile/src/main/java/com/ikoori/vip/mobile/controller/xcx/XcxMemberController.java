@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +19,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.api.vo.UserInfo;
 import com.ikoori.vip.common.constant.cache.Cache;
-import com.ikoori.vip.common.persistence.model.Member;
 import com.ikoori.vip.common.support.HttpUtil;
+import com.ikoori.vip.common.util.DateUtil;
 import com.ikoori.vip.common.util.EmojiFilter;
 import com.ikoori.vip.core.cache.CacheKit;
 import com.ikoori.vip.mobile.config.DubboConsumer;
@@ -198,7 +196,7 @@ public class XcxMemberController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/update", method = { RequestMethod.GET, RequestMethod.POST })
-	public Map<String, Object> update(String sessionid, @Valid Member mem) throws Exception {
+	public Map<String, Object> update(String sessionid,Integer sex,String mobile,String name,String birthday,String address,String area) throws Exception {
 		log.info("进入update");
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "500");
@@ -207,8 +205,8 @@ public class XcxMemberController extends BaseController {
 			String unionid = getUnionid(sessionid, result);
 			if (StringUtils.isNotBlank(unionid)) {
 				// 修改会员信息
-				consumer.getMemberInfoApi().get().updateMemberInfoByUnionid(unionid, mem.getMobile(), mem.getName(),
-						mem.getSex(), mem.getBirthday(), mem.getAddress(), mem.getArea());
+				consumer.getMemberInfoApi().get().updateMemberInfoByUnionid(unionid, mobile, name, sex,
+						DateUtil.parseTime(birthday), address, area);
 				result.put("code", "200");
 			}
 		} catch (Exception e) {
