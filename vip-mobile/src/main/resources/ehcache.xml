@@ -27,12 +27,23 @@
             diskExpiryThreadIntervalSeconds="120"
 	/>
             
-   	<!-- 保存小程序	激活验证码 -->
-    <cache name="XCXREGISTERCODE"
+   	<!-- 保存小程序	激活短信码 -->
+    <cache name="XCXMSGCODE"
             maxElementsInMemory="50000"
             eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="3600"
+            timeToIdleSeconds="1500"
+            timeToLiveSeconds="1500"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+    />
+    
+    <!-- 保存小程序	激活验证码 -->
+    <cache name="XCXIMGCODE"
+            maxElementsInMemory="50000"
+            eternal="false"
+            timeToIdleSeconds="1500"
+            timeToLiveSeconds="1500"
             overflowToDisk="true"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"

@@ -218,7 +218,7 @@ public class BaseController {
 	* @return void     
 	* @throws 
 	*/
-	protected int sendMessage(String mobile) {
+	protected String sendMessage(String mobile) {
 		log.info("进入sendMessage");
 		int max = 999999;
 		int min = 100000;
@@ -228,7 +228,7 @@ public class BaseController {
 		String result_mt = Client.me().mdSmsSend_u(mobile, content, "", "", "");
 		log.info("短信发送结果>>" +result_mt);
 		log.info("结束sendMessage");
-		return s;
+		return s+"";
 	}
 	
 	/**

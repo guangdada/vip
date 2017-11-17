@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.ikoori.vip.common.constant.state.OrderSource;
 import com.ikoori.vip.common.dto.CouponPayDo;
 import com.ikoori.vip.common.dto.OrderItemPayDo;
 import com.ikoori.vip.common.dto.OrderPayDo;
@@ -90,6 +91,7 @@ public class WebOrderController extends BaseController {
 				orderPayDo.setPoint(Integer.valueOf(point));
 				orderPayDo.setCoupons(JSONArray.parseArray(coupons, CouponPayDo.class));
 				orderPayDo.setOrderItems(JSONArray.parseArray(orderItems, OrderItemPayDo.class));
+				orderPayDo.setOrderSource(OrderSource.offline.getCode());
 				orderService.saveOrder(orderPayDo);
 			}
 		} catch (BussinessException e) {

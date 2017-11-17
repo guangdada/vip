@@ -47,9 +47,10 @@
 								        </button>
 								    </div>
 								    <select class="form-control" id="orderSource">
-								        <option value="" selected="">请选择</option>
-								        <option value="0">门店</option>
-								        <option value="1">天猫</option>
+								     	<option value="" selected="">请选择</option>
+								    	@for(c in orderSources!){ 
+										  <option value="${c.code}">${c.message}</option> 
+										@}
 								    </select>
 								</div>
                             </div>

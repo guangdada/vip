@@ -176,6 +176,7 @@ public class OrderServiceImpl implements IOrderService {
 		order.setPayStatus(1);
 		order.setMemberId(member.getId());
 		order.setProductNum(orderPayDo.getOrderItems().size());
+		order.setOrderSource(orderPayDo.getOrderSource());
 		//order.setDiscountInfo(discountInfo);
 		orderMapper.insert(order);
 		

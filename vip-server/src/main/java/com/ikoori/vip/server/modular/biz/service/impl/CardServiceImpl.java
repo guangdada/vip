@@ -1,6 +1,7 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -122,6 +123,7 @@ public class CardServiceImpl implements ICardService {
 					"isAllowShare", "termToCardId", "activationCondition", "grantCondition", "displayOrder",
 					"createTime", "updateTime", "status" };
 			BeanUtils.copyProperties(card, cardDb, ignoreProperties);
+			cardDb.setUpdateTime(new Date());
 			Integer c = cardMapper.updateAllColumnById(cardDb);
 			if(c > 0){
 				// 先删除修改前的权益值，再添加新的权益值

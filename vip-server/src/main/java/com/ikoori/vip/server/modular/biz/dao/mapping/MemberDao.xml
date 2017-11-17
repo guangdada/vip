@@ -59,7 +59,7 @@
 		AND unionid = #{unionid}
     </select>
     
-    <select id="getMemberByOpenid" resultType="map">
+    <select id="getMemberByOpenid" resultType="com.ikoori.vip.common.persistence.model.Member">
     	SELECT
 			m.*
 		FROM

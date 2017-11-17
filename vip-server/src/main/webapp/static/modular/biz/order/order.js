@@ -16,15 +16,17 @@ Order.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '订单号', field: 'order_no', visible: true, align: 'center', valign: 'middle'},
+        {title: '微信ID', field: 'unionid', visible: true, align: 'center', valign: 'middle'},
         {title: '会员名称', field: 'member_name', visible: true, align: 'center', valign: 'middle'},
+        {title: '会员手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
         {title: '支付单号', field: 'pay_order_no', visible: true, align: 'center', valign: 'middle'},
         {title: '订单状态', field: 'pay_status', visible: true, align: 'center', valign: 'middle'},
         {title: '支付金额', field: 'payment', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	return row.payment ? row.payment/100 : "";
         }},
-        {title: '优惠金额', field: 'discount', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
+        /*{title: '优惠金额', field: 'discount', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	return row.discount ? row.discount/100 : "";
-        }},
+        }},*/
         {title: '总金额', field: 'balance_due', visible: true, align: 'center', valign: 'middle',formatter:function(value,row,index){
         	return row.balance_due ? row.balance_due/100 : "";
         }},

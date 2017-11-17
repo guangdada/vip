@@ -206,7 +206,7 @@ public class XcxMemberController extends BaseController {
 			if (StringUtils.isNotBlank(unionid)) {
 				// 修改会员信息
 				consumer.getMemberInfoApi().get().updateMemberInfoByUnionid(unionid, mobile, name, sex,
-						DateUtil.parseTime(birthday), address, area);
+						DateUtil.parseDate(birthday), address, area);
 				result.put("code", "200");
 			}
 		} catch (Exception e) {

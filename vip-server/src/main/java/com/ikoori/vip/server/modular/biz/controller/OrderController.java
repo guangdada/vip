@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.constant.factory.PageFactory;
+import com.ikoori.vip.common.constant.state.OrderSource;
 import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.model.Merchant;
@@ -65,6 +66,7 @@ public class OrderController extends BaseController {
     	List<Store> stores=storeService.selectByCondition(condition);
     	//查询店铺
     	model.addAttribute("stores", stores);
+    	model.addAttribute("orderSources",OrderSource.values());
         return PREFIX + "order.html";
     }
 

@@ -9,6 +9,7 @@ public class OrderPayDo {
 	private String cardNumber;
 	private String storeNo;
 	private Integer balanceDue;
+	private Integer orderSource;
 	private Integer payment;
 	private Integer discount;
 	private Integer point;
@@ -104,5 +105,12 @@ public class OrderPayDo {
 	public void setOpenid(String openid) {
 		this.openid = openid;
 	}
-	
+
+	public Integer getOrderSource() {
+		return orderSource;
+	}
+
+	public void setOrderSource(Integer orderSource) {
+		this.orderSource = orderSource;
+	}
 }

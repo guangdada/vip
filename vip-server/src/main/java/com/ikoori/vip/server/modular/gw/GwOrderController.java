@@ -3,6 +3,7 @@ package com.ikoori.vip.server.modular.gw;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.ikoori.vip.common.constant.state.OrderSource;
 import com.ikoori.vip.common.dto.CouponPayDo;
 import com.ikoori.vip.common.dto.OrderItemPayDo;
 import com.ikoori.vip.common.dto.OrderPayDo;
@@ -79,17 +81,19 @@ public class GwOrderController extends BaseController {
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				OrderPayDo orderPayDo = new OrderPayDo();
 				orderPayDo.setStoreNo(storeNo);
 				orderPayDo.setOpenid(openid);
 				orderPayDo.setOrderNo(orderNo);
 				orderPayDo.setBalanceDue(Integer.valueOf(balanceDue));
 				orderPayDo.setPayment(Integer.valueOf(payment));
-				orderPayDo.setDiscount(Integer.valueOf(discount));
-				orderPayDo.setPoint(Integer.valueOf(point));
-				orderPayDo.setCoupons(JSONArray.parseArray(coupons, CouponPayDo.class));
+				orderPayDo.setDiscount(StringUtils.isBlank(discount) ? null : Integer.valueOf(discount));
+				orderPayDo.setPoint(StringUtils.isBlank(point) ? null : Integer.valueOf(point));
+				orderPayDo.setCoupons(
+						StringUtils.isBlank(coupons) ? null : JSONArray.parseArray(coupons, CouponPayDo.class));
 				orderPayDo.setOrderItems(JSONArray.parseArray(orderItems, OrderItemPayDo.class));
+				orderPayDo.setOrderSource(OrderSource.gw.getCode());
 				orderService.saveOrder(orderPayDo);
 			}
 		} catch (BussinessException e) {

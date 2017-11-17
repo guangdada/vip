@@ -1,5 +1,6 @@
 package com.ikoori.vip.server.modular.biz.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -224,6 +225,7 @@ s	 * @date:   2017年10月16日 下午2:02:56
 			couponDb.setServicePhone(coupon.getServicePhone());
 			couponDb.setStartAt(coupon.getStartAt());
 			couponDb.setEndAt(coupon.getEndAt());
+			couponDb.setUpdateTime(new Date());
 			couponMapper.updateAllColumnById(couponDb);
 		}else{
 			// 优惠券别名，用于领取的时候替代ID
