@@ -153,7 +153,7 @@ public class CouponController {
 			if (unionid == null) {
 				throw new Exception("登录信息有误");
 			}
-			consumer.getCouponApi().get().getCoupon(alias, unionid);
+			consumer.getCouponApi().get().fetchCoupon(alias, unionid);
 			model.addAttribute("code",true);
 			model.addAttribute("msg","该券已经放入您的账户");
 		} catch (Exception e) {

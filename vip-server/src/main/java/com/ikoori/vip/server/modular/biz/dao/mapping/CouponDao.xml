@@ -101,7 +101,7 @@
 			FROM
 				v_coupon_fetch cf
 			WHERE
-				coupon_id = c.id
+				coupon_id = #{couponId}
 			AND cf.member_id = #{memberId}
 		)
     </update>

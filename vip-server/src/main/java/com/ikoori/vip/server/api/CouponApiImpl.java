@@ -100,7 +100,7 @@ public class CouponApiImpl implements CouponApi {
 	/**
 	 * 领取优惠券
 	 * 
-	 * @Title: getStoreDetail
+	 * @Title: fetchCoupon
 	 * @param alias
 	 * @param unionid
 	 * @return
@@ -110,7 +110,7 @@ public class CouponApiImpl implements CouponApi {
 	 */
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	@Override
-	public JSONObject getCoupon(String alias, String unionid) throws Exception {
+	public JSONObject fetchCoupon(String alias, String unionid) throws Exception {
 		log.info("进入getCoupon");
 		log.info("进入getCoupon >> alias=" + alias);
 		log.info("进入getCoupon >> unionid=" + unionid);
@@ -255,35 +255,32 @@ public class CouponApiImpl implements CouponApi {
 			throw new Exception(obj.toJSONString());
 		}
 
-		CouponCode couponCode = getCouponCode(verifyCode);
-		if (couponCode == null) {
-			log.error("没有找到该现金券哦" + verifyCode);
-			obj.put("msg", "没有找到该现金券哦");
-			throw new Exception(obj.toJSONString());
+		synchronized (verifyCode.intern()) {
+			CouponCode couponCode = getCouponCode(verifyCode);
+			if (couponCode == null) {
+				log.error("没有找到该现金券哦" + verifyCode);
+				obj.put("msg", "没有找到该现金券哦");
+				throw new Exception(obj.toJSONString());
+			}
+			if (couponCode.getUseStatus() != CouponCodeStatus.publish.getCode()) {
+				log.error("该现金券还没有发行哦");
+				obj.put("msg", "该现金券还没有发行哦");
+				throw new Exception(obj.toJSONString());
+			}
+			Coupon coupon = couponMapper.selectById(couponCode.getCouponId());
+			if (coupon == null || !coupon.isIsExpired() || !coupon.isIsInvalid()) {
+				log.error("该现金券已经过期啦");
+				obj.put("msg", "该现金券已经过期啦");
+				throw new Exception(obj.toJSONString());
+			}
+			// 判断是否符合领取条件
+			checkCouponFetch(obj, coupon, member, 1);
+			// 保存领取记录
+			couponFetchService.saveCouponFetch(member, coupon, couponCode.getVerifyCode());
+			// 修改券码状态为“已激活”
+			couponCode.setUseStatus(CouponCodeStatus.active.getCode());
+			couponCodeMapper.updateById(couponCode);
 		}
-
-		if (couponCode.getUseStatus() != CouponCodeStatus.publish.getCode()) {
-			log.error("该现金券还没有发行哦");
-			obj.put("msg", "该现金券还没有发行哦");
-			throw new Exception(obj.toJSONString());
-		}
-
-		Coupon coupon = couponMapper.selectById(couponCode.getCouponId());
-		if (coupon == null || !coupon.isIsExpired() || !coupon.isIsInvalid()) {
-			log.error("该现金券已经过期啦");
-			obj.put("msg", "该现金券已经过期啦");
-			throw new Exception(obj.toJSONString());
-		}
-
-		// 判断是否符合领取条件
-		checkCouponFetch(obj, coupon, member, 1);
-
-		// 保存领取记录
-		couponFetchService.saveCouponFetch(member, coupon, couponCode.getVerifyCode());
-		
-		// 修改券码状态为“已激活”
-		couponCode.setUseStatus(CouponCodeStatus.active.getCode());
-		couponCodeMapper.updateById(couponCode);
 		log.info("结束activeCoupon");
 		return obj;
 

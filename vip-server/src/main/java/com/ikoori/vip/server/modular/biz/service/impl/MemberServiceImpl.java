@@ -384,15 +384,16 @@ public class MemberServiceImpl implements IMemberService {
 								log.info("修改库存失败");
 								continue;
 							}
+							
+							int uu = couponDao.updateGetCountUser(coupon.getId(), member.getId()); // 跟新领取人数
+							if (uu == 0) {
+								log.info("修改领取人数失败:" +uu);
+							}
+							
 							log.info("保存优惠券领取记录");
 							for (int i = 0; i < number.intValue(); i++) {
 								// 保存领取记录
 								couponFetchService.saveCouponFetch(member, coupon,null);
-							}
-							int uu = couponDao.updateGetCountUser(coupon.getId(), member.getId()); // 跟新领取人数
-							if (uu == 0) {
-								log.info("修改领取人数失败");
-								continue;
 							}
 						}
 					} else if (RightType.POINTS.getCode().equals(cardRight.getRightType())) {

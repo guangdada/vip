@@ -21,14 +21,14 @@ public interface CouponApi {
 	
 	/**
 	 * 领取优惠券
-	 * @Title: getStoreDetail   
+	 * @Title: fetchCoupon   
 	 * @param alias
 	 * @param unionid
 	 * @return
 	 * @date:   2017年9月14日 下午10:59:29 
 	 * @author: chengxg
 	 */
-	public JSONObject getCoupon(String couponId,String unionid) throws Exception;
+	public JSONObject fetchCoupon(String couponId,String unionid) throws Exception;
 	
 	/**
 	 * 根据券号激活优惠券
