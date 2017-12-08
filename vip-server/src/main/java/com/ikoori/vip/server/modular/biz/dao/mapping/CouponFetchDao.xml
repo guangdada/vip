@@ -243,6 +243,7 @@
 			c.start_at As startAt,
 			c.end_at As endAt,
             c.is_invalid As couponIsInvalid,
+            c.is_expired As isExpired,
             c.`value` AS VALUE,
 			c.type AS couponType,
 			c.preferential_type As preferentialType,

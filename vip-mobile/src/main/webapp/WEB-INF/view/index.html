@@ -4,6 +4,13 @@
 <script type="text/javascript" src="${ctxPath}/static/layer_mobile/layer.js"></script>
 <script type="text/javascript" src="${ctxPath}/static/qrcode/qrcode.min.js"></script>
 <link rel="stylesheet" href="${ctxPath}/static/font-awesome-4.7.0/css/font-awesome.min.css">
+<style>
+.weui-cell__bd p{
+	font-size:16px;
+	margin-left:3px;
+}
+
+</style>
 <body>
 
 <div class="card-region" onclick="showQr()"
@@ -38,7 +45,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/info">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/11.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-user-o fa-lg"  aria-hidden="true"></i>
+					<i class="fa fa-user-o fa-lg"  aria-hidden="true" style="color:#1296db;"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>我的资料</p>
@@ -48,7 +55,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/point">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/point.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-database fa-lg"  aria-hidden="true"></i>
+					<i class="fa fa-database fa-lg"  aria-hidden="true" style="color:#fd346b;"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>我的积分</p>
@@ -58,7 +65,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/storeOrder">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-file-text-o fa-lg"  aria-hidden="true"></i>
+					<i class="fa fa-file-text-o fa-lg"  aria-hidden="true" style="color:#08af2f;"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>门店订单</p>
@@ -68,7 +75,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/onlineOrder">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/1.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa  fa-file-text fa-lg"  aria-hidden="true"></i>
+					<i class="fa  fa-file-text fa-lg"  aria-hidden="true" style="color:#1296db;"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>线上订单</p>
@@ -79,7 +86,7 @@
 				href="${ctxPath}/member/coupon">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/7.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-credit-card fa-lg" style="font-size: 1.2em;"  aria-hidden="true"></i>
+					<i class="fa fa-credit-card fa-lg" style="font-size: 1.2em;color:#fd346b;"  aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>我的优惠券</p>
@@ -90,7 +97,7 @@
 				href="${ctxPath}/coupon/toActive">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/8.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-credit-card-alt fa-lg" style="font-size: 1.03em;" aria-hidden="true"></i>
+					<i class="fa fa-credit-card-alt fa-lg" style="font-size: 1.03em;color:#08af2f;" aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>兑换现金券</p>
@@ -100,7 +107,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/cardDetail">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa  fa-id-card-o fa-lg" style="font-size: 1.18em;" aria-hidden="true"></i>
+					<i class="fa  fa-id-card-o fa-lg" style="font-size: 1.18em;color:#1296db ;" aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>会员卡详情</p>
@@ -110,7 +117,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/member/store">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-building-o fa-lg" style="font-size: 1.58em;" aria-hidden="true"></i>
+					<i class="fa fa-building-o fa-lg" style="font-size: 1.58em;color:#fd346b;" aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>附近门店</p>
@@ -120,7 +127,7 @@
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/sign/toSign">
 				<div class="weui-cell__hd">
 					<!-- <img src="${ctxPath}/static/jqweui/images/10.png" alt="" style="width: 20px; margin-right: 5px; display: block"> -->
-					<i class="fa fa-calendar fa-lg" style="font-size: 1.4em;" aria-hidden="true"></i>
+					<i class="fa fa-calendar fa-lg" style="font-size: 1.4em;color:#08af2f;" aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>每日签到</p>
@@ -129,7 +136,7 @@
 			</a>
 			<a class="weui-cell weui-cell_access" href="${ctxPath}/share/invitation">
 				<div class="weui-cell__hd">
-					<i class="fa fa-envelope-o  fa-lg" style="font-size: 1.4em;" aria-hidden="true"></i>
+					<i class="fa fa-envelope-o  fa-lg" style="font-size: 1.4em;color:#1296db;" aria-hidden="true"></i>
 				</div>
 				<div class="weui-cell__bd">
 					<p>邀请函</p>

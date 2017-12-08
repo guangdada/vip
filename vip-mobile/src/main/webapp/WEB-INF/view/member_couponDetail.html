@@ -96,9 +96,8 @@
 					<div class="weui-cell__ft">
 						@if(!couponDetail. isInvalid){ 
 							已失效
-						@}
-						@if(couponDetail.isUsed==0){
-						 	未使用 
+						@}else{
+							可用
 						@}
 					 </div>
 				</div>
