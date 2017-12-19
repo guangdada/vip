@@ -74,7 +74,7 @@ public class WebOrderController extends BaseController {
 				data.put("sign", sign);
 				log.info("请求参数:" + data.toString());
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if(!isSign){
 					log.info("签名失败");
 					result.put("code", "500");
 					result.put("msg", "签名失败");

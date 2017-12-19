@@ -71,7 +71,7 @@ public class WebMemberController extends BaseController {
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (isSign) {
+				if (!isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
@@ -109,7 +109,7 @@ public class WebMemberController extends BaseController {
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (isSign) {
+				if (!isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
@@ -150,7 +150,7 @@ public class WebMemberController extends BaseController {
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (isSign) {
+				if (!isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
@@ -203,7 +203,7 @@ public class WebMemberController extends BaseController {
 				data.put("mobile", mobile);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if (isSign) {
+				if (!isSign) {
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}

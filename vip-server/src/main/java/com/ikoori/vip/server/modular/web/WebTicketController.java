@@ -60,7 +60,7 @@ public class WebTicketController extends BaseController {
 				data.put("storeNo", storeNo);
 				data.put("sign", sign);
 				isSign = WXPayUtil.isSignatureValid(data, gunsProperties.getSignKey());
-				if(isSign){
+				if(!isSign){
 					result.put("code", "500");
 					result.put("msg", "签名失败");
 				}
@@ -70,13 +70,47 @@ public class WebTicketController extends BaseController {
 				Store store = storeService.selectByStoreNo(storeNo);
 				Ticket ticket = ticketService.selectByStoreNum(storeNo);
 				if (ticket != null) {
-					obj.put("tilte", ticket.getTitle());
-					obj.put("remark", ticket.getRemark());
-					obj.put("specType", SpecType.valueOf(ticket.getSpecType()));
-					obj.put("storeName", store.getName());
-					obj.put("address", store.getAddress());
-					obj.put("servicePhone", store.getServicePhone());
-					obj.put("website", store.getWebsite());
+					JSONObject logo = new JSONObject();
+					logo.put("name", "店铺logo");
+					logo.put("value", store.getLogo());
+					obj.put("logo",logo);
+					
+					JSONObject title = new JSONObject();
+					title.put("name", "标题");
+					title.put("value", ticket.getTitle());
+					obj.put("title", title);
+					
+					JSONObject remark = new JSONObject();
+					remark.put("name", "备注");
+					remark.put("value", ticket.getRemark());
+					obj.put("remark", remark);
+					
+					JSONObject specType = new JSONObject();
+					specType.put("name", "规格");
+					specType.put("value", SpecType.valueOf(ticket.getSpecType()));
+					obj.put("specType", specType);
+					
+					JSONObject storeName = new JSONObject();
+					storeName.put("name", "店铺名称");
+					storeName.put("value", store.getName());
+					obj.put("storeName", storeName);
+					
+					
+					JSONObject address = new JSONObject();
+					address.put("name", "地址");
+					address.put("value", store.getAddress());
+					obj.put("address", address);
+					
+					
+					JSONObject servicePhone = new JSONObject();
+					servicePhone.put("name", "服务电话");
+					servicePhone.put("value", store.getServicePhone());
+					obj.put("servicePhone", servicePhone);
+					
+					JSONObject website = new JSONObject();
+					website.put("name", "网址");
+					website.put("value", store.getWebsite());
+					obj.put("website", website);
 				}
 				result.put("content", obj);
 			}
