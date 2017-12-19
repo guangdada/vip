@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ikoori.vip.common.constant.state.SpecType;
+import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.Ticket;
 import com.ikoori.vip.common.util.WXPayUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
+import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.service.ITicketService;
 
 import io.swagger.annotations.ApiOperation;
@@ -37,12 +40,15 @@ public class WebTicketController extends BaseController {
 	IMemberService memberService;
 	
 	@Autowired
+	IStoreService storeService;
+	
+	@Autowired
     GunsProperties gunsProperties;
 	
 	@ApiOperation("获得小票规格")
 	@RequestMapping(value="info",method=RequestMethod.POST)
 	@ResponseBody
-	public String info(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
+	public Map<String, Object> info(@ApiParam(value = "店铺编号", required = true) @RequestParam(required = true) String storeNo,
 			@ApiParam(value = "签名", required = true) @RequestParam(required = true) String sign) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", "200");
@@ -59,13 +65,18 @@ public class WebTicketController extends BaseController {
 					result.put("msg", "签名失败");
 				}
 			}
-			if(isSign){
+			if (isSign) {
 				JSONObject obj = new JSONObject();
+				Store store = storeService.selectByStoreNo(storeNo);
 				Ticket ticket = ticketService.selectByStoreNum(storeNo);
-				if(ticket!= null){
+				if (ticket != null) {
 					obj.put("tilte", ticket.getTitle());
 					obj.put("remark", ticket.getRemark());
-					obj.put("specType", ticket.getSpecType());
+					obj.put("specType", SpecType.valueOf(ticket.getSpecType()));
+					obj.put("storeName", store.getName());
+					obj.put("address", store.getAddress());
+					obj.put("servicePhone", store.getServicePhone());
+					obj.put("website", store.getWebsite());
 				}
 				result.put("content", obj);
 			}
@@ -74,6 +85,6 @@ public class WebTicketController extends BaseController {
 			result.put("code", "500");
 			result.put("msg", "请求失败");
 		}
-		return JSONObject.toJSONString(result);
+		return result;
 	}
 }

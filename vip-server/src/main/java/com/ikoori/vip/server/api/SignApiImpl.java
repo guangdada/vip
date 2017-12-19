@@ -79,9 +79,20 @@ public class SignApiImpl implements SignApi {
 		JSONObject obj = new JSONObject();
 		// unionid获得会员
 		Member member = memberDao.getMemberByUnionid(unionid);
+		// 最后签到日期
+		Date signDate = member.getSignDate();
+		String signDateStr = signDate == null ? "" : DateUtil.getDay(signDate);
+		
+		Date yesDate = DateUtil.getAfterDayDate(-1);
+		String yesDateStr = DateUtil.getDay(yesDate);
+		String nowDateStr = DateUtil.getDay(new Date());
+		
+		// 最后签到时间为昨天或者今天，则表示为连续签到状态
+		boolean isContinue = yesDateStr.equals(signDateStr) || nowDateStr.equals(signDateStr);
+		
 		obj.put("points", member == null ? 0 : member.getPoints());
 		obj.put("signDate", member == null ? 0 : member.getSignDate());
-		obj.put("signDays", member == null ? 0 : member.getSignDays());
+		obj.put("signDays", !isContinue ? 0 : member.getSignDays());
 		obj.put("signTotalDays", member == null ? 0 : member.getSignTotalDays());
 		List<String> dates = signLogDao.getSignDates(member.getMerchantId(), member.getId());
 		obj.put("signDates", dates);

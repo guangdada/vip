@@ -31,4 +31,6 @@ public interface IStoreService {
 	
 	public List<Store> selectStore(Long merchantId);
 	
+	public Store selectByStoreNo(String storeNo);
+	
 }

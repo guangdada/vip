@@ -103,6 +103,10 @@ public class StoreServiceImpl implements IStoreService {
 	@Override
 	public List<Store> selectStore(Long merchantId) {
 		return storeDao.selectStore(merchantId);
-		
+	}
+	
+	@Override
+	public Store selectByStoreNo(String storeNo){
+		return storeDao.selectByStoreNo(storeNo);
 	}
 }
