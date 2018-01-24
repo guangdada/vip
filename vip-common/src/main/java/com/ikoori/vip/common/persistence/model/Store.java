@@ -120,6 +120,17 @@ public class Store extends Model<Store> {
      * 店铺状态
      */
 	private Integer state;
+	
+	/**
+	 * 公众号二维码
+	 */
+	private String qrcode;
+	
+	/**
+	 * 加盟热线
+	 */
+	private String jointel;
+	
     /**
      * 创建时间
      */
@@ -347,6 +358,23 @@ public class Store extends Model<Store> {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
+	}
+
+	public String getJointel() {
+		return jointel;
+	}
+
+	public void setJointel(String jointel) {
+		this.jointel = jointel;
 	}
 
 	@Override

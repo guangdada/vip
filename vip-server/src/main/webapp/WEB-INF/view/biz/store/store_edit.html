@@ -11,6 +11,8 @@
             <input type="hidden" id="cityId" name="cityId" value="${store.cityId}"/>
             <#storeLogo id="logo" name="店铺logo:" avatarImg="${store.logo}" col="2"/>
             
+            <#storeLogo id="qrcode" name="公众号二维码:" avatarImg="${store.qrcode}" col="2"/>
+            
             <div class="form-group">
 				<label  class="col-sm-2 control-label">店铺类型:</label>
 				<div class="col-sm-2 no-right">
@@ -37,18 +39,13 @@
 			</div>
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">联系电话:</label>
-				<div class="col-sm-5">
+				<div class="col-sm-3">
 					<input type="text" class="form-control" id="servicePhone" name="servicePhone" value="${store.servicePhone}" placeholder="请填写联系电话">
 				</div>
-				<!-- <div class="col-sm-1 no-right">
-					<input type="text" class="form-control" id="servicePhonePre" name="servicePhonePre" value="${servicePhonePre!}"  placeholder="">
+				<label  class="col-sm-2 control-label">加盟电话:</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control" id="jointel" name="jointel" value="${store.jointel}" placeholder="请填写加盟电话">
 				</div>
-				<div class="col-sm-1 both-little">
-					-
-				</div>
-				<div class="col-sm-2 no-left">
-					<input type="text" class="form-control" id="servicePhoneSub" name="servicePhoneSub" value="${servicePhoneSub!}" placeholder="">
-				</div> -->
 			</div>
 			<div class="form-group">
 				<label  class="col-sm-2 control-label">所需区域:</label>

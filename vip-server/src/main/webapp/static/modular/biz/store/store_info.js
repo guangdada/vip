@@ -67,7 +67,8 @@ StoreInfoDlg.collectData = function() {
 	}
     this.set('id').set('name').set('name').set('servicePhone').set('storeType')
     .set('provinceId',provinceId).set('cityId',cityId).set('areaId',areaId)
-    .set('address').set('openTime').set('closeTime').set('description').set('logo').set('website').set('pics',JSON.stringify(pics));
+    .set('address').set('openTime').set('closeTime').set('description').set('logo')
+    .set('jointel').set('qrcode').set('website').set('pics',JSON.stringify(pics));
     if(coordinate){
     	var longitude = coordinate.split(',')[0];
     	var	latitude = coordinate.split(',')[1];
@@ -283,6 +284,11 @@ $(function() {
     var avatarUp = new $WebUpload("logo");
     avatarUp.setUploadBarId("progressBar");
     avatarUp.init();
+    
+   // 公众号二维码上传
+    var qrcode = new $WebUpload("qrcode");
+    qrcode.setUploadBarId("progressBar");
+    qrcode.init();
     
     // 店铺图片
     var storePic = new $WebUpload("storePic");

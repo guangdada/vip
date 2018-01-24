@@ -2,23 +2,7 @@
  * 初始化小票详情对话框
  */
 var TicketInfoDlg = {
-    ticketInfoData : {},
-   /* validateFields : {
-		title : {
-			validators : {
-				notEmpty : {
-					message : '头部标题不能为空'
-				},
-			}
-		},
-		remark : {
-			validators : {
-				notEmpty : {
-					message : '手机号码不能为空'
-				}
-			}
-		}
-	}*/
+    ticketInfoData : {}
 };
 
 /**
@@ -139,15 +123,15 @@ $(function() {
 		rules: {
 	    	title: {
 	    		required :true,
-	    		rangelength:[1,10]
+	    		rangelength:[1,50]
 	    	},
 	    	remark: {
 	    		required :true,
-	    		rangelength:[1,20]
+	    		rangelength:[1,50]
 	    	},
 	    	name: {
 	    		required :true,
-	    		rangelength:[1,10]
+	    		rangelength:[1,50]
 	    	},
 	    	stores:{
 	    		required:true,
@@ -166,15 +150,15 @@ $(function() {
 	    messages: {
 	    	title: {
 	    		required:"小票名称不能为空",
-	    		rangelength:"小票名称必须在 1-10 个字内"
+	    		rangelength:"小票名称必须在 1-50 个字内"
 	    	},
 	    	name: {
 	    		required:"小票抬头不能为空",
-	    		rangelength:"小票抬头必须在 1-10 个字内"
+	    		rangelength:"小票抬头必须在 1-50 个字内"
 	    	},
 	    	remark: {
 	    		required:"小票底部备注不能为空",
-	    		rangelength:"小票底部备注必须在 1-20 个字内"
+	    		rangelength:"小票底部备注必须在 1-50 个字内"
 	    	},
 	    	stores: {
 	    		required:"请选择店铺",

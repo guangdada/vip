@@ -9,7 +9,7 @@
         <div id="${id}PreId">
             <div><img width="100px" height="100px"
                 @if(isEmpty(avatarImg)){
-                      src="${ctxPath}/static/img/girl.gif"></div>
+                      src="${ctxPath}/static/img/default.jpg"></div>
                 @}else{
                       src="${avatarImg}"></div>
                 @}
