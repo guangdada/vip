@@ -54,6 +54,13 @@ public class Merchant extends Model<Merchant> {
      */
 	@TableField("head_img")
 	private String headImg;
+	
+	
+	/**
+	 * 公众号二维码
+	 */
+	private String qrcode;
+	
     /**
      * 商户状态（0：未认证;1:已认证）
      */
@@ -166,6 +173,15 @@ public class Merchant extends Model<Merchant> {
 	@Override
 	protected Serializable pkVal() {
 		return this.id;
+	}
+	
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
 	}
 
 	@Override

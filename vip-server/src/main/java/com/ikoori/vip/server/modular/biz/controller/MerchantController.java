@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.ikoori.vip.common.annotion.Permission;
 import com.ikoori.vip.common.annotion.log.BussinessLog;
@@ -25,14 +23,11 @@ import com.ikoori.vip.common.exception.BizExceptionEnum;
 import com.ikoori.vip.common.exception.BussinessException;
 import com.ikoori.vip.common.persistence.dao.MerchantMapper;
 import com.ikoori.vip.common.persistence.model.Merchant;
-import com.ikoori.vip.common.support.HttpUtil;
 import com.ikoori.vip.common.util.ToolUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
-import com.ikoori.vip.server.core.util.WeChatAPI;
 import com.ikoori.vip.server.modular.biz.dao.MerchantDao;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
 import com.ikoori.vip.server.modular.biz.service.IMerchantService;
-import com.ikoori.vip.server.modular.biz.service.impl.MemberServiceImpl;
 import com.ikoori.vip.server.modular.biz.warpper.MerchantWarpper;
 
 /**

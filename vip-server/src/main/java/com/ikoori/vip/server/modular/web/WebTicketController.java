@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ikoori.vip.common.constant.state.SpecType;
+import com.ikoori.vip.common.persistence.model.Merchant;
 import com.ikoori.vip.common.persistence.model.Store;
 import com.ikoori.vip.common.persistence.model.Ticket;
 import com.ikoori.vip.common.util.WXPayUtil;
 import com.ikoori.vip.server.common.controller.BaseController;
 import com.ikoori.vip.server.config.properties.GunsProperties;
 import com.ikoori.vip.server.modular.biz.service.IMemberService;
+import com.ikoori.vip.server.modular.biz.service.IMerchantService;
 import com.ikoori.vip.server.modular.biz.service.IStoreService;
 import com.ikoori.vip.server.modular.biz.service.ITicketService;
 
@@ -41,6 +43,9 @@ public class WebTicketController extends BaseController {
 	
 	@Autowired
 	IStoreService storeService;
+	
+	@Autowired
+	IMerchantService memchantService;
 	
 	@Autowired
     GunsProperties gunsProperties;
@@ -114,16 +119,17 @@ public class WebTicketController extends BaseController {
 			if (isSign) {
 				JSONObject obj = new JSONObject();
 				Store store = storeService.selectByStoreNo(storeNo);
+				Merchant merchant = memchantService.getMerchantById(store.getMerchantId());
 				Ticket ticket = ticketService.selectByStoreNum(storeNo);
 				if (ticket != null) {
 					JSONObject logo = new JSONObject();
 					logo.put("name", "店铺logo");
-					logo.put("value", store.getLogo());
+					logo.put("value", merchant.getHeadImg());
 					obj.put("logo",logo);
 					
 					JSONObject qrcode = new JSONObject();
 					qrcode.put("name", "公众号二维码");
-					qrcode.put("value", store.getQrcode());
+					qrcode.put("value", merchant.getQrcode());
 					obj.put("qrcode",qrcode);
 					
 					JSONObject joinTel = new JSONObject();

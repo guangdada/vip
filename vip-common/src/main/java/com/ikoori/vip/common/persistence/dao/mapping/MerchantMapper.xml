@@ -11,6 +11,7 @@
 		<result column="tips" property="tips" />
 		<result column="qq" property="qq" />
 		<result column="head_img" property="headImg" />
+		<result column="qrcode" property="qrcode" />
 		<result column="state" property="state" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />

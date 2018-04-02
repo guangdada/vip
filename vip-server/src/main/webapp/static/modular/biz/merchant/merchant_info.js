@@ -60,7 +60,7 @@ MerchantInfoDlg.close = function() {
  * 收集数据
  */
 MerchantInfoDlg.collectData = function() {
-	this.set('id').set('name').set('mobile').set('tips').set('qq').set('headImg');
+	this.set('id').set('name').set('mobile').set('tips').set('qq').set('headImg').set('qrcode');
 }
 
 /**
@@ -124,4 +124,9 @@ $(function() {
     var avatarUp = new $WebUpload("headImg");
     avatarUp.setUploadBarId("progressBar");
     avatarUp.init();
+    
+    // 公众号二维码上传
+    var qrcode = new $WebUpload("qrcode");
+    qrcode.setUploadBarId("progressBar");
+    qrcode.init();
 });

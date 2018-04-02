@@ -66,7 +66,7 @@ public class MerchantServiceImpl implements IMerchantService {
 	        user.setPhone(merchant.getMobile());
 	        user.setCreatetime(new Date());
 	        user.setRoleid(gunsProperties.getMerchantRoleId());
-	        user.setAvatar(merchant.getHeadImg());
+	        //user.setAvatar(merchant.getHeadImg());
 	        user.insert();
 	        merchant.setUserId(Long.valueOf(user.getId()));
 	        merchant.setState(MerchantState.YES.getCode());
@@ -78,7 +78,7 @@ public class MerchantServiceImpl implements IMerchantService {
 				throw new BussinessException(BizExceptionEnum.USER_ALREADY_REG);
 			}
 			dbUser.setName(merchant.getName());
-			dbUser.setAvatar(merchant.getHeadImg());
+			//dbUser.setAvatar(merchant.getHeadImg());
 			dbUser.updateById();
 			merchantMapper.updateById(merchant);
 		}
@@ -105,5 +105,9 @@ public class MerchantServiceImpl implements IMerchantService {
 	public Merchant getCurrentMerchant(){
 		Long userId = Long.valueOf(ShiroKit.getUser().getId());
 		return getMerchantUserId(userId);
+	}
+	
+	public Merchant getMerchantById(Long merchantId){
+		return merchantMapper.selectById(merchantId);
 	}
 }

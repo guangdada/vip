@@ -14,4 +14,6 @@ public interface IMerchantService {
 	public Merchant getMerchantUserId(Long userId);
 	
 	public Merchant getCurrentMerchant();
+	
+	public Merchant getMerchantById(Long merchantId);
 }

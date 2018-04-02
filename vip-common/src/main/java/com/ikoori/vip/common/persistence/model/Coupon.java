@@ -69,7 +69,7 @@ public class Coupon extends Model<Coupon> {
 	@TableField("origin_discount")
 	private Integer originDiscount;
     /**
-     * 别名
+     * 别名(用于分享时的唯一标识)
      */
 	private String alias;
     /**

@@ -124,7 +124,7 @@ public class Store extends Model<Store> {
 	/**
 	 * 公众号二维码
 	 */
-	private String qrcode;
+	//private String qrcode;
 	
 	/**
 	 * 加盟热线
@@ -361,13 +361,13 @@ public class Store extends Model<Store> {
 	}
 	
 
-	public String getQrcode() {
+	/*public String getQrcode() {
 		return qrcode;
 	}
 
 	public void setQrcode(String qrcode) {
 		this.qrcode = qrcode;
-	}
+	}*/
 
 	public String getJointel() {
 		return jointel;
