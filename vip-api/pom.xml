@@ -17,7 +17,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!--其他依赖 -->
+		<!--其他依赖  -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
