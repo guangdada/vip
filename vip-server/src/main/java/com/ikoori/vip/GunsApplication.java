@@ -26,7 +26,7 @@ public class GunsApplication extends WebMvcConfigurerAdapter{
     GunsProperties gunsProperties;
 
     /**
-     * 增加swagger的支持
+     * 增加swagger的支持 
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
